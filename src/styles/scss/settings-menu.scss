@@ -1,0 +1,17 @@
+@import "variables";
+
+body {
+  &.trueachievement-extras {
+    .ta-x-settings-menu {
+      &-sub-setting {
+        padding-left: 2rem;
+      }
+
+      .close {
+        i {
+          pointer-events: none;
+        }
+      }
+    }
+  }
+}

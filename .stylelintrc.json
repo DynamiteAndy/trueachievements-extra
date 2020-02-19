@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-html"
+  ],
+  "rules": {
+    "number-leading-zero": null
+  }
+}

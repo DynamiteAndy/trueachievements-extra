@@ -1,0 +1,70 @@
+@import "variables";
+
+.trueachievement-extras-online-status {
+  background: $ta-x-both-theme-online-status;
+  border: 2px solid $ta-x-white-theme-online-status-border;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  z-index: 2;
+
+  &.trueachievement-extras-friend-feed-online-status {
+    height: 6px;
+    left: 2.8rem;
+    margin-bottom: -4px;
+    margin-right: -10px;
+    top: -1.3rem;
+    width: 6px;
+  }
+
+  &.trueachievement-extras-achievement-solution-comment-online-status {
+    height: 6px;
+    left: 2.8rem;
+    margin-bottom: -5px;
+    margin-right: -10px;
+    top: -1.3rem;
+    width: 6px;
+  }
+
+  &.trueachievement-extras-achievement-solution-poster-online-status {
+    height: 12px;
+    left: 8.9rem;
+    margin-bottom: -16px;
+    top: -5rem;
+    width: 12px;
+
+    // 32x32
+    @media only screen and (max-width: $ta-x-tablet-breakpoint) {
+      height: 6px;
+      left: -1.9rem;
+      margin-bottom: -10px;
+      margin-right: 0;
+      top: -.2rem;
+      width: 6px;
+    }
+  }
+
+  &.trueachievement-extras-forum-online-status {
+    height: 12px;
+    left: 2.5rem;
+    margin-bottom: -16px;
+    top: -3rem;
+    width: 12px;
+
+    // 32x32
+    @media only screen and (max-width: $ta-x-tablet-breakpoint) {
+      height: 6px;
+      left: -2rem;
+      margin-bottom: 0;
+      margin-right: -10px;
+      top: 1.3rem;
+      width: 6px;
+    }
+  }
+}
+
+[data-theme="dark"] {
+  .trueachievement-extras-online-status {
+    border: 2px solid $ta-x-dark-theme-online-status-border;
+  }
+}

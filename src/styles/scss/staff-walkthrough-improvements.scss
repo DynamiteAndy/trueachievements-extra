@@ -1,0 +1,158 @@
+@import "variables";
+
+/* stylelint-disable selector-id-pattern */
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff-walkthrough-improvements {
+      min-width: unset !important;
+      overflow: auto;
+
+      main {
+        min-height: unset !important;
+      }
+
+      .admin-page {
+        position: unset;
+        display: flex;
+        flex-direction: column;
+
+        #chWalkthroughPageVersions,
+        #chWalkthroughPagePreview {
+          margin-left: 0;
+          position: unset;
+          width: unset;
+        }
+
+        #divWalkthroughHolder {
+          position: unset;
+          margin-top: unset;
+          height: unset;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        #divSearchWalkthrough {
+          .buttons {
+            display: flex;
+          }
+
+          .button {
+            display: block;
+            flex-grow: 1;
+
+            &#btnSearchWalkthrough {
+              margin: 0;
+              margin-bottom: 3px;
+
+              &:hover {
+                margin-bottom: 5px;
+              }
+            }
+          }
+
+          .clearboth {
+            display: none;
+          }
+        }
+
+        #chWalkthroughs,
+        #chEditWalkthrough,
+        #chWalkthroughAchievements,
+        #chWalkthroughGames,
+        #chWalkthroughGamers,
+        #chWalkthroughOtherSiteLink {
+          position: unset;
+          top: unset;
+          left: unset;
+          display: block;
+          margin: 0;
+        }
+
+        #chEditWalkthrough {
+          flex: 1;
+          margin: 0 1.5rem;
+        }
+
+        #btnWalkthrough {
+          display: none;
+        }
+
+        .ta-x-staff-walkthrough-improvements-walkthrough-page-container {
+          display: flex;
+
+          #chWalkthroughPageVersions {
+            height: 100%;
+
+            &.ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history {
+              position: relative;
+              top:
+                var(
+                  --ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top,
+                  $ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top
+                );
+            }
+
+            &.ta-x-y-hide {
+              transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)));
+              transition: transform .5s ease;
+
+              &-no-transition {
+                transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)));
+              }
+            }
+          }
+
+          #chWalkthroughPagePreview {
+            flex: 1;
+          }
+
+          &.ta-x-staff-walkthrough-improvements-walkthrough-page-edit-page-left,
+          &.ta-x-staff-walkthrough-improvements-walkthrough-team-button {
+            #chWalkthroughPageVersions {
+              .content {
+                .buttons {
+                  display: flex;
+                  justify-content: center;
+                  flex-direction: column;
+
+                  .button {
+                    flex: 1;
+
+                    &:not(:first-of-type) {
+                      margin-top: 5px;
+                    }
+                  }
+
+                  .clearboth {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+
+          &.ta-x-staff-walkthrough-improvements-walkthrough-page-edit-page-left {
+            #chWalkthroughPagePreview {
+              .content {
+                .buttons {
+                  display: none;
+
+                  .clearboth {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+}
+/* stylelint-enable selector-id-pattern */

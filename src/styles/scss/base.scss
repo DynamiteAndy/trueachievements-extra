@@ -1,0 +1,20 @@
+@import "variables";
+
+:root {
+  --ta-x-sticky-header-height: $ta-x-sticky-header-height;
+}
+
+body {
+  &.trueachievement-extras {
+    .ta-x-hide {
+      display: none;
+    }
+
+    .middle {
+      @media (min-width: 1200px) {
+        width: 100%;
+        max-width: 1200px;
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@import "variables";
+
+body {
+  &.trueachievement-extras {
+    .ta-x-sticky-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+  }
+}
