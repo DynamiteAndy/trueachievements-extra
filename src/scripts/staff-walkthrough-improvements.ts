@@ -11,7 +11,7 @@ let walkthoughPageVersions: HTMLElement;
 let stickyNavBarEnabled: boolean;
 let stickyNavBarElement: HTMLElement;
 
-const atTopOfPage = (): boolean => window.pageYOffset <= walkthroughContainer.offsetTop;
+const atTopOfPage = (): boolean => window.pageYOffset <= (walkthroughContainer.offsetTop + (stickyNavBarEnabled ? stickyNavBarElement.offsetHeight : 0));
 
 const setTopStyle = (noTransitionStyle?: boolean): void => {
   let addAnimation: string;

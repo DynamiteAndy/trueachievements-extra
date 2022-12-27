@@ -185,7 +185,7 @@ App_Data
 
 # Userscript Files
 dist/*
-!dist/*.min.user.js
+!dist/*.user.js
 coverage
 .nyc_output
 config.json
