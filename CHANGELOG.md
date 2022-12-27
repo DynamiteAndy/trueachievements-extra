@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.0
+- Adds a feature to select the default status on manage walkthrough
+
 ## 1.0.2
 - Bug fix for being improved checkbox breaking the manage walkthrough page layout
 

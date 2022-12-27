@@ -9,6 +9,9 @@ import ConditionalRender from './models/conditional-render';
 let extensionBody: HTMLElement;
 let extensionTrigger: HTMLElement;
 
+const isSelectElement = (el: HTMLElement): boolean => el.nodeName === 'SELECT';
+const isCheckboxElement = (el: HTMLElement): boolean => el.nodeName === 'INPUT' && (el as HTMLInputElement).type === 'checkbox';
+
 const applyBody = async(): Promise<void> => {
   const html = fs.readFileSync('./src/views/settings-menu.html', 'utf8');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
@@ -26,12 +29,13 @@ const applyBody = async(): Promise<void> => {
 
   extensionBody = document.querySelector(`.${Constants.Styles.SettingsMenu.featureJs}`);
 
-  [...extensionBody.querySelectorAll('input')].forEach(setting => {
+  ([...extensionBody.querySelectorAll('input, select')] as HTMLElement[]).forEach(setting => {
     const configObject = setting.dataset.configArea;
     const configSettings = setting.dataset.configSetting;
 
     if (!configObject || !configSettings) return;
-    if (setting.type === 'checkbox') setting.checked = config[configObject][configSettings];
+    if (isCheckboxElement(setting)) (setting as HTMLInputElement).checked = config[configObject][configSettings];
+    else if (isSelectElement(setting)) (setting as HTMLSelectElement).value = config[configObject][configSettings];
   });
 
   ([...extensionBody.querySelectorAll('[data-render-condition]')] as HTMLElement[]).forEach(hiddenSetting => {
@@ -72,14 +76,13 @@ const listen = (): void => {
     const configObject = htmlTarget?.dataset.configArea;
     const configSettings = htmlTarget?.dataset.configSetting;
 
-    if (inputTarget?.type === 'checkbox') config[configObject][configSettings] = inputTarget?.checked;
+    if (isSelectElement(htmlTarget)) config[configObject][configSettings] = (htmlTarget as HTMLSelectElement).value
+    else if (isCheckboxElement(htmlTarget)) config[configObject][configSettings] = inputTarget?.checked;
 
     ([...extensionBody.querySelectorAll(`[data-render-condition*="#${htmlTarget.id}"]`)] as HTMLElement[]).forEach(hiddenSetting => {
       const condition = new ConditionalRender(hiddenSetting.dataset.renderCondition);
 
       if (!condition.isValid()) return;
-
-      const inputTarget = target as HTMLInputElement;
 
       if (inputTarget.type === 'checkbox') {
         hiddenSetting.classList[(inputTarget.checked === condition.value)

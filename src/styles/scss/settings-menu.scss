@@ -3,8 +3,30 @@
 body {
   &.trueachievement-extras {
     .ta-x-settings-menu {
+      &-column-setting {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .frm-grp {
+          padding-top: .5rem;
+        }
+      }
+
       &-sub-setting {
         padding-left: 2rem;
+
+        &-wrapable {
+          flex-wrap: wrap;
+
+          label {
+            flex-basis: 80%;
+            flex-grow: 1;
+          }
+
+          .frm-tgl {
+            margin-right: 0;
+          }
+        }
       }
 
       .close {

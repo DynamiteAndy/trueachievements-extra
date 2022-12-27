@@ -87,6 +87,8 @@ const applyBody = async(): Promise<void> => {
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
     const walkthroughHolder = await waitForElement('#divWalkthroughHolder');
 
+    await applyDefaultStatus();
+
     if (await waitForElement('#chWalkthroughGames') === null) {
       return;
     }
@@ -158,6 +160,18 @@ const applyWalkthroughTeamButton = (): void => {
 
     walkthoughPageVersions.querySelector('.content .buttons').appendChild(
       parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonJs}`));
+  }
+}
+
+const applyDefaultStatus = async(): Promise<void> => {
+  if (!config.staffWalkthroughImprovements.manageWalkthroughDefaultStatus) return;
+
+  const status = (await waitForElement('#ddlStatusFilter') as HTMLSelectElement)
+
+  if(status.querySelector('[selected]') === null &&
+    status.value !== config.staffWalkthroughImprovements.manageWalkthroughDefaultStatusValue) {
+    status.value = config.staffWalkthroughImprovements.manageWalkthroughDefaultStatusValue
+    status.onchange(null);
   }
 }
 
