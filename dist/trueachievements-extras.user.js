@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          TrueAchievements Extra - Development
 // @namespace     dynamite-andy
-// @version       1.0.1.085203
+// @version       1.0.2.091114
 // @iconURL       https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon32x32.ico?raw=true
 // @icon64URL     https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon64x64.ico?raw=true
 // @updateURL     https://github.com/andrewcartwright1/trueachievements-extra/raw/main/dist/trueachievements-extras.user.js
@@ -17,7 +17,7 @@
 // @grant         GM_addStyle
 // ==/UserScript==
 
-// Last Updated: 27/12/2022, 08:52:03
+// Last Updated: 27/12/2022, 09:11:14
 
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
@@ -624,7 +624,7 @@ const applyBody = () => __awaiter(void 0, void 0, void 0, function* () {
         const html = "<div class=\"js-ta-x-staff-walkthrough-improvements-walkthrough-page-container ta-x-staff-walkthrough-improvements-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<a class=\"button js-ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button\" href=\"/staff/walkthrough/managewalkthrough.aspx\">Walkthrough Team</a>";
         const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
         const walkthroughHolder = yield (0, wait_1.waitForElement)('#divWalkthroughHolder');
-        if ((yield (0, wait_1.waitForElement)('#lstWalkthroughIDselectedrow')) === null) {
+        if ((yield (0, wait_1.waitForElement)('#chWalkthroughGames')) === null) {
             return;
         }
         if ((yield (0, wait_1.waitForElement)('#chWalkthroughGames')) !== null) {

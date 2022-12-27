@@ -87,7 +87,7 @@ const applyBody = async(): Promise<void> => {
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
     const walkthroughHolder = await waitForElement('#divWalkthroughHolder');
 
-    if (await waitForElement('#lstWalkthroughIDselectedrow') === null) {
+    if (await waitForElement('#chWalkthroughGames') === null) {
       return;
     }
 
