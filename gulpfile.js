@@ -6,12 +6,14 @@ const browserify = require('browserify');
 const tsify = require('tsify');
 const gulp = require('gulp');
 const header = require('gulp-header');
+const debug = require('gulp-debug');
 const terser = require('gulp-terser');
 const eslint = require('gulp-eslint');
 const stylelint = require('./node_modules/@ronilaukkarinen/gulp-stylelint');
 const replace = require('gulp-replace');
 const sass = require('gulp-sass')(require('sass'));
 const concat = require('gulp-concat-css');
+const filter = require('gulp-filter');
 const del = require('del');
 
 /* CONFIG */
@@ -52,12 +54,18 @@ gulp.task('lint:ts', () => gulp.src([TS_PATH, `!${DEST_PATH}/**`, '!node_modules
     .pipe(eslint.format())
     .pipe(eslint.failAfterError()));
 
-gulp.task('build:styles', () => gulp.src(SCSS_PATH, { base: './src/styles/' })
+gulp.task('build:styles', () => {
+  const bundlePathFilter = filter(['./dist/styles/**/*.css']);
+
+  return gulp.src(SCSS_PATH, { base: './src/styles/' })
+    .pipe(debug({ title: 'Filepath:', showCount: false }))
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(DEST_STYLES_PATH), { overwrite: true })
+    .pipe(bundlePathFilter)
     .pipe(concat(`./${OUT_FILE_NAME}.styles.css`))
     .pipe(gulp.dest(DEST_STYLES_PATH, { overwrite: true }))
-    .on('end', () => del.sync([`${DEST_STYLES_PATH}**/*`, `!${DEST_STYLES_PATH}${OUT_FILE_NAME}.styles.css`])));
+    .on('end', () => del.sync([`${DEST_STYLES_PATH}**/*`, `!${DEST_STYLES_PATH}${OUT_FILE_NAME}.styles.css`]));
+});
 
 gulp.task('build:dev', () => new Promise(resolve => {
   const b = browserify()

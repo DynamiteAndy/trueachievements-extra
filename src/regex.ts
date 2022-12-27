@@ -44,13 +44,21 @@ export const staffManageWalkthroughPage = (str: string): boolean => new RegExp('
 export const staffWalkthroughPage = (str: string): boolean => new RegExp('^/staff/walkthrough/walkthroughpage.aspx', 'i').test(getUrlProperties(str, 'pathname'));
 export const staffWalkthroughPreviewPage = (str: string): boolean => new RegExp('^/staff/walkthrough/walkthroughpreview.aspx', 'i').test(getUrlProperties(str, 'pathname'));
 export const staffWalkthroughPagePreviewPage = (str: string): boolean => new RegExp('^/staff/walkthrough/walkthroughpagepreview.aspx', 'i').test(getUrlProperties(str, 'pathname'));
-
   // // Random Strings
   // summaryAvailable: (str: string) => new RegExp('Summary available for .* at ', 'i').test(str),
   // hasStartedBroadcasting: (str: string) => new RegExp(' has started broadcasting .* on their twitch channel ', 'i').test(str),
   // statusChange: (str: string) => new RegExp('Status change by .* at', 'i').test(str),
 export const today = (str: string): boolean => new RegExp('Today', 'i').test(str);
 export const yesterday = (str: string): boolean => new RegExp('Yesterday', 'i').test(str);
+
+export const extractBetween = (between: string, str: string): string => {
+  const regex = new RegExp(`${between}(.*?)${between}`);
+  const matches = str.match(regex)
+  
+  return matches
+    ? matches[1]
+    : str;
+}
 
 export default {
   achievementsPage,
@@ -60,5 +68,6 @@ export default {
   staffWalkthroughPage,
   staffWalkthroughPreviewPage,
   today,
-  yesterday
+  yesterday,
+  extractBetween
 };

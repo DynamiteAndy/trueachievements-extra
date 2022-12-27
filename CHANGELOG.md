@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+- Adds a dark mode tinymce theme for edit walkthrough
+- Improves the image selector on edit walkthrough
+
 ## 1.1.0
 - Adds a feature to select the default status on manage walkthrough
 

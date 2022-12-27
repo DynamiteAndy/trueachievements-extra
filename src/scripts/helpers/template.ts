@@ -1,10 +1,12 @@
 const wrapper = document.createElement('div');
 
-export const template = (element: HTMLElement, ...params: any): HTMLElement => {
+export const template = (element: HTMLElement, opts: any = {}): HTMLElement => {
+  const { image } = opts;
   wrapper.appendChild(element);
 
   (wrapper.firstChild as HTMLElement).outerHTML = element.outerHTML
-    .replace(/{GM_info.script.version}/g, GM_info.script.version || '');
+    .replace(/{GM_info.script.version}/g, GM_info.script.version || '')
+    .replace(/{image.title}/g, image?.title || '');
     // .replace(/{link}/g, obj.link || '')
     // .replace(/{name}/g, obj.name || '')
     // .replace(/{gamer.name}/g, obj.gamer ? obj.gamer.name : '' || '')

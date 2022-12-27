@@ -1,6 +1,6 @@
 @import "variables";
 
-/* stylelint-disable selector-id-pattern */
+/* stylelint-disable selector-id-pattern, no-descending-specificity */
 body {
   &.trueachievement-extras {
     &.ta-x-staff-walkthrough-improvements {
@@ -151,8 +151,70 @@ body {
           flex-direction: column;
           justify-content: space-around;
         }
+
+        .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector {
+          &#oWalkthroughImageViewer {
+            width: 321px;
+          }
+
+          .ta-x-sticky-header {
+            position: sticky;
+            border-bottom: 1px solid #000;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+          }
+
+          .itemname {
+            padding: 5px;
+            text-align: center;
+            font-size: unset !important;
+          }
+
+          a[title="Add images"] {
+            text-align: center;
+            padding: 5px;
+            cursor: pointer !important;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .imageviewer {
+            display: flex;
+            flex-wrap: wrap;
+
+            .ivimage {
+              position: unset;
+              margin: 5px;
+              max-width: 46%;
+
+              .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title {
+                text-align: center;
+                padding-top: 3px;
+                white-space: break-spaces;
+              }
+            }
+          }
+        }
+      }
+
+      &[data-ta-x-theme="dark"] {
+        .admin-page {
+          .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector {
+            .ta-x-sticky-header {
+              background-color: #2f3740;
+            }
+
+            .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title {
+              color: #b5b9bf;
+            }
+          }
+        }
       }
     }
   }
 }
-/* stylelint-enable selector-id-pattern */
+
+/* stylelint-enable selector-id-pattern, no-descending-specificity */

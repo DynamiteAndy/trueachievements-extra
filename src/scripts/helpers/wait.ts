@@ -1,6 +1,6 @@
-export const waitForElement = (selector: string, element: Document | HTMLElement = document, timeoutMS = 10000): Promise<HTMLElement> => new Promise(resolve => {
+export const waitForElement = (selector: string, element: Document | HTMLElement = document.documentElement, timeoutMS = 10000): Promise<HTMLElement> => new Promise(resolve => {
   if (element.querySelector(selector)) {
-    return resolve(document.querySelector(selector) as HTMLElement);
+    return resolve(element.querySelector(selector) as HTMLElement);
   }
 
   /* eslint-disable prefer-const */
@@ -20,7 +20,7 @@ export const waitForElement = (selector: string, element: Document | HTMLElement
     }
   });
 
-  observer.observe(document.body || document.documentElement, {
+  observer.observe(element || document.documentElement, {
     childList: true,
     subtree: true
   });

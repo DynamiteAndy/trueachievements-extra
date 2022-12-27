@@ -1,9 +1,11 @@
 import * as fs from 'fs';
 import config from '../config';
 import { Constants } from '../constants';
-import { staffEditWalkthroughPage, staffManageWalkthroughPage, staffWalkthroughPage, staffWalkthroughPagePreviewPage, staffWalkthroughPreviewPage } from '../regex';
+import { extractBetween, staffEditWalkthroughPage, staffManageWalkthroughPage, staffWalkthroughPage, staffWalkthroughPagePreviewPage, staffWalkthroughPreviewPage } from '../regex';
 import { classListContains } from './helpers/html-element-util';
 import { waitForElement } from './helpers/wait';
+import { apply } from '../styles/staff-walkthrough-improvements';
+import { template } from './helpers/template';
 
 // Elements -------
 let walkthroughContainer: HTMLElement;
@@ -124,6 +126,9 @@ const applyBody = async(): Promise<void> => {
 
     const aside = await waitForElement('.page aside');
     aside.remove();
+  } else if (staffEditWalkthroughPage(window.location.href)) {
+    await apply();
+    await applyImprovedImageSelector();
   }
 };
 
@@ -168,20 +173,68 @@ const applyDefaultStatus = async(): Promise<void> => {
 
   const status = (await waitForElement('#ddlStatusFilter') as HTMLSelectElement)
 
-  if(status.querySelector('[selected]') === null &&
+  if (status.querySelector('[selected]') === null &&
     status.value !== config.staffWalkthroughImprovements.manageWalkthroughDefaultStatusValue) {
     status.value = config.staffWalkthroughImprovements.manageWalkthroughDefaultStatusValue
     status.onchange(null);
   }
 }
 
+const applyImprovedImageSelector = async(): Promise<void> => {
+  if (!config.staffWalkthroughImprovements.improvedImageSelector) return;
+
+  const html = fs.readFileSync('./src/views/staff-walkthrough-improvements.html', 'utf8');
+  const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
+  const stickyImageHeader = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorContainerJs}`);
+  const imageContainer = await waitForElement('#oWalkthroughImageViewer');
+  imageContainer.classList.add(Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle, Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs);
+  
+  const imageViewer = imageContainer.querySelector('.imageviewer');
+
+  imageContainer.insertBefore(stickyImageHeader, imageViewer);
+  stickyImageHeader.appendChild(imageViewer.querySelector('.itemname'));
+  stickyImageHeader.appendChild(imageViewer.querySelector('.addimages a'));
+
+  ([...imageViewer.querySelectorAll('.ivimage a')] as HTMLElement[]).forEach(imageAnchor => {
+    const clonedImageTitle = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`).cloneNode(true);
+    const imageTitle = template(clonedImageTitle as HTMLElement, { image: imageAnchor.querySelector('img') });
+    imageTitle.innerText = extractBetween("'", imageTitle.innerText);
+
+    imageAnchor.appendChild(imageTitle);
+  })
+}
+
 const listen = (): void => {
-  if(config.staffWalkthroughImprovements.enabled && staffWalkthroughPage(window.location.href)) {
+  if (config.staffWalkthroughImprovements.enabled && staffWalkthroughPage(window.location.href)) {
     window.addEventListener('scroll', () => setTopStyle(!classListContains(walkthoughPageVersions, [
       Constants.Styles.Animations.yHideNoTransition,
       Constants.Styles.Animations.yHide,
       Constants.Styles.Animations.yShow
     ])));
+  }
+
+  if (config.staffWalkthroughImprovements.enabled && config.staffWalkthroughImprovements.improvedImageSelector &&
+      staffEditWalkthroughPage(window.location.href)) {
+    document.addEventListener('click', ({ target }) => {
+      if ((target as HTMLElement)?.closest('[aria-label="Add Image"]') !== null) return;
+      if ((target as HTMLElement)?.closest(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`) !== null) return;
+
+      const imageSelector = (document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`) as HTMLElement)
+
+      if (imageSelector.style.display !== 'block') return;
+  
+      imageSelector.style.display = 'none';
+    });
+
+    window.addEventListener('blur', () => {
+      if (document.activeElement === document.querySelector('#txtWalkthrough_ifr')) {
+        const imageSelector = (document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`) as HTMLElement)
+
+        if (imageSelector.style.display !== 'block') return;
+  
+        imageSelector.style.display = 'none';
+      }
+    });
   }
 };
 

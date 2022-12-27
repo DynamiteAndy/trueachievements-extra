@@ -52,6 +52,19 @@ export class Constants {
         static readonly containerJs = `${this.featureJs}-container`;
         static readonly containerStyle = `${this.featureStyle}-container`;
       }
+
+      static readonly EditWalkthroughPage = class {
+        static readonly featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`;
+        static readonly featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`;
+        static readonly containerJs = `${this.featureJs}-container`;
+        static readonly containerStyle = `${this.featureStyle}-container`;
+        static readonly improvedImageSelectorJs = `${this.featureJs}-improved-image-selector`
+        static readonly improvedImageSelectorStyle = `${this.featureStyle}-improved-image-selector`
+        static readonly improvedImageSelectorContainerJs = `${this.improvedImageSelectorJs}-container`
+        static readonly improvedImageSelectorContainerStyle = `${this.improvedImageSelectorStyle}-container`
+        static readonly improvedImageSelectorImageTitleJs = `${this.improvedImageSelectorJs}-image-title`
+        static readonly improvedImageSelectorImageTitleStyle = `${this.improvedImageSelectorStyle}-image-title`
+      }
     }
 
     static Variables = class {

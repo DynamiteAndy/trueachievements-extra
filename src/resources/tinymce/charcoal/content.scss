@@ -1,0 +1,11 @@
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff-walkthrough-improvements {
+      &[data-ta-x-theme="dark"] {
+        background-color: #444;
+        color: #bbb;
+        border-color: #555;
+      }
+    }
+  }
+}

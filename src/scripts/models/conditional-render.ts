@@ -1,4 +1,4 @@
-import { toBool } from "../helpers/parse";
+import { toBool } from '../helpers/parse';
 
 export default class ConditionalRender {
   public selector: string;

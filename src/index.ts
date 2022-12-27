@@ -2,7 +2,7 @@
 // const ajaxInterceptor = require('ajax-interceptor');
 // import { broadcast } from './scripts/components/events';
 
-import { allConcurrently } from "./scripts/components/promise";
+import { allConcurrently } from './scripts/components/promise';
 
 // ajaxInterceptor.addRequestCallback((xhr: any) => broadcast('ajaxIntercept:request', undefined, { detail: xhr }));
 // ajaxInterceptor.addResponseCallback((xhr: any) => broadcast('ajaxIntercept:response', undefined, { detail: xhr }));
