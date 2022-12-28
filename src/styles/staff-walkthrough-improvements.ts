@@ -11,7 +11,7 @@ const listen = async(): Promise<void> => {
 
     const bodyEl = (await waitForElement('#tinymce', iframeDocument) as HTMLElement)
     bodyEl.classList.add(Constants.Styles.root, Constants.Styles.StaffWalkthroughImprovements.featureStyle);
-    bodyEl.setAttribute('data-ta-x-theme', themeElement.dataset.theme);
+    bodyEl.setAttribute('data-ta-x-theme', themeElement.getAttribute('data-theme'));
     
     const style = iframeDocument.createElement('style');
     style.innerHTML = fs.readFileSync('./dist/resources/tinymce/charcoal/content.css', 'utf8');
@@ -29,8 +29,8 @@ const listen = async(): Promise<void> => {
   const observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-        iframe.contentWindow.postMessage({ theme: (mutation.target as HTMLElement).dataset.theme }, '*')
-        document.body.setAttribute('data-ta-x-theme', (mutation.target as HTMLElement).dataset.theme);
+        iframe.contentWindow.postMessage({ theme: (mutation.target as HTMLElement).getAttribute('data-theme') }, '*')
+        document.body.setAttribute('data-ta-x-theme', (mutation.target as HTMLElement).getAttribute('data-theme'));
       }
     });
   });

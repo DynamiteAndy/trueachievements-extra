@@ -60,6 +60,15 @@ export const extractBetween = (between: string, str: string): string => {
     : str;
 }
 
+export const extractAllBetween = (between: string, str: string): string[] =>  {
+  const regex = new RegExp(`${between}(.*?)${between}`, 'g');
+  const matches = str.match(regex)
+  
+  return matches
+    ? matches.map(str => str.replace(between, ''))
+    : [str];
+}
+
 export default {
   achievementsPage,
   achievementPage,

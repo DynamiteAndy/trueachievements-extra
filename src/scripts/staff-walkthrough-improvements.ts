@@ -1,11 +1,13 @@
 import * as fs from 'fs';
 import config from '../config';
 import { Constants } from '../constants';
-import { extractBetween, staffEditWalkthroughPage, staffManageWalkthroughPage, staffWalkthroughPage, staffWalkthroughPagePreviewPage, staffWalkthroughPreviewPage } from '../regex';
+import { extractAllBetween, extractBetween, staffEditWalkthroughPage, staffManageWalkthroughPage, staffWalkthroughPage, staffWalkthroughPagePreviewPage, staffWalkthroughPreviewPage } from '../regex';
 import { classListContains } from './helpers/html-element-util';
 import { waitForElement } from './helpers/wait';
 import { apply } from '../styles/staff-walkthrough-improvements';
 import { template } from './helpers/template';
+import memoizeFetch from './helpers/memoize-fetch';
+import { toInt } from './helpers/parse';
 
 // Elements -------
 let walkthroughContainer: HTMLElement;
@@ -95,30 +97,30 @@ const applyBody = async(): Promise<void> => {
       return;
     }
 
-    if (await waitForElement('#chWalkthroughGames') !== null) {
-      const editWalkthrough = await waitForElement('#chEditWalkthrough', walkthroughHolder);
-      editWalkthrough.after(
-        parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
+    const editWalkthrough = await waitForElement('#chEditWalkthrough', walkthroughHolder);
+    editWalkthrough.after(
+      parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
 
-      const sideBarContainer = walkthroughHolder.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`);
-      sideBarContainer.appendChild(await waitForElement('#chWalkthroughGames', walkthroughHolder));
-      sideBarContainer.appendChild(await waitForElement('#chWalkthroughAchievements', walkthroughHolder));
-      sideBarContainer.appendChild(await waitForElement('#chWalkthroughGamers', walkthroughHolder));
-      sideBarContainer.appendChild(await waitForElement('#chWalkthroughOtherSiteLink', walkthroughHolder));
+    const sideBarContainer = walkthroughHolder.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`);
+    sideBarContainer.appendChild(await waitForElement('#chWalkthroughGames', walkthroughHolder));
+    sideBarContainer.appendChild(await waitForElement('#chWalkthroughAchievements', walkthroughHolder));
+    sideBarContainer.appendChild(await waitForElement('#chWalkthroughGamers', walkthroughHolder));
+    sideBarContainer.appendChild(await waitForElement('#chWalkthroughOtherSiteLink', walkthroughHolder));
 
-      let buttonsContainer: HTMLElement = null;
-      [...document.querySelectorAll('#btnWalkthrough_Options li a')].forEach(button => {
-        button.classList.add('button');
-  
-        if (buttonsContainer === null) {
-          buttonsContainer = button.closest('.buttons');
-        }
-  
-        buttonsContainer.appendChild(button);
-      })
-  
-      buttonsContainer.parentNode.insertBefore(buttonsContainer, buttonsContainer.previousElementSibling);
-    }
+    let buttonsContainer: HTMLElement = null;
+    [...document.querySelectorAll('#btnWalkthrough_Options li a')].forEach(button => {
+      button.classList.add('button');
+
+      if (buttonsContainer === null) {
+        buttonsContainer = button.closest('.buttons');
+      }
+
+      buttonsContainer.appendChild(button);
+    })
+
+    buttonsContainer.parentNode.insertBefore(buttonsContainer, buttonsContainer.previousElementSibling);
+
+    await applyClickableTableLinks();
   } else if (staffWalkthroughPreviewPage(window.location.href) || staffWalkthroughPagePreviewPage(window.location.href)) {
     const main = await waitForElement('.page main');
     main.parentElement.classList.add('no-aside');
@@ -180,6 +182,39 @@ const applyDefaultStatus = async(): Promise<void> => {
   }
 }
 
+const applyClickableTableLinks = async(): Promise<void> => {
+  if (config.staffWalkthroughImprovements.clickableTableLinks) {
+    const selectedWalkthrough = (await waitForElement('#lstWalkthroughIDselectedrow a') as HTMLAnchorElement)
+    const walkthroughId = toInt(extractAllBetween("'", selectedWalkthrough.href)[1]);
+    const response = await memoizeFetch(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
+
+    const parsedDocument = new DOMParser().parseFromString(response, 'text/html');
+    const editors =  ([...parsedDocument.querySelectorAll('.walkthroughsummary .editors dd a')] as HTMLElement[]);
+    const games =  ([...parsedDocument.querySelectorAll('.walkthroughsummary .games a.gamelink')] as HTMLElement[]);
+    const container = document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`);
+    
+    ([...container.querySelectorAll('#scrolllstWalkthroughGames .c1')] as HTMLElement[]).forEach(el => {
+      const gameName = el.innerText.trim();
+      const walkthroughPreviewGame = games.find(game => game.innerText.toLowerCase() === gameName.toLowerCase());
+      
+      if (walkthroughPreviewGame) {
+        el.innerText = '';
+        el.innerHTML = walkthroughPreviewGame.outerHTML;
+      }
+    });
+
+    ([...container.querySelectorAll('#scrolllstWalkthroughGamers .c1')] as HTMLElement[]).forEach(el => {
+      const gamerName = el.innerText.trim();
+      const walkthroughPreviewGamer = editors.find(editor => editor.innerText.toLowerCase() === gamerName.toLowerCase());
+      
+      if (walkthroughPreviewGamer) {
+        el.innerText = '';
+        el.innerHTML = walkthroughPreviewGamer.outerHTML;
+      }
+    });
+  }
+}
+
 const applyImprovedImageSelector = async(): Promise<void> => {
   if (!config.staffWalkthroughImprovements.improvedImageSelector) return;
 
@@ -192,7 +227,7 @@ const applyImprovedImageSelector = async(): Promise<void> => {
   const imageViewer = imageContainer.querySelector('.imageviewer');
 
   imageContainer.insertBefore(stickyImageHeader, imageViewer);
-  stickyImageHeader.appendChild(imageViewer.querySelector('.itemname'));
+  stickyImageHeader.appendChild(imageViewer.querySelector('.itemname, .noimages'));
   stickyImageHeader.appendChild(imageViewer.querySelector('.addimages a'));
 
   ([...imageViewer.querySelectorAll('.ivimage a')] as HTMLElement[]).forEach(imageAnchor => {
@@ -205,7 +240,8 @@ const applyImprovedImageSelector = async(): Promise<void> => {
 }
 
 const listen = (): void => {
-  if (config.staffWalkthroughImprovements.enabled && staffWalkthroughPage(window.location.href)) {
+  if (config.staffWalkthroughImprovements.enabled && config.staffWalkthroughImprovements.stickyPageHistory &&
+      staffWalkthroughPage(window.location.href)) {
     window.addEventListener('scroll', () => setTopStyle(!classListContains(walkthoughPageVersions, [
       Constants.Styles.Animations.yHideNoTransition,
       Constants.Styles.Animations.yHide,

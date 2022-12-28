@@ -58,7 +58,7 @@ gulp.task('build:styles', () => {
   const bundlePathFilter = filter(['./dist/styles/**/*.css']);
 
   return gulp.src(SCSS_PATH, { base: './src/styles/' })
-    .pipe(debug({ title: 'Filepath:', showCount: false }))
+    .pipe(debug({ title: 'Linting:', showCount: false }))
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(DEST_STYLES_PATH), { overwrite: true })
     .pipe(bundlePathFilter)
@@ -78,9 +78,8 @@ gulp.task('build:dev', () => new Promise(resolve => {
       .pipe(header(fs.readFileSync(HEADER_PATH, 'utf8') + '\n')) // Add header to UserScript.
       .pipe(replace(/@name\W\s*([\w\d\s]*)/g, match => match.replace(SCRIPT_NAME, `${SCRIPT_NAME} - Development`)))
       .pipe(replace(/@description\W\s*([\w\d\s:\/{}.-]*)/g, match => match.replace('{from-package.json}', pjson.description)))
-      .pipe(replace(/@version\W\s*([\w\d\s:\/{}.-]*)/g, match => match.replace('{from-package.json}', `${pjson.version}.${new Date().toLocaleString().split(', ')[1].replace(/:/g, '')}`)))
+      .pipe(replace(/@version\W\s*([\w\d\s:\/{}.-]*)/g, match => match.replace('{from-package.json}', `${pjson.version}.${new Date().toLocaleString().replace(', ', '-').replace(/:/g, '').replace(/\//g, '').split(' ')[0]}`)))
       .pipe(replace(/@author\W\s*([\w\d\s:\/{}.-]*)/g, match => match.replace('{from-package.json}', pjson.author)))
-      .pipe(replace(/@match\W\s*([\w\d\s:\/{}.-]*)/g, match => match.replace('{from-browser-sync}', 'localhost:3000/*')))
       .pipe(replace(/@updateURL\W\s*([\w\d\s:\/.-]*)/g, match => match.replace('.min.user.js', `.user.js`)))
       .pipe(replace(/@downloadURL\W\s*([\w\d\s:\/.-]*)/g, match => match.replace('.min.user.js', `.user.js`)))
       .pipe(replace(/Last Updated:\W\s*([\w\d\s:\/{}.-]*)/g, match => match.replace('{date-time-now}', new Date().toLocaleString())))

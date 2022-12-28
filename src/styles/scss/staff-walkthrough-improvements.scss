@@ -163,8 +163,13 @@ body {
             display: flex;
             flex-direction: column;
             background-color: #fff;
+
+            .noimages {
+              margin-top: 0;
+            }
           }
 
+          .noimages,
           .itemname {
             padding: 5px;
             text-align: center;

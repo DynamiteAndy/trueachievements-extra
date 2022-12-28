@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+- Adds a feature to make the game, gamers and achievements on manage walkthrough clickable links
+- Bug fix for sticky page history event listener still getting added
+- Bug fix for improved image selector breaking if there is no iamges
+
 ## 1.2.0
 - Adds a dark mode tinymce theme for edit walkthrough
 - Improves the image selector on edit walkthrough
