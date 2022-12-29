@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { log } from 'missionlog';
 import config from '../config';
 import { Constants } from '../constants';
 import { template } from './helpers/template';
@@ -13,6 +14,8 @@ const isSelectElement = (el: HTMLElement): boolean => el.nodeName === 'SELECT';
 const isCheckboxElement = (el: HTMLElement): boolean => el.nodeName === 'INPUT' && (el as HTMLInputElement).type === 'checkbox';
 
 const applyBody = async(): Promise<void> => {
+  log.debug('Settings-Menu', 'Starting - applyBody');
+
   const html = fs.readFileSync('./src/views/settings-menu.html', 'utf8');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const navigationBar = await waitForElement('header nav');
@@ -24,7 +27,7 @@ const applyBody = async(): Promise<void> => {
   extensionTrigger = document.querySelector(`.${Constants.Styles.SettingsMenu.wrenchJs}`);
 
   const navGamer = await waitForElement('.nav-gamer');
-  const templatedFeature = template(parsedDocument.querySelector(`.${Constants.Styles.SettingsMenu.featureJs}`))
+  const templatedFeature = template(parsedDocument.querySelector(`.${Constants.Styles.SettingsMenu.featureJs}`));
   navGamer.parentNode.insertBefore(templatedFeature, navGamer.nextSibling);
 
   extensionBody = document.querySelector(`.${Constants.Styles.SettingsMenu.featureJs}`);
@@ -51,9 +54,13 @@ const applyBody = async(): Promise<void> => {
         : 'add'](Constants.Styles.Base.hide);
     }
   });
+
+  log.debug('Settings-Menu', 'Finished - applyBody');
 };
 
 const listen = (): void => {
+  log.debug('Settings-Menu', 'Starting - listen');
+
   extensionTrigger.addEventListener('click', () => {
     extensionTrigger.classList.add('active');
     extensionBody.classList.add('nav-gamer');
@@ -76,7 +83,7 @@ const listen = (): void => {
     const configObject = htmlTarget?.dataset.configArea;
     const configSettings = htmlTarget?.dataset.configSetting;
 
-    if (isSelectElement(htmlTarget)) config[configObject][configSettings] = (htmlTarget as HTMLSelectElement).value
+    if (isSelectElement(htmlTarget)) config[configObject][configSettings] = (htmlTarget as HTMLSelectElement).value;
     else if (isCheckboxElement(htmlTarget)) config[configObject][configSettings] = inputTarget?.checked;
 
     ([...extensionBody.querySelectorAll(`[data-render-condition*="#${htmlTarget.id}"]`)] as HTMLElement[]).forEach(hiddenSetting => {
@@ -91,9 +98,15 @@ const listen = (): void => {
       }
     });
   });
+
+  log.debug('Settings-Menu', 'Finished - listen');
 };
 
-export const render = async (): Promise<void> => {
+export default async (): Promise<void> => {
+  log.debug('Settings-Menu', 'Starting');
+  
   await applyBody();
   listen();
+
+  log.debug('Settings-Menu', 'Finished');
 };

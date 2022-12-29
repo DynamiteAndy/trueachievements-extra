@@ -1,0 +1,70 @@
+/* stylelint-disable selector-id-pattern */
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff-walkthrough-improvements {
+      .admin-page {
+        #divWalkthroughHolder {
+          position: unset;
+          margin-top: unset;
+          height: unset;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        #divSearchWalkthrough {
+          .buttons {
+            display: flex;
+          }
+
+          .button {
+            display: block;
+            flex-grow: 1;
+
+            &#btnSearchWalkthrough {
+              margin: 0;
+              margin-bottom: 3px;
+
+              &:hover {
+                margin-bottom: 5px;
+              }
+            }
+          }
+
+          .clearboth {
+            display: none;
+          }
+        }
+
+        #chWalkthroughs,
+        #chEditWalkthrough,
+        #chWalkthroughAchievements,
+        #chWalkthroughGames,
+        #chWalkthroughGamers,
+        #chWalkthroughOtherSiteLink {
+          position: unset;
+          top: unset;
+          left: unset;
+          display: block;
+          margin: 0;
+        }
+
+        #chEditWalkthrough {
+          flex: 1;
+          margin: 0 1.5rem;
+        }
+
+        #btnWalkthrough {
+          display: none;
+        }
+
+        .ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+}
+
+/* stylelint-enable selector-id-pattern */

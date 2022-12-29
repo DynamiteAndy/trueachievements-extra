@@ -1,5 +1,6 @@
+import { JSDOM } from 'jsdom';
 import { classListContains } from './html-element-util';
-import { JSDOM } from 'jsdom'
+
 
 describe('htmlelement-helper', () => {
   describe('classListContains', () => {

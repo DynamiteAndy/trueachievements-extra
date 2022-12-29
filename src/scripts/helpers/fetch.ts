@@ -18,10 +18,10 @@ export const JSONFetch = async(url: string, options: any = {}) => {
   const response = await fetchHelper(url, options);
 
   return parseJSON(response);
-}
+};
 
 export const HTMLFetch = async(url: string, options: any = {}) => {
   const response = await fetchHelper(url, options);
 
   return parseHTML(response);
-}
+};

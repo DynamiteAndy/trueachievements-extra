@@ -21,16 +21,16 @@ export const toInt = (value: string|boolean|number): number => {
 };
 
 export const toDate = (value: string): Date => {
-  if (regex.today(value)) {
+  if (regex.words.today.test(value)) {
     return today;
   }
 
-  if (regex.yesterday(value)) {
+  if (regex.words.yesterday.test(value)) {
     return yesterday;
   }
   
   return isValid(value) ? new Date(value) : null;
-}
+};
 
 export const toBool = (str: string|boolean|number): boolean => {
   if (typeof(str) === 'string') {
@@ -58,4 +58,4 @@ export default {
   toInt,
   toDate,
   toBool
-}
+};

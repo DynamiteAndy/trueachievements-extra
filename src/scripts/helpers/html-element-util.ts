@@ -8,4 +8,4 @@ export const classListContains = (element: HTMLElement, classes: string|string[]
   }
 
   return false;
-}
+};

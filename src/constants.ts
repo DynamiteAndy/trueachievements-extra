@@ -1,6 +1,7 @@
 const classStylePrefix = 'ta-x';
 const jsStylePrefix = 'js-ta-x';
 const variableStylePrefix = '--ta-x';
+const templatePrefix = 'ta-x-template';
 
 export class Constants {
   static Styles = class {
@@ -51,6 +52,7 @@ export class Constants {
         static readonly featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-manage-walkthrough-page`;
         static readonly containerJs = `${this.featureJs}-container`;
         static readonly containerStyle = `${this.featureStyle}-container`;
+        static readonly clickableAchievementsJs = `${this.featureJs}-clickable-achievements`;
       }
 
       static readonly EditWalkthroughPage = class {
@@ -69,17 +71,24 @@ export class Constants {
 
     static Variables = class {
       static StickyHeader = class {
-        static readonly featureVariableStylePreix = `${variableStylePrefix}-sticky-header`;
-        static readonly height = `${this.featureVariableStylePreix}-height`;
+        static readonly featureVariableStylePrefix = `${variableStylePrefix}-sticky-header`;
+        static readonly height = `${this.featureVariableStylePrefix}-height`;
       }
 
       static StaffWalkthroughImprovements = class {
-        static readonly featureVariableStylePreix = `${variableStylePrefix}-staff-walkthrough-improvements`;
-  
         static readonly WalkthroughPage = class {
-          static readonly featureVariableStylePreix = `${variableStylePrefix}-staff-walkthrough-improvements-walkthrough-page`;
-          static readonly stickyPageHistoryTop = `${this.featureVariableStylePreix}-sticky-page-history-top`;
+          static readonly featureVariableStylePrefix = `${variableStylePrefix}-staff-walkthrough-improvements-walkthrough-page`;
+          static readonly stickyPageHistoryTop = `${this.featureVariableStylePrefix}-sticky-page-history-top`;
         }
+      }
+    }
+  }
+
+  static Templates = class {
+    static StaffWalkthroughImprovements = class {
+      static readonly ManageWalkthroughPage = class {
+        static readonly featureTemplatePrefix = `${templatePrefix}-manage-walkthrough`;
+        static readonly achievementRow = `${this.featureTemplatePrefix}-achievement-row`;
       }
     }
   }

@@ -1,0 +1,18 @@
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff-walkthrough-improvements {
+      min-width: unset !important;
+      overflow: auto;
+
+      main {
+        min-height: unset !important;
+      }
+
+      .admin-page {
+        position: unset;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}

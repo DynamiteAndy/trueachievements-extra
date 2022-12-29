@@ -9,7 +9,7 @@ export const waitForElement = (selector: string, element: Document | HTMLElement
 
   const timeout = setTimeout(() => {
     observer.disconnect();
-    resolve(null)
+    resolve(null);
   }, timeoutMS);
 
   observer = new MutationObserver(() => {

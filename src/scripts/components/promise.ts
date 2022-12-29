@@ -40,4 +40,4 @@ export const allConcurrently = (max: number, arr) => {
       }
     };
   });
-}
+};

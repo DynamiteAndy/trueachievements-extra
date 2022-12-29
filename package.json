@@ -1,6 +1,6 @@
 {
   "name": "trueachievements-extras",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Provides a variety of extras for use on TrueAchievements",
   "private": true,
   "scripts": {
@@ -23,14 +23,16 @@
     "@types/jasmine": "^4.3.1",
     "@types/jsdom": "^20.0.1",
     "@types/tampermonkey": "^4.0.5",
-    "@typescript-eslint/eslint-plugin": "^5.46.0",
-    "@typescript-eslint/parser": "^5.46.0",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
     "brfs": "^2.0.2",
     "browserify": "^17.0.0",
     "browserify-shim": "^3.8.16",
     "concurrently": "^7.6.0",
     "del": "^6.1.1",
-    "eslint": "^8.29.0",
+    "eslint": "^8.30.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-import": "^2.26.0",
     "fs-extra": "^11.1.0",
     "gulp": "^4.0.2",
     "gulp-concat-css": "^3.1.0",
@@ -67,6 +69,7 @@
     "fs": "fs"
   },
   "dependencies": {
-    "ajax-interceptor": "^1.0.1"
+    "ajax-interceptor": "^1.0.1",
+    "missionlog": "^1.8.4"
   }
 }

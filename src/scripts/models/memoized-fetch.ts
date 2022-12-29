@@ -18,20 +18,20 @@ export class MemoizedFetch {
 
     switch (opts.deleteAfter.period) {
       case 'seconds':
-        this.expiryTime = new Date(now.setSeconds(now.getSeconds() + opts.deleteAfter.value))
-        break
+        this.expiryTime = new Date(now.setSeconds(now.getSeconds() + opts.deleteAfter.value));
+        break;
 
       case 'minutes':
-        this.expiryTime = new Date(now.setMinutes(now.getMinutes() + opts.deleteAfter.value))
-        break
+        this.expiryTime = new Date(now.setMinutes(now.getMinutes() + opts.deleteAfter.value));
+        break;
 
       case 'hours':
-        this.expiryTime = new Date(now.setHours(now.getHours() + opts.deleteAfter.value))
-        break
+        this.expiryTime = new Date(now.setHours(now.getHours() + opts.deleteAfter.value));
+        break;
 
       case 'days':
-        this.expiryTime = new Date(now.setSeconds(now.getDay() + opts.deleteAfter.value))
-        break
+        this.expiryTime = new Date(now.setSeconds(now.getDay() + opts.deleteAfter.value));
+        break;
     }
   }
 

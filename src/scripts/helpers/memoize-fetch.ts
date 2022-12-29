@@ -1,13 +1,14 @@
 import { MemoizedFetch, MemoizedFetchOpts } from '../models/memoized-fetch';
+import cache from '../../cache';
 import { fetchHelper } from './fetch';
-import cache from '../../cache'
+import { isBeforeNow } from './date-util';
 
 const cachedCalls: Map<string, MemoizedFetch> = cache.memoize;
 
-export default async(url: string, fetchOpts = {}, memoizeOpts: MemoizedFetchOpts = { deleteAfter: { value: 24, period: 'hours' } }): Promise<string> => {
+export default async(url: string, fetchOpts = {}, memoizeOpts: MemoizedFetchOpts = { deleteAfter: { value: 7, period: 'days' } }): Promise<string> => {
   const cachedRequest = cachedCalls.get(url);
 
-  if (cachedRequest && (new Date() < new Date(cachedRequest.expiryTime))) {
+  if (cachedRequest && isBeforeNow(new Date(cachedRequest.expiryTime))) {
     return cachedRequest.response;
   }
 

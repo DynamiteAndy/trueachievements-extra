@@ -1,12 +1,14 @@
-const wrapper = document.createElement('div');
+const wrapper = document.createElement('template');
 
-export const template = (element: HTMLElement, opts: any = {}): HTMLElement => {
-  const { image } = opts;
-  wrapper.appendChild(element);
+export const template = (el: HTMLElement, opts: any = {}): HTMLElement => {
+  const { image, element } = opts;
+  wrapper.appendChild(el);
 
-  (wrapper.firstChild as HTMLElement).outerHTML = element.outerHTML
+  wrapper.innerHTML = el.outerHTML
+    .replace(/(\r\n|\n|\r)/gm, '')
     .replace(/{GM_info.script.version}/g, GM_info.script.version || '')
-    .replace(/{image.title}/g, image?.title || '');
+    .replace(/{image.title}/g, image?.title || '')
+    .replace(/{element.outerHTML}/g, element?.outerHTML || '');
     // .replace(/{link}/g, obj.link || '')
     // .replace(/{name}/g, obj.name || '')
     // .replace(/{gamer.name}/g, obj.gamer ? obj.gamer.name : '' || '')
@@ -21,7 +23,7 @@ export const template = (element: HTMLElement, opts: any = {}): HTMLElement => {
     //   year: 'numeric'
     // }) : '' || '');
 
-  const newElement = wrapper.firstChild;
+  const newElement = wrapper.content.firstChild;
 
   wrapper.innerHTML = '';
 

@@ -1,17 +1,32 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "rules": { 
-      "no-console": 0,
-      "quotes": [2, "single", { "avoidEscape": true }],
-      "keyword-spacing": [2, { "after": true }],
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "project": ["./tsconfig.json"] },
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
+  "rules": { 
+    "semi": ["error", "always"],
+    "no-console": 0,
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "keyword-spacing": [2, { "after": true }],
+    "import/no-unresolved": "error",
+    "import/named": "error",
+    "import/order": "error"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".ts" ]
+      }
     }
+  }
 }
