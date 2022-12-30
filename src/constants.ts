@@ -66,6 +66,10 @@ export class Constants {
         static readonly improvedImageSelectorContainerStyle = `${this.improvedImageSelectorStyle}-container`
         static readonly improvedImageSelectorImageTitleJs = `${this.improvedImageSelectorJs}-image-title`
         static readonly improvedImageSelectorImageTitleStyle = `${this.improvedImageSelectorStyle}-image-title`
+        static readonly themeToggleJs = `${this.featureJs}-theme-toggle`
+        static readonly themeToggleStyle = `${this.featureStyle}-theme-toggle`
+        static readonly themeToggleDarkStyle = `${this.themeToggleStyle}-dark`
+        static readonly themeToggleLightStyle = `${this.themeToggleStyle}-light`
       }
     }
 

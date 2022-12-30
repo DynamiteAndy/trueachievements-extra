@@ -27,6 +27,8 @@ export default {
     get clickableTableLinks(): boolean { return GM_getValue('trueachievements-extra-staffWalkthroughImprovements-clickableTableLinks', false); },
     set clickableTableLinks(value: boolean) { GM_setValue('trueachievements-extra-staffWalkthroughImprovements-clickableTableLinks', value); },
     get manageWalkthroughDefaultStatusValue(): string { return GM_getValue('trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatusValue', '-1'); },
-    set manageWalkthroughDefaultStatusValue(value: string) { GM_setValue('trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatusValue', value); }
+    set manageWalkthroughDefaultStatusValue(value: string) { GM_setValue('trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatusValue', value); },
+    get tinymceTheme(): string { return GM_getValue('trueachievements-extra-staffWalkthroughImprovements-tinymceTheme', null); },
+    set tinymceTheme(value: string) { GM_setValue('trueachievements-extra-staffWalkthroughImprovements-tinymceTheme', value); }
   }
 };

@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { log } from 'missionlog';
+import config from '../config';
 import { Constants } from '../constants';
 import { waitForElement } from '../scripts/helpers/wait';
 
@@ -7,8 +8,16 @@ const listen = async(): Promise<void> => {
   log.debug('Staff-Walkthrough-Improvements-Styles', 'Starting - listen');
 
   const iframe =  await waitForElement('#txtWalkthrough_ifr') as HTMLIFrameElement;
-  const themeElement = await waitForElement('[data-theme]') as HTMLElement;
-  const theme = themeElement.getAttribute('data-theme');
+  const globalThemeElement = await waitForElement('[data-theme]') as HTMLElement;
+  const tinymceThemeElement = await waitForElement(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
+  let theme: string;
+
+  if (config.staffWalkthroughImprovements.tinymceTheme === null) {
+    theme = globalThemeElement.getAttribute('data-theme');
+    log.warn('Staff-Walkthrough-Improvements-Styles', 'No tinymce theme has been set, using site theme');
+  } else {
+    theme = config.staffWalkthroughImprovements.tinymceTheme;
+  }
   
   iframe.addEventListener('load', async() => {
     log.debug('Staff-Walkthrough-Improvements-Styles', 'Starting - load event listener');
@@ -17,17 +26,21 @@ const listen = async(): Promise<void> => {
 
     const bodyEl = await waitForElement('#tinymce', iframeDocument) as HTMLElement;
     bodyEl.classList.add(Constants.Styles.root, Constants.Styles.StaffWalkthroughImprovements.featureStyle);
-    bodyEl.setAttribute('data-ta-x-theme', theme);
+    bodyEl.setAttribute('data-ta-x-tinymce-theme', theme);
 
     log.debug('Staff-Walkthrough-Improvements-Styles', 'set iframe theme to', theme);
     
     const style = iframeDocument.createElement('style');
+    style.id = 'ta-x-staff-walkthrough-improvements-dark-tinymce-style';
     style.innerHTML = fs.readFileSync('./dist/resources/tinymce/charcoal/content.css', 'utf8');
     iframeDocument.head.appendChild(style);
 
     const script = iframeDocument.createElement('script');
+    script.id = 'ta-x-staff-walkthrough-improvements-dark-tinymce-script';
     script.innerHTML = `window.addEventListener('message', function(event) {
-      document.body.setAttribute('data-ta-x-theme', event.data.theme);
+      console.log(event);
+      if (!event || !event.data || event.data.theme === null || event.data.theme === undefined) return;
+      document.body.setAttribute('data-ta-x-tinymce-theme', event.data.theme);
     });`;
     iframeDocument.head.appendChild(script);
 
@@ -36,16 +49,33 @@ const listen = async(): Promise<void> => {
     log.debug('Staff-Walkthrough-Improvements-Styles', 'Finished - load event listener');
   });
 
+  let preventMutation = false;
   const observer = new MutationObserver((mutations: MutationRecord[]) => {
-    mutations.forEach((mutation: MutationRecord) => {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-        const theme = (mutation.target as HTMLElement).getAttribute('data-theme');
+    if (preventMutation) {
+      preventMutation = false;
+      return;
+    }
 
-        log.debug('Staff-Walkthrough-Improvements-Styles', 'Started - mutation observer', theme);
+    mutations.forEach((mutation: MutationRecord) => {
+      if (mutation.type === 'attributes') {
+        let theme: string;
+        let setby: string;
+        if (mutation.attributeName === 'data-theme') {
+          theme = (mutation.target as HTMLElement).getAttribute('data-theme');
+          setby = 'data-theme';
+          preventMutation = true;
+          tinymceThemeElement.setAttribute('data-ta-x-tinymce-theme', theme === 'dark' ? theme : '');
+        } else if (mutation.attributeName === 'data-ta-x-tinymce-theme') {
+          theme = (mutation.target as HTMLElement).getAttribute('data-ta-x-tinymce-theme');
+          setby = 'data-ta-x-tinymce-theme';
+        } else {
+          return;
+        }
+
+        log.debug('Staff-Walkthrough-Improvements-Styles', 'Started - mutation observer', theme, 'set by', setby);
 
         if (theme !== null && theme !== undefined) {
           iframe.contentWindow.postMessage({ theme: theme }, '*');
-          document.body.setAttribute('data-ta-x-theme', theme);
 
           log.debug('Staff-Walkthrough-Improvements-Styles', 'set iframe theme to', theme);
           log.debug('Staff-Walkthrough-Improvements-Styles', 'Finished - mutation observer');
@@ -56,11 +86,13 @@ const listen = async(): Promise<void> => {
     });
   });
   
-  observer.observe(themeElement, {
+  observer.observe(globalThemeElement, {
     attributes: true
   });
 
-  document.body.setAttribute('data-ta-x-theme', theme);
+  observer.observe(tinymceThemeElement, {
+    attributes: true
+  });
 
   log.debug('Staff-Walkthrough-Improvements-Styles', 'Finished - listen');
 };

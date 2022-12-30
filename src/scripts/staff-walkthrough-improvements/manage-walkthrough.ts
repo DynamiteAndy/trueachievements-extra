@@ -8,6 +8,7 @@ import memoizeFetch from '../helpers/memoize-fetch';
 import { toInt } from '../helpers/parse';
 import { allConcurrently } from '../components/promise';
 import { template } from '../helpers/template';
+import { getDuplicates } from '../helpers/array-util';
 
 // Elements -------
 let walkthroughContainer: HTMLElement;
@@ -87,7 +88,14 @@ const adjustRightSidebar = async(): Promise<void> => {
   
   if (sideBarContainer) {
     sideBarContainer.appendChild(await waitForElement('#chWalkthroughGames', walkthroughContainer));
-    sideBarContainer.appendChild(await waitForElement('#chWalkthroughAchievements', walkthroughContainer));
+    
+    const walkthroughAchievementsContainer = await waitForElement('#chWalkthroughAchievements', walkthroughContainer);
+    
+    if (walkthroughAchievementsContainer) {
+      deDupeAchievements(walkthroughAchievementsContainer);
+      sideBarContainer.appendChild(walkthroughAchievementsContainer);
+    }
+
     sideBarContainer.appendChild(await waitForElement('#chWalkthroughGamers', walkthroughContainer));
     sideBarContainer.appendChild(await waitForElement('#chWalkthroughOtherSiteLink', walkthroughContainer));
   } else {
@@ -106,6 +114,12 @@ const applyClickableTableLinks = async(): Promise<void> => {
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const container = document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`);
   const selectedWalkthrough = await waitForElement('#lstWalkthroughIDselectedrow a') as HTMLAnchorElement;
+
+  if (!selectedWalkthrough) {
+    log.error('Manage-Walkthrough', 'no walkthrough is currently selected');
+    return;
+  }
+
   const walkthroughId = toInt(extractAllBetween("'", selectedWalkthrough.href)[1]);
   const walthroughPreviewResponse = await memoizeFetch(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
   const walthroughPreviewDocument = new DOMParser().parseFromString(walthroughPreviewResponse, 'text/html');
@@ -193,7 +207,33 @@ const applyClickableTableLinks = async(): Promise<void> => {
   await allConcurrently(2, [clickableGames, clickableGamers]);
   await allConcurrently(2, [clickableAndMissedAchievements]);
 
-  log.debug('Manage-Walkthrough', 'Started - applyClickableTableLinks');
+  log.debug('Manage-Walkthrough', 'Finished - applyClickableTableLinks');
+};
+
+const deDupeAchievements = (walkthroughAchievementsContainer: HTMLElement): void => {
+  const walkthroughAchievements = [...walkthroughAchievementsContainer.querySelectorAll('#scrolllstWalkthroughAchievementID .c1')] as HTMLElement[];
+  const duplicateAchievements = getDuplicates(walkthroughAchievements.map(el => el.innerText), true);
+  
+  if (duplicateAchievements.length > 0) {
+    const currentCount = walkthroughAchievements.length;
+    let removedRows = 0;
+
+    for (let i = 0; i < duplicateAchievements.length; i++) {
+      const dupeAchievementRows = walkthroughAchievements.filter(walkthroughAchievement => walkthroughAchievement.innerText.toLowerCase() === duplicateAchievements[i].toLowerCase());
+      const firstInstancePageColumn = dupeAchievementRows[0].nextElementSibling as HTMLTableElement;
+
+      for (let j = 1; j < dupeAchievementRows.length; j++) {
+        const pageNumber = (dupeAchievementRows[j].nextElementSibling as HTMLTableElement).innerText.trim();
+        firstInstancePageColumn.innerText += `, ${pageNumber}`;
+
+        dupeAchievementRows[j].closest('tr').remove();
+        removedRows++;
+      }
+    }
+
+    const achievementsTotal = walkthroughAchievementsContainer.querySelector('#lstWalkthroughAchievementID .total') as HTMLElement;
+    achievementsTotal.innerText = achievementsTotal.innerText.replace(currentCount.toString(), (currentCount - removedRows).toString());
+  }
 };
 
 const listen = (): void => {

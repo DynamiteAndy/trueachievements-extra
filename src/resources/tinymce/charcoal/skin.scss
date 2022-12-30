@@ -2,7 +2,7 @@
 body {
   &.trueachievement-extras {
     &.ta-x-staff-walkthrough-improvements {
-      &[data-ta-x-theme="dark"] {
+      [data-theme="dark"] {
         .mce-panel {
           border: 0 solid #232b33;
           background-color: #404952;

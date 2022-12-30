@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0
+- Fixed an issue where clickable table links would only make a single achievement clickable if it was duplicated.
+- Removes any duplicate achievements on manage walkthrough and combines page numbers together.
+- Added error handling for if a walkthrough has previously been selected but is no longer selected after "being improved" is checked.
+- Added a button to the tiny mce editor to allow theme switching at a iframe level instead of a site wide level.
+
 ## 1.4.0
 - Cleaned up regex to be more reuseable,
 - Adds a feature to walkthrough clickable links for achievements
