@@ -30,7 +30,7 @@ export class MemoizedFetch {
         break;
 
       case 'days':
-        this.expiryTime = new Date(now.setSeconds(now.getDay() + opts.deleteAfter.value));
+        this.expiryTime = new Date(now.setDate(now.getDate() + opts.deleteAfter.value));
         break;
     }
   }

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.1
+- Fixed caching by days, it was caching by seconds instead >_<
+
 ## 1.5.0
 - Fixed an issue where clickable table links would only make a single achievement clickable if it was duplicated.
 - Removes any duplicate achievements on manage walkthrough and combines page numbers together.

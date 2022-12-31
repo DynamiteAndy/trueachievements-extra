@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          TrueAchievements Extra - Development
 // @namespace     dynamite-andy
-// @version       1.5.0.30122022-235543
+// @version       1.5.1.31122022-203358
 // @iconURL       https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon32x32.ico?raw=true
 // @icon64URL     https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon64x64.ico?raw=true
 // @updateURL     https://github.com/andrewcartwright1/trueachievements-extra/raw/main/dist/trueachievements-extras.user.js
@@ -17,7 +17,7 @@
 // @grant         GM_addStyle
 // ==/UserScript==
 
-// Last Updated: 30/12/2022, 23:55:43
+// Last Updated: 31/12/2022, 20:33:58
 
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var toPropertyKey = require("./toPropertyKey.js");
@@ -801,7 +801,7 @@ class MemoizedFetch {
                 this.expiryTime = new Date(now.setHours(now.getHours() + opts.deleteAfter.value));
                 break;
             case 'days':
-                this.expiryTime = new Date(now.setSeconds(now.getDay() + opts.deleteAfter.value));
+                this.expiryTime = new Date(now.setDate(now.getDate() + opts.deleteAfter.value));
                 break;
         }
     }
