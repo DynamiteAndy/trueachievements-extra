@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { log } from 'missionlog';
-import { Constants } from '../constants';
+import { Constants } from '@ta-x-globals';
 import { waitForElement } from '../scripts/helpers/wait';
 
 export default async(): Promise<void> => {

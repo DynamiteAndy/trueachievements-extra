@@ -1,9 +1,9 @@
+import { Cache } from '@ta-x-globals';
 import { MemoizedFetch, MemoizedFetchOpts } from '../models/memoized-fetch';
-import cache from '../../cache';
 import { fetchHelper } from './fetch';
 import { isBeforeNow } from './date-util';
 
-const cachedCalls: Map<string, MemoizedFetch> = cache.memoize;
+const cachedCalls: Map<string, MemoizedFetch> = Cache.memoize;
 
 export default async(url: string, fetchOpts = {}, memoizeOpts: MemoizedFetchOpts = { deleteAfter: { value: 7, period: 'days' } }): Promise<string> => {
   const cachedRequest = cachedCalls.get(url);
@@ -16,6 +16,6 @@ export default async(url: string, fetchOpts = {}, memoizeOpts: MemoizedFetchOpts
   const body = await response.text();
 
   cachedCalls.set(url, new MemoizedFetch(memoizeOpts).setResponse(body));
-  cache.memoize = cachedCalls;
+  Cache.memoize = cachedCalls;
   return body;
 };

@@ -1,6 +1,6 @@
 import { log } from 'missionlog';
+import { Constants } from '@ta-x-globals';
 import { allConcurrently } from '../components/promise';
-import { Constants } from '../../constants';
 import { waitForElement } from '../helpers/wait';
 import config from '../../config';
 import regex from '../../regex';

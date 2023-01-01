@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { log } from 'missionlog';
+import { Constants } from '@ta-x-globals';
 import config from '../../config';
-import { Constants } from '../../constants';
 import regex, { extractBetween } from '../../regex';
 import { waitForElement } from '../helpers/wait';
 import styles from '../../styles/staff-walkthrough-improvements';

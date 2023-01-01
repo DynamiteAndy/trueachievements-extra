@@ -1,6 +1,6 @@
 import { log } from 'missionlog';
+import { Constants } from '@ta-x-globals';
 import config from '../config';
-import { Constants } from '../constants';
 import { toBool } from './helpers/parse';
 import { waitForElement } from './helpers/wait';
 
