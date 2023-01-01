@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "moduleResolution":"node",
-    "target": "es6"
+    "target": "es6",
+    "paths": {
+      "@ta-x-globals": ["./globals/index"]
+    }
   }
 }

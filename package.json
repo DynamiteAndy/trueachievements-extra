@@ -25,6 +25,7 @@
     "@types/tampermonkey": "^4.0.5",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
+    "aliasify": "^2.1.0",
     "brfs": "^2.0.2",
     "browserify": "^17.0.0",
     "browserify-shim": "^3.8.16",
@@ -59,8 +60,10 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^2.0.0"
   },
+  "aliasify": "./aliasify-tsconfig.js",
   "browserify": {
     "transform": [
+      "aliasify",
       "brfs",
       "browserify-shim"
     ]
