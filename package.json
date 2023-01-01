@@ -7,7 +7,9 @@
     "start": "gulp && concurrently --kill-others --kill-others-on-fail --names \"tamperdav,gulp\" \"node node_modules\\tamperdav\\server.js\" \"gulp watch\"",
     "build": "gulp",
     "lint": "concurrently --names \"html,styles,ts\" \"gulp lint:html\" \"gulp lint:styles\" \"gulp lint:ts\"",
-    "test": "concurrently --max-processes 1 --names \"jasmine,nyc\" \"nyc jasmine --reporter=jasmine-console-reporter --config=./jasmine.json\" \"nyc report --reporter=html\""
+    "test": "concurrently --max-processes 1 --names \"jasmine,nyc\" \"npm run test:jasmine\" \"npm run test:nyc\"",
+    "test:jasmine": "nyc node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine.js --reporter=jasmine-console-reporter --config=./jasmine.json",
+    "test:nyc": "nyc report --reporter=html"
   },
   "author": "Dynamite Andy - dynamiteandy@gmail.com",
   "bugs": {
@@ -25,6 +27,7 @@
     "@types/tampermonkey": "^4.0.5",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
+    "aliasify": "^2.1.0",
     "brfs": "^2.0.2",
     "browserify": "^17.0.0",
     "browserify-shim": "^3.8.16",
@@ -54,13 +57,16 @@
     "stylelint-config-standard-scss": "^6.1.0",
     "tamperdav": "git+https://git@github.com/Tampermonkey/tamperdav.git",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.1",
     "tsify": "^5.0.4",
     "typescript": "^4.9.4",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^2.0.0"
   },
+  "aliasify": "./aliasify-tsconfig.js",
   "browserify": {
     "transform": [
+      "aliasify",
       "brfs",
       "browserify-shim"
     ]

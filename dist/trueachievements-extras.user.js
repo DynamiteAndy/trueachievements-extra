@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          TrueAchievements Extra - Development
 // @namespace     dynamite-andy
-// @version       1.5.1.31122022-203358
+// @version       1.5.1.01012023-172001
 // @iconURL       https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon32x32.ico?raw=true
 // @icon64URL     https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon64x64.ico?raw=true
 // @updateURL     https://github.com/andrewcartwright1/trueachievements-extra/raw/main/dist/trueachievements-extras.user.js
@@ -17,7 +17,7 @@
 // @grant         GM_addStyle
 // ==/UserScript==
 
-// Last Updated: 31/12/2022, 20:33:58
+// Last Updated: 01/01/2023, 17:20:01
 
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var toPropertyKey = require("./toPropertyKey.js");
@@ -155,28 +155,6 @@ exports.log = log;
 },{"@babel/runtime/helpers/defineProperty":1,"@babel/runtime/helpers/interopRequireDefault":2}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const date_util_1 = require("./scripts/helpers/date-util");
-const cache = {
-    get memoize() {
-        const value = GM_getValue('trueachievements-extra-memoized', '');
-        return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
-    },
-    set memoize(value) { GM_setValue('trueachievements-extra-memoized', JSON.stringify(Array.from(value.entries()))); },
-    forceClear: () => {
-        GM_deleteValue('trueachievements-extra-memoized');
-    },
-    clearExpired: null
-};
-const clearExpired = () => {
-    const updatedCache = Array.from(cache.memoize.entries()).filter(item => (0, date_util_1.isBeforeNow)(item[1].expiryTime));
-    cache.memoize = new Map(updatedCache);
-};
-cache.clearExpired = clearExpired;
-exports.default = cache;
-
-},{"./scripts/helpers/date-util":14}],8:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     stickyHeader: {
         get enabled() { return GM_getValue('trueachievements-extra-stickyHeader-enabled', false); },
@@ -212,7 +190,30 @@ exports.default = {
     }
 };
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Cache = void 0;
+const date_util_1 = require("../utilities/date-util");
+class Cache {
+    static get memoize() {
+        const value = GM_getValue('trueachievements-extra-memoized', '');
+        return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+    }
+    static set memoize(value) {
+        GM_setValue('trueachievements-extra-memoized', JSON.stringify(Array.from(value.entries())));
+    }
+    static forceClear() {
+        GM_deleteValue('trueachievements-extra-memoized');
+    }
+    static clearExpired() {
+        const updatedCache = Array.from(this.memoize.entries()).filter(item => (0, date_util_1.isBeforeNow)(item[1].expiryTime));
+        this.memoize = new Map(updatedCache);
+    }
+}
+exports.Cache = Cache;
+
+},{"../utilities/date-util":31}],9:[function(require,module,exports){
 "use strict";
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -324,6 +325,26 @@ Constants.Templates = (_p = class {
 
 },{}],10:[function(require,module,exports){
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./cache"), exports);
+__exportStar(require("./constants"), exports);
+
+},{"./cache":8,"./constants":9}],11:[function(require,module,exports){
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -335,12 +356,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const missionlog_1 = require("missionlog");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
 const promise_1 = require("./scripts/components/promise");
 const index_1 = require("./styles/index");
 const settings_menu_1 = require("./scripts/settings-menu");
 const sticky_header_1 = require("./scripts/sticky-header");
 const index_2 = require("./scripts/staff-walkthrough-improvements/index");
-const cache_1 = require("./cache");
 const logger = {
     [missionlog_1.LogLevel.ERROR]: (tag, msg, params) => console.error(`TA-X [${tag}]`, msg, ...params),
     [missionlog_1.LogLevel.WARN]: (tag, msg, params) => console.warn(`TA-X [${tag}]`, msg, ...params),
@@ -352,16 +373,115 @@ missionlog_1.log.init({}, (level, tag, msg, params) => {
     logger[level](tag, msg, params);
 });
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    cache_1.default.clearExpired();
     yield (0, promise_1.allConcurrently)(4, [
         index_1.default,
         settings_menu_1.default,
         sticky_header_1.default,
         index_2.default
     ]);
+    _ta_x_globals_1.Cache.clearExpired();
 }))();
 
-},{"./cache":7,"./scripts/components/promise":12,"./scripts/settings-menu":23,"./scripts/staff-walkthrough-improvements/index":25,"./scripts/sticky-header":29,"./styles/index":30,"missionlog":6}],11:[function(require,module,exports){
+},{"./scripts/components/promise":16,"./scripts/settings-menu":21,"./scripts/staff-walkthrough-improvements/index":23,"./scripts/sticky-header":27,"./styles/index":28,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"missionlog":6}],12:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConditionalRender = void 0;
+const string_util_1 = require("../utilities/string-util");
+class ConditionalRender {
+    constructor(...params) {
+        if (params.length === 1) {
+            this.fromString(params[0]);
+            return;
+        }
+    }
+    fromString(json) {
+        try {
+            const parsedObj = JSON.parse(json);
+            this.selector = parsedObj.selector;
+            this.value = (0, string_util_1.toBool)(parsedObj.value);
+        }
+        catch (e) {
+            // Do nothing
+        }
+    }
+    isValid() {
+        return this.selector != null && this.value != null;
+    }
+    toString() {
+        return JSON.stringify(this);
+    }
+}
+exports.ConditionalRender = ConditionalRender;
+
+},{"../utilities/string-util":34}],13:[function(require,module,exports){
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./conditional-render"), exports);
+__exportStar(require("./memoized-fetch"), exports);
+
+},{"./conditional-render":12,"./memoized-fetch":14}],14:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MemoizedFetch = exports.MemoizedFetchOpts = void 0;
+class MemoizedFetchOpts {
+    constructor(deleteAfter) {
+        this.deleteAfter = deleteAfter;
+    }
+}
+exports.MemoizedFetchOpts = MemoizedFetchOpts;
+class MemoizedFetch {
+    constructor(opts) {
+        const now = new Date();
+        switch (opts.deleteAfter.period) {
+            case 'seconds':
+                this.expiryTime = new Date(now.setSeconds(now.getSeconds() + opts.deleteAfter.value));
+                break;
+            case 'minutes':
+                this.expiryTime = new Date(now.setMinutes(now.getMinutes() + opts.deleteAfter.value));
+                break;
+            case 'hours':
+                this.expiryTime = new Date(now.setHours(now.getHours() + opts.deleteAfter.value));
+                break;
+            case 'days':
+                this.expiryTime = new Date(now.setDate(now.getDate() + opts.deleteAfter.value));
+                break;
+        }
+    }
+    setResponse(response) {
+        this.response = response;
+        return this;
+    }
+    fromString(json) {
+        try {
+            const parsedObj = JSON.parse(json);
+            this.expiryTime = parsedObj.expiryTime;
+            this.response = parsedObj.response;
+        }
+        catch (e) {
+            // Do nothing
+        }
+    }
+    toString() {
+        return JSON.stringify(this);
+    }
+}
+exports.MemoizedFetch = MemoizedFetch;
+
+},{}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.extractAllBetween = exports.extractBetween = void 0;
@@ -478,7 +598,7 @@ exports.default = {
     extractBetween: exports.extractBetween
 };
 
-},{}],12:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.allConcurrently = exports.allSequentially = void 0;
@@ -523,26 +643,7 @@ const allConcurrently = (max, arr) => {
 };
 exports.allConcurrently = allConcurrently;
 
-},{}],13:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDuplicates = void 0;
-const getDuplicates = (arr, unique = false) => unique
-    ? [...new Set(arr.filter((e, i, a) => a.indexOf(e) !== i))]
-    : arr.filter((e, i, a) => a.indexOf(e) !== i);
-exports.getDuplicates = getDuplicates;
-
-},{}],14:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.isBeforeNow = exports.isValid = void 0;
-const getDate = (date) => typeof (date) === 'string' ? new Date(date) : date;
-const isValid = (date) => new Date(getDate(date)).toString().toLowerCase() !== 'invalid date';
-exports.isValid = isValid;
-const isBeforeNow = (date) => new Date() < getDate(date);
-exports.isBeforeNow = isBeforeNow;
-
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -580,22 +681,7 @@ const HTMLFetch = (url, options = {}) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.HTMLFetch = HTMLFetch;
 
-},{}],16:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.classListContains = void 0;
-const classListContains = (element, classes) => {
-    const classArray = Array.isArray(classes) ? classes : [classes];
-    for (let i = 0; i < classArray.length; i++) {
-        if (element.classList.contains(classArray[i])) {
-            return true;
-        }
-    }
-    return false;
-};
-exports.classListContains = classListContains;
-
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -607,11 +693,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const memoized_fetch_1 = require("../models/memoized-fetch");
-const cache_1 = require("../../cache");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
+const memoized_fetch_1 = require("../../models/memoized-fetch");
+const date_util_1 = require("../../utilities/date-util");
 const fetch_1 = require("./fetch");
-const date_util_1 = require("./date-util");
-const cachedCalls = cache_1.default.memoize;
+const cachedCalls = _ta_x_globals_1.Cache.memoize;
 exports.default = (url, fetchOpts = {}, memoizeOpts = { deleteAfter: { value: 7, period: 'days' } }) => __awaiter(void 0, void 0, void 0, function* () {
     const cachedRequest = cachedCalls.get(url);
     if (cachedRequest && (0, date_util_1.isBeforeNow)(new Date(cachedRequest.expiryTime))) {
@@ -620,68 +706,11 @@ exports.default = (url, fetchOpts = {}, memoizeOpts = { deleteAfter: { value: 7,
     const response = yield (0, fetch_1.fetchHelper)(url, fetchOpts);
     const body = yield response.text();
     cachedCalls.set(url, new memoized_fetch_1.MemoizedFetch(memoizeOpts).setResponse(body));
-    cache_1.default.memoize = cachedCalls;
+    _ta_x_globals_1.Cache.memoize = cachedCalls;
     return body;
 });
 
-},{"../../cache":7,"../models/memoized-fetch":22,"./date-util":14,"./fetch":15}],18:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.toBool = exports.toDate = exports.toInt = void 0;
-const regex_1 = require("../../regex");
-const date_util_1 = require("./date-util");
-const today = new Date(new Date().setHours(0, 0, 0, 0));
-const yesterday = new Date(new Date(today).setDate(today.getDate() - 1));
-const toInt = (value) => {
-    if (typeof (value) === 'string') {
-        const parsedValue = parseInt(value.replace(/,/g, ''), 10);
-        return !isNaN(parsedValue) ? parsedValue : null;
-    }
-    if (typeof (value) === 'boolean') {
-        return value ? 1 : 0;
-    }
-    return typeof (value) === 'number'
-        ? value
-        : null;
-};
-exports.toInt = toInt;
-const toDate = (value) => {
-    if (regex_1.default.words.today.test(value)) {
-        return today;
-    }
-    if (regex_1.default.words.yesterday.test(value)) {
-        return yesterday;
-    }
-    return (0, date_util_1.isValid)(value) ? new Date(value) : null;
-};
-exports.toDate = toDate;
-const toBool = (str) => {
-    if (typeof (str) === 'string') {
-        return str.toLowerCase() === 'true'
-            ? true
-            : str.toLowerCase() === 'false'
-                ? false
-                : null;
-    }
-    if (typeof (str) === 'number') {
-        return str === 1
-            ? true
-            : str === 0
-                ? false
-                : null;
-    }
-    return typeof (str) === 'boolean'
-        ? str
-        : null;
-};
-exports.toBool = toBool;
-exports.default = {
-    toInt: exports.toInt,
-    toDate: exports.toDate,
-    toBool: exports.toBool
-};
-
-},{"../../regex":11,"./date-util":14}],19:[function(require,module,exports){
+},{"../../models/memoized-fetch":14,"../../utilities/date-util":31,"./fetch":17,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.template = void 0;
@@ -749,84 +778,6 @@ exports.until = until;
 
 },{}],21:[function(require,module,exports){
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const parse_1 = require("../helpers/parse");
-class ConditionalRender {
-    constructor(...params) {
-        if (params.length === 1) {
-            this.fromString(params[0]);
-            return;
-        }
-    }
-    fromString(json) {
-        try {
-            const parsedObj = JSON.parse(json);
-            this.selector = parsedObj.selector;
-            this.value = (0, parse_1.toBool)(parsedObj.value);
-        }
-        catch (e) {
-            // Do nothing
-        }
-    }
-    isValid() {
-        return this.selector != null && this.value != null;
-    }
-    toString() {
-        return JSON.stringify(this);
-    }
-}
-exports.default = ConditionalRender;
-
-},{"../helpers/parse":18}],22:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MemoizedFetch = exports.MemoizedFetchOpts = void 0;
-class MemoizedFetchOpts {
-    constructor(deleteAfter) {
-        this.deleteAfter = deleteAfter;
-    }
-}
-exports.MemoizedFetchOpts = MemoizedFetchOpts;
-class MemoizedFetch {
-    constructor(opts) {
-        const now = new Date();
-        switch (opts.deleteAfter.period) {
-            case 'seconds':
-                this.expiryTime = new Date(now.setSeconds(now.getSeconds() + opts.deleteAfter.value));
-                break;
-            case 'minutes':
-                this.expiryTime = new Date(now.setMinutes(now.getMinutes() + opts.deleteAfter.value));
-                break;
-            case 'hours':
-                this.expiryTime = new Date(now.setHours(now.getHours() + opts.deleteAfter.value));
-                break;
-            case 'days':
-                this.expiryTime = new Date(now.setDate(now.getDate() + opts.deleteAfter.value));
-                break;
-        }
-    }
-    setResponse(response) {
-        this.response = response;
-        return this;
-    }
-    fromString(json) {
-        try {
-            const parsedObj = JSON.parse(json);
-            this.expiryTime = parsedObj.expiryTime;
-            this.response = parsedObj.response;
-        }
-        catch (e) {
-            // Do nothing
-        }
-    }
-    toString() {
-        return JSON.stringify(this);
-    }
-}
-exports.MemoizedFetch = MemoizedFetch;
-
-},{}],23:[function(require,module,exports){
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -839,11 +790,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const missionlog_1 = require("missionlog");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
+const _ta_x_models_1 = require('F:\\Git\\trueachievements-extra\\src\\models\\index.ts');
 const config_1 = require("../config");
-const constants_1 = require("../constants");
 const template_1 = require("./helpers/template");
 const wait_1 = require("./helpers/wait");
-const conditional_render_1 = require("./models/conditional-render");
 // Elements -------
 let extensionBody;
 let extensionTrigger;
@@ -855,12 +806,12 @@ const applyBody = () => __awaiter(void 0, void 0, void 0, function* () {
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
     const navigationBar = yield (0, wait_1.waitForElement)('header nav');
     const navGamerToggle = yield (0, wait_1.waitForElement)('[data-tgl="nav-gamer"]', navigationBar);
-    navigationBar.insertBefore(parsedDocument.querySelector(`.${constants_1.Constants.Styles.SettingsMenu.wrenchJs}`), navGamerToggle.nextSibling);
-    extensionTrigger = document.querySelector(`.${constants_1.Constants.Styles.SettingsMenu.wrenchJs}`);
+    navigationBar.insertBefore(parsedDocument.querySelector(`.${_ta_x_globals_1.Constants.Styles.SettingsMenu.wrenchJs}`), navGamerToggle.nextSibling);
+    extensionTrigger = document.querySelector(`.${_ta_x_globals_1.Constants.Styles.SettingsMenu.wrenchJs}`);
     const navGamer = yield (0, wait_1.waitForElement)('.nav-gamer');
-    const templatedFeature = (0, template_1.template)(parsedDocument.querySelector(`.${constants_1.Constants.Styles.SettingsMenu.featureJs}`));
+    const templatedFeature = (0, template_1.template)(parsedDocument.querySelector(`.${_ta_x_globals_1.Constants.Styles.SettingsMenu.featureJs}`));
     navGamer.parentNode.insertBefore(templatedFeature, navGamer.nextSibling);
-    extensionBody = document.querySelector(`.${constants_1.Constants.Styles.SettingsMenu.featureJs}`);
+    extensionBody = document.querySelector(`.${_ta_x_globals_1.Constants.Styles.SettingsMenu.featureJs}`);
     [...extensionBody.querySelectorAll('input, select')].forEach(setting => {
         const configObject = setting.dataset.configArea;
         const configSettings = setting.dataset.configSetting;
@@ -872,14 +823,14 @@ const applyBody = () => __awaiter(void 0, void 0, void 0, function* () {
             setting.value = config_1.default[configObject][configSettings];
     });
     [...extensionBody.querySelectorAll('[data-render-condition]')].forEach(hiddenSetting => {
-        const condition = new conditional_render_1.default(hiddenSetting.dataset.renderCondition);
+        const condition = new _ta_x_models_1.ConditionalRender(hiddenSetting.dataset.renderCondition);
         if (!condition.isValid())
             return;
         const settingInput = document.querySelector(condition.selector);
         if (settingInput.type === 'checkbox') {
             hiddenSetting.classList[(settingInput.checked === condition.value)
                 ? 'remove'
-                : 'add'](constants_1.Constants.Styles.Base.hide);
+                : 'add'](_ta_x_globals_1.Constants.Styles.Base.hide);
         }
     });
     missionlog_1.log.debug('Settings-Menu', 'Finished - applyBody');
@@ -889,14 +840,14 @@ const listen = () => {
     extensionTrigger.addEventListener('click', () => {
         extensionTrigger.classList.add('active');
         extensionBody.classList.add('nav-gamer');
-        extensionBody.classList.remove(constants_1.Constants.Styles.Base.hide);
+        extensionBody.classList.remove(_ta_x_globals_1.Constants.Styles.Base.hide);
         extensionBody.classList.add('open');
     });
     extensionBody.addEventListener('click', ({ target }) => {
-        if (!(target === null || target === void 0 ? void 0 : target.classList.contains(constants_1.Constants.Styles.SettingsMenu.closeJs)))
+        if (!(target === null || target === void 0 ? void 0 : target.classList.contains(_ta_x_globals_1.Constants.Styles.SettingsMenu.closeJs)))
             return;
         extensionBody.classList.remove('open');
-        extensionBody.classList.add(constants_1.Constants.Styles.Base.hide);
+        extensionBody.classList.add(_ta_x_globals_1.Constants.Styles.Base.hide);
         extensionBody.classList.remove('nav-gamer');
         extensionTrigger.classList.remove('active');
     });
@@ -910,13 +861,13 @@ const listen = () => {
         else if (isCheckboxElement(htmlTarget))
             config_1.default[configObject][configSettings] = inputTarget === null || inputTarget === void 0 ? void 0 : inputTarget.checked;
         [...extensionBody.querySelectorAll(`[data-render-condition*="#${htmlTarget.id}"]`)].forEach(hiddenSetting => {
-            const condition = new conditional_render_1.default(hiddenSetting.dataset.renderCondition);
+            const condition = new _ta_x_models_1.ConditionalRender(hiddenSetting.dataset.renderCondition);
             if (!condition.isValid())
                 return;
             if (inputTarget.type === 'checkbox') {
                 hiddenSetting.classList[(inputTarget.checked === condition.value)
                     ? 'remove'
-                    : 'add'](constants_1.Constants.Styles.Base.hide);
+                    : 'add'](_ta_x_globals_1.Constants.Styles.Base.hide);
             }
         });
     });
@@ -929,7 +880,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Settings-Menu', 'Finished');
 });
 
-},{"../config":8,"../constants":9,"./helpers/template":19,"./helpers/wait":20,"./models/conditional-render":21,"missionlog":6}],24:[function(require,module,exports){
+},{"../config":7,"./helpers/template":19,"./helpers/wait":20,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"F:\\Git\\trueachievements-extra\\src\\models\\index.ts":13,"missionlog":6}],22:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -943,8 +894,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const missionlog_1 = require("missionlog");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
 const config_1 = require("../../config");
-const constants_1 = require("../../constants");
 const regex_1 = require("../../regex");
 const wait_1 = require("../helpers/wait");
 const staff_walkthrough_improvements_1 = require("../../styles/staff-walkthrough-improvements");
@@ -961,15 +912,15 @@ const applyImprovedImageSelector = () => __awaiter(void 0, void 0, void 0, funct
     missionlog_1.log.debug('Edit-Walkthrough', 'Starting - applyImprovedImageSelector');
     const html = "<div class=\"js-ta-x-staff-walkthrough-improvements-walkthrough-page-container ta-x-staff-walkthrough-improvements-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-container ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-container ta-x-sticky-header\">\r\n\r\n</div>\r\n\r\n<a class=\"button js-ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button\" href=\"/staff/walkthrough/managewalkthrough.aspx\">Walkthrough Team</a>\r\n\r\n<p class=\"js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title\">{image.title}</p>\r\n\r\n<div class=\"mce-container mce-last mce-flow-layout-item mce-btn-group js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle\" role=\"group\" data-ta-x-tinymce-theme>\r\n    <div>\r\n        <div class=\"mce-widget mce-btn mce-first mce-last\" tabindex=\"-1\" role=\"button\" aria-label=\"Switch theme\">\r\n            <button role=\"presentation\" type=\"button\" tabindex=\"-1\">\r\n                <svg class=\"ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\">\r\n                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->\r\n                    <path fill=\"currentColor\" d=\"M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z\"></path>\r\n                </svg>\r\n                <svg class=\"ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\">\r\n                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->\r\n                    <path fill=\"currentColor\" d=\"M505.2 324.8l-47.73-68.78l47.75-68.81c7.359-10.62 8.797-24.12 3.844-36.06c-4.969-11.94-15.52-20.44-28.22-22.72l-82.39-14.88l-14.89-82.41c-2.281-12.72-10.76-23.25-22.69-28.22c-11.97-4.936-25.42-3.498-36.12 3.844L256 54.49L187.2 6.709C176.5-.6016 163.1-2.039 151.1 2.896c-11.92 4.971-20.4 15.5-22.7 28.19l-14.89 82.44L31.15 128.4C18.42 130.7 7.854 139.2 2.9 151.2C-2.051 163.1-.5996 176.6 6.775 187.2l47.73 68.78l-47.75 68.81c-7.359 10.62-8.795 24.12-3.844 36.06c4.969 11.94 15.52 20.44 28.22 22.72l82.39 14.88l14.89 82.41c2.297 12.72 10.78 23.25 22.7 28.22c11.95 4.906 25.44 3.531 36.09-3.844L256 457.5l68.83 47.78C331.3 509.7 338.8 512 346.3 512c4.906 0 9.859-.9687 14.56-2.906c11.92-4.969 20.4-15.5 22.7-28.19l14.89-82.44l82.37-14.88c12.73-2.281 23.3-10.78 28.25-22.75C514.1 348.9 512.6 335.4 505.2 324.8zM456.8 339.2l-99.61 18l-18 99.63L256 399.1L172.8 456.8l-18-99.63l-99.61-18L112.9 255.1L55.23 172.8l99.61-18l18-99.63L256 112.9l83.15-57.75l18.02 99.66l99.61 18L399.1 255.1L456.8 339.2zM256 143.1c-61.85 0-111.1 50.14-111.1 111.1c0 61.85 50.15 111.1 111.1 111.1s111.1-50.14 111.1-111.1C367.1 194.1 317.8 143.1 256 143.1zM256 319.1c-35.28 0-63.99-28.71-63.99-63.99S220.7 192 256 192s63.99 28.71 63.99 63.1S291.3 319.1 256 319.1z\"/>\r\n                </svg>\r\n            </button>\r\n        </div>\r\n    </div>\r\n</div>";
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-    const stickyImageHeader = parsedDocument.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorContainerJs}`);
+    const stickyImageHeader = parsedDocument.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorContainerJs}`);
     const imageContainer = yield (0, wait_1.waitForElement)('#oWalkthroughImageViewer');
-    imageContainer.classList.add(constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle, constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs);
+    imageContainer.classList.add(_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle, _ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs);
     const imageViewer = imageContainer.querySelector('.imageviewer');
     imageContainer.insertBefore(stickyImageHeader, imageViewer);
     stickyImageHeader.appendChild(imageViewer.querySelector('.itemname, .noimages'));
     stickyImageHeader.appendChild(imageViewer.querySelector('.addimages a'));
     [...imageViewer.querySelectorAll('.ivimage a')].forEach(imageAnchor => {
-        const clonedImageTitle = parsedDocument.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`).cloneNode(true);
+        const clonedImageTitle = parsedDocument.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`).cloneNode(true);
         const imageTitle = (0, template_1.template)(clonedImageTitle, { image: imageAnchor.querySelector('img') });
         imageTitle.innerText = (0, regex_1.extractBetween)("'", imageTitle.innerText);
         imageAnchor.appendChild(imageTitle);
@@ -980,7 +931,7 @@ const applyTinymceThemeToggle = () => __awaiter(void 0, void 0, void 0, function
     missionlog_1.log.debug('Edit-Walkthrough', 'Starting - applyTinymceThemeToggle');
     const html = "<div class=\"js-ta-x-staff-walkthrough-improvements-walkthrough-page-container ta-x-staff-walkthrough-improvements-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-container ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-container ta-x-sticky-header\">\r\n\r\n</div>\r\n\r\n<a class=\"button js-ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button\" href=\"/staff/walkthrough/managewalkthrough.aspx\">Walkthrough Team</a>\r\n\r\n<p class=\"js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title\">{image.title}</p>\r\n\r\n<div class=\"mce-container mce-last mce-flow-layout-item mce-btn-group js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle\" role=\"group\" data-ta-x-tinymce-theme>\r\n    <div>\r\n        <div class=\"mce-widget mce-btn mce-first mce-last\" tabindex=\"-1\" role=\"button\" aria-label=\"Switch theme\">\r\n            <button role=\"presentation\" type=\"button\" tabindex=\"-1\">\r\n                <svg class=\"ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\">\r\n                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->\r\n                    <path fill=\"currentColor\" d=\"M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z\"></path>\r\n                </svg>\r\n                <svg class=\"ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\">\r\n                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->\r\n                    <path fill=\"currentColor\" d=\"M505.2 324.8l-47.73-68.78l47.75-68.81c7.359-10.62 8.797-24.12 3.844-36.06c-4.969-11.94-15.52-20.44-28.22-22.72l-82.39-14.88l-14.89-82.41c-2.281-12.72-10.76-23.25-22.69-28.22c-11.97-4.936-25.42-3.498-36.12 3.844L256 54.49L187.2 6.709C176.5-.6016 163.1-2.039 151.1 2.896c-11.92 4.971-20.4 15.5-22.7 28.19l-14.89 82.44L31.15 128.4C18.42 130.7 7.854 139.2 2.9 151.2C-2.051 163.1-.5996 176.6 6.775 187.2l47.73 68.78l-47.75 68.81c-7.359 10.62-8.795 24.12-3.844 36.06c4.969 11.94 15.52 20.44 28.22 22.72l82.39 14.88l14.89 82.41c2.297 12.72 10.78 23.25 22.7 28.22c11.95 4.906 25.44 3.531 36.09-3.844L256 457.5l68.83 47.78C331.3 509.7 338.8 512 346.3 512c4.906 0 9.859-.9687 14.56-2.906c11.92-4.969 20.4-15.5 22.7-28.19l14.89-82.44l82.37-14.88c12.73-2.281 23.3-10.78 28.25-22.75C514.1 348.9 512.6 335.4 505.2 324.8zM456.8 339.2l-99.61 18l-18 99.63L256 399.1L172.8 456.8l-18-99.63l-99.61-18L112.9 255.1L55.23 172.8l99.61-18l18-99.63L256 112.9l83.15-57.75l18.02 99.66l99.61 18L399.1 255.1L456.8 339.2zM256 143.1c-61.85 0-111.1 50.14-111.1 111.1c0 61.85 50.15 111.1 111.1 111.1s111.1-50.14 111.1-111.1C367.1 194.1 317.8 143.1 256 143.1zM256 319.1c-35.28 0-63.99-28.71-63.99-63.99S220.7 192 256 192s63.99 28.71 63.99 63.1S291.3 319.1 256 319.1z\"/>\r\n                </svg>\r\n            </button>\r\n        </div>\r\n    </div>\r\n</div>";
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-    const themeToggle = parsedDocument.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
+    const themeToggle = parsedDocument.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
     const toolbar = yield (0, wait_1.waitForElement)('.mce-tinymce .mce-toolbar.mce-last .mce-container-body');
     if (!toolbar) {
         missionlog_1.log.error('Edit-Walkthrough', 'Failed to find tinymce toolbar');
@@ -998,18 +949,18 @@ const listen = () => {
         var _a;
         if (config_1.default.staffWalkthroughImprovements.improvedImageSelector) {
             if ((target === null || target === void 0 ? void 0 : target.closest('[aria-label="Add Image"]')) === null &&
-                (target === null || target === void 0 ? void 0 : target.closest(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`)) === null) {
-                const imageSelector = document.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`);
+                (target === null || target === void 0 ? void 0 : target.closest(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`)) === null) {
+                const imageSelector = document.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`);
                 if (imageSelector.style.display === 'block') {
                     imageSelector.style.display = 'none';
                 }
             }
         }
-        if (((_a = target === null || target === void 0 ? void 0 : target.classList) === null || _a === void 0 ? void 0 : _a.contains(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`)) ||
-            (target === null || target === void 0 ? void 0 : target.closest(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`)) !== null) {
-            const button = target.classList.contains(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`)
+        if (((_a = target === null || target === void 0 ? void 0 : target.classList) === null || _a === void 0 ? void 0 : _a.contains(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`)) ||
+            (target === null || target === void 0 ? void 0 : target.closest(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`)) !== null) {
+            const button = target.classList.contains(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`)
                 ? target
-                : target.closest(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
+                : target.closest(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
             const currentTheme = button.getAttribute('data-ta-x-tinymce-theme');
             let newTheme;
             if (currentTheme === 'dark') {
@@ -1026,7 +977,7 @@ const listen = () => {
         missionlog_1.log.debug('Edit-Walkthrough', 'Starting improvedImageSelector - listen');
         window.addEventListener('blur', () => {
             if (document.activeElement === document.querySelector('#txtWalkthrough_ifr')) {
-                const imageSelector = document.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`);
+                const imageSelector = document.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`);
                 if (imageSelector.style.display !== 'block')
                     return;
                 imageSelector.style.display = 'none';
@@ -1045,7 +996,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Edit-Walkthrough', 'Finished');
 });
 
-},{"../../config":8,"../../constants":9,"../../regex":11,"../../styles/staff-walkthrough-improvements":31,"../components/promise":12,"../helpers/template":19,"../helpers/wait":20,"missionlog":6}],25:[function(require,module,exports){
+},{"../../config":7,"../../regex":15,"../../styles/staff-walkthrough-improvements":29,"../components/promise":16,"../helpers/template":19,"../helpers/wait":20,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"missionlog":6}],23:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1058,8 +1009,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const missionlog_1 = require("missionlog");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
 const promise_1 = require("../components/promise");
-const constants_1 = require("../../constants");
 const wait_1 = require("../helpers/wait");
 const config_1 = require("../../config");
 const regex_1 = require("../../regex");
@@ -1074,7 +1025,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
         return;
     missionlog_1.log.debug('Staff-Walkthrough-Improvements', 'Starting');
     if (yield (0, wait_1.waitForElement)('body')) {
-        document.body.classList.add(constants_1.Constants.Styles.StaffWalkthroughImprovements.featureJs, constants_1.Constants.Styles.StaffWalkthroughImprovements.featureStyle);
+        document.body.classList.add(_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.featureJs, _ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.featureStyle);
         yield (0, promise_1.allConcurrently)(4, [manage_walkthrough_1.default, walkthrough_page_1.default, edit_walkthrough_1.default, walkthrough_preview_1.default]);
         missionlog_1.log.debug('Staff-Walkthrough-Improvements', 'Finished');
     }
@@ -1083,7 +1034,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 
-},{"../../config":8,"../../constants":9,"../../regex":11,"../components/promise":12,"../helpers/wait":20,"./edit-walkthrough":24,"./manage-walkthrough":26,"./walkthrough-page":27,"./walkthrough-preview":28,"missionlog":6}],26:[function(require,module,exports){
+},{"../../config":7,"../../regex":15,"../components/promise":16,"../helpers/wait":20,"./edit-walkthrough":22,"./manage-walkthrough":24,"./walkthrough-page":25,"./walkthrough-preview":26,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"missionlog":6}],24:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1097,15 +1048,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const missionlog_1 = require("missionlog");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
+const _ta_x_utilities_1 = require('F:\\Git\\trueachievements-extra\\src\\utilities\\index.ts');
 const config_1 = require("../../config");
-const constants_1 = require("../../constants");
 const regex_1 = require("../../regex");
 const wait_1 = require("../helpers/wait");
 const memoize_fetch_1 = require("../helpers/memoize-fetch");
-const parse_1 = require("../helpers/parse");
 const promise_1 = require("../components/promise");
 const template_1 = require("../helpers/template");
-const array_util_1 = require("../helpers/array-util");
 // Elements -------
 let walkthroughContainer;
 const applyBody = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -1116,7 +1066,7 @@ const applyBody = () => __awaiter(void 0, void 0, void 0, function* () {
     yield applyDefaultStatus();
     const editWalkthrough = yield (0, wait_1.waitForElement)('#chEditWalkthrough', walkthroughContainer);
     if (editWalkthrough) {
-        editWalkthrough.after(parsedDocument.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
+        editWalkthrough.after(parsedDocument.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
         yield (0, promise_1.allConcurrently)(2, [adjustRightSidebar, adjustButtons, applyClickableTableLinks]);
     }
     else {
@@ -1164,7 +1114,7 @@ const adjustButtons = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 const adjustRightSidebar = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Manage-Walkthrough', 'Started - adjustButtons');
-    const sideBarContainer = yield (0, wait_1.waitForElement)(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`, walkthroughContainer);
+    const sideBarContainer = yield (0, wait_1.waitForElement)(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`, walkthroughContainer);
     if (sideBarContainer) {
         sideBarContainer.appendChild(yield (0, wait_1.waitForElement)('#chWalkthroughGames', walkthroughContainer));
         const walkthroughAchievementsContainer = yield (0, wait_1.waitForElement)('#chWalkthroughAchievements', walkthroughContainer);
@@ -1186,13 +1136,13 @@ const applyClickableTableLinks = () => __awaiter(void 0, void 0, void 0, functio
     missionlog_1.log.debug('Manage-Walkthrough', 'Started - applyClickableTableLinks');
     const html = "<template id=\"ta-x-template-manage-walkthrough-achievement-row\">\r\n    <tr>\r\n        <td class=\"point\"></td>\r\n        <td class=\"c1\">{element.outerHTML}</td>\r\n        <td class=\"c2\"></td>\r\n        <td class=\"dlop plain\"></td>\r\n    </tr>\r\n</template>";
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-    const container = document.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`);
+    const container = document.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`);
     const selectedWalkthrough = yield (0, wait_1.waitForElement)('#lstWalkthroughIDselectedrow a');
     if (!selectedWalkthrough) {
         missionlog_1.log.error('Manage-Walkthrough', 'no walkthrough is currently selected');
         return;
     }
-    const walkthroughId = (0, parse_1.toInt)((0, regex_1.extractAllBetween)("'", selectedWalkthrough.href)[1]);
+    const walkthroughId = (0, _ta_x_utilities_1.toInt)((0, regex_1.extractAllBetween)("'", selectedWalkthrough.href)[1]);
     const walthroughPreviewResponse = yield (0, memoize_fetch_1.default)(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
     const walthroughPreviewDocument = new DOMParser().parseFromString(walthroughPreviewResponse, 'text/html');
     const clickableGames = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -1249,7 +1199,7 @@ const applyClickableTableLinks = () => __awaiter(void 0, void 0, void 0, functio
                         link.href = regex_1.default.test.achievements.achievementUrlWithGamerId(link.href) ? new URL(link.href).pathname : link.href;
                     }
                     else {
-                        const clonedAchievementRow = parsedDocument.querySelector(`#${constants_1.Constants.Templates.StaffWalkthroughImprovements.ManageWalkthroughPage.achievementRow}`).content.firstElementChild.cloneNode(true);
+                        const clonedAchievementRow = parsedDocument.querySelector(`#${_ta_x_globals_1.Constants.Templates.StaffWalkthroughImprovements.ManageWalkthroughPage.achievementRow}`).content.firstElementChild.cloneNode(true);
                         const achievementRow = (0, template_1.template)(clonedAchievementRow, { element: gameAchievement });
                         const link = achievementRow.querySelector('a');
                         achievementRow.querySelector('a').href = regex_1.default.test.achievements.achievementUrlWithGamerId(link.href) ? new URL(link.href).pathname : link.href;
@@ -1270,7 +1220,7 @@ const applyClickableTableLinks = () => __awaiter(void 0, void 0, void 0, functio
 });
 const deDupeAchievements = (walkthroughAchievementsContainer) => {
     const walkthroughAchievements = [...walkthroughAchievementsContainer.querySelectorAll('#scrolllstWalkthroughAchievementID .c1')];
-    const duplicateAchievements = (0, array_util_1.getDuplicates)(walkthroughAchievements.map(el => el.innerText), true);
+    const duplicateAchievements = (0, _ta_x_utilities_1.getDuplicates)(walkthroughAchievements.map(el => el.innerText), true);
     if (duplicateAchievements.length > 0) {
         const currentCount = walkthroughAchievements.length;
         let removedRows = 0;
@@ -1300,7 +1250,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Manage-Walkthrough', 'Finished');
 });
 
-},{"../../config":8,"../../constants":9,"../../regex":11,"../components/promise":12,"../helpers/array-util":13,"../helpers/memoize-fetch":17,"../helpers/parse":18,"../helpers/template":19,"../helpers/wait":20,"missionlog":6}],27:[function(require,module,exports){
+},{"../../config":7,"../../regex":15,"../components/promise":16,"../helpers/memoize-fetch":18,"../helpers/template":19,"../helpers/wait":20,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"F:\\Git\\trueachievements-extra\\src\\utilities\\index.ts":33,"missionlog":6}],25:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1314,10 +1264,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const missionlog_1 = require("missionlog");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
+const _ta_x_utilities_1 = require('F:\\Git\\trueachievements-extra\\src\\utilities\\index.ts');
 const config_1 = require("../../config");
-const constants_1 = require("../../constants");
 const regex_1 = require("../../regex");
-const html_element_util_1 = require("../helpers/html-element-util");
 const wait_1 = require("../helpers/wait");
 const promise_1 = require("../components/promise");
 // Elements -------
@@ -1330,8 +1280,8 @@ const applyBody = () => __awaiter(void 0, void 0, void 0, function* () {
     const html = "<div class=\"js-ta-x-staff-walkthrough-improvements-walkthrough-page-container ta-x-staff-walkthrough-improvements-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-container ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-container ta-x-sticky-header\">\r\n\r\n</div>\r\n\r\n<a class=\"button js-ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button\" href=\"/staff/walkthrough/managewalkthrough.aspx\">Walkthrough Team</a>\r\n\r\n<p class=\"js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title\">{image.title}</p>\r\n\r\n<div class=\"mce-container mce-last mce-flow-layout-item mce-btn-group js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle\" role=\"group\" data-ta-x-tinymce-theme>\r\n    <div>\r\n        <div class=\"mce-widget mce-btn mce-first mce-last\" tabindex=\"-1\" role=\"button\" aria-label=\"Switch theme\">\r\n            <button role=\"presentation\" type=\"button\" tabindex=\"-1\">\r\n                <svg class=\"ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\">\r\n                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->\r\n                    <path fill=\"currentColor\" d=\"M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z\"></path>\r\n                </svg>\r\n                <svg class=\"ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\">\r\n                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->\r\n                    <path fill=\"currentColor\" d=\"M505.2 324.8l-47.73-68.78l47.75-68.81c7.359-10.62 8.797-24.12 3.844-36.06c-4.969-11.94-15.52-20.44-28.22-22.72l-82.39-14.88l-14.89-82.41c-2.281-12.72-10.76-23.25-22.69-28.22c-11.97-4.936-25.42-3.498-36.12 3.844L256 54.49L187.2 6.709C176.5-.6016 163.1-2.039 151.1 2.896c-11.92 4.971-20.4 15.5-22.7 28.19l-14.89 82.44L31.15 128.4C18.42 130.7 7.854 139.2 2.9 151.2C-2.051 163.1-.5996 176.6 6.775 187.2l47.73 68.78l-47.75 68.81c-7.359 10.62-8.795 24.12-3.844 36.06c4.969 11.94 15.52 20.44 28.22 22.72l82.39 14.88l14.89 82.41c2.297 12.72 10.78 23.25 22.7 28.22c11.95 4.906 25.44 3.531 36.09-3.844L256 457.5l68.83 47.78C331.3 509.7 338.8 512 346.3 512c4.906 0 9.859-.9687 14.56-2.906c11.92-4.969 20.4-15.5 22.7-28.19l14.89-82.44l82.37-14.88c12.73-2.281 23.3-10.78 28.25-22.75C514.1 348.9 512.6 335.4 505.2 324.8zM456.8 339.2l-99.61 18l-18 99.63L256 399.1L172.8 456.8l-18-99.63l-99.61-18L112.9 255.1L55.23 172.8l99.61-18l18-99.63L256 112.9l83.15-57.75l18.02 99.66l99.61 18L399.1 255.1L456.8 339.2zM256 143.1c-61.85 0-111.1 50.14-111.1 111.1c0 61.85 50.15 111.1 111.1 111.1s111.1-50.14 111.1-111.1C367.1 194.1 317.8 143.1 256 143.1zM256 319.1c-35.28 0-63.99-28.71-63.99-63.99S220.7 192 256 192s63.99 28.71 63.99 63.1S291.3 319.1 256 319.1z\"/>\r\n                </svg>\r\n            </button>\r\n        </div>\r\n    </div>\r\n</div>";
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
     walkthoughPageVersions = yield (0, wait_1.waitForElement)('#chWalkthroughPageVersions');
-    walkthoughPageVersions.parentElement.insertBefore(parsedDocument.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.containerJs}`), walkthoughPageVersions);
-    walkthroughContainer = document.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.containerJs}`);
+    walkthoughPageVersions.parentElement.insertBefore(parsedDocument.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.containerJs}`), walkthoughPageVersions);
+    walkthroughContainer = document.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.containerJs}`);
     walkthroughContainer.appendChild(walkthoughPageVersions);
     (0, promise_1.allConcurrently)(3, [moveWalkthroughPagePreview, applyStickyNavBar, applyEditPageLeft, applyWalkthroughTeamButton]);
     missionlog_1.log.debug('Walkthrough-Page', 'Finished - applyBody');
@@ -1351,9 +1301,9 @@ const applyStickyNavBar = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Walkthrough-Page', 'Started - applyStickyNavBar');
     stickyNavBarEnabled = config_1.default.stickyHeader.enabled;
     stickyNavBarElement = stickyNavBarEnabled
-        ? yield (0, wait_1.waitForElement)(`.${constants_1.Constants.Styles.StickyHeader.featureJs}`)
+        ? yield (0, wait_1.waitForElement)(`.${_ta_x_globals_1.Constants.Styles.StickyHeader.featureJs}`)
         : yield (0, wait_1.waitForElement)('.header');
-    walkthoughPageVersions.classList.add(constants_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryJs, constants_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryStyle);
+    walkthoughPageVersions.classList.add(_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryJs, _ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryStyle);
     setTopStyle(true);
     missionlog_1.log.debug('Walkthrough-Page', 'Finished - applyStickyNavBar');
 });
@@ -1361,10 +1311,10 @@ const applyEditPageLeft = () => __awaiter(void 0, void 0, void 0, function* () {
     if (!config_1.default.staffWalkthroughImprovements.editPageLeft)
         return;
     missionlog_1.log.debug('Walkthrough-Page', 'Started - applyEditPageLeft');
-    walkthroughContainer.classList.add(constants_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.editPageLeftStyle);
+    walkthroughContainer.classList.add(_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.editPageLeftStyle);
     const editButton = yield (0, wait_1.waitForElement)('[id="btnEditPage"], [id="btnEditPage2"]', walkthroughContainer);
     if (editButton) {
-        editButton.classList.add(constants_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.editPageLeftJs);
+        editButton.classList.add(_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.editPageLeftJs);
         const walkthroughPageButtons = yield (0, wait_1.waitForElement)('.content .buttons', walkthoughPageVersions);
         if (walkthroughPageButtons) {
             walkthroughPageButtons.insertBefore(editButton, walkthroughPageButtons.firstElementChild);
@@ -1382,12 +1332,12 @@ const applyWalkthroughTeamButton = () => __awaiter(void 0, void 0, void 0, funct
     if (!config_1.default.staffWalkthroughImprovements.walkthroughTeamButton)
         return;
     missionlog_1.log.debug('Walkthrough-Page', 'Started - applyWalkthroughTeamButton');
-    walkthroughContainer.classList.add(constants_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonStyle);
+    walkthroughContainer.classList.add(_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonStyle);
     const html = "<div class=\"js-ta-x-staff-walkthrough-improvements-walkthrough-page-container ta-x-staff-walkthrough-improvements-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container\">\r\n\r\n</div>\r\n\r\n<div class=\"js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-container ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-container ta-x-sticky-header\">\r\n\r\n</div>\r\n\r\n<a class=\"button js-ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button\" href=\"/staff/walkthrough/managewalkthrough.aspx\">Walkthrough Team</a>\r\n\r\n<p class=\"js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title\">{image.title}</p>\r\n\r\n<div class=\"mce-container mce-last mce-flow-layout-item mce-btn-group js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle\" role=\"group\" data-ta-x-tinymce-theme>\r\n    <div>\r\n        <div class=\"mce-widget mce-btn mce-first mce-last\" tabindex=\"-1\" role=\"button\" aria-label=\"Switch theme\">\r\n            <button role=\"presentation\" type=\"button\" tabindex=\"-1\">\r\n                <svg class=\"ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\">\r\n                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->\r\n                    <path fill=\"currentColor\" d=\"M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z\"></path>\r\n                </svg>\r\n                <svg class=\"ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\">\r\n                    <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->\r\n                    <path fill=\"currentColor\" d=\"M505.2 324.8l-47.73-68.78l47.75-68.81c7.359-10.62 8.797-24.12 3.844-36.06c-4.969-11.94-15.52-20.44-28.22-22.72l-82.39-14.88l-14.89-82.41c-2.281-12.72-10.76-23.25-22.69-28.22c-11.97-4.936-25.42-3.498-36.12 3.844L256 54.49L187.2 6.709C176.5-.6016 163.1-2.039 151.1 2.896c-11.92 4.971-20.4 15.5-22.7 28.19l-14.89 82.44L31.15 128.4C18.42 130.7 7.854 139.2 2.9 151.2C-2.051 163.1-.5996 176.6 6.775 187.2l47.73 68.78l-47.75 68.81c-7.359 10.62-8.795 24.12-3.844 36.06c4.969 11.94 15.52 20.44 28.22 22.72l82.39 14.88l14.89 82.41c2.297 12.72 10.78 23.25 22.7 28.22c11.95 4.906 25.44 3.531 36.09-3.844L256 457.5l68.83 47.78C331.3 509.7 338.8 512 346.3 512c4.906 0 9.859-.9687 14.56-2.906c11.92-4.969 20.4-15.5 22.7-28.19l14.89-82.44l82.37-14.88c12.73-2.281 23.3-10.78 28.25-22.75C514.1 348.9 512.6 335.4 505.2 324.8zM456.8 339.2l-99.61 18l-18 99.63L256 399.1L172.8 456.8l-18-99.63l-99.61-18L112.9 255.1L55.23 172.8l99.61-18l18-99.63L256 112.9l83.15-57.75l18.02 99.66l99.61 18L399.1 255.1L456.8 339.2zM256 143.1c-61.85 0-111.1 50.14-111.1 111.1c0 61.85 50.15 111.1 111.1 111.1s111.1-50.14 111.1-111.1C367.1 194.1 317.8 143.1 256 143.1zM256 319.1c-35.28 0-63.99-28.71-63.99-63.99S220.7 192 256 192s63.99 28.71 63.99 63.1S291.3 319.1 256 319.1z\"/>\r\n                </svg>\r\n            </button>\r\n        </div>\r\n    </div>\r\n</div>";
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
     const walkthroughPageButtons = yield (0, wait_1.waitForElement)('.content .buttons', walkthoughPageVersions);
     if (walkthroughPageButtons) {
-        walkthroughPageButtons.appendChild(parsedDocument.querySelector(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonJs}`));
+        walkthroughPageButtons.appendChild(parsedDocument.querySelector(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonJs}`));
     }
     else {
         missionlog_1.log.warn('Walkthrough-Page', 'applyWalkthroughTeamButton - did not find walkthrough buttons on page versions element');
@@ -1396,10 +1346,10 @@ const applyWalkthroughTeamButton = () => __awaiter(void 0, void 0, void 0, funct
 });
 const setTopStyle = (noTransitionStyle) => {
     let addAnimation;
-    let removeAnimation = [constants_1.Constants.Styles.Animations.yShow, constants_1.Constants.Styles.Animations.yHide, constants_1.Constants.Styles.Animations.yHideNoTransition];
+    let removeAnimation = [_ta_x_globals_1.Constants.Styles.Animations.yShow, _ta_x_globals_1.Constants.Styles.Animations.yHide, _ta_x_globals_1.Constants.Styles.Animations.yHideNoTransition];
     let topStyle = window.pageYOffset - walkthroughContainer.offsetTop + 5;
     const apply = () => {
-        document.documentElement.style.setProperty(constants_1.Constants.Styles.Variables.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryTop, `${topStyle}px`);
+        document.documentElement.style.setProperty(_ta_x_globals_1.Constants.Styles.Variables.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryTop, `${topStyle}px`);
         walkthoughPageVersions.classList.remove(...removeAnimation);
         if (addAnimation)
             walkthoughPageVersions.classList.add(addAnimation);
@@ -1409,16 +1359,16 @@ const setTopStyle = (noTransitionStyle) => {
             (stickyNavBarEnabled ? stickyNavBarElement.offsetHeight : 0);
     if (!atTopOfPage()) {
         if (stickyNavBarEnabled) {
-            if (!stickyNavBarElement.classList.contains(constants_1.Constants.Styles.Animations.yShow)) {
-                addAnimation = noTransitionStyle ? constants_1.Constants.Styles.Animations.yHideNoTransition : constants_1.Constants.Styles.Animations.yHide;
-                removeAnimation = [constants_1.Constants.Styles.Animations.yShow];
+            if (!stickyNavBarElement.classList.contains(_ta_x_globals_1.Constants.Styles.Animations.yShow)) {
+                addAnimation = noTransitionStyle ? _ta_x_globals_1.Constants.Styles.Animations.yHideNoTransition : _ta_x_globals_1.Constants.Styles.Animations.yHide;
+                removeAnimation = [_ta_x_globals_1.Constants.Styles.Animations.yShow];
             }
             else {
                 if (window.pageYOffset <= (window.pageYOffset + stickyNavBarElement.offsetTop)) {
                     topStyle += stickyNavBarElement.offsetTop;
                 }
-                addAnimation = constants_1.Constants.Styles.Animations.yShow;
-                removeAnimation = [constants_1.Constants.Styles.Animations.yHide, constants_1.Constants.Styles.Animations.yHideNoTransition];
+                addAnimation = _ta_x_globals_1.Constants.Styles.Animations.yShow;
+                removeAnimation = [_ta_x_globals_1.Constants.Styles.Animations.yHide, _ta_x_globals_1.Constants.Styles.Animations.yHideNoTransition];
             }
         }
         else {
@@ -1430,8 +1380,8 @@ const setTopStyle = (noTransitionStyle) => {
         }
     }
     if (stickyNavBarEnabled && topStyle >= 0) {
-        if (stickyNavBarElement.classList.contains(constants_1.Constants.Styles.Animations.yShow)) {
-            addAnimation = constants_1.Constants.Styles.Animations.yShow;
+        if (stickyNavBarElement.classList.contains(_ta_x_globals_1.Constants.Styles.Animations.yShow)) {
+            addAnimation = _ta_x_globals_1.Constants.Styles.Animations.yShow;
             apply();
             return;
         }
@@ -1443,10 +1393,10 @@ const listen = () => {
     missionlog_1.log.debug('Walkthrough-Preview', 'Started - listen');
     if (config_1.default.staffWalkthroughImprovements.stickyPageHistory) {
         missionlog_1.log.debug('Walkthrough-Page', 'Starting stickyPageHistory - listen');
-        window.addEventListener('scroll', () => setTopStyle(!(0, html_element_util_1.classListContains)(walkthoughPageVersions, [
-            constants_1.Constants.Styles.Animations.yHideNoTransition,
-            constants_1.Constants.Styles.Animations.yHide,
-            constants_1.Constants.Styles.Animations.yShow
+        window.addEventListener('scroll', () => setTopStyle(!(0, _ta_x_utilities_1.classListContains)(walkthoughPageVersions, [
+            _ta_x_globals_1.Constants.Styles.Animations.yHideNoTransition,
+            _ta_x_globals_1.Constants.Styles.Animations.yHide,
+            _ta_x_globals_1.Constants.Styles.Animations.yShow
         ])));
         missionlog_1.log.debug('Walkthrough-Page', 'Finished stickyPageHistory - listen');
     }
@@ -1461,7 +1411,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Walkthrough-Page', 'Finished');
 });
 
-},{"../../config":8,"../../constants":9,"../../regex":11,"../components/promise":12,"../helpers/html-element-util":16,"../helpers/wait":20,"missionlog":6}],28:[function(require,module,exports){
+},{"../../config":7,"../../regex":15,"../components/promise":16,"../helpers/wait":20,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"F:\\Git\\trueachievements-extra\\src\\utilities\\index.ts":33,"missionlog":6}],26:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1498,7 +1448,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Walkthrough-Preview', 'Finished');
 });
 
-},{"../../regex":11,"../helpers/wait":20,"missionlog":6}],29:[function(require,module,exports){
+},{"../../regex":15,"../helpers/wait":20,"missionlog":6}],27:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1511,9 +1461,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const missionlog_1 = require("missionlog");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
+const _ta_x_utilities_1 = require('F:\\Git\\trueachievements-extra\\src\\utilities\\index.ts');
 const config_1 = require("../config");
-const constants_1 = require("../constants");
-const parse_1 = require("./helpers/parse");
 const wait_1 = require("./helpers/wait");
 // Elements -------
 let extensionBody;
@@ -1526,33 +1476,33 @@ const applyBody = () => __awaiter(void 0, void 0, void 0, function* () {
     const fakeElement = document.createElement('div');
     fakeElement.style.height = `${extensionBody.offsetHeight}px`;
     extensionParent.insertBefore(fakeElement, extensionBody);
-    extensionBody.classList.add(constants_1.Constants.Styles.StickyHeader.featureJs, constants_1.Constants.Styles.StickyHeader.featureStyle);
-    document.documentElement.style.setProperty(constants_1.Constants.Styles.Variables.StickyHeader.height, `${extensionBody.offsetHeight}px`);
+    extensionBody.classList.add(_ta_x_globals_1.Constants.Styles.StickyHeader.featureJs, _ta_x_globals_1.Constants.Styles.StickyHeader.featureStyle);
+    document.documentElement.style.setProperty(_ta_x_globals_1.Constants.Styles.Variables.StickyHeader.height, `${extensionBody.offsetHeight}px`);
     if (!atTopOfPage()) {
-        extensionBody.classList.add(constants_1.Constants.Styles.Animations.yHideNoTransition);
+        extensionBody.classList.add(_ta_x_globals_1.Constants.Styles.Animations.yHideNoTransition);
     }
     missionlog_1.log.debug('Sticky-Header', 'Finished - applyBody');
 });
 const listen = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Sticky-Header', 'Starting - listen');
-    const navGamer = yield (0, wait_1.waitForElement)(`.nav-gamer:not(.${constants_1.Constants.Styles.SettingsMenu.featureJs})`);
-    const taxSettingsMenu = yield (0, wait_1.waitForElement)(`.${constants_1.Constants.Styles.SettingsMenu.featureJs}`);
+    const navGamer = yield (0, wait_1.waitForElement)(`.nav-gamer:not(.${_ta_x_globals_1.Constants.Styles.SettingsMenu.featureJs})`);
+    const taxSettingsMenu = yield (0, wait_1.waitForElement)(`.${_ta_x_globals_1.Constants.Styles.SettingsMenu.featureJs}`);
     let prevState = navGamer.classList.contains('open') || taxSettingsMenu.classList.contains('open');
     window.addEventListener('scroll', () => {
         const currentScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         if (atTopOfPage()) {
-            extensionBody.classList.remove(constants_1.Constants.Styles.Animations.yHide, constants_1.Constants.Styles.Animations.yHideNoTransition);
+            extensionBody.classList.remove(_ta_x_globals_1.Constants.Styles.Animations.yHide, _ta_x_globals_1.Constants.Styles.Animations.yHideNoTransition);
         }
         else {
             const searchElement = extensionBody.querySelector('#divtxtSearchContainer');
-            if (searchElement.style.display !== 'inline' && !(0, parse_1.toBool)(extensionBody.dataset.menuOpen)) {
+            if (searchElement.style.display !== 'inline' && !(0, _ta_x_utilities_1.toBool)(extensionBody.dataset.menuOpen)) {
                 if (previousScrollTop > currentScrollTop) {
-                    extensionBody.classList.remove(constants_1.Constants.Styles.Animations.yHide, constants_1.Constants.Styles.Animations.yHideNoTransition);
-                    extensionBody.classList.add(constants_1.Constants.Styles.Animations.yShow);
+                    extensionBody.classList.remove(_ta_x_globals_1.Constants.Styles.Animations.yHide, _ta_x_globals_1.Constants.Styles.Animations.yHideNoTransition);
+                    extensionBody.classList.add(_ta_x_globals_1.Constants.Styles.Animations.yShow);
                 }
                 else if (previousScrollTop < currentScrollTop) {
-                    extensionBody.classList.remove(constants_1.Constants.Styles.Animations.yShow);
-                    extensionBody.classList.add(constants_1.Constants.Styles.Animations.yHide);
+                    extensionBody.classList.remove(_ta_x_globals_1.Constants.Styles.Animations.yShow);
+                    extensionBody.classList.add(_ta_x_globals_1.Constants.Styles.Animations.yHide);
                 }
             }
         }
@@ -1589,7 +1539,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Sticky-Header', 'Finished');
 });
 
-},{"../config":8,"../constants":9,"./helpers/parse":18,"./helpers/wait":20,"missionlog":6}],30:[function(require,module,exports){
+},{"../config":7,"./helpers/wait":20,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"F:\\Git\\trueachievements-extra\\src\\utilities\\index.ts":33,"missionlog":6}],28:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1603,12 +1553,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const missionlog_1 = require("missionlog");
-const constants_1 = require("../constants");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
 const wait_1 = require("../scripts/helpers/wait");
 exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Styles', 'Starting');
     if (yield (0, wait_1.waitForElement)('body')) {
-        document.body.classList.add(constants_1.Constants.Styles.root);
+        document.body.classList.add(_ta_x_globals_1.Constants.Styles.root);
         GM_addStyle("body.trueachievement-extras .ta-x-y-show {\n  transform: translateY(0);\n  transition: transform 0.5s ease;\n}\n\nbody.trueachievement-extras .ta-x-y-hide {\n  transform: translateY(-100%);\n  transition: transform 0.5s ease;\n}\n\nbody.trueachievement-extras .ta-x-y-hide-no-transition {\n  transform: translateY(-100%);\n}\n:root {\n  --ta-x-sticky-header-height: $ta-x-sticky-header-height;\n}\n\nbody.trueachievement-extras .ta-x-hide {\n  display: none;\n}\n\n@media (min-width: 1200px) {\n  body.trueachievement-extras .middle {\n    width: 100%;\n    max-width: 1200px;\n  }\n}\n.trueachievement-extras-online-status {\n  background: #107c10;\n  border: 2px solid #d9d9d9;\n  border-radius: 50%;\n  display: block;\n  position: relative;\n  z-index: 2;\n}\n\n.trueachievement-extras-online-status.trueachievement-extras-friend-feed-online-status {\n  height: 6px;\n  left: 2.8rem;\n  margin-bottom: -4px;\n  margin-right: -10px;\n  top: -1.3rem;\n  width: 6px;\n}\n\n.trueachievement-extras-online-status.trueachievement-extras-achievement-solution-comment-online-status {\n  height: 6px;\n  left: 2.8rem;\n  margin-bottom: -5px;\n  margin-right: -10px;\n  top: -1.3rem;\n  width: 6px;\n}\n\n.trueachievement-extras-online-status.trueachievement-extras-achievement-solution-poster-online-status {\n  height: 12px;\n  left: 8.9rem;\n  margin-bottom: -16px;\n  top: -5rem;\n  width: 12px;\n}\n\n@media only screen and (max-width: 768px) {\n  .trueachievement-extras-online-status.trueachievement-extras-achievement-solution-poster-online-status {\n    height: 6px;\n    left: -1.9rem;\n    margin-bottom: -10px;\n    margin-right: 0;\n    top: -0.2rem;\n    width: 6px;\n  }\n}\n\n.trueachievement-extras-online-status.trueachievement-extras-forum-online-status {\n  height: 12px;\n  left: 2.5rem;\n  margin-bottom: -16px;\n  top: -3rem;\n  width: 12px;\n}\n\n@media only screen and (max-width: 768px) {\n  .trueachievement-extras-online-status.trueachievement-extras-forum-online-status {\n    height: 6px;\n    left: -2rem;\n    margin-bottom: 0;\n    margin-right: -10px;\n    top: 1.3rem;\n    width: 6px;\n  }\n}\n\n[data-theme=dark] .trueachievement-extras-online-status {\n  border: 2px solid #646464;\n}\nbody.trueachievement-extras .ta-x-settings-menu-column-setting {\n  flex-direction: column;\n  align-items: flex-start;\n}\n\nbody.trueachievement-extras .ta-x-settings-menu-column-setting .frm-grp {\n  padding-top: 0.5rem;\n}\n\nbody.trueachievement-extras .ta-x-settings-menu-sub-setting {\n  padding-left: 2rem;\n}\n\nbody.trueachievement-extras .ta-x-settings-menu-sub-setting-wrapable {\n  flex-wrap: wrap;\n}\n\nbody.trueachievement-extras .ta-x-settings-menu-sub-setting-wrapable label {\n  flex-basis: 80%;\n  flex-grow: 1;\n}\n\nbody.trueachievement-extras .ta-x-settings-menu-sub-setting-wrapable .frm-tgl {\n  margin-right: 0;\n}\n\nbody.trueachievement-extras .ta-x-settings-menu .close i {\n  pointer-events: none;\n}\nbody.trueachievement-extras .ta-x-sticky-header {\n  position: fixed;\n  top: 0;\n  width: 100%;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements {\n  min-width: unset !important;\n  overflow: auto;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements main {\n  min-height: unset !important;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page {\n  position: unset;\n  display: flex;\n  flex-direction: column;\n}\n/* stylelint-disable selector-id-pattern */\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector#oWalkthroughImageViewer {\n  width: 321px;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .noimages,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .itemname {\n  padding: 5px;\n  text-align: center;\n  font-size: unset !important;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header {\n  position: sticky;\n  border-bottom: 1px solid #000;\n  display: flex;\n  flex-direction: column;\n  background-color: #fff;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header .noimages {\n  margin-top: 0;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector a[title=\"Add images\"] {\n  text-align: center;\n  padding: 5px;\n  cursor: pointer !important;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector a[title=\"Add images\"]:hover {\n  text-decoration: underline;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .imageviewer {\n  display: flex;\n  flex-wrap: wrap;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .imageviewer .ivimage {\n  position: unset;\n  margin: 5px;\n  max-width: 46%;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title {\n  text-align: center;\n  padding-top: 3px;\n  white-space: break-spaces;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg {\n  height: 20px;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg path {\n  fill: #555;\n  filter: drop-shadow(21px 21px #fff);\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg:hover path {\n  fill: #333;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light {\n  display: none;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark {\n  display: block;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle[data-ta-x-tinymce-theme=dark] svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light {\n  display: block;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle[data-ta-x-tinymce-theme=dark] svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark {\n  display: none;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title {\n  color: #b5b9bf;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header {\n  background-color: #2f3740;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg path {\n  fill: #b5b9bf;\n  filter: drop-shadow(21px 21px #000);\n}\n\n/* stylelint-enable selector-id-pattern */\n/* stylelint-disable selector-id-pattern */\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divWalkthroughHolder {\n  position: unset;\n  margin-top: unset;\n  height: unset;\n  display: flex;\n  justify-content: space-between;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .buttons {\n  display: flex;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button {\n  display: block;\n  flex-grow: 1;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button#btnSearchWalkthrough {\n  margin: 0;\n  margin-bottom: 3px;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button#btnSearchWalkthrough:hover {\n  margin-bottom: 5px;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .clearboth {\n  display: none;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughs,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chEditWalkthrough,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughAchievements,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughGames,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughGamers,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughOtherSiteLink {\n  position: unset;\n  top: unset;\n  left: unset;\n  display: block;\n  margin: 0;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chEditWalkthrough {\n  flex: 1;\n  margin: 0 1.5rem;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #btnWalkthrough {\n  display: none;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container {\n  display: flex;\n  flex-direction: column;\n  justify-content: space-around;\n}\n\n/* stylelint-enable selector-id-pattern */\n/* stylelint-disable selector-id-pattern */\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container {\n  display: flex;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPagePreview {\n  margin-left: 0;\n  position: unset;\n  width: unset;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPagePreview {\n  flex: 1;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions {\n  height: 100%;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history {\n  position: relative;\n  top: var(--ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top, 0);\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-y-hide {\n  transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)));\n  transition: transform 0.5s ease;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-y-hide-no-transition {\n  transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)));\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-edit-page-left #chWalkthroughPageVersions .content .buttons,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button #chWalkthroughPageVersions .content .buttons {\n  display: flex;\n  justify-content: center;\n  flex-direction: column;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-edit-page-left #chWalkthroughPageVersions .content .buttons .button,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button #chWalkthroughPageVersions .content .buttons .button {\n  flex: 1;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-edit-page-left #chWalkthroughPageVersions .content .buttons .button:not(:first-of-type),\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button #chWalkthroughPageVersions .content .buttons .button:not(:first-of-type) {\n  margin-top: 5px;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-edit-page-left #chWalkthroughPageVersions .content .buttons .clearboth,\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-walkthrough-team-button #chWalkthroughPageVersions .content .buttons .clearboth {\n  display: none;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-edit-page-left #chWalkthroughPagePreview .content .buttons {\n  display: none;\n}\n\nbody.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-edit-page-left #chWalkthroughPagePreview .content .buttons .clearboth {\n  display: none;\n}\n\n/* stylelint-enable selector-id-pattern */\n");
         missionlog_1.log.debug('Styles', 'Finished');
     }
@@ -1617,7 +1567,7 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 
-},{"../constants":9,"../scripts/helpers/wait":20,"missionlog":6}],31:[function(require,module,exports){
+},{"../scripts/helpers/wait":20,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"missionlog":6}],29:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1631,14 +1581,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const missionlog_1 = require("missionlog");
+const _ta_x_globals_1 = require('F:\\Git\\trueachievements-extra\\src\\globals\\index.ts');
 const config_1 = require("../config");
-const constants_1 = require("../constants");
 const wait_1 = require("../scripts/helpers/wait");
 const listen = () => __awaiter(void 0, void 0, void 0, function* () {
     missionlog_1.log.debug('Staff-Walkthrough-Improvements-Styles', 'Starting - listen');
     const iframe = yield (0, wait_1.waitForElement)('#txtWalkthrough_ifr');
     const globalThemeElement = yield (0, wait_1.waitForElement)('[data-theme]');
-    const tinymceThemeElement = yield (0, wait_1.waitForElement)(`.${constants_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
+    const tinymceThemeElement = yield (0, wait_1.waitForElement)(`.${_ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
     let theme;
     if (config_1.default.staffWalkthroughImprovements.tinymceTheme === null) {
         theme = globalThemeElement.getAttribute('data-theme');
@@ -1651,7 +1601,7 @@ const listen = () => __awaiter(void 0, void 0, void 0, function* () {
         missionlog_1.log.debug('Staff-Walkthrough-Improvements-Styles', 'Starting - load event listener');
         const iframeDocument = iframe && iframe.contentDocument;
         const bodyEl = yield (0, wait_1.waitForElement)('#tinymce', iframeDocument);
-        bodyEl.classList.add(constants_1.Constants.Styles.root, constants_1.Constants.Styles.StaffWalkthroughImprovements.featureStyle);
+        bodyEl.classList.add(_ta_x_globals_1.Constants.Styles.root, _ta_x_globals_1.Constants.Styles.StaffWalkthroughImprovements.featureStyle);
         bodyEl.setAttribute('data-ta-x-tinymce-theme', theme);
         missionlog_1.log.debug('Staff-Walkthrough-Improvements-Styles', 'set iframe theme to', theme);
         const style = iframeDocument.createElement('style');
@@ -1724,4 +1674,117 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 
-},{"../config":8,"../constants":9,"../scripts/helpers/wait":20,"missionlog":6}]},{},[10]);
+},{"../config":7,"../scripts/helpers/wait":20,"F:\\Git\\trueachievements-extra\\src\\globals\\index.ts":10,"missionlog":6}],30:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getDuplicates = void 0;
+const getDuplicates = (arr, unique = false) => unique
+    ? [...new Set(arr.filter((e, i, a) => a.indexOf(e) !== i))]
+    : arr.filter((e, i, a) => a.indexOf(e) !== i);
+exports.getDuplicates = getDuplicates;
+
+},{}],31:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isBeforeNow = exports.isValid = void 0;
+const getDate = (date) => typeof (date) === 'string' ? new Date(date) : date;
+const isValid = (date) => new Date(getDate(date)).toString().toLowerCase() !== 'invalid date';
+exports.isValid = isValid;
+const isBeforeNow = (date) => new Date() < getDate(date);
+exports.isBeforeNow = isBeforeNow;
+
+},{}],32:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.classListContains = void 0;
+const classListContains = (element, classes) => {
+    const classArray = Array.isArray(classes) ? classes : [classes];
+    for (let i = 0; i < classArray.length; i++) {
+        if (element.classList.contains(classArray[i])) {
+            return true;
+        }
+    }
+    return false;
+};
+exports.classListContains = classListContains;
+
+},{}],33:[function(require,module,exports){
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./array-util"), exports);
+__exportStar(require("./date-util"), exports);
+__exportStar(require("./html-element-util"), exports);
+__exportStar(require("./string-util"), exports);
+
+},{"./array-util":30,"./date-util":31,"./html-element-util":32,"./string-util":34}],34:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.toBool = exports.toDate = exports.toInt = void 0;
+const regex_1 = require("../regex");
+const date_util_1 = require("./date-util");
+const today = new Date(new Date().setHours(0, 0, 0, 0));
+const yesterday = new Date(new Date(today).setDate(today.getDate() - 1));
+const toInt = (value) => {
+    if (typeof (value) === 'string') {
+        const parsedValue = parseInt(value.replace(/,/g, ''), 10);
+        return !isNaN(parsedValue) ? parsedValue : null;
+    }
+    if (typeof (value) === 'boolean') {
+        return value ? 1 : 0;
+    }
+    return typeof (value) === 'number'
+        ? value
+        : null;
+};
+exports.toInt = toInt;
+const toDate = (value) => {
+    if (regex_1.default.words.today.test(value)) {
+        return today;
+    }
+    if (regex_1.default.words.yesterday.test(value)) {
+        return yesterday;
+    }
+    return (0, date_util_1.isValid)(value) ? new Date(value) : null;
+};
+exports.toDate = toDate;
+const toBool = (str) => {
+    if (typeof (str) === 'string') {
+        return str.toLowerCase() === 'true'
+            ? true
+            : str.toLowerCase() === 'false'
+                ? false
+                : null;
+    }
+    if (typeof (str) === 'number') {
+        return str === 1
+            ? true
+            : str === 0
+                ? false
+                : null;
+    }
+    return typeof (str) === 'boolean'
+        ? str
+        : null;
+};
+exports.toBool = toBool;
+exports.default = {
+    toInt: exports.toInt,
+    toDate: exports.toDate,
+    toBool: exports.toBool
+};
+
+},{"../regex":15,"./date-util":31}]},{},[11]);

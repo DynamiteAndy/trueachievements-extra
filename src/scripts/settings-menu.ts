@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import { log } from 'missionlog';
+import { Constants } from '@ta-x-globals';
+import { ConditionalRender } from '@ta-x-models';
+import { waitForElement } from '@ta-x-utilities';
+import { template } from '@ta-x-helpers';
 import config from '../config';
-import { Constants } from '../constants';
-import { template } from './helpers/template';
-import { waitForElement } from './helpers/wait';
-import ConditionalRender from './models/conditional-render';
 
 // Elements -------
 let extensionBody: HTMLElement;

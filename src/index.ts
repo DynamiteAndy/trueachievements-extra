@@ -1,10 +1,10 @@
 import { log, LogLevel } from 'missionlog';
-import { allConcurrently } from './scripts/components/promise';
+import { Cache } from '@ta-x-globals';
+import { allConcurrently } from '@ta-x-utilities';
 import styles from './styles/index';
 import settingsMenu from './scripts/settings-menu';
 import stickyHeader from './scripts/sticky-header';
 import staffWalkthroughImprovements from './scripts/staff-walkthrough-improvements/index';
-import cache from './cache';
 
 const logger = {
   [LogLevel.ERROR]: (tag, msg, params) => console.error(`TA-X [${tag}]`, msg, ...params),
@@ -19,12 +19,12 @@ log.init({ }, (level, tag, msg, params) => {
 });
 
 (async () => {
-  cache.clearExpired();
-  
   await allConcurrently(4, [
     styles,
     settingsMenu,
     stickyHeader,
     staffWalkthroughImprovements
   ]);
+
+  Cache.clearExpired();
 })();

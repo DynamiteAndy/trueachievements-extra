@@ -1,6 +1,6 @@
-import { toBool } from '../helpers/parse';
+import { toBool } from '../utilities/string-util';
 
-export default class ConditionalRender {
+export class ConditionalRender {
   public selector: string;
   public value: boolean;
 

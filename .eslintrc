@@ -19,12 +19,13 @@
     "keyword-spacing": [2, { "after": true }],
     "import/no-unresolved": "error",
     "import/named": "error",
-    "import/order": "error"
+    "import/order": ["error", {"groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object"]}]
   },
   "settings": {
     "import/resolver": {
+      "typescript": {},
       "node": {
-        "paths": ["src"],
+        "paths": ["./src"],
         "extensions": [".js", ".ts" ]
       }
     }

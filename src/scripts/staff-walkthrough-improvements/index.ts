@@ -1,7 +1,6 @@
 import { log } from 'missionlog';
-import { allConcurrently } from '../components/promise';
-import { Constants } from '../../constants';
-import { waitForElement } from '../helpers/wait';
+import { waitForElement, allConcurrently } from '@ta-x-utilities';
+import { Constants } from '@ta-x-globals';
 import config from '../../config';
 import regex from '../../regex';
 import manageWalkthrough from './manage-walkthrough';
