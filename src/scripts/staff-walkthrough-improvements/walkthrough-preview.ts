@@ -1,6 +1,6 @@
 import { log } from 'missionlog';
+import { waitForElement } from '@ta-x-utilities';
 import regex from '../../regex';
-import { waitForElement } from '../helpers/wait';
 
 // Elements -------
 const applyBody = async(): Promise<void> => {

@@ -1,5 +1,5 @@
-import { isBeforeNow } from '../scripts/helpers/date-util';
-import { MemoizedFetch } from '../scripts/models/memoized-fetch';
+import { isBeforeNow } from '../utilities/date-util';
+import { MemoizedFetch } from '../models/memoized-fetch';
 
 export class Cache {
   static get memoize(): Map<string, MemoizedFetch> { 
@@ -11,11 +11,11 @@ export class Cache {
     GM_setValue('trueachievements-extra-memoized', JSON.stringify(Array.from(value.entries())));
   }
   
-  static forceClear() {
+  static forceClear(): void {
     GM_deleteValue('trueachievements-extra-memoized');
   }
 
-  static clearExpired() {
+  static clearExpired(): void {
     const updatedCache = Array.from(this.memoize.entries()).filter(item => isBeforeNow(item[1].expiryTime));
     this.memoize = new Map(updatedCache);
   }

@@ -49,7 +49,7 @@ gulp.task('lint:styles', () => gulp.src(SCSS_PATH, { base: './src/styles/' })
       ]
     })));
 
-gulp.task('lint:ts', () => gulp.src([TS_PATH, `!${DEST_PATH}/**`, '!node_modules/**'], { base: './src/scripts/' })
+gulp.task('lint:ts', () => gulp.src([TS_PATH, `!${DEST_PATH}/**`, '!node_modules/**'], { base: './src/' })
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError()));

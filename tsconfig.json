@@ -5,6 +5,10 @@
     "target": "es6",
     "paths": {
       "@ta-x-globals": ["./globals/index"],
+      "@ta-x-utilities": ["./utilities/index"],
+      "@ta-x-models": ["./models/index"],
+      "@ta-x-components": ["./components/index"],
+      "@ta-x-helpers": ["./helpers/index"],
       "@ta-x-jasmine": ["./jasmine/index"]
     }
   }

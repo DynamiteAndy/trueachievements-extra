@@ -1,12 +1,9 @@
 import * as fs from 'fs';
 import { log } from 'missionlog';
 import { Constants } from '@ta-x-globals';
+import { classListContains, waitForElement, allConcurrently } from '@ta-x-utilities';
 import config from '../../config';
 import regex from '../../regex';
-import { classListContains } from '../helpers/html-element-util';
-import { waitForElement } from '../helpers/wait';
-import { allConcurrently } from '../components/promise';
-
 
 // Elements -------
 let walkthroughContainer: HTMLElement;

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { log } from 'missionlog';
 import { Constants } from '@ta-x-globals';
-import { waitForElement } from '../scripts/helpers/wait';
+import { waitForElement } from '@ta-x-utilities';
 
 export default async(): Promise<void> => {
   log.debug('Styles', 'Starting');

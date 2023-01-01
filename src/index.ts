@@ -1,6 +1,6 @@
 import { log, LogLevel } from 'missionlog';
 import { Cache } from '@ta-x-globals';
-import { allConcurrently } from './scripts/components/promise';
+import { allConcurrently } from '@ta-x-utilities';
 import styles from './styles/index';
 import settingsMenu from './scripts/settings-menu';
 import stickyHeader from './scripts/sticky-header';

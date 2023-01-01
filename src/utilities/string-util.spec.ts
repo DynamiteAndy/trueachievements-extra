@@ -1,6 +1,6 @@
-import { toInt, toBool, toDate } from './parse';
+import { toInt, toBool, toDate } from './string-util';
 
-describe('parse', () => {
+describe('string-util', () => {
   describe('toInt', () => {
     const positiveTestCases = [
       { case: '12', expected: 12 },

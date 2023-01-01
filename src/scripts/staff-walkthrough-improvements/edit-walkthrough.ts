@@ -1,12 +1,12 @@
 import * as fs from 'fs';
 import { log } from 'missionlog';
+import { waitForElement, allConcurrently } from '@ta-x-utilities';
+import { template } from '@ta-x-helpers';
 import { Constants } from '@ta-x-globals';
 import config from '../../config';
 import regex, { extractBetween } from '../../regex';
-import { waitForElement } from '../helpers/wait';
 import styles from '../../styles/staff-walkthrough-improvements';
-import { template } from '../helpers/template';
-import { allConcurrently } from '../components/promise';
+
 
 const applyBody = async(): Promise<void> => {
   log.debug('Edit-Walkthrough', 'Starting - applyBody');

@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import { log } from 'missionlog';
 import { Constants } from '@ta-x-globals';
+import { waitForElement } from '@ta-x-utilities';
 import config from '../config';
-import { waitForElement } from '../scripts/helpers/wait';
 
 const listen = async(): Promise<void> => {
   log.debug('Staff-Walkthrough-Improvements-Styles', 'Starting - listen');

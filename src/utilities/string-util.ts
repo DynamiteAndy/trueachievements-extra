@@ -1,4 +1,4 @@
-import regex from '../../regex';
+import regex from '../regex';
 import { isValid } from './date-util';
 
 const today = new Date(new Date().setHours(0, 0, 0, 0));

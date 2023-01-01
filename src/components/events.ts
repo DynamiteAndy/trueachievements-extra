@@ -1,7 +1,8 @@
 const eventList = {};
 const listenerQueue = new Map();
+
 const getSymbol = (value: string|number): symbol|number => ((typeof value === 'string') ? Symbol.for(value) : value);
-const contextExists = (event: string, context): boolean => (eventList[event] && eventList[event].has(context));
+const contextExists = (event: string, context: string): boolean => (eventList[event] && eventList[event].has(context));
 
 const unsubscribeByIdentifier = (event: string, context: string, identifier: string | number): void => {
   const id = getSymbol(identifier);
@@ -22,7 +23,7 @@ const unsubscribeByIdentifier = (event: string, context: string, identifier: str
 };
 
 const unsubscribeByListener = (event: string, context: string, fn: (...params: any[]) => void): void => {
-  listenerQueue.forEach((listener, identifier) => {
+  listenerQueue.forEach((listener, identifier: string | number) => {
     if (listener === fn) unsubscribeByIdentifier(event, context, identifier);
   });
 };
@@ -37,7 +38,7 @@ const unsubscribeAllListeners = (event: string, context: string): void => {
   if (!eventList[event].size) delete eventList[event];
 };
 
-export const broadcast = (event: string, context = 'global', data = undefined): void => {
+export const broadcast = (event: string, context = 'global', data?: any): void => {
   if (!contextExists(event, context)) return;
   const listeners = eventList[event].get(context);
 

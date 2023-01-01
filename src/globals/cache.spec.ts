@@ -8,14 +8,14 @@ describe('cache', () => {
       {
         case: new Map([[
           'trueachievements-extra-memoized',
-          JSON.stringify([["key1", "value"]])
+          JSON.stringify([['key1', 'value']])
         ]]),
         expected: 1
       },
       {
         case: new Map([[
           'trueachievements-extra-memoized',
-          JSON.stringify([["key1", "value"], ["key2", "value"]])
+          JSON.stringify([['key1', 'value'], ['key2', 'value']])
         ]]),
         expected: 2
       }
@@ -34,13 +34,13 @@ describe('cache', () => {
       { case: new Map<string, any>(), expected: 0 },
       {
         case: new Map([[
-          "key1", "value"
+          'key1', 'value'
         ]]),
         expected: 1
       },
       {
         case: new Map(
-          [["key1", "value"],["key2", "value"]]
+          [['key1', 'value'], ['key2', 'value']]
         ),
         expected: 2
       }
@@ -48,7 +48,7 @@ describe('cache', () => {
 
     testCases.forEach((test, index) => {
       it(`should set cached items (testcase: ${index})`, () => {
-        Cache.memoize = test.case
+        Cache.memoize = test.case;
         expect(Cache.memoize.size).toEqual(test.expected);
       });
     });
@@ -61,14 +61,14 @@ describe('cache', () => {
         {
           case: new Map([[
             'trueachievements-extra-memoized',
-            JSON.stringify([["key1", "value"]])
+            JSON.stringify([['key1', 'value']])
           ]]),
           expected: 0
         },
         {
           case: new Map([[
             'trueachievements-extra-memoized',
-            JSON.stringify([["key1", "value"], ["key2", "value"]])
+            JSON.stringify([['key1', 'value'], ['key2', 'value']])
           ]]),
           expected: 0
         }
