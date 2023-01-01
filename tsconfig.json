@@ -4,7 +4,8 @@
     "moduleResolution":"node",
     "target": "es6",
     "paths": {
-      "@ta-x-globals": ["./globals/index"]
+      "@ta-x-globals": ["./globals/index"],
+      "@ta-x-jasmine": ["./jasmine/index"]
     }
   }
 }

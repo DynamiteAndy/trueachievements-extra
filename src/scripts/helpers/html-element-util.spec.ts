@@ -1,7 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { classListContains } from './html-element-util';
 
-
 describe('htmlelement-helper', () => {
   describe('classListContains', () => {
     const { document } = (new JSDOM()).window;

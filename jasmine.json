@@ -4,7 +4,8 @@
     "./src/**/*.spec.ts"
   ],
   "helpers": [
-    "./node_modules/ts-node/register/type-check.js"
+    "./node_modules/ts-node/register/type-check.js",
+    "./src/jasmine/**/*.ts"
   ],
   "stopSpecOnExpectationFailure": false,
   "random": false
