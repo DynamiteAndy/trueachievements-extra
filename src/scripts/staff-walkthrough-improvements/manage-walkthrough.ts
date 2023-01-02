@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import { log } from 'missionlog';
+import html from '@ta-x-views/staff-walkthrough-improvements.html';
+import achievementRow from '@ta-x-views/templates/manage-walkthrough-achievement-row.html';
 import { getDuplicates, toInt, waitForElement, allConcurrently } from '@ta-x-utilities';
 import { template, memoizeFetch } from '@ta-x-helpers';
 import { Constants } from '@ta-x-globals';
@@ -10,9 +10,6 @@ import regex, { extractAllBetween } from '../../regex';
 let walkthroughContainer: HTMLElement;
 
 const applyBody = async(): Promise<void> => {
-  log.debug('Manage-Walkthrough', 'Started - applyBody');
-
-  const html = fs.readFileSync('./src/views/staff-walkthrough-improvements.html', 'utf8');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   walkthroughContainer = await waitForElement('#divWalkthroughHolder');
 
@@ -24,18 +21,12 @@ const applyBody = async(): Promise<void> => {
     editWalkthrough.after(parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
 
     await allConcurrently(2, [adjustRightSidebar, adjustButtons, applyClickableTableLinks]);
-  } else {
-    log.warn('Manage-Walkthrough', 'Did not find edit walkthrough container');
   }
-
-  log.debug('Manage-Walkthrough', 'Finished - applyBody');
 };
 
 const applyDefaultStatus = async(): Promise<void> => {
   if (!config.staffWalkthroughImprovements.manageWalkthroughDefaultStatus) return;
   if (regex.test.staff.walkthrough.manageWalkthroughUrlWithWalkthroughId(window.location.href)) return;
-
-  log.debug('Manage-Walkthrough', 'Started - applyDefaultStatus');
 
   const status = await waitForElement('#ddlStatusFilter') as HTMLSelectElement;
 
@@ -43,16 +34,10 @@ const applyDefaultStatus = async(): Promise<void> => {
     status.value !== config.staffWalkthroughImprovements.manageWalkthroughDefaultStatusValue) {
     status.value = config.staffWalkthroughImprovements.manageWalkthroughDefaultStatusValue;
     status.onchange(null);
-  } else {
-    log.info('Manage-Walkthrough', 'A status has already been selected');
   }
-
-  log.debug('Manage-Walkthrough', 'Started - applyDefaultStatus');
 };
 
 const adjustButtons = async (): Promise<void> => {
-  log.debug('Manage-Walkthrough', 'Started - adjustButtons');
-
   const buttonContainer = await waitForElement('#btnWalkthrough_Options', walkthroughContainer);
   let buttonsContainer: HTMLElement = null;
 
@@ -70,16 +55,10 @@ const adjustButtons = async (): Promise<void> => {
 
   if (buttonsContainer) {
     buttonsContainer.parentNode.insertBefore(buttonsContainer, buttonsContainer.previousElementSibling);
-  } else {
-    log.warn('Manage-Walkthrough', 'Did not find walkthrough options button container');
   }
-
-  log.debug('Manage-Walkthrough', 'Finished - adjustButtons');
 };
 
 const adjustRightSidebar = async(): Promise<void> => {
-  log.debug('Manage-Walkthrough', 'Started - adjustButtons');
-
   const sideBarContainer =  await waitForElement(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`, walkthroughContainer);
   
   if (sideBarContainer) {
@@ -94,25 +73,17 @@ const adjustRightSidebar = async(): Promise<void> => {
 
     sideBarContainer.appendChild(await waitForElement('#chWalkthroughGamers', walkthroughContainer));
     sideBarContainer.appendChild(await waitForElement('#chWalkthroughOtherSiteLink', walkthroughContainer));
-  } else {
-    log.warn('Manage-Walkthrough', 'Did not find walkthrough sidebar container');
   }
-
-  log.debug('Manage-Walkthrough', 'Finished - adjustButtons');
 };
 
 const applyClickableTableLinks = async(): Promise<void> => {
   if (!config.staffWalkthroughImprovements.clickableTableLinks) return;
 
-  log.debug('Manage-Walkthrough', 'Started - applyClickableTableLinks');
-
-  const html = fs.readFileSync('./src/views/templates/manage-walkthrough-achievement-row.html', 'utf8');
-  const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
+  const parsedDocument = new DOMParser().parseFromString(achievementRow, 'text/html');
   const container = document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`);
   const selectedWalkthrough = await waitForElement('#lstWalkthroughIDselectedrow a') as HTMLAnchorElement;
 
   if (!selectedWalkthrough) {
-    log.error('Manage-Walkthrough', 'no walkthrough is currently selected');
     return;
   }
 
@@ -133,8 +104,6 @@ const applyClickableTableLinks = async(): Promise<void> => {
           el.innerHTML = walkthroughPreviewGame.outerHTML;
         }
       });
-    } else {
-      log.warn('Manage-Walkthrough', 'Did not find walkthrough games container');
     }
   };
 
@@ -151,8 +120,6 @@ const applyClickableTableLinks = async(): Promise<void> => {
           el.innerHTML = walkthroughPreviewGamer.outerHTML;
         }
       });
-    } else {
-      log.warn('Manage-Walkthrough', 'Did not find walkthrough gamers container');
     }
   };
 
@@ -164,7 +131,6 @@ const applyClickableTableLinks = async(): Promise<void> => {
       const walkthroughAchievementContainer = container.querySelector('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID tbody') as HTMLElement;
 
       if (!walkthroughAchievementContainer) {
-        log.warn('Manage-Walkthrough', 'Did not find walkthrough achievement container');
         return;
       }
 
@@ -195,15 +161,11 @@ const applyClickableTableLinks = async(): Promise<void> => {
 
       const achievementsTotal = walkthroughContainer.querySelector('#chWalkthroughAchievements #lstWalkthroughAchievementID .total') as HTMLElement;
       achievementsTotal.innerText = `${achievementsTotal.innerText}/${ [...container.querySelectorAll('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID .c1')].length}`;
-    } else {
-      log.warn('Manage-Walkthrough', 'Did not find walkthrough games container');
     }
   };
 
   await allConcurrently(2, [clickableGames, clickableGamers]);
   await allConcurrently(2, [clickableAndMissedAchievements]);
-
-  log.debug('Manage-Walkthrough', 'Finished - applyClickableTableLinks');
 };
 
 const deDupeAchievements = (walkthroughAchievementsContainer: HTMLElement): void => {
@@ -239,10 +201,6 @@ const listen = (): void => {
 export default async(): Promise<void> => {
   if (!regex.test.staff.walkthrough.manageWalkthroughUrl(window.location.href)) return;
 
-  log.debug('Manage-Walkthrough', 'Started');
-
   await applyBody();
   listen();
-
-  log.debug('Manage-Walkthrough', 'Finished');
 };

@@ -5,7 +5,7 @@ export const allSequentially = (arr) => {
         result = result.then(() => (typeof task === 'function' ? task() : task));
         promise.push(result);
         return promise;
-      }, []),
+      }, [])
   );
 };
 

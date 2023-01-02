@@ -8,7 +8,7 @@ describe('string-util', () => {
       { case: 12, expected: 12 },
       { case: 120, expected: 120 },
       { case: true, expected: 1 },
-      { case: false, expected: 0 },
+      { case: false, expected: 0 }
     ];
 
     positiveTestCases.forEach((test, index) => {
@@ -53,7 +53,7 @@ describe('string-util', () => {
 
     const negativeTestCases = [
       { case: 'tomorrow', expected: null },
-      { case: 'Tomorrow', expected: null },
+      { case: 'Tomorrow', expected: null }
     ];
 
     negativeTestCases.forEach((test, index) => {
@@ -72,7 +72,7 @@ describe('string-util', () => {
       { case: 1, expected: true },
       { case: 0, expected: false },
       { case: true, expected: true },
-      { case: false, expected: false },
+      { case: false, expected: false }
     ];
 
     positiveTestCases.forEach((test, index) => {

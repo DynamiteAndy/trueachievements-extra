@@ -96,7 +96,7 @@ export default {
   },
   words: {
     today,
-    yesterday,
+    yesterday
   },
   test: {
     achievements: {
