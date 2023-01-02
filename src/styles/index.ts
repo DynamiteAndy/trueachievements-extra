@@ -1,17 +1,10 @@
-import * as fs from 'fs';
-import { log } from 'missionlog';
+import styles from '@ta-x-scss/index.scss';
 import { Constants } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
 
 export default async(): Promise<void> => {
-  log.debug('Styles', 'Starting');
-
-  if (await waitForElement('body')) {
-    document.body.classList.add(Constants.Styles.root);
-    GM_addStyle(fs.readFileSync('./dist/styles/trueachievements-extras.styles.css', 'utf8'));
-
-    log.debug('Styles', 'Finished');
-  } else {
-    log.error('Styles', 'Failed to add, The body element was not found');
-  }
+  if (!await waitForElement('body')) return;
+  
+  document.body.classList.add(Constants.Styles.root);
+  GM_addStyle(styles);
 };

@@ -1,5 +1,4 @@
-import * as fs from 'fs';
-import { log } from 'missionlog';
+import html from '@ta-x-views/settings-menu.html';
 import { Constants } from '@ta-x-globals';
 import { ConditionalRender } from '@ta-x-models';
 import { waitForElement } from '@ta-x-utilities';
@@ -14,9 +13,6 @@ const isSelectElement = (el: HTMLElement): boolean => el.nodeName === 'SELECT';
 const isCheckboxElement = (el: HTMLElement): boolean => el.nodeName === 'INPUT' && (el as HTMLInputElement).type === 'checkbox';
 
 const applyBody = async(): Promise<void> => {
-  log.debug('Settings-Menu', 'Starting - applyBody');
-
-  const html = fs.readFileSync('./src/views/settings-menu.html', 'utf8');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const navigationBar = await waitForElement('header nav');
   const navGamerToggle = await waitForElement('[data-tgl="nav-gamer"]', navigationBar);
@@ -54,13 +50,9 @@ const applyBody = async(): Promise<void> => {
         : 'add'](Constants.Styles.Base.hide);
     }
   });
-
-  log.debug('Settings-Menu', 'Finished - applyBody');
 };
 
 const listen = (): void => {
-  log.debug('Settings-Menu', 'Starting - listen');
-
   extensionTrigger.addEventListener('click', () => {
     extensionTrigger.classList.add('active');
     extensionBody.classList.add('nav-gamer');
@@ -98,15 +90,9 @@ const listen = (): void => {
       }
     });
   });
-
-  log.debug('Settings-Menu', 'Finished - listen');
 };
 
 export default async (): Promise<void> => {
-  log.debug('Settings-Menu', 'Starting');
-  
   await applyBody();
   listen();
-
-  log.debug('Settings-Menu', 'Finished');
 };

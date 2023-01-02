@@ -1,4 +1,3 @@
-import { log } from 'missionlog';
 import { Constants } from '@ta-x-globals';
 import { toBool, waitForElement } from '@ta-x-utilities';
 import config from '../config';
@@ -10,8 +9,6 @@ let previousScrollTop: number;
 const atTopOfPage = (): boolean => window.pageYOffset <= extensionBody.offsetTop;
 
 const applyBody = async(): Promise<void> => {
-  log.debug('Sticky-Header', 'Starting - applyBody');
-  
   extensionBody = await waitForElement('header');
   
   const extensionParent = extensionBody.parentNode;
@@ -27,13 +24,9 @@ const applyBody = async(): Promise<void> => {
   if (!atTopOfPage()) {
     extensionBody.classList.add(Constants.Styles.Animations.yHideNoTransition);
   }
-
-  log.debug('Sticky-Header', 'Finished - applyBody');
 };
 
 const listen = async(): Promise<void> => {
-  log.debug('Sticky-Header', 'Starting - listen');
-
   const navGamer = await waitForElement(`.nav-gamer:not(.${Constants.Styles.SettingsMenu.featureJs})`);
   const taxSettingsMenu = await waitForElement(`.${Constants.Styles.SettingsMenu.featureJs}`);
   let prevState = navGamer.classList.contains('open') || taxSettingsMenu.classList.contains('open');
@@ -84,17 +77,11 @@ const listen = async(): Promise<void> => {
     attributes : true,
     attributeFilter : ['style', 'class']
    });
-
-   log.debug('Sticky-Header', 'Finished - listen');
 };
 
 export default async(): Promise<void> => {
   if (!config.stickyHeader.enabled) return;
 
-  log.debug('Sticky-Header', 'Starting');
-  
   await applyBody();
   await listen();
-
-  log.debug('Sticky-Header', 'Finished');
 };

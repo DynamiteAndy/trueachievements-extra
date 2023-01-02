@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.1
+- Fixed test runner not reporting correctly
+- Fixed a bug with improved image loader not working if there was alot of images
+
+## 2.0.0
+- Moved from browserify to webpack, considered breaking as its a change to how the script is compiled.
+
 ## 1.5.1
 - Fixed caching by days, it was caching by seconds instead >_<
 
