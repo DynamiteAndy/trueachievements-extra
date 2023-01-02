@@ -1,5 +1,4 @@
-import * as fs from 'fs';
-import { log } from 'missionlog';
+import html from '@ta-x-views/staff-walkthrough-improvements.html';
 import { Constants } from '@ta-x-globals';
 import { classListContains, waitForElement, allConcurrently } from '@ta-x-utilities';
 import config from '../../config';
@@ -12,9 +11,6 @@ let stickyNavBarEnabled: boolean;
 let stickyNavBarElement: HTMLElement;
 
 const applyBody = async(): Promise<void> => {
-  log.debug('Walkthrough-Page', 'Started - applyBody');
-
-  const html = fs.readFileSync('./src/views/staff-walkthrough-improvements.html', 'utf8');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   walkthoughPageVersions = await waitForElement('#chWalkthroughPageVersions');
 
@@ -25,8 +21,6 @@ const applyBody = async(): Promise<void> => {
   walkthroughContainer.appendChild(walkthoughPageVersions);
 
   allConcurrently(3, [moveWalkthroughPagePreview, applyStickyNavBar, applyEditPageLeft, applyWalkthroughTeamButton]);
-
-  log.debug('Walkthrough-Page', 'Finished - applyBody');
 };
 
 const moveWalkthroughPagePreview = async(): Promise<void> => {
@@ -34,15 +28,11 @@ const moveWalkthroughPagePreview = async(): Promise<void> => {
   
   if (walkthoughPagePreview) {
     walkthroughContainer.appendChild(walkthoughPagePreview);
-  } else {
-    log.warn('Walkthrough-Page', 'moveWalkthroughPagePreview - did not find walkthrough preview');
   }
 };
 
 const applyStickyNavBar = async(): Promise<void> => {
   if (!config.staffWalkthroughImprovements.stickyPageHistory) return;
-
-  log.debug('Walkthrough-Page', 'Started - applyStickyNavBar');
 
   stickyNavBarEnabled = config.stickyHeader.enabled;
   stickyNavBarElement = stickyNavBarEnabled
@@ -53,14 +43,10 @@ const applyStickyNavBar = async(): Promise<void> => {
     Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryStyle);
 
   setTopStyle(true);
-
-  log.debug('Walkthrough-Page', 'Finished - applyStickyNavBar');
 };
 
 const applyEditPageLeft = async(): Promise<void> => {
   if (!config.staffWalkthroughImprovements.editPageLeft) return;
-
-  log.debug('Walkthrough-Page', 'Started - applyEditPageLeft');
 
   walkthroughContainer.classList.add(Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.editPageLeftStyle);
 
@@ -73,34 +59,21 @@ const applyEditPageLeft = async(): Promise<void> => {
 
     if (walkthroughPageButtons) {
       walkthroughPageButtons.insertBefore(editButton, walkthroughPageButtons.firstElementChild);
-    } else {
-      log.warn('Walkthrough-Page', 'applyEditPageLeft - did not find walkthrough buttons on page versions element');
     }
-  } else {
-    log.warn('Walkthrough-Page', 'applyEditPageLeft - did not find walkthrough edit page buttons on walkthrough preview');
   }
-
-  log.debug('Walkthrough-Page', 'Finished - applyEditPageLeft');
 };
 
 const applyWalkthroughTeamButton = async(): Promise<void> => {
   if (!config.staffWalkthroughImprovements.walkthroughTeamButton) return;
 
-  log.debug('Walkthrough-Page', 'Started - applyWalkthroughTeamButton');
-
   walkthroughContainer.classList.add(Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonStyle);
 
-  const html = fs.readFileSync('./src/views/staff-walkthrough-improvements.html', 'utf8');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const walkthroughPageButtons =  await waitForElement('.content .buttons', walkthoughPageVersions);
 
   if (walkthroughPageButtons) {
     walkthroughPageButtons.appendChild(parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonJs}`));
-  } else {
-    log.warn('Walkthrough-Page', 'applyWalkthroughTeamButton - did not find walkthrough buttons on page versions element');
   }
-
-  log.debug('Walkthrough-Page', 'Finished - applyWalkthroughTeamButton');
 };
 
 const setTopStyle = (noTransitionStyle?: boolean): void => {
@@ -156,30 +129,18 @@ const setTopStyle = (noTransitionStyle?: boolean): void => {
 };
 
 const listen = (): void => {
-  log.debug('Walkthrough-Preview', 'Started - listen');
-
   if (config.staffWalkthroughImprovements.stickyPageHistory) {
-    log.debug('Walkthrough-Page', 'Starting stickyPageHistory - listen');
-
     window.addEventListener('scroll', () => setTopStyle(!classListContains(walkthoughPageVersions, [
       Constants.Styles.Animations.yHideNoTransition,
       Constants.Styles.Animations.yHide,
       Constants.Styles.Animations.yShow
     ])));
-
-    log.debug('Walkthrough-Page', 'Finished stickyPageHistory - listen');
   }
-
-  log.debug('Walkthrough-Page', 'Finished - listen');
 };
 
 export default async(): Promise<void> => {
   if (!regex.test.staff.walkthrough.walkthroughPageUrl(window.location.href)) return;
 
-  log.debug('Walkthrough-Page', 'Started');
-
   await applyBody();
   listen();
-
-  log.debug('Walkthrough-Page', 'Finished');
 };

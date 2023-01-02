@@ -1,15 +1,24 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
     "baseUrl": "./src",
-    "moduleResolution":"node",
-    "target": "es6",
+    "moduleResolution": "node",
+    "target": "ES2020",
+    "allowJs": false,
+    "removeComments": true,
+    "allowUnreachableCode": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
       "@ta-x-globals": ["./globals/index"],
       "@ta-x-utilities": ["./utilities/index"],
       "@ta-x-models": ["./models/index"],
       "@ta-x-components": ["./components/index"],
       "@ta-x-helpers": ["./helpers/index"],
-      "@ta-x-jasmine": ["./jasmine/index"]
+      "@ta-x-scss/*": ["./scss/*"],
+      "@ta-x-tinymce-scss/*": ["./scss/staff-walkthrough-improvements/tinymce/*"],
+      "@ta-x-views/*": ["./views/*"],
+      "@ta-x-jasmine": ["./jasmine/index"],
     }
   }
 }

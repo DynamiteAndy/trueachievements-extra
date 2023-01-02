@@ -1,5 +1,4 @@
-import * as fs from 'fs';
-import { log } from 'missionlog';
+import html from '@ta-x-views/staff-walkthrough-improvements.html';
 import { waitForElement, allConcurrently } from '@ta-x-utilities';
 import { template } from '@ta-x-helpers';
 import { Constants } from '@ta-x-globals';
@@ -7,21 +6,13 @@ import config from '../../config';
 import regex, { extractBetween } from '../../regex';
 import styles from '../../styles/staff-walkthrough-improvements';
 
-
 const applyBody = async(): Promise<void> => {
-  log.debug('Edit-Walkthrough', 'Starting - applyBody');
-
   await allConcurrently(2, [styles, applyImprovedImageSelector, applyTinymceThemeToggle]);
-
-  log.debug('Edit-Walkthrough', 'Finished - applyBody');
 };
 
 const applyImprovedImageSelector = async(): Promise<void> => {
   if (!config.staffWalkthroughImprovements.improvedImageSelector) return;
 
-  log.debug('Edit-Walkthrough', 'Starting - applyImprovedImageSelector');
-
-  const html = fs.readFileSync('./src/views/staff-walkthrough-improvements.html', 'utf8');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const stickyImageHeader = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorContainerJs}`);
   const imageContainer = await waitForElement('#oWalkthroughImageViewer');
@@ -40,20 +31,14 @@ const applyImprovedImageSelector = async(): Promise<void> => {
 
     imageAnchor.appendChild(imageTitle);
   });
-
-  log.debug('Edit-Walkthrough', 'Finished - applyImprovedImageSelector');
 };
 
 const applyTinymceThemeToggle = async(): Promise<void> => {
-  log.debug('Edit-Walkthrough', 'Starting - applyTinymceThemeToggle');
-
-  const html = fs.readFileSync('./src/views/staff-walkthrough-improvements.html', 'utf8');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const themeToggle = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
   const toolbar = await waitForElement('.mce-tinymce .mce-toolbar.mce-last .mce-container-body');
 
   if (!toolbar) {
-    log.error('Edit-Walkthrough', 'Failed to find tinymce toolbar');
     return;
   }
 
@@ -62,13 +47,9 @@ const applyTinymceThemeToggle = async(): Promise<void> => {
   }
 
   toolbar.appendChild(themeToggle);
-
-  log.debug('Edit-Walkthrough', 'Finished - applyTinymceThemeToggle');
 };
 
 const listen = (): void => {
-  log.debug('Edit-Walkthrough', 'Starting - listen');
-
   document.addEventListener('click', ({ target }) => {
     if (config.staffWalkthroughImprovements.improvedImageSelector) {
       if ((target as HTMLElement)?.closest('[aria-label="Add Image"]') === null &&
@@ -101,8 +82,6 @@ const listen = (): void => {
   });
 
   if (config.staffWalkthroughImprovements.improvedImageSelector) {
-    log.debug('Edit-Walkthrough', 'Starting improvedImageSelector - listen');
-
     window.addEventListener('blur', () => {
       if (document.activeElement === document.querySelector('#txtWalkthrough_ifr')) {
         const imageSelector = document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`) as HTMLElement;
@@ -112,20 +91,12 @@ const listen = (): void => {
         imageSelector.style.display = 'none';
       }
     });
-
-    log.debug('Edit-Walkthrough', 'Finished improvedImageSelector - listen');
   }
-
-  log.debug('Edit-Walkthrough', 'Finished - listen');
 };
 
 export default async(): Promise<void> => {
   if (!regex.test.staff.walkthrough.editWalkthroughUrl(window.location.href)) return;
 
-  log.debug('Edit-Walkthrough', 'Starting');
-
   await applyBody();
   listen();
-
-  log.debug('Edit-Walkthrough', 'Finished');
 };

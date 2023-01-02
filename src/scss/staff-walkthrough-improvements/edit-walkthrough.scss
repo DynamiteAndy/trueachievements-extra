@@ -27,7 +27,7 @@ body {
             }
           }
 
-          a[title="Add images"] {
+          a[title='Add images'] {
             text-align: center;
             padding: 5px;
             cursor: pointer !important;
@@ -79,7 +79,7 @@ body {
             }
           }
 
-          &[data-ta-x-tinymce-theme="dark"] {
+          &[data-ta-x-tinymce-theme='dark'] {
             svg {
               &.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light {
                 display: block;
@@ -93,7 +93,7 @@ body {
         }
       }
 
-      [data-theme="dark"] {
+      [data-theme='dark'] {
         .admin-page {
           .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector {
             .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title {
