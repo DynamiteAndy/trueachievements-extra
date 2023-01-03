@@ -6,7 +6,7 @@ import config from '../config';
 
 const listen = async(): Promise<void> => {
   const iframe =  await waitForElement('#txtWalkthrough_ifr') as HTMLIFrameElement;
-  const globalThemeElement = await waitForElement('[data-theme]') as HTMLElement;
+  const globalThemeElement = await waitForElement('.page, [data-theme]') as HTMLElement;
   const tinymceThemeElement = await waitForElement(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
   let theme: string;
 

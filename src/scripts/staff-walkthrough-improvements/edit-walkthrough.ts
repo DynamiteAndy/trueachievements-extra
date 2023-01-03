@@ -7,7 +7,7 @@ import regex, { extractBetween } from '../../regex';
 import styles from '../../styles/staff-walkthrough-improvements';
 
 const applyBody = async(): Promise<void> => {
-  await allConcurrently(2, [styles, applyImprovedImageSelector, applyTinymceThemeToggle]);
+  await allConcurrently(2, [applyImprovedImageSelector, applyTinymceThemeToggle, styles]);
 };
 
 const applyImprovedImageSelector = async(): Promise<void> => {
@@ -19,10 +19,11 @@ const applyImprovedImageSelector = async(): Promise<void> => {
   imageContainer.classList.add(Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle, Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs);
   
   const imageViewer = imageContainer.querySelector('.imageviewer');
+  const imageLink = await waitForElement('.addimages a', imageContainer);
 
   imageContainer.insertBefore(stickyImageHeader, imageViewer);
   stickyImageHeader.appendChild(imageViewer.querySelector('.itemname, .noimages'));
-  stickyImageHeader.appendChild(imageViewer.querySelector('.addimages a'));
+  stickyImageHeader.appendChild(imageLink);
 
   ([...imageViewer.querySelectorAll('.ivimage a')] as HTMLElement[]).forEach(imageAnchor => {
     const clonedImageTitle = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`).cloneNode(true);

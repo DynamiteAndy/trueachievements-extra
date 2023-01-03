@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+- Fixed test runner not reporting correctly
+- Fixed a bug with improved image loader not working if there was alot of images
+
 ## 2.0.0
 - Moved from browserify to webpack, considered breaking as its a change to how the script is compiled.
 

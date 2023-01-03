@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          TrueAchievements Extra
 // @namespace     dynamite-andy
-// @version       2.0.0
+// @version       2.0.1
 // @iconURL       https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon32x32.ico?raw=true
 // @icon64URL     https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon64x64.ico?raw=true
 // @updateURL     https://github.com/andrewcartwright1/trueachievements-extra/raw/main/dist/trueachievements-extras.user.js
@@ -1582,7 +1582,7 @@ var skin_update = injectStylesIntoStyleTag_default()(skin/* default */.Z, skin_o
 
 const staff_walkthrough_improvements_listen = async () => {
     const iframe = await waitForElement('#txtWalkthrough_ifr');
-    const globalThemeElement = await waitForElement('[data-theme]');
+    const globalThemeElement = await waitForElement('.page, [data-theme]');
     const tinymceThemeElement = await waitForElement(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
     let theme;
     if (config.staffWalkthroughImprovements.tinymceTheme === null) {
@@ -1659,7 +1659,7 @@ const staff_walkthrough_improvements_listen = async () => {
 
 
 const edit_walkthrough_applyBody = async () => {
-    await allConcurrently(2, [staff_walkthrough_improvements, applyImprovedImageSelector, applyTinymceThemeToggle]);
+    await allConcurrently(2, [applyImprovedImageSelector, applyTinymceThemeToggle, staff_walkthrough_improvements]);
 };
 const applyImprovedImageSelector = async () => {
     if (!config.staffWalkthroughImprovements.improvedImageSelector)
@@ -1669,9 +1669,10 @@ const applyImprovedImageSelector = async () => {
     const imageContainer = await waitForElement('#oWalkthroughImageViewer');
     imageContainer.classList.add(Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle, Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs);
     const imageViewer = imageContainer.querySelector('.imageviewer');
+    const imageLink = await waitForElement('.addimages a', imageContainer);
     imageContainer.insertBefore(stickyImageHeader, imageViewer);
     stickyImageHeader.appendChild(imageViewer.querySelector('.itemname, .noimages'));
-    stickyImageHeader.appendChild(imageViewer.querySelector('.addimages a'));
+    stickyImageHeader.appendChild(imageLink);
     [...imageViewer.querySelectorAll('.ivimage a')].forEach(imageAnchor => {
         const clonedImageTitle = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`).cloneNode(true);
         const imageTitle = template(clonedImageTitle, { image: imageAnchor.querySelector('img') });

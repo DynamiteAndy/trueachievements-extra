@@ -1,6 +1,6 @@
 {
   "name": "trueachievements-extras",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "description": "Provides a variety of extras for use on TrueAchievements",
   "bugs": {
@@ -23,9 +23,9 @@
     "lint:scss": "stylelint \"**/*.scss\"",
     "lint:ts": "eslint . --ext .ts",
     "start": "cross-env webpack_watch=true npm run build:dev",
-    "test": "concurrently --max-processes 1 --names \"jasmine,nyc\" \"npm run test:jasmine\" \"npm run test:nyc\"",
-    "test:jasmine": "nyc node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine.js --reporter=jasmine-console-reporter --config=./jasmine.json",
-    "test:nyc": "nyc report --reporter=html"
+    "test": "concurrently --max-processes 1 --names \"jasmine,c8\" \"npm run test:jasmine\" \"npm run test:c8\"",
+    "test:jasmine": "c8 node -r tsconfig-paths/register node_modules/jasmine/bin/jasmine.js --reporter=jasmine-console-reporter --config=./jasmine.json",
+    "test:c8": "c8 report --reporter=html"
   },
   "devDependencies": {
     "@types/jasmine": "^4.3.1",
@@ -35,6 +35,7 @@
     "@types/webpack-livereload-plugin": "^2.3.3",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
+    "c8": "^7.12.0",
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
@@ -46,7 +47,6 @@
     "jasmine-console-reporter": "^3.1.0",
     "jsdom": "^20.0.3",
     "less-loader": "^11.1.0",
-    "nyc": "^15.1.0",
     "postcss-html": "^1.5.0",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
