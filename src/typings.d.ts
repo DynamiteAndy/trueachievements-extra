@@ -7,3 +7,8 @@ declare module '*.scss' {
   const value: any;
   export default value;
 }
+
+declare module '*.hbs' {
+  const value: any;
+  export default value;
+}

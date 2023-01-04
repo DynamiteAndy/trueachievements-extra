@@ -31,10 +31,17 @@ export const allConcurrently = (max: number, arr) => {
       if (processed === tail.length) {
         resolve(Promise.all(resolved));
       } else {
-        resolved.push(tail[processed]().then(x => {
-          runNext();
-          return x;
-        }));
+        if ('then' in tail[processed]) {
+          resolved.push(tail[processed].then(x => {
+            runNext();
+            return x;
+          }));
+        } else {
+          resolved.push(tail[processed]().then(x => {
+            runNext();
+            return x;
+          }));
+        }
 
         processed++;
       }

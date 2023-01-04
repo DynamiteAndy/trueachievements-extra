@@ -1,3 +1,6 @@
+export const isSelectElement = (el: HTMLElement): boolean => el.nodeName === 'SELECT';
+export const isCheckboxElement = (el: HTMLElement): boolean => el.nodeName === 'INPUT' && (el as HTMLInputElement).type === 'checkbox';
+
 export const classListContains = (element: HTMLElement, classes: string|string[]): boolean => {
   const classArray = Array.isArray(classes) ? classes : [classes];
 
@@ -10,7 +13,9 @@ export const classListContains = (element: HTMLElement, classes: string|string[]
   return false;
 };
 
-export const waitForElement = (selector: string, element: Document | HTMLElement = document.documentElement, timeoutMS = 10000): Promise<HTMLElement> => new Promise(resolve => {
+export const waitForElement = (selector: string, element: Document | HTMLElement | Element = document.documentElement, timeoutMS = 10000): Promise<HTMLElement> => new Promise(resolve => {
+  if (element === null) return null;
+  
   if (element.querySelector(selector)) {
     return resolve(element.querySelector(selector) as HTMLElement);
   }

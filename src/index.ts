@@ -1,16 +1,17 @@
 import { Cache } from '@ta-x-globals';
 import { allConcurrently } from '@ta-x-utilities';
-import styles from './styles/index';
-import settingsMenu from './scripts/settings-menu';
-import stickyHeader from './scripts/sticky-header';
-import staffWalkthroughImprovements from './scripts/staff-walkthrough-improvements/index';
+import { accordion } from '@ta-x-components';
+import { SettingsMenu, StickyHeader, StaffWalkthroughImprovements } from '@ta-x-features';
+import styles from './features/staff-walkthrough-improvements/styles';
 
 (async () => {
+  accordion();
+  
   await allConcurrently(4, [
     styles,
-    settingsMenu,
-    stickyHeader,
-    staffWalkthroughImprovements
+    SettingsMenu,
+    StickyHeader,
+    StaffWalkthroughImprovements
   ]);
 
   Cache.clearExpired();

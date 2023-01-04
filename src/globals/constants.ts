@@ -7,6 +7,10 @@ export class Constants {
   static Styles = class {
     static readonly root = 'trueachievement-extras';
 
+    static Components = class {
+      static readonly accordion = `${jsStylePrefix}-accordion`;
+    };
+
     static Animations = class {
       static readonly yShow = `${classStylePrefix}-y-show`;
       static readonly yHide = `${classStylePrefix}-y-hide`;
@@ -23,6 +27,10 @@ export class Constants {
       static readonly subSetting = `${this.featureStyle}-sub-setting`;
       static readonly wrenchJs = `${this.featureJs}-wrench`;
       static readonly closeJs = `${this.featureJs}-close`;
+      static readonly versionLink = `${this.featureJs}-version`;
+      static readonly changelogView = `${this.featureJs}-changelog`;
+      static readonly settingsView = `${this.featureJs}-settings`;
+      static readonly settingsContentShow = `${this.featureStyle}-settings-item-show`;
     };
 
     static StickyHeader = class {
@@ -41,10 +49,8 @@ export class Constants {
         static readonly containerStyle = `${this.featureStyle}-container`;
         static readonly stickyPageHistoryJs = `${this.featureJs}-sticky-page-history`;
         static readonly stickyPageHistoryStyle = `${this.featureStyle}-sticky-page-history`;
-        static readonly editPageLeftJs = `${this.featureJs}-edit-page-left`;
-        static readonly editPageLeftStyle = `${this.featureStyle}-edit-page-left`;
+        static readonly moveButtonsToLeftStyle = `${this.featureStyle}-move-buttons-to-left`;
         static readonly walkthroughTeamButtonJs = `${this.featureJs}-walkthrough-team-button`;
-        static readonly walkthroughTeamButtonStyle = `${this.featureStyle}-walkthrough-team-button`;
       };
 
       static readonly ManageWalkthroughPage = class {
