@@ -9,6 +9,8 @@ export class Constants {
 
     static Components = class {
       static readonly accordion = `${jsStylePrefix}-accordion`;
+      static readonly snackbar = `${jsStylePrefix}-snackbar`;
+      static readonly showSnackbar = `${classStylePrefix}-snackbar-show`;
     };
 
     static Animations = class {

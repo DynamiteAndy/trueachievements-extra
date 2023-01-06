@@ -1,0 +1,63 @@
+body {
+  &.trueachievement-extras {
+    .ta-x-snackbar {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: #333;
+      text-align: center;
+      border-radius: 1.5rem;
+      padding: 16px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+
+      &-show {
+        visibility: visible;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+
+      h2 {
+        color: #bbb;
+        border-left: 3px solid #3f67a4;
+
+        &.warning {
+          border-color: #f57921;
+        }
+
+        &.danger {
+          border-color: #f52721;
+        }
+
+        &.success {
+          border-color: #58bb12;
+        }
+      }
+    }
+
+    @keyframes fadein {
+      from {
+        bottom: 0;
+        opacity: 0;
+      }
+
+      to {
+        bottom: 30px;
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeout {
+      from {
+        bottom: 30px;
+        opacity: 1;
+      }
+
+      to {
+        bottom: 0;
+        opacity: 0;
+      }
+    }
+  }
+}

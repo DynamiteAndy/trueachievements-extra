@@ -1,50 +1,34 @@
-export const allSequentially = (arr) => {
-  let result = Promise.resolve();
-  return Promise.all(
-      arr.reduce((promise, task) => {
-        result = result.then(() => (typeof task === 'function' ? task() : task));
-        promise.push(result);
-        return promise;
-      }, [])
-  );
-};
+type Callback<T> = (args: T) => void;
 
-export const allConcurrently = (max: number, arr) => {
+export const promisify = <T>(fn: (cb: Callback<T>) => void): (() => Promise<T>) => () => new Promise((resolve) => fn((callbackArgs) => resolve(callbackArgs)));
+
+export const allConcurrently = async <T>(name: string, arr: { name: string, task: (() => T | Promise<T>) }[], max = 3): Promise<T[]> => {
   if (arr.length === 0) return Promise.resolve([]);
 
-  const tail = arr.splice(max);
-  const head = arr;
-  const resolved = [];
-  let processed = 0;
+  let index = 0;
+  const results = [];
 
-  return new Promise(resolve => {
-    head.forEach(task => {
-      const res = (typeof task === 'function' ? task() : task);
-      resolved.push(res);
-      res.then(y => {
-        runNext();
-        return y;
-      });
-    });
+  // Run a pseudo-thread
+  const execThread = async () => {
+    while (index < arr.length) {
+      const curIndex = index++;
+      // Use of `curIndex` is important because `index` may change after await is resolved
+      const task = arr[curIndex].task.constructor.name === 'Function'
+        ? promisify(arr[curIndex].task)
+        : arr[curIndex].task;
 
-    const runNext = () => {
-      if (processed === tail.length) {
-        resolve(Promise.all(resolved));
-      } else {
-        if ('then' in tail[processed]) {
-          resolved.push(tail[processed].then(x => {
-            runNext();
-            return x;
-          }));
-        } else {
-          resolved.push(tail[processed]().then(x => {
-            runNext();
-            return x;
-          }));
-        }
+      results[curIndex] = await task();
+    }
+  };
 
-        processed++;
-      }
-    };
-  });
+  // Start threads
+  const threads = [];
+
+  for (let thread = 0; thread < max; thread++) {
+    threads.push(execThread());
+  }
+
+  await Promise.all(threads);
+
+  return results;
 };

@@ -35,10 +35,10 @@ export default async(): Promise<void> => {
   if (!StaffRegex.Walkthroughs.Test.walkthroughPageUrl()) return;
 
   await applyBody();
-  await allConcurrently(3, [ 
-    addWalkthroughTeamButton(walkthroughContainer, walkthoughPageVersions),
-    moveButtonsToLeft(walkthroughContainer, walkthoughPageVersions),
-    setPageHistorySticky(walkthroughContainer, walkthoughPageVersions),
-    highlightPageLocked(walkthroughContainer)
+  allConcurrently('Walkthrough Page', [ 
+    { name: 'walkthrough-page-set-page-history-sticky', task: async() => setPageHistorySticky(walkthroughContainer, walkthoughPageVersions) },
+    { name: 'walkthrough-page-add-walkthrough-team-button', task: async() => addWalkthroughTeamButton(walkthroughContainer, walkthoughPageVersions) },
+    { name: 'walkthrough-page-move-buttons-to-left', task: async() => moveButtonsToLeft(walkthroughContainer, walkthoughPageVersions) },
+    { name: 'walkthrough-page-highlight-page-locked', task: async() => highlightPageLocked(walkthroughContainer) }
    ]);
 };

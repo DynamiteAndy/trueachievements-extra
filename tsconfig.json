@@ -18,6 +18,7 @@
       "@ta-x-models": ["./models/index"],
       "@ta-x-components": ["./components/index"],
       "@ta-x-helpers": ["./helpers/index"],
+      "@ta-x-types": ["./types/index"],
       "@ta-x-scss/*": ["./scss/*"],
       "@ta-x-tinymce-scss/*": ["./scss/features/staff-walkthrough-improvements/tinymce/*"],
       "@ta-x-views/*": ["./views/*"],

@@ -4,13 +4,8 @@ export class ConditionalRender {
   public selector: string;
   public value: boolean;
 
-  public constructor();
-  public constructor(json: string);
-  public constructor(...params: any[]) {
-    if (params.length === 1) {
-      this.fromString(params[0] as string);
-      return;
-    }
+  public constructor(json: string) {
+    this.fromString(json);
   }
 
   fromString(json: string): void {

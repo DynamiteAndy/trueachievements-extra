@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.0
+- Fixed another issue where some walkthrough elements would not follow the tinymce theme,
+- Add a autosave notification on edit walkthrough,
+- Fixed a bug with auto select first where it would auto select the first even if a walkthrough was selected,
+- Fixed a bug with auto select first (it was checking the wrong setting was enabled, sorry)!
+
+## 2.1.2
+- Fixed an issue where some walkthrough elements would not follow the tinymce theme. 
+
 ## 2.1.1
 - Fancy new settings menu with accordions to clean up the settings,
 - Moved injected html to handlebars templates,
@@ -17,7 +26,7 @@
 - Moved from gulp and browserify to webpack, considered breaking as its a change to how the script is compiled.
 
 ## 1.5.1
-- Fixed caching by days, it was caching by seconds instead >_<
+- Fixed caching by days, it was caching by seconds instead >_<.
 
 ## 1.5.0
 - Fixed an issue where clickable table links would only make a single achievement clickable if it was duplicated.

@@ -1,14 +1,14 @@
 declare module '*.html' {
-  const value: any;
+  const value: string;
   export default value;
 }
 
 declare module '*.scss' {
-  const value: any;
+  const value: string;
   export default value;
 }
 
 declare module '*.hbs' {
-  const value: any;
+  const value: string;
   export default value;
 }

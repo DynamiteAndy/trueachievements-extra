@@ -69,6 +69,7 @@ const listen = async(): Promise<void> => {
         theme = mutation.target.getAttribute('data-theme');
         preventMutation = true;
         themeToggle.setAttribute('data-ta-x-tinymce-theme', theme === 'dark' ? theme : '');
+        document.body.setAttribute('data-ta-x-theme', theme === 'dark' ? theme : '');
       } else if (mutation.attributeName === 'data-ta-x-tinymce-theme') {
         theme = mutation.target.getAttribute('data-ta-x-tinymce-theme');
       } else {
@@ -105,7 +106,9 @@ export const addTinymceThemeToggle = async(): Promise<void> => {
 
   themeToggle = toolbar.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs} [data-ta-x-tinymce-theme]`);
 
-  themeToggle.setAttribute('data-ta-x-tinymce-theme', await getTinymceTheme());
+  const theme = await getTinymceTheme();
+  themeToggle.setAttribute('data-ta-x-tinymce-theme', theme);
+  document.body.setAttribute('data-ta-x-theme', theme);
   await listen();
 };
 

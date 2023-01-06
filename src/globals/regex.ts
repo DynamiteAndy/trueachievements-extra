@@ -26,6 +26,7 @@ const manageWalkthroughUrlWithWalkthroughId = new RegExp('^/staff/walkthrough/ma
 const walkthroughPageUrl = new RegExp('^/staff/walkthrough/walkthroughpage.aspx', 'i');
 const walkthroughPreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpreview.aspx', 'i');
 const walkthroughPagePreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpagepreview.aspx', 'i');
+const autosave = new RegExp('^/ajaxfunctions.aspx/AutoSave', 'i');
 
 export const AchievementsRegex = {
   achievementUrl,
@@ -40,6 +41,13 @@ export const GamesRegex = {
   achievementsUrl,
   Test: {
     achievementsUrl: (str: string = window.location.href): boolean => achievementsUrl.test(getUrlProperties(str, 'pathname'))
+  }
+};
+
+export const AjaxRegex = {
+  autosave,
+  Test: {
+    autosave: (str: string = window.location.href): boolean => autosave.test(getUrlProperties(str, 'pathname'))
   }
 };
 

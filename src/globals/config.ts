@@ -18,6 +18,8 @@ export const stickyHeader = {
 export const editWalkthrough = {
   get improvedImageSelector(): boolean { return migrateGet('trueachievements-extra-staffWalkthroughImprovements-improvedImageSelector', 'improvedImageSelector', false); },
   set improvedImageSelector(value: boolean) { GM_setValue('trueachievements-extra-staffWalkthroughImprovements-improvedImageSelector', value); },
+  get autoSaveNotification(): boolean { return GM_getValue('autoSaveNotification', false); },
+  set autoSaveNotification(value: boolean) { GM_setValue('autoSaveNotification', value); },
   get tinymceTheme(): string { return migrateGet('trueachievements-extra-staffWalkthroughImprovements-tinymceTheme', 'tinymceTheme', null); },
   set tinymceTheme(value: string) { GM_setValue('trueachievements-extra-staffWalkthroughImprovements-tinymceTheme', value); }
 };

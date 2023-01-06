@@ -1,10 +1,11 @@
 import { setLocalStorage } from '@ta-x-jasmine';
+import { MemoizedFetch } from '@ta-x-models';
 import { Cache } from './cache'; 
 
 describe('cache', () => { 
   describe('memoize - get', () => {
     const testCases = [
-      { case: new Map<string, any>(), expected: 0 },
+      { case: new Map<string, MemoizedFetch>(), expected: 0 },
       {
         case: new Map([[
           'trueachievements-extra-memoized',
@@ -31,16 +32,16 @@ describe('cache', () => {
 
   describe('memoize - set', () => {
     const testCases = [
-      { case: new Map<string, any>(), expected: 0 },
+      { case: new Map<string, MemoizedFetch>(), expected: 0 },
       {
         case: new Map([[
-          'key1', 'value'
+          'key1', new MemoizedFetch()
         ]]),
         expected: 1
       },
       {
         case: new Map(
-          [['key1', 'value'], ['key2', 'value']]
+          [['key1', new MemoizedFetch()], ['key2', new MemoizedFetch()]]
         ),
         expected: 2
       }

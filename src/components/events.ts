@@ -51,7 +51,7 @@ export const broadcast = (event: string, context = 'global', data?: any): void =
 export const subscribe = (event: string, listener: (...params: any[]) => void, identifier?: string | number, context = 'global', binding = null): number | symbol => {
   const listenerId = identifier ? getSymbol(identifier) : Symbol();
 
-  if (listenerQueue.has(listenerId)) throw new Error('You can\'t override an existing listener identifier. You must unsubscribe it first');
+  if (listenerQueue.has(listenerId)) throw new Error("You can't override an existing listener identifier. You must unsubscribe it first");
   if (!eventList[event]) eventList[event] = new Map();
   if (!eventList[event].has(context)) eventList[event].set(context, []);
 

@@ -15,6 +15,9 @@ export const classListContains = (element: HTMLElement, classes: string|string[]
 
 export const waitForElement = (selector: string, element: Document | HTMLElement | Element = document.documentElement, timeoutMS = 10000): Promise<HTMLElement> => new Promise(resolve => {
   if (element === null) return null;
+  if (element === document.documentElement) {
+    element = document.documentElement;
+  } 
   
   if (element.querySelector(selector)) {
     return resolve(element.querySelector(selector) as HTMLElement);
@@ -37,7 +40,7 @@ export const waitForElement = (selector: string, element: Document | HTMLElement
     }
   });
 
-  observer.observe(element || document.documentElement, {
+  observer.observe(element, {
     childList: true,
     subtree: true
   });

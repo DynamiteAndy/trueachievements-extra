@@ -10,30 +10,38 @@ const clickableAchievements = async(walkthroughContainer: HTMLElement, walthroug
     const walkthroughAchievementContainer = walkthroughContainer.querySelector('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID tbody') as HTMLElement;
     const games = ([...walthroughPreviewDocument.querySelectorAll('.walkthroughsummary .games a.gamelink')] as HTMLAnchorElement[]);
 
-    await allConcurrently(3, games.map((game) => async () => {
-      const gameResponse = await memoizeFetch(game.href);
-      const gameDocument = new DOMParser().parseFromString(gameResponse, 'text/html');
+    await allConcurrently('ClickableAchievements - Games', games.map((game: HTMLAnchorElement) => ({
+        name: `manage-walkthrough-clickable-table-links-clickable-achievements-${game.innerText}`,
+        task: async () => {
+          const gameResponse = await memoizeFetch(game.href);
+          const gameDocument = new DOMParser().parseFromString(gameResponse, 'text/html');
+          const gameAchievements = ([...gameDocument.querySelectorAll('main ul.ach-panels li a.title')] as HTMLElement[]);
 
-      ([...gameDocument.querySelectorAll('main ul.ach-panels li a.title')] as HTMLElement[]).forEach((gameAchievement: HTMLElement) => {
-        const achievementName = gameAchievement.innerText.trim();
-        const walkthroughAchievement = walkthroughAchievements.find(walkthroughAchievement => walkthroughAchievement.innerText.toLowerCase() === achievementName.toLowerCase());
+          await allConcurrently('ClickableAchievements - Achievements', gameAchievements.map((gameAchievement: HTMLElement) => ({
+            name: `manage-walkthrough-clickable-table-links-clickable-achievements-${game.innerText}-${gameAchievement.innerText.trim()}`,
+            task: async () => {
+              const achievementName = gameAchievement.innerText.trim();
+              const walkthroughAchievement = walkthroughAchievements.find(walkthroughAchievement => walkthroughAchievement.innerText.toLowerCase() === achievementName.toLowerCase());
 
-        if (walkthroughAchievement) {
-          walkthroughAchievement.innerText = '';
-          walkthroughAchievement.innerHTML = gameAchievement.outerHTML;
+              if (walkthroughAchievement) {
+                walkthroughAchievement.innerText = '';
+                walkthroughAchievement.innerHTML = gameAchievement.outerHTML;
 
-          const link = walkthroughAchievement.querySelector('a') as HTMLAnchorElement;
-          link.href = AchievementsRegex.Test.achievementUrlWithGamerId(link.href) ? new URL(link.href).pathname : link.href;
-        } else {
-          const clonedAchievementRow = (parsedDocument.querySelector(`#${Constants.Templates.StaffWalkthroughImprovements.ManageWalkthroughPage.achievementRow}`) as HTMLTemplateElement).content.firstElementChild.cloneNode(true);
-          const achievementRow = template(clonedAchievementRow as HTMLElement, { element: gameAchievement });
-          const link = achievementRow.querySelector('a') as HTMLAnchorElement;
-          achievementRow.querySelector('a').href = AchievementsRegex.Test.achievementUrlWithGamerId(link.href) ? new URL(link.href).pathname : link.href;
+                const link = walkthroughAchievement.querySelector('a') as HTMLAnchorElement;
+                link.href = AchievementsRegex.Test.achievementUrlWithGamerId(link.href) ? new URL(link.href).pathname : link.href;
+              } else {
+                const clonedAchievementRow = (parsedDocument.querySelector(`#${Constants.Templates.StaffWalkthroughImprovements.ManageWalkthroughPage.achievementRow}`) as HTMLTemplateElement).content.firstElementChild.cloneNode(true);
+                const achievementRow = template(clonedAchievementRow as HTMLElement, { element: gameAchievement });
+                const link = achievementRow.querySelector('a') as HTMLAnchorElement;
+                achievementRow.querySelector('a').href = AchievementsRegex.Test.achievementUrlWithGamerId(link.href) ? new URL(link.href).pathname : link.href;
 
-          walkthroughAchievementContainer.appendChild(achievementRow);
+                walkthroughAchievementContainer.appendChild(achievementRow);
+              }
+            }
+          })), 5);
         }
-      });
-    }));
+      })
+    ));
 
     const achievementsTotal = walkthroughContainer.querySelector('#chWalkthroughAchievements #lstWalkthroughAchievementID .total') as HTMLElement;
     achievementsTotal.innerText = `${achievementsTotal.innerText}/${ [...walkthroughAchievementContainer.querySelectorAll('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID .c1')].length}`;
@@ -86,11 +94,11 @@ export const makeTableLinksClickable = async(): Promise<void> => {
   const walthroughPreviewResponse = await memoizeFetch(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
   const walthroughPreviewDocument = new DOMParser().parseFromString(walthroughPreviewResponse, 'text/html');
 
-  await allConcurrently(2, [
-    clickableAchievements(walkthroughContainer, walthroughPreviewDocument),
-    clickableGames(walkthroughContainer, walthroughPreviewDocument),
-    clickableGamers(walkthroughContainer, walthroughPreviewDocument)
-  ]);
+  await allConcurrently('Manage Walkthrough Page Clickable Table Links', [
+    { name: 'manage-walkthrough-clickable-table-links-clickable-achievements', task: async() => clickableAchievements(walkthroughContainer, walthroughPreviewDocument) },
+    { name: 'manage-walkthrough-clickable-table-links-clickable-games', task: async() => clickableGames(walkthroughContainer, walthroughPreviewDocument) },
+    { name: 'manage-walkthrough-clickable-table-links-clickable-gamers', task: async() => clickableGamers(walkthroughContainer, walthroughPreviewDocument) }
+  ], 1);
 };
 
 export default { makeTableLinksClickable };

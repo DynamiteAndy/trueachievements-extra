@@ -1,4 +1,4 @@
-import { AchievementsRegex, GamesRegex, StaffRegex, DatesRegex } from './regex';
+import { AchievementsRegex, GamesRegex, StaffRegex, DatesRegex, AjaxRegex } from './regex';
 
 describe('regex', () => {
   describe('achievementUrl', () => {
@@ -137,6 +137,19 @@ describe('regex', () => {
     testCases.forEach((test, index) => {
       it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
         expect(StaffRegex.Walkthroughs.Test.walkthroughPagePreviewUrl(test.case)).toEqual(test.expected);
+      });
+    });
+  });
+
+  describe('autosave', () => {
+    const testCases = [
+      { case: 'https://www.trueachievements.com/ajaxfunctions.aspx/AutoSave', expected: true },
+      { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx', expected: false }
+    ];
+
+    testCases.forEach((test, index) => {
+      it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+        expect(AjaxRegex.Test.autosave(test.case)).toEqual(test.expected);
       });
     });
   });

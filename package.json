@@ -1,6 +1,6 @@
 {
   "name": "trueachievements-extras",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "private": true,
   "description": "Provides a variety of extras for use on TrueAchievements",
   "bugs": {
@@ -77,5 +77,8 @@
     "webpack-merge": "^5.8.0",
     "webpack-sources": "^3.2.3"
   },
-  "url": "https://github.com/andrewcartwright1/trueachievements-extra"
+  "url": "https://github.com/andrewcartwright1/trueachievements-extra",
+  "dependencies": {
+    "ajax-interceptor": "^1.0.1"
+  }
 }

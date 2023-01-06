@@ -19,7 +19,10 @@ const applyBody = async(): Promise<void> => {
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
     editWalkthrough.after(parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
 
-    await allConcurrently(2, [adjustRightSidebar, adjustButtons]);
+    await allConcurrently('Manage Walkthrough', [
+      { name: 'manage-walkthrough-adjust-right-sidebar', task: adjustRightSidebar },
+      { name: 'manage-walkthrough-adjust-buttons', task: adjustButtons }
+    ]);
   }
 };
 

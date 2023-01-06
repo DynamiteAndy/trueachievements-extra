@@ -23,6 +23,9 @@ export const prodConfig = merge(baseConfig as any, {
         terserOptions: {
           format: {
             comments: /@.* [\w|\d].*|==\/?UserScript==/i
+          },
+          compress: {
+            drop_console: true
           }
         }
       }),

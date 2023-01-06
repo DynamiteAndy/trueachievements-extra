@@ -12,5 +12,10 @@ export default async(): Promise<void> => {
 
   document.body.classList.add(Constants.Styles.StaffWalkthroughImprovements.featureJs, Constants.Styles.StaffWalkthroughImprovements.featureStyle);
   
-  await allConcurrently(4, [ manageWalkthrough, walkthroughPreview, walkthroughPage, editWalkthrough ]);
+  allConcurrently('Staff Walkthrough Improvements', [ 
+    { name: 'staff-walkthrough-improvements-manage-walkthrough', task: manageWalkthrough },
+    { name: 'staff-walkthrough-improvements-walkthrough-preview', task: walkthroughPreview },
+    { name: 'staff-walkthrough-improvements-walkthrough-page', task: walkthroughPage },
+    { name: 'staff-walkthrough-improvements-edit-walkthrough', task: editWalkthrough }
+  ], 4);
 };

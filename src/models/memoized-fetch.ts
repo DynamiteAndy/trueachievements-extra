@@ -1,19 +1,12 @@
-export class MemoizedFetchOpts {
-  public deleteAfter: any;
-
-  public constructor(deleteAfter: {
-    value: number,
-    period: 'seconds' | 'minutes' | 'hours' | 'days'
-  }) {
-    this.deleteAfter = deleteAfter;
-  }
-}
+import { MemoizedFetchOptions } from '@ta-x-types';
 
 export class MemoizedFetch {
   public expiryTime: Date;
   public response: string;
 
-  public constructor(opts: MemoizedFetchOpts) {
+  public constructor(opts?: MemoizedFetchOptions) {
+    opts = opts ? opts : { deleteAfter: { value: 7, period: 'days' } };
+
     const now = new Date();
 
     switch (opts.deleteAfter.period) {
