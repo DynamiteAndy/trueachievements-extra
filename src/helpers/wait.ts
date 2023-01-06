@@ -1,4 +1,14 @@
-export const until = (predFn: () => any): Promise<any> => {
-  const poll = (done: any) => (predFn() ? done() : setTimeout(() => poll(done), 250));
-  return new Promise(poll);
+export const until = async (f: () => boolean, timeoutMs = 10000) => {
+  return new Promise((resolve, reject) => {
+    const timeWas = new Date();
+    const wait = setInterval(function () {
+      if (f()) {
+        clearInterval(wait);
+        resolve(true);
+      } else if (+new Date() - +timeWas > timeoutMs) {
+        clearInterval(wait);
+        reject(false);
+      }
+    }, 20);
+  });
 };

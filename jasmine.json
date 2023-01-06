@@ -5,7 +5,7 @@
   ],
   "helpers": [
     "./node_modules/ts-node/register/type-check.js",
-    "./src/jasmine/**/*.ts"
+    "./test/jasmine/**/*.ts"
   ],
   "stopSpecOnExpectationFailure": false,
   "random": false

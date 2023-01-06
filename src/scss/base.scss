@@ -16,5 +16,13 @@ body {
         max-width: 1200px;
       }
     }
+
+    .ta-x-flex-break {
+      flex-basis: 100%;
+      height: 0;
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
   }
 }

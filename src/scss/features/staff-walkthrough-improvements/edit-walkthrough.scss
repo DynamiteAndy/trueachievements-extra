@@ -1,0 +1,127 @@
+/* stylelint-disable selector-id-pattern */
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff-walkthrough-improvements {
+      .admin-page {
+        .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector {
+          &#oWalkthroughImageViewer {
+            width: 321px;
+          }
+
+          .noimages,
+          .itemname {
+            padding: 5px;
+            text-align: center;
+            font-size: unset !important;
+          }
+
+          .ta-x-sticky-header {
+            position: sticky;
+            border-bottom: 1px solid #000;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+
+            .noimages {
+              margin-top: 0;
+            }
+          }
+
+          a[title='Add images'] {
+            text-align: center;
+            padding: 5px;
+            cursor: pointer !important;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .imageviewer {
+            display: flex;
+            flex-wrap: wrap;
+
+            .ivimage {
+              position: unset;
+              margin: 5px;
+              max-width: 46%;
+            }
+          }
+
+          .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title {
+            text-align: center;
+            padding-top: 3px;
+            white-space: break-spaces;
+          }
+        }
+
+        .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle {
+          svg {
+            height: 20px;
+            pointer-events: none;
+
+            path {
+              fill: #555;
+              filter: drop-shadow(21px 21px #fff);
+              pointer-events: none;
+            }
+
+            &:hover {
+              path {
+                fill: #333;
+              }
+            }
+
+            &.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light {
+              display: none;
+            }
+
+            &.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark {
+              display: block;
+            }
+          }
+
+          [data-ta-x-tinymce-theme='dark'] {
+            svg {
+              &.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light {
+                display: block;
+              }
+
+              &.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+
+      [data-theme='dark'] {
+        .admin-page {
+          .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector {
+            .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title {
+              color: #b5b9bf;
+            }
+
+            .ta-x-sticky-header {
+              background-color: #2f3740;
+
+              .itemname {
+                color: #b5b9bf;
+              }
+            }
+          }
+
+          .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle {
+            svg {
+              path {
+                fill: #b5b9bf;
+                filter: drop-shadow(21px 21px #000);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+/* stylelint-enable selector-id-pattern */

@@ -1,4 +1,4 @@
-import regex from '../regex';
+import { DatesRegex } from '../globals/regex';
 import { isValid } from './date-util';
 
 const today = new Date(new Date().setHours(0, 0, 0, 0));
@@ -21,11 +21,11 @@ export const toInt = (value: string|boolean|number): number => {
 };
 
 export const toDate = (value: string): Date => {
-  if (regex.words.today.test(value)) {
+  if (DatesRegex.today.test(value)) {
     return today;
   }
 
-  if (regex.words.yesterday.test(value)) {
+  if (DatesRegex.yesterday.test(value)) {
     return yesterday;
   }
   
@@ -54,8 +54,28 @@ export const toBool = (str: string|boolean|number): boolean => {
     : null;
 };
 
+export const extractBetween = (between: string, str: string): string => {
+  const regex = new RegExp(`${between}(.*?)${between}`);
+  const matches = str.match(regex);
+  
+  return matches
+    ? matches[1]
+    : str;
+};
+
+export const extractAllBetween = (between: string, str: string): string[] =>  {
+  const regex = new RegExp(`${between}(.*?)${between}`, 'g');
+  const matches = str.match(regex);
+  
+  return matches
+    ? matches.map(str => str.replace(between, ''))
+    : [str];
+};
+
 export default {
   toInt,
   toDate,
-  toBool
+  toBool,
+  extractBetween,
+  extractAllBetween
 };

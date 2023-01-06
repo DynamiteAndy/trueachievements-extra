@@ -1,11 +1,20 @@
 # Changelog
 
+## 2.1.1
+- Fancy new settings menu with accordions to clean up the settings,
+- Moved injected html to handlebars templates,
+- Minify html and css further reducing package size (?),
+- Split out all features into own files instead of 1 file with many features,
+- Added a new feature to change the locked message on walkthrough page to be more clear,
+- Added a changelog view for the past 5 versions and a credits area,
+- Added a new feature to auto select the first walkthrough on manage walkthrough.
+
 ## 2.0.1
-- Fixed test runner not reporting correctly
-- Fixed a bug with improved image loader not working if there was alot of images
+- Fixed test runner not reporting correctly,
+- Fixed a bug with improved image loader not working if there was alot of images.
 
 ## 2.0.0
-- Moved from browserify to webpack, considered breaking as its a change to how the script is compiled.
+- Moved from gulp and browserify to webpack, considered breaking as its a change to how the script is compiled.
 
 ## 1.5.1
 - Fixed caching by days, it was caching by seconds instead >_<

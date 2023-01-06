@@ -1,0 +1,211 @@
+body {
+  &.trueachievement-extras {
+    .ta-x-settings-menu {
+      &-settings {
+        max-height: 547px;
+        overflow-y: scroll !important;
+        padding: 0 1rem !important;
+        padding-bottom: 1rem !important;
+        height: 100%;
+        position: relative;
+
+        >div {
+          display: block;
+          padding: 0;
+        }
+
+        .frm-grp {
+          user-select: none;
+          margin-right: 0;
+        }
+
+        .frm-sel {
+          &::after {
+            top: 10px;
+          }
+        }
+
+        .t-settings {
+          >div {
+            flex-wrap: wrap;
+          }
+
+          .ta-x-checkbox-help-text {
+            font-size: 1.2rem;
+            padding-top: .5rem;
+          }
+        }
+
+        .ta-x-settings-menu-settings-item {
+          position: absolute;
+          display: none;
+          width: 313px;
+          padding-bottom: 1rem;
+
+          &-show {
+            display: block;
+          }
+
+          .ta-x-settings-menu-changelog-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+
+            a {
+              width: 100%;
+            }
+
+            h1,
+            h2 {
+              width: 100%;
+            }
+
+            h1 {
+              margin-bottom: 1rem;
+            }
+
+            h2 {
+              border-top: 2px solid #0e5814;
+              border-bottom: 2px solid #0e5814;
+              padding: .5rem;
+            }
+
+            .ta-x-changelog-marker {
+              flex-basis: unset;
+              align-self: center;
+              padding-right: 1rem;
+            }
+          }
+        }
+
+        .ta-x-settings-menu-settings-accordion {
+          flex-wrap: wrap;
+          border: 0;
+          padding-bottom: 0;
+
+          &:last-of-type {
+            padding-bottom: 0;
+          }
+
+          &-header,
+          &-body {
+            width: 100%;
+          }
+
+          &-header {
+            padding: 1rem;
+            flex-shrink: unset;
+            color: #fff;
+            cursor: pointer;
+            user-select: none;
+
+            span {
+              width: 100%;
+              pointer-events: none;
+            }
+
+            svg {
+              height: 20px;
+              pointer-events: none;
+            }
+
+            &.collapsed {
+              svg {
+                transition: all .5s linear;
+              }
+            }
+
+            &.expanded {
+              svg {
+                transform: rotate(-180deg);
+              }
+            }
+          }
+
+          &-body {
+            border: 1px solid #161616;
+            border-top: 0;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            padding: 0;
+            transition: max-height .5s ease-out;
+            max-height: 0;
+            overflow: hidden;
+          }
+
+          .t-settings {
+            > div {
+              padding: 1rem 0;
+              margin: 0 1rem;
+
+              &:last-of-type {
+                border: 0;
+              }
+            }
+          }
+        }
+      }
+
+      &-columned-setting {
+        flex-direction: column;
+        align-items: flex-start;
+
+        >div:first-of-type {
+          display: flex;
+        }
+
+        .frm-sel {
+          padding-top: 1rem;
+        }
+      }
+
+      &-bottom {
+        background: #4a5568;
+        position: absolute;
+        bottom: 0;
+        display: block;
+        width: 100%;
+        padding: 0 1rem !important;
+
+        .title {
+          margin-bottom: 0;
+          color: #ddd;
+          border: 0;
+
+          a {
+            background: unset;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      .close {
+        i {
+          pointer-events: none;
+        }
+      }
+    }
+
+    [data-theme='dark'] {
+      .ta-x-settings-menu {
+        &-bottom {
+          .buttons {
+            border-color: #000 !important;
+
+            a {
+              background: #4299e1 !important;
+            }
+          }
+        }
+
+        .ta-x-settings-menu-settings-accordion {
+          &-header {
+            color: #ddd;
+          }
+        }
+      }
+    }
+  }
+}

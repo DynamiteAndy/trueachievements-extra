@@ -184,6 +184,7 @@ App_Data
 .vs
 
 # Userscript Files
+!build/
 dist/*
 !dist/*.user.js
 dist/*.dev.user.js

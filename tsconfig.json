@@ -10,15 +10,19 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
+      "@ta-x-features": ["./features/index"],
+      "@ta-x-features/*": ["./features/*"],
+      "@ta-x-partials/*": ["./views/partials/*"],
       "@ta-x-globals": ["./globals/index"],
       "@ta-x-utilities": ["./utilities/index"],
       "@ta-x-models": ["./models/index"],
       "@ta-x-components": ["./components/index"],
       "@ta-x-helpers": ["./helpers/index"],
       "@ta-x-scss/*": ["./scss/*"],
-      "@ta-x-tinymce-scss/*": ["./scss/staff-walkthrough-improvements/tinymce/*"],
+      "@ta-x-tinymce-scss/*": ["./scss/features/staff-walkthrough-improvements/tinymce/*"],
       "@ta-x-views/*": ["./views/*"],
-      "@ta-x-jasmine": ["./jasmine/index"],
+      "@ta-x-project-root/*": ["../*"],
+      "@ta-x-jasmine": ["../test/jasmine/index"]
     }
   }
 }

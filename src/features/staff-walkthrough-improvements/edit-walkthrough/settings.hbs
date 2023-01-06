@@ -1,0 +1,10 @@
+<div class="ta-x-settings-menu-settings-accordion" data-render-condition='{ "selector": "#chkStaffWalkthroughImprovements", "value": "true" }'>
+    {{ includes "@ta-x-partials/accordion-header.hbs" title="Edit Walkthrough" expanded=false }}
+
+    <div class="ta-x-settings-menu-settings-accordion-body t-settings">
+        {{ includes "@ta-x-partials/checkbox-setting.hbs"
+            label="Improved Image Selector"
+            id="chkStaffWalkthroughImprovementsImproveImageSelector"
+            config-path="staffWalkthroughImprovements.editWalkthrough.improvedImageSelector" }}
+    </div>
+</div>
