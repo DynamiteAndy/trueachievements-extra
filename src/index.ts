@@ -19,7 +19,7 @@ ajaxInterceptor.wire();
     { name: 'feature:settings-menu', task: SettingsMenu },
     { name: 'feature:sticky-header', task: StickyHeader },
     { name: 'feature:staff-walkthrough-improvements', task: StaffWalkthroughImprovements }
-  ]);
+  ], 4);
 
   Cache.clearExpired();
 })();

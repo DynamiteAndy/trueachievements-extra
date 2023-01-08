@@ -78,6 +78,8 @@ export class Constants {
         static readonly themeToggleStyle = `${this.featureStyle}-theme-toggle`;
         static readonly themeToggleDarkStyle = `${this.themeToggleStyle}-dark`;
         static readonly themeToggleLightStyle = `${this.themeToggleStyle}-light`;
+        static readonly stickyTinymceToolbarJs = `${this.featureJs}-sticky-tinymce-toolbar`;
+        static readonly stickyTinymceToolbarStyles = `${this.featureStyle}-sticky-tinymce-toolbar`;
       };
     };
 
@@ -91,6 +93,13 @@ export class Constants {
         static readonly WalkthroughPage = class {
           static readonly featureVariableStylePrefix = `${variableStylePrefix}-staff-walkthrough-improvements-walkthrough-page`;
           static readonly stickyPageHistoryTop = `${this.featureVariableStylePrefix}-sticky-page-history-top`;
+        };
+
+        static readonly EditWalkthroughPage = class {
+          static readonly featureVariableStylePrefix = `${variableStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`;
+          static readonly stickyTinymceToolbarWidth = `${this.featureVariableStylePrefix}-sticky-tinymce-toolbar-width`;
+          static readonly stickyTinymceToolbarTop = `${this.featureVariableStylePrefix}-sticky-tinymce-toolbar-top`;
+          static readonly stickyTinymceToolbarFloatingMenu = `${this.featureVariableStylePrefix}-sticky-tinymce-toolbar-floating-menu`;
         };
       };
     };

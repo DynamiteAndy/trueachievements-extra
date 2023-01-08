@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.0
+## 2.2.1
 - Fixed another issue where some walkthrough elements would not follow the tinymce theme,
 - Add a autosave notification on edit walkthrough,
 - Fixed a bug with auto select first where it would auto select the first even if a walkthrough was selected,

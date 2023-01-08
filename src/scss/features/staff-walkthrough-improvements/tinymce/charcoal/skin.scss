@@ -2,6 +2,10 @@
 body {
   &.trueachievement-extras {
     &.ta-x-staff-walkthrough-improvements {
+      .mce-edit-area {
+        border: 0 !important;
+      }
+
       &[data-ta-x-theme='dark'] {
         .mce-panel {
           border: 0 solid #232b33;
@@ -141,9 +145,8 @@ body {
         }
 
         .mce-edit-area {
-          border: 1px solid #000 !important;
-          border-right: 0 !important;
-          border-bottom: 0 !important;
+          border-left: 1px solid #000 !important;
+          border: 0 !important;
         }
 
         .mce-tabs {

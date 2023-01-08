@@ -1,4 +1,5 @@
 import { Constants } from '@ta-x-globals';
+import { subscribe } from './events';
 
 export const accordion = (): void => {
   document.addEventListener('click', ({ target }): void => {
@@ -11,6 +12,11 @@ export const accordion = (): void => {
     content.style.maxHeight
       ? content.style.maxHeight = null
       : content.style.maxHeight = `${content.scrollHeight}px`;
+  });
+
+  subscribe('accordion:setMaxHeight', (content: HTMLElement) => {
+    if (!content.style.maxHeight) return;
+    content.style.maxHeight = `${content.scrollHeight}px`;
   });
 };
 

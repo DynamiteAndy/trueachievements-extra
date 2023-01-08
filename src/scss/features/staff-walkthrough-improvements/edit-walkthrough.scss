@@ -1,3 +1,5 @@
+@import '../../variables';
+
 /* stylelint-disable selector-id-pattern */
 body {
   &.trueachievement-extras {
@@ -93,6 +95,20 @@ body {
             }
           }
         }
+
+        .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar {
+          border-bottom: 1px solid #ddd;
+          width:
+            var(
+              --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width,
+              $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width
+            );
+          top:
+            var(
+              --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top,
+              $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top
+            ) !important;
+        }
       }
 
       [data-theme='dark'] {
@@ -119,6 +135,22 @@ body {
               }
             }
           }
+
+          .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar {
+            border-color: #232b33;
+          }
+        }
+      }
+
+      >.mce-menu {
+        background-color: red;
+
+        &.mce-floatpanel {
+          top:
+            var(
+              --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu,
+              $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu
+            ) !important;
         }
       }
     }

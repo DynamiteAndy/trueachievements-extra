@@ -1,5 +1,6 @@
 import { Constants, config } from '@ta-x-globals';
 import { ConditionalRender } from '@ta-x-models';
+import { broadcast } from '@ta-x-components';
 import { waitForElement, getValue, isCheckboxElement, isSelectElement, setValue } from '@ta-x-utilities';
 import { template } from '@ta-x-helpers';
 import html from './body.hbs';
@@ -93,6 +94,9 @@ const listen = (): void => {
     else if (isCheckboxElement(target)) setValue(config, configPath, (target as HTMLInputElement).checked);
 
     checkRenderConditions(target);
+    
+    const parentAccordionBody = target.closest('.ta-x-settings-menu-settings-accordion-body');
+    if (parentAccordionBody) broadcast('accordion:setMaxHeight', undefined, parentAccordionBody);
   });
 };
 
