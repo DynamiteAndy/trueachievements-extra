@@ -13,14 +13,13 @@ const listen = (): void => {
   window.addEventListener('scroll', setTopPosition);
 };
 
-export const fixTinymceFloatingMenus = async(): Promise<void> => {
-  const tinymceContainer = await waitForElement('.mce-tinymce');
-  tinymceToolbar = await waitForElement('.mce-tinymce .mce-container-body .mce-toolbar-grp', tinymceContainer);
+export const fixFloatingMenus = async(container: HTMLElement): Promise<void> => {
+  tinymceToolbar = await waitForElement('.mce-container-body .mce-toolbar-grp', container);
 
-  if (!tinymceContainer || !tinymceToolbar) return;
-  
+  if (!tinymceToolbar) return;
+
   setTopPosition();
   listen();
 };
 
-export default { fixTinymceFloatingMenus };
+export default { fixFloatingMenus };

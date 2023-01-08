@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.3.0
+- Added a code view to the tinymce editor
+
 ## 2.2.1
 - Fixed another issue where some walkthrough elements would not follow the tinymce theme,
 - Add a autosave notification on edit walkthrough,

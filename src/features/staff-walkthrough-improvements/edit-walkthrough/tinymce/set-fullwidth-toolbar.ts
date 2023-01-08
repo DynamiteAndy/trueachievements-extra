@@ -18,12 +18,12 @@ const listen = async (): Promise<void> => {
   }));
 };
 
-export const fixTinymceFullWidthToolbar = async(): Promise<void> => {
-  tinymceContainer = await waitForElement('.mce-tinymce');
-  tinymceToolbar = await waitForElement('.mce-tinymce .mce-container-body .mce-toolbar-grp', tinymceContainer);
+export const setFullWidthToolbar = async(container: HTMLElement): Promise<void> => {
+  tinymceContainer = container;
+  tinymceToolbar = await waitForElement('.mce-container-body .mce-toolbar-grp', container);
 
-  if (!tinymceContainer || !tinymceToolbar) return;
-  
+  if (!tinymceToolbar) return;
+
   tinymceToolbar.classList.add(Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarStyles);
   document.documentElement.style.setProperty(Constants.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarWidth, `${tinymceToolbar.parentElement.scrollWidth}px`);
 
@@ -31,4 +31,4 @@ export const fixTinymceFullWidthToolbar = async(): Promise<void> => {
   await listen();
 };
 
-export default { fixTinymceFullWidthToolbar };
+export default { setFullWidthToolbar };

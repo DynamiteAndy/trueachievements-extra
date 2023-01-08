@@ -2,7 +2,6 @@ import skin from '@ta-x-tinymce-scss/charcoal/skin.scss';
 import content from '@ta-x-tinymce-scss/charcoal/content.scss';
 import { Constants, editWalkthrough } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
-import html from './edit-walkthrough.html';
 
 let themeToggle: HTMLElement;
 let globalTheme: HTMLElement;
@@ -91,19 +90,9 @@ const listen = async(): Promise<void> => {
   });
 };
 
-export const addTinymceThemeToggle = async(): Promise<void> => {
-  if (!await waitForElement('[href*="skin.min.css"]', document.head)) return;
-
-  const toolbar = await waitForElement('.mce-tinymce .mce-toolbar.mce-last .mce-container-body');
-
-  if (!toolbar) return;
-
+export const addToggleThemeButton = async(toolbar: HTMLElement): Promise<void> => {
   GM_addStyle(skin);
-
-  const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-  const addedGroup = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
-  toolbar.appendChild(addedGroup);
-
+  
   themeToggle = toolbar.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs} [data-ta-x-tinymce-theme]`);
 
   const theme = await getTinymceTheme();
@@ -112,4 +101,4 @@ export const addTinymceThemeToggle = async(): Promise<void> => {
   await listen();
 };
 
-export default { addTinymceThemeToggle };
+export default { addToggleThemeButton };
