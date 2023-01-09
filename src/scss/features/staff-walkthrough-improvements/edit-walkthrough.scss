@@ -146,6 +146,15 @@ body {
 
           .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar {
             border-color: #232b33;
+
+            &.ta-x-y-hide {
+                transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)));
+                transition: transform .5s ease;
+            
+                &-no-transition {
+                  transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)));
+                }
+              }
           }
         }
       }

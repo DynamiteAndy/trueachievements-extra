@@ -32,7 +32,6 @@ export const applyStickyElementStyle = async (variableProperty: string, stickyEl
       topStylePx += stickyNavBarElement.offsetHeight;
 
       if (!stickyNavBarElement.classList.contains(Constants.Styles.Animations.yShow)) {
-        if (opts.isRelativeToParent) topStylePx = stickyElement.offsetHeight;
         addAnimation = opts.noTransitionStyle ? Constants.Styles.Animations.yHideNoTransition : Constants.Styles.Animations.yHide;
         removeAnimation = [Constants.Styles.Animations.yShow];
       } else {
