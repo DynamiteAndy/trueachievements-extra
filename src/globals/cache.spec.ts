@@ -58,7 +58,7 @@ describe('cache', () => {
   describe('forceclear', () => {
     describe('memoize', () => {
       const testCases = [
-        { case: new Map<string, any>(), expected: 0 },
+        { case: new Map<string, string>(), expected: 0 },
         {
           case: new Map([[
             'trueachievements-extra-memoized',

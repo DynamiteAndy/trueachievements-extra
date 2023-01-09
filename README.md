@@ -9,24 +9,17 @@ Requires: [Tampermonkey](http://tampermonkey.net/)
 3. Click "Raw" and Tampermonkey will prompt script installation
 
 # Developer Guide
-Requires: [Node](https://nodejs.org/en/), [Tampermonkey](http://tampermonkey.net/) and a code editor such as [Visual Studio Code](https://code.visualstudio.com/) or any alternative.
+Requires: [Node v18](https://nodejs.org/en/), [pNPm](https://pnpm.io/), [Tampermonkey](http://tampermonkey.net/) and a code editor such as [Visual Studio Code](https://code.visualstudio.com/) or any alternative.
 
 ## Developing
-- `npm i`
-- `npm i --only=dev` (If you have issues with packages being missing.)
-- `npm start`
+- `pnpm i`
+- `pnpm start`
 
 Install `trueachievements-extras.dev.user.js` from dist and add it to Tampermonkey, this will fetch the userscript from your local machine.
 This requires Tampermonkey to be gave the "Allow access to file URLS" permission on chrome.
 
 ### Versioning
 This should be done at the point of creating a release. Version the package.json, ensuring to comply with [semver](http://semver.org/) (MAJOR.MINOR.PATCH)
-
-- `git remote update`
-- `git pull --rebase origin master`
-- Either `npm version patch` | `npm version minor` | `npm version major`
-- `npm run build`
-- `git push --force origin <branch>`
 
 ## Installation
 Requires: [Tampermonkey](http://tampermonkey.net/)

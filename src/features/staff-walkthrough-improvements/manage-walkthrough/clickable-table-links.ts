@@ -7,7 +7,13 @@ const clickableAchievements = async(walkthroughContainer: HTMLElement, walthroug
   if (await waitForElement('#chWalkthroughAchievements', walkthroughContainer)) {
     const parsedDocument = new DOMParser().parseFromString(achievementRow, 'text/html');
     const walkthroughAchievements = [...walkthroughContainer.querySelectorAll('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID .c1')] as HTMLElement[];
-    const walkthroughAchievementContainer = walkthroughContainer.querySelector('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID tbody') as HTMLElement;
+    let walkthroughAchievementContainer = walkthroughContainer.querySelector('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID tbody') as HTMLElement;
+
+    if (!walkthroughAchievementContainer) {
+      const walkthroughAchievementTable = walkthroughContainer.querySelector('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID table');
+      walkthroughAchievementContainer = walkthroughAchievementTable.appendChild(document.createElement('tbody'));
+    }
+
     const games = ([...walthroughPreviewDocument.querySelectorAll('.walkthroughsummary .games a.gamelink')] as HTMLAnchorElement[]);
 
     await allConcurrently('ClickableAchievements - Games', games.map((game: HTMLAnchorElement) => ({

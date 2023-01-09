@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import StatoscopeWebpackPlugin from '@statoscope/webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import Handlebars from 'handlebars';
 import register from './handlebars/register';
@@ -56,19 +57,15 @@ export const baseConfig = {
         }
       },
       {
-        test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
-      },
-      {
         test: /\.s?[ac]ss$/i,
-        exclude: /tinymce[\\|/].*[\\|/]content\.s?[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        test: /tinymce[\\|/].*[\\|/]content\.s?[ac]ss$/i,
         use: ['sass-to-string', 'sass-loader']
       }
     ]
   },
-  plugins: process.env.webpack_analyse ? [new BundleAnalyzerPlugin()] : []
+  plugins: process.env.webpack_analyse
+    ? [
+        new BundleAnalyzerPlugin(),
+        new StatoscopeWebpackPlugin()
+      ]
+    : []
 };

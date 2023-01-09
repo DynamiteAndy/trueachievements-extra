@@ -11,7 +11,7 @@ const filename = process.env.webpack_minimize ? 'trueachievements-extras.min.use
 metadata.updateURL += filename;
 metadata.downloadURL += filename;
 
-export const prodConfig = merge(baseConfig as any, {
+export const prodConfig = merge(baseConfig as never, {
   mode: 'production',
   output: {
     filename: filename

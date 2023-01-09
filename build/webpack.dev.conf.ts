@@ -12,7 +12,7 @@ metadata.require.push(
 delete metadata.downloadURL;
 delete metadata.updateURL;
 
-export const devConfig = merge(baseConfig as any, {
+export const devConfig = merge(baseConfig as never, {
   mode: 'development',
   cache: false,
   entry: {

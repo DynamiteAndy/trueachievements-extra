@@ -1,7 +1,13 @@
 # Changelog
 
+## 2.3.1
+- Fix the janky timymce editor if sticky header was enabled,
+- Fix clickable table links not working if there was no achievements in the table,
+- Fix the code button on the tinymce editor looking weird,
+- Fix the floating menus on the tinymce editor being janky
+
 ## 2.3.0
-- Added a code view to the tinymce editor
+- Added a code view to the tinymce editor.
 
 ## 2.2.1
 - Fixed another issue where some walkthrough elements would not follow the tinymce theme,

@@ -1,4 +1,4 @@
-export default async(url: string, options: any = {}): Promise<Response> => {
+export default async(url: string, options: RequestInit = {}): Promise<Response> => {
   options.headers = options.headers || new Headers();
   options.method = (options.method) ? options.method.toUpperCase() : 'GET';
 

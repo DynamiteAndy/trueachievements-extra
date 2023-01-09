@@ -1,3 +1,4 @@
+import { broadcast } from '@ta-x-components';
 import { Constants } from '@ta-x-globals';
 import { applyStickyElementStyle } from '@ta-x-helpers';
 import { classListContains, waitForElement } from '@ta-x-utilities';
@@ -7,7 +8,7 @@ let tinymceToolbar: HTMLElement;
 const variableProperty = Constants.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarTop;
 
 const listen = async (): Promise<void> => {
-  window.addEventListener('scroll', async() => await applyStickyElementStyle(variableProperty, tinymceToolbar, tinymceContainer,
+  window.addEventListener('scroll', async() => { await applyStickyElementStyle(variableProperty, tinymceToolbar, tinymceContainer,
     {
       noTransitionStyle: !classListContains(tinymceToolbar, [
         Constants.Styles.Animations.yHideNoTransition,
@@ -15,7 +16,10 @@ const listen = async (): Promise<void> => {
         Constants.Styles.Animations.yShow
       ]),
       isRelativeToParent: true
-  }));
+    });
+
+    setTimeout(() => broadcast('tinymce:repositionFloatingMenus'), 250);
+  });
 };
 
 export const setFullWidthToolbar = async(container: HTMLElement): Promise<void> => {
