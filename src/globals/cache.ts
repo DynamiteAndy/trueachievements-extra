@@ -3,16 +3,26 @@ import { MemoizedFetch } from '../models/memoized-fetch';
 
 export class Cache {
   static get memoize(): Map<string, MemoizedFetch> { 
-    const value = GM_getValue('trueachievements-extra-memoized', '') as string;
+    const value = GM_getValue('memoized', '') as string;
     return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
   }
   
   static set memoize(value: Map<string, MemoizedFetch>) {
-    GM_setValue('trueachievements-extra-memoized', JSON.stringify(Array.from(value.entries())));
+    GM_setValue('memoized', JSON.stringify(Array.from(value.entries())));
+  }
+
+  static get walkthroughForumOwnerProgressUrl(): Map<string, string> { 
+    const value = GM_getValue('walkthroughOwnerProgressUrl', '') as string;
+    return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+  }
+
+  static set walkthroughForumOwnerProgressUrl(value: Map<string, string>) {
+    GM_setValue('walkthroughOwnerProgressUrl', JSON.stringify(Array.from(value.entries())));
   }
   
   static forceClear(): void {
-    GM_deleteValue('trueachievements-extra-memoized');
+    GM_deleteValue('memoized');
+    GM_deleteValue('walkthroughOwnerProgressUrl');
   }
 
   static clearExpired(): void {

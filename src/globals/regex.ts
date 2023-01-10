@@ -20,6 +20,8 @@ const getUrlProperties = (str: string, props: string|string[] = []) => {
 const achievementUrl = new RegExp('^/a[0-9]*/.*', 'i');
 const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*', 'i');
 const achievementsUrl = new RegExp('^/game/.*/achievements$', 'i');
+const walkthroughUrl = new RegExp('^/game/.*/walkthrough$', 'i');
+const gameUrl = new RegExp('^/game/.*$', 'i');
 const editWalkthroughUrl = new RegExp('^/staff/walkthrough/editwalkthroughpage.aspx', 'i');
 const manageWalkthroughUrl = new RegExp('^/staff/walkthrough/managewalkthrough.aspx', 'i');
 const manageWalkthroughUrlWithWalkthroughId = new RegExp('^/staff/walkthrough/managewalkthrough.aspx\\?walkthroughid=[0-9]*', 'i');
@@ -27,6 +29,9 @@ const walkthroughPageUrl = new RegExp('^/staff/walkthrough/walkthroughpage.aspx'
 const walkthroughPreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpreview.aspx', 'i');
 const walkthroughPagePreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpagepreview.aspx', 'i');
 const autosave = new RegExp('^/ajaxfunctions.aspx/AutoSave', 'i');
+const forumsUrl = new RegExp('^/forum/forums.aspx', 'i');
+const viewBoardUrlWithBoardId = new RegExp('^/forum/viewboard.aspx\\?messageboardid=[0-9]*', 'i');
+const viewThreadUrlWithThreadId = new RegExp('^/forum/viewthread.aspx\\?tid=[0-9]*', 'i');
 
 export const AchievementsRegex = {
   achievementUrl,
@@ -39,8 +44,12 @@ export const AchievementsRegex = {
 
 export const GamesRegex = {
   achievementsUrl,
+  gameUrl,
+  walkthroughUrl,
   Test: {
-    achievementsUrl: (str: string = window.location.href): boolean => achievementsUrl.test(getUrlProperties(str, 'pathname'))
+    achievementsUrl: (str: string = window.location.href): boolean => achievementsUrl.test(getUrlProperties(str, 'pathname')),
+    gameUrl: (str: string = window.location.href): boolean => gameUrl.test(getUrlProperties(str, 'pathname')),
+    walkthroughUrl: (str: string = window.location.href): boolean => walkthroughUrl.test(getUrlProperties(str, 'pathname'))
   }
 };
 
@@ -76,14 +85,36 @@ export const StaffRegex = {
   }
 };
 
+export const ForumRegex = {
+  forumsUrl,
+  viewBoardUrlWithBoardId,
+  viewThreadUrlWithThreadId,
+  Test: {
+    all: (str: string = window.location.href): boolean => forumsUrl.test(getUrlProperties(str, 'pathname')) ||
+      viewBoardUrlWithBoardId.test(getUrlProperties(str, ['pathname','search'])) ||
+      viewThreadUrlWithThreadId.test(getUrlProperties(str, ['pathname','search'])),
+
+    forumsUrl: (str: string = window.location.href): boolean => forumsUrl.test(getUrlProperties(str, 'pathname')),
+    viewBoardUrlWithBoardId: (str: string = window.location.href): boolean => viewBoardUrlWithBoardId.test(getUrlProperties(str, ['pathname','search'])),
+    viewThreadUrlWithThreadId: (str: string = window.location.href): boolean => viewThreadUrlWithThreadId.test(getUrlProperties(str, ['pathname','search']))
+  }
+};
+
 export const DatesRegex = {
   today: new RegExp('Today', 'i'),
   yesterday: new RegExp('Yesterday', 'i')
+};
+
+export const SentencesRegex = {
+  discussWalkthrough: new RegExp('^Please use this thread to discuss the .* walkthrough?.$'),
+  walkthroughPublished: new RegExp('^The walkthrough has now been published.(?:\\n\\n)?You can find it here: .* Walkthrough?.$')
 };
 
 export default {
   AchievementsRegex,
   GamesRegex,
   StaffRegex,
-  DatesRegex
+  ForumRegex,
+  DatesRegex,
+  SentencesRegex
 };

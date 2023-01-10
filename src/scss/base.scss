@@ -24,5 +24,22 @@ body {
       padding: 0;
       margin: 0;
     }
+
+    .ta-x-article-loader {
+      text-align: center;
+
+      img {
+        width: 25px;
+        height: 25px;
+        margin: 0 auto;
+        margin-bottom: .8rem;
+      }
+    }
+
+    [data-ta-x-loaded] {
+      .ta-x-article-loader {
+        display: none;
+      }
+    }
   }
 }

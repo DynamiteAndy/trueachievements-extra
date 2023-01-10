@@ -8,14 +8,14 @@ describe('cache', () => {
       { case: new Map<string, MemoizedFetch>(), expected: 0 },
       {
         case: new Map([[
-          'trueachievements-extra-memoized',
+          'memoized',
           JSON.stringify([['key1', 'value']])
         ]]),
         expected: 1
       },
       {
         case: new Map([[
-          'trueachievements-extra-memoized',
+          'memoized',
           JSON.stringify([['key1', 'value'], ['key2', 'value']])
         ]]),
         expected: 2
@@ -61,14 +61,14 @@ describe('cache', () => {
         { case: new Map<string, string>(), expected: 0 },
         {
           case: new Map([[
-            'trueachievements-extra-memoized',
+            'memoized',
             JSON.stringify([['key1', 'value']])
           ]]),
           expected: 0
         },
         {
           case: new Map([[
-            'trueachievements-extra-memoized',
+            'memoized',
             JSON.stringify([['key1', 'value'], ['key2', 'value']])
           ]]),
           expected: 0

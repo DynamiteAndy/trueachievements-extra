@@ -41,6 +41,7 @@ export const baseConfig = {
         test: /\.hbs$/i,
         loader: 'html-loader',
         options: {
+          sources: false,
           preprocessor: (content: string, loaderContext) => {
             try {
               let result = Handlebars.compile(content)({});
@@ -59,7 +60,7 @@ export const baseConfig = {
         test: /\.html$/i,
         loader: 'html-loader',
         options: {
-          minimize: process.env.webpack_minimize ? true : false,
+          sources: false,
           preprocessor: (content: string) => {
             const result = minify(Buffer.from(content), minifyHtmlConfig).toString();
 
