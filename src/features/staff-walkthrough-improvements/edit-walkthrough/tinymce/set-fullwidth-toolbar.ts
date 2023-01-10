@@ -1,4 +1,4 @@
-import { broadcast } from '@ta-x-components';
+import { pubSub } from '@ta-x-components';
 import { Constants } from '@ta-x-globals';
 import { applyStickyElementStyle } from '@ta-x-helpers';
 import { classListContains, waitForElement } from '@ta-x-utilities';
@@ -18,7 +18,7 @@ const listen = async (): Promise<void> => {
       isRelativeToParent: true
     });
 
-    setTimeout(() => broadcast('tinymce:repositionFloatingMenus'), 250);
+    setTimeout(() => pubSub.publish('tinymce:repositionFloatingMenus'), 250);
   });
 };
 

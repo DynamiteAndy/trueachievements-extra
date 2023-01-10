@@ -1,4 +1,4 @@
-import { subscribe } from '@ta-x-components';
+import { pubSub } from '@ta-x-components';
 import { Constants } from '@ta-x-globals';
 import { getElementCoordinates, waitForElement } from '@ta-x-utilities';
 
@@ -12,7 +12,7 @@ const setTopPosition = (): void => {
 
 const listen = (): void => {
   window.addEventListener('scroll', setTopPosition);
-  subscribe('tinymce:repositionFloatingMenus', setTopPosition);
+  pubSub.subscribe('tinymce:repositionFloatingMenus', setTopPosition);
 };
 
 export const fixFloatingMenus = async(container: HTMLElement): Promise<void> => {
