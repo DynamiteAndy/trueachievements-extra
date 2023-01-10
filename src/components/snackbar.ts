@@ -1,7 +1,7 @@
 import { Constants } from '@ta-x-globals';
 import html from '@ta-x-views/components/snackbar.html';
 import { waitForElement } from '../utilities/html-element-util';
-import { subscribe } from './events';
+import pubSub from './pub-sub';
 
 export const snackbar = async (): Promise<void> => {
   if (!await waitForElement('body')) return;
@@ -12,7 +12,7 @@ export const snackbar = async (): Promise<void> => {
   const snackbar = document.querySelector(`.${Constants.Styles.Components.snackbar}`) as HTMLElement;
   const textContainer = snackbar.querySelector('h2');
 
-  subscribe('snackbar:show', ({ text, type }) => {
+  pubSub.subscribe('snackbar:show', ({ text, type }) => {
     if (!snackbar) return;
     textContainer.innerText = text;
     textContainer.classList.add(type);
