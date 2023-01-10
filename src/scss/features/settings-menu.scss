@@ -28,6 +28,10 @@ body {
         .t-settings {
           >div {
             flex-wrap: wrap;
+
+            >label {
+              max-width: 80%;
+            }
           }
 
           .ta-x-checkbox-help-text {

@@ -54,7 +54,19 @@ export const staffWalkthroughImprovements = {
   walkthroughPage
 };
 
+export const walkthroughs = {
+  get showOwnerProgress(): boolean { return GM_getValue('showOwnerProgress', false); },
+  set showOwnerProgress(value: boolean) { GM_setValue('showOwnerProgress', value); }
+};
+
+export const forumImprovements = {
+  get enabled(): boolean { return GM_getValue('forumImprovements-enabled', false); },
+  set enabled(value: boolean) { GM_setValue('forumImprovements-enabled', value); },
+  walkthroughs
+};
+
 export const config = {
   stickyHeader,
-  staffWalkthroughImprovements
+  staffWalkthroughImprovements,
+  forumImprovements
 };

@@ -40,6 +40,24 @@ export class Constants {
       static readonly featureStyle = `${classStylePrefix}-sticky-header`;
     };
 
+    static ForumImprovements = class {
+      static readonly featureJs = `${jsStylePrefix}-forum-improvements`;
+      static readonly featureStyle = `${classStylePrefix}-forum-improvements`;
+
+      static Walkthroughs = class {
+        static readonly featureJs = `${jsStylePrefix}-forum-improvements-walkthroughs`;
+        static readonly featureStyle = `${classStylePrefix}-forum-improvements-walkthroughs`;
+        static readonly showOwnerProgressJs = `${this.featureJs}-show-owner-progress`;
+        static readonly showOwnerProgressStyle = `${this.featureStyle}-show-owner-progress`;
+        static readonly showOwnerProgressEditorWrapperStyle = `${this.showOwnerProgressStyle}-editor-wrapper`;
+        static readonly showOwnerProgressEditorRowStyle = `${this.showOwnerProgressStyle}-editor-row`;
+        static readonly showOwnerProgressEditorStyle = `${this.showOwnerProgressStyle}-editor`;
+        static readonly askForWalkthroughWalkthroughJs = `${this.showOwnerProgressJs}-ask-for-walkthrough`;
+        static readonly saveWalkthroughInputJs = `${this.showOwnerProgressJs}-save-walkthrough-input`;
+        static readonly saveWalkthroughButtonJs = `${this.showOwnerProgressJs}-save-walkthrough-button`;
+      };
+    };
+
     static StaffWalkthroughImprovements = class {
       static readonly featureJs = `${jsStylePrefix}-staff-walkthrough-improvements`;
       static readonly featureStyle = `${classStylePrefix}-staff-walkthrough-improvements`;

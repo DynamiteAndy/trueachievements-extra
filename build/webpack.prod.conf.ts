@@ -1,7 +1,5 @@
 import { merge } from 'webpack-merge';
 import { default as UserScriptMetaDataPlugin } from 'userscript-metadata-webpack-plugin';
-import HtmlMinimizerPlugin from 'html-minimizer-webpack-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import  TerserPlugin from 'terser-webpack-plugin';
 import { baseConfig } from './webpack.base.conf';
 import metadata from './metadata';
@@ -28,9 +26,7 @@ export const prodConfig = merge(baseConfig as never, {
             drop_console: true
           }
         }
-      }),
-      new CssMinimizerPlugin(),
-      new HtmlMinimizerPlugin()
+      })
     ]
   },
   cache: false,

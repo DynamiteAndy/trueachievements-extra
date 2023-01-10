@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.0
+- Fix the red background on achievements on the walkthrough editor
+- Adds a new feature for forums, walkthrough forums will now show progress, editors and likes
+
 ## 2.3.1
 - Fix the janky timymce editor if sticky header was enabled,
 - Fix clickable table links not working if there was no achievements in the table,
