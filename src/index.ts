@@ -22,5 +22,8 @@ ajaxInterceptor.wire();
     { name: 'feature:forum-improvements', task: ForumImprovements }
   ], 4);
 
-  Cache.clearExpired();
+  allConcurrently('Cache', [
+    { name: 'cache:expired', task: Cache.clearExpired },
+    { name: 'cache:legacy', task: Cache.clearLegacy }
+  ]);
 })();
