@@ -23,7 +23,7 @@ ajaxInterceptor.wire();
   ], 4);
 
   allConcurrently('Cache', [
-    { name: 'cache:expired', task: Cache.clearExpired },
-    { name: 'cache:legacy', task: Cache.clearLegacy }
+    { name: 'cache:expired', task: Cache.clearExpired.bind(Cache) },
+    { name: 'cache:legacy', task: Cache.clearLegacy.bind(Cache) }
   ]);
 })();
