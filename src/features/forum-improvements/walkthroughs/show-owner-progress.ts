@@ -109,14 +109,14 @@ const getOwnerProgress = async(url: string): Promise<void> => {
         toggleAskForWalkthrough();
         return;
       }
+    }
 
-      extensionArticle.appendChild(walkthroughProgress);
+    extensionArticle.appendChild(walkthroughProgress);
 
-      const fillCircleScript = extensionArticle.querySelector('script');
-     
-      if (fillCircleScript) {
-        eval(fillCircleScript.innerHTML);
-      }
+    const fillCircleScript = extensionArticle.querySelector('script');
+   
+    if (fillCircleScript) {
+      eval(fillCircleScript.innerHTML);
     }
   }
 

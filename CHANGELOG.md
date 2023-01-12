@@ -1,14 +1,18 @@
 # Changelog
 
+## 2.4.1
+- Fix in progress walkthroughs only showing on inital load,
+- Delete left overs from legacy cached items.
+
 ## 2.4.0
-- Fix the red background on achievements on the walkthrough editor
-- Adds a new feature for forums, walkthrough forums will now show progress, editors and likes
+- Fix the red background on achievements on the walkthrough editor,
+- Adds a new feature for forums, walkthrough forums will now show progress, editors and likes.
 
 ## 2.3.1
 - Fix the janky timymce editor if sticky header was enabled,
 - Fix clickable table links not working if there was no achievements in the table,
 - Fix the code button on the tinymce editor looking weird,
-- Fix the floating menus on the tinymce editor being janky
+- Fix the floating menus on the tinymce editor being janky.
 
 ## 2.3.0
 - Added a code view to the tinymce editor.
