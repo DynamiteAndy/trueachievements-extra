@@ -11,7 +11,7 @@ body {
     }
 
     .middle {
-      @media (min-width: 1200px) {
+      @media (max-width: 1349px) {
         width: 100%;
         max-width: 1200px;
       }

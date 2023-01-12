@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.3
+- Fix resizing issue at 1350px.
+
 ## 2.4.2
 - Fix binding on clearing expired cache,
 - Fix version text moving inline on the menu.
