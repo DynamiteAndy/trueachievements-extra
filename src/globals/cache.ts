@@ -29,4 +29,8 @@ export class Cache {
     const updatedCache = Array.from(this.memoize.entries()).filter(item => isBeforeNow(item[1].expiryTime));
     this.memoize = new Map(updatedCache);
   }
+  
+  static clearLegacy(): void {
+    GM_deleteValue('trueachievements-extra-memoized');
+  }
 }
