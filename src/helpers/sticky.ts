@@ -3,6 +3,7 @@ import { StickyElementOptions } from '@ta-x-types';
 import { waitForElement } from '../utilities/html-element-util';
 
 const stickyNavBarEnabled = stickyHeader.enabled;
+const stickyNavBarStuck = stickyHeader.remainStuck;
 let stickyNavBarElement: HTMLElement;
 
 const setStickyNavElement = async () => {
@@ -31,7 +32,7 @@ export const applyStickyElementStyle = async (variableProperty: string, stickyEl
     if (stickyNavBarEnabled) {
       topStylePx += stickyNavBarElement.offsetHeight;
 
-      if (!stickyNavBarElement.classList.contains(Constants.Styles.Animations.yShow)) {
+      if (!stickyNavBarElement.classList.contains(Constants.Styles.Animations.yShow) && !stickyNavBarStuck) {
         addAnimation = opts.noTransitionStyle ? Constants.Styles.Animations.yHideNoTransition : Constants.Styles.Animations.yHide;
         removeAnimation = [Constants.Styles.Animations.yShow];
       } else {

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.5.0
+- Adds a feature to keep the sticky header stuck.
+
 ## 2.4.3
 - Fix resizing issue at 1350px.
 

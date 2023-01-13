@@ -18,12 +18,14 @@ const applyBody = async(): Promise<void> => {
 
   document.documentElement.style.setProperty(Constants.Styles.Variables.StickyHeader.height, `${extensionBody.offsetHeight}px`);
 
-  if (!atTopOfPage()) {
+  if (!stickyHeader.remainStuck && !atTopOfPage()) {
     extensionBody.classList.add(Constants.Styles.Animations.yHideNoTransition);
   }
 };
 
 const listen = async(): Promise<void> => {
+  if (stickyHeader.remainStuck) return;
+  
   const navGamer = await waitForElement(`.nav-gamer:not(.${Constants.Styles.SettingsMenu.featureJs})`);
   const taxSettingsMenu = await waitForElement(`.${Constants.Styles.SettingsMenu.featureJs}`);
   previousMenuOpen = navGamer.classList.contains('open') || taxSettingsMenu.classList.contains('open');

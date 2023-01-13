@@ -12,7 +12,9 @@ const migrateGet = <T>(oldSetting: string, newSetting: string, defaultValue: T):
 
 export const stickyHeader = {
   get enabled(): boolean { return migrateGet('trueachievements-extra-stickyHeader-enabled', 'stickyHeader-enabled', false); },
-  set enabled(value: boolean) { GM_setValue('stickyHeader-enabled', value); }
+  set enabled(value: boolean) { GM_setValue('stickyHeader-enabled', value); },
+  get remainStuck(): boolean { return GM_getValue('stickyHeader-remainStuck', false); },
+  set remainStuck(value: boolean) { GM_setValue('stickyHeader-remainStuck', value); }
 };
 
 export const editWalkthrough = {
