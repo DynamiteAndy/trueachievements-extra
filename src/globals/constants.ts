@@ -79,6 +79,11 @@ export class Constants {
         static readonly containerJs = `${this.featureJs}-container`;
         static readonly containerStyle = `${this.featureStyle}-container`;
         static readonly clickableAchievementsJs = `${this.featureJs}-clickable-achievements`;
+        static readonly missingButtonsContainerJs = `${this.featureJs}-missing-buttons-container`;
+        static readonly addPageButtonJs = `${this.featureJs}-add-page-button`;
+        static readonly previewButtonJs = `${this.featureJs}-preview-button`;
+        static readonly viewContentButtonJs = `${this.featureJs}-view-content-button`;
+        static readonly readyForReviewButtonJs = `${this.featureJs}-ready-for-review-button`;
       };
 
       static readonly EditWalkthroughPage = class {

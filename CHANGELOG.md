@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.0
+- Adds a feature to readd the missing buttons when adding a new page on manage walkthrough.
+- Fixed a error thrown when adding a page on manage walkthrough.
+
 ## 2.5.0
 - Adds a feature to keep the sticky header stuck.
 

@@ -31,6 +31,8 @@ export const manageWalkthrough = {
   set manageWalkthroughDefaultStatus(value: boolean) { GM_setValue('manageWalkthroughDefaultStatus', value); },
   get clickableTableLinks(): boolean { return migrateGet('trueachievements-extra-staffWalkthroughImprovements-clickableTableLinks', 'clickableTableLinks', false); },
   set clickableTableLinks(value: boolean) { GM_setValue('clickableTableLinks', value); },
+  get addMissingButtons(): boolean { return GM_getValue('addMissingButtons', false); },
+  set addMissingButtons(value: boolean) { GM_setValue('addMissingButtons', value); },
   get autoSelectFirst(): boolean { return GM_getValue('autoSelectFirst', false); },
   set autoSelectFirst(value: boolean) { GM_setValue('autoSelectFirst', value); },
   get manageWalkthroughDefaultStatusValue(): string { return migrateGet('trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatusValue', 'manageWalkthroughDefaultStatusValue', '-1'); },
