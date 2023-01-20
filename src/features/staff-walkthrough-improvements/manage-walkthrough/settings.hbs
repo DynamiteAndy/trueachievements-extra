@@ -1,4 +1,4 @@
-<div class="ta-x-settings-menu-settings-accordion" data-render-condition='{ "selector": "#chkStaffWalkthroughImprovements", "value": "true" }'>
+<div class="ta-x-settings-menu-settings-accordion" data-render-condition='{ "selector": "#chkStaffWalkthroughImprovements", "checked": true }'>
     {{ includes "@ta-x-partials/accordion-header.hbs" title="Manage Walkthrough" expanded=false }}
 
     <div class="ta-x-settings-menu-settings-accordion-body t-settings">
@@ -8,10 +8,15 @@
             config-path="staffWalkthroughImprovements.manageWalkthrough.clickableTableLinks" }}
 
         {{ includes "@ta-x-partials/checkbox-setting.hbs"
+            label="Add Missing Buttons"
+            id="chkStaffWalkthroughImprovementsAddPageButton"
+            config-path="staffWalkthroughImprovements.manageWalkthrough.addMissingButtons" }}
+
+        {{ includes "@ta-x-partials/checkbox-setting.hbs"
             label="Auto Select First Walkthrough"
             id="chkStaffWalkthroughImprovementsAutoSelectFirst"
             config-path="staffWalkthroughImprovements.manageWalkthrough.autoSelectFirst" 
-            helper-render-condition='{ "selector": "#chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus", "value": "true" }'
+            helper-render-condition='{ "selector": "#chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus", "checked": true }'
             helper-text="This feature runs after the default status has been set." }}
 
         <div class="ta-x-settings-menu-columned-setting">
@@ -21,7 +26,7 @@
                 config-path="staffWalkthroughImprovements.manageWalkthrough.manageWalkthroughDefaultStatus" }}
 
             {{ includes "@ta-x-partials/select-setting.hbs"
-                render-condition='{ "selector": "#chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus", "value": "true" }'
+                render-condition='{ "selector": "#chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus", "checked": true }'
                 id="selStaffWalkthroughImprovementsManageWalkthroughDefaultStatusValue"
                 config-path="staffWalkthroughImprovements.manageWalkthrough.manageWalkthroughDefaultStatusValue"
                 options='[

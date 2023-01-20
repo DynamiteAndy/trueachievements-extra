@@ -2,7 +2,8 @@ import { toBool } from '../utilities/string-util';
 
 export class ConditionalRender {
   public selector: string;
-  public value: boolean;
+  public checked: boolean;
+  public value: string[];
 
   public constructor(json: string) {
     this.fromString(json);
@@ -10,17 +11,20 @@ export class ConditionalRender {
 
   fromString(json: string): void {
     try {
-      const parsedObj = JSON.parse(json) as ConditionalRender;
+      const parsedObj = JSON.parse(json);
     
       this.selector = parsedObj.selector;
-      this.value = toBool(parsedObj.value);
+      this.checked = parsedObj.checked ? toBool(parsedObj.checked) : null;
+      this.value = parsedObj.value ? parsedObj.value.split(',') : null;
     } catch (e) {
-      // Do nothing
+      this.selector = null;
+      this.checked = null;
+      this.value = null;
     }
   }
 
   isValid(): boolean {
-    return this.selector != null && this.value != null;
+    return this.selector !== null && (this.checked !== null || this.value !== null);
   }
 
   toString(): string {

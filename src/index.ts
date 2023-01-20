@@ -1,8 +1,11 @@
-import { default as ajaxInterceptor }  from 'ajax-interceptor';
+import { default as ajaxInterceptor } from 'ajax-interceptor';
 import { Cache } from '@ta-x-globals';
 import { allConcurrently } from '@ta-x-utilities';
 import { accordion, pubSub, snackbar } from '@ta-x-components';
-import { SettingsMenu, StickyHeader, StaffWalkthroughImprovements, Styles, ForumImprovements } from '@ta-x-features';
+import { SettingsMenu, StickyHeader,
+  StaffWalkthroughImprovements, Styles,
+  ForumImprovements, NewsImprovements,
+  GamesImprovements, GamerImprovements} from '@ta-x-features';
 
 ajaxInterceptor.addRequestCallback((xhr: XMLHttpRequest) => pubSub.publish('ajaxIntercept:request', xhr ));
 ajaxInterceptor.addResponseCallback((xhr: XMLHttpRequest) => pubSub.publish('ajaxIntercept:response', xhr));
@@ -19,7 +22,10 @@ ajaxInterceptor.wire();
     { name: 'feature:settings-menu', task: SettingsMenu },
     { name: 'feature:sticky-header', task: StickyHeader },
     { name: 'feature:staff-walkthrough-improvements', task: StaffWalkthroughImprovements },
-    { name: 'feature:forum-improvements', task: ForumImprovements }
+    { name: 'feature:forum-improvements', task: ForumImprovements },
+    { name: 'feature:news-improvements', task: NewsImprovements },
+    { name: 'feature:games-improvements', task: GamesImprovements },
+    { name: 'feature:gamer-improvements', task: GamerImprovements }
   ], 4);
 
   allConcurrently('Cache', [

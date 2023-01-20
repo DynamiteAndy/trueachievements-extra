@@ -31,6 +31,8 @@ export const manageWalkthrough = {
   set manageWalkthroughDefaultStatus(value: boolean) { GM_setValue('manageWalkthroughDefaultStatus', value); },
   get clickableTableLinks(): boolean { return migrateGet('trueachievements-extra-staffWalkthroughImprovements-clickableTableLinks', 'clickableTableLinks', false); },
   set clickableTableLinks(value: boolean) { GM_setValue('clickableTableLinks', value); },
+  get addMissingButtons(): boolean { return GM_getValue('addMissingButtons', false); },
+  set addMissingButtons(value: boolean) { GM_setValue('addMissingButtons', value); },
   get autoSelectFirst(): boolean { return GM_getValue('autoSelectFirst', false); },
   set autoSelectFirst(value: boolean) { GM_setValue('autoSelectFirst', value); },
   get manageWalkthroughDefaultStatusValue(): string { return migrateGet('trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatusValue', 'manageWalkthroughDefaultStatusValue', '-1'); },
@@ -67,8 +69,51 @@ export const forumImprovements = {
   walkthroughs
 };
 
+export const sales = {
+  get autoSortBy(): boolean { return GM_getValue('autoSortBy', false); },
+  set autoSortBy(value: boolean) { GM_setValue('autoSortBy', value); },
+  get autoSortByValue(): string[] { 
+    const value = GM_getValue('autoSortByValue', '') as string;
+    return value.length !== 0 ? JSON.parse(value) : [ 'product', 'game' ];
+  },
+  set autoSortByValue(value: string[]) { GM_setValue('autoSortByValue', JSON.stringify(value)); },
+  get autoSortByOrder(): string { return GM_getValue('autoSortByOrder', 'asc'); },
+  set autoSortByOrder(value: string) { GM_setValue('autoSortByOrder', value); }
+};
+
+export const newsImprovements = {
+  get enabled(): boolean { return GM_getValue('newsImprovements-enabled', false); },
+  set enabled(value: boolean) { GM_setValue('newsImprovements-enabled', value); },
+  sales
+};
+
+export const games = {
+  get addHighlightGamesNotInCollectionButton(): boolean { return GM_getValue('addHighlightGamesNotInCollectionButton-enabled', false); },
+  set addHighlightGamesNotInCollectionButton(value: boolean) { GM_setValue('addHighlightGamesNotInCollectionButton-enabled', value); }
+};
+
+export const gamesImprovements = {
+  get enabled(): boolean { return GM_getValue('gamesImprovements-enabled', false); },
+  set enabled(value: boolean) { GM_setValue('gamesImprovements-enabled', value); },
+  games
+};
+
+export const achievements = {
+  get addGroupByGameButton(): boolean { return GM_getValue('addGroupByGameButton-enabled', false); },
+  set addGroupByGameButton(value: boolean) { GM_setValue('addGroupByGameButton-enabled', value); }
+};
+
+export const gamerImprovements = {
+  get enabled(): boolean { return GM_getValue('gamerImprovements-enabled', false); },
+  set enabled(value: boolean) { GM_setValue('gamerImprovements-enabled', value); },
+  achievements
+};
+
 export const config = {
   stickyHeader,
   staffWalkthroughImprovements,
-  forumImprovements
+  forumImprovements,
+  newsImprovements,
+  gamesImprovements,
+  gamerImprovements
 };

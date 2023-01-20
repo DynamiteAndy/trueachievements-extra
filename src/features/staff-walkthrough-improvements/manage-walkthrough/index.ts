@@ -1,10 +1,11 @@
 import { getDuplicates, waitForElement, allConcurrently } from '@ta-x-utilities';
-import { Constants } from '@ta-x-globals';
-import { StaffRegex } from 'globals/regex';
+import { Constants, StaffRegex } from '@ta-x-globals';
+import { until } from '@ta-x-helpers';
 import html from './manage-walkthrough.html';
 import { changeToDefaultStatus } from './default-status';
 import { makeTableLinksClickable } from './clickable-table-links';
 import { autoSelectFirst } from './auto-select-first';
+import { addMissingButtons } from './add-missing-buttons';
 
 let walkthroughContainer: HTMLElement;
 
@@ -15,11 +16,11 @@ const applyBody = async(): Promise<void> => {
 
   const editWalkthrough = await waitForElement('#chEditWalkthrough', walkthroughContainer);
 
-  if (editWalkthrough) {
+  if (editWalkthrough && await until(() => walkthroughContainer.childElementCount > 2, 1000)) {
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
     editWalkthrough.after(parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
 
-    await allConcurrently('Manage Walkthrough', [
+    allConcurrently('Manage Walkthrough', [
       { name: 'manage-walkthrough-adjust-right-sidebar', task: adjustRightSidebar },
       { name: 'manage-walkthrough-adjust-buttons', task: adjustButtons }
     ]);
@@ -28,6 +29,9 @@ const applyBody = async(): Promise<void> => {
 
 const adjustButtons = async (): Promise<void> => {
   const buttonContainer = await waitForElement('#btnWalkthrough_Options', walkthroughContainer);
+  
+  if (buttonContainer === null) return;
+
   let buttonsContainer: HTMLElement = null;
 
   [...buttonContainer.querySelectorAll('li a')].forEach(button => {
@@ -93,5 +97,9 @@ export default async(): Promise<void> => {
   await changeToDefaultStatus();
   await autoSelectFirst();
   await applyBody();
-  await makeTableLinksClickable();
+
+  allConcurrently('Manage Walkthrough', [ 
+    { name: 'manage-walkthrough-make-table-links-clickable', task: makeTableLinksClickable },
+    { name: 'manage-walkthrough-add-missing-buttons', task: addMissingButtons }
+   ]);
 };

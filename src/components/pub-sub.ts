@@ -5,6 +5,7 @@ type Events = {
   'ajaxIntercept:response': XMLHttpRequest;
   'snackbar:show': { text: string, type: string };
   'accordion:setMaxHeight': HTMLElement;
+  'accordion:toggleState': HTMLElement;
   'tinymce:repositionFloatingMenus': null;
 };
 
