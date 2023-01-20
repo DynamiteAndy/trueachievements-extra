@@ -1,6 +1,7 @@
 # Changelog
 
-## 2.6.0
+## 2.6.1
+- Fixed a bug with the settings not expanding correctly,
 - Adds a feature to readd the missing buttons when adding a new page on manage walkthrough,
 - Adds a feature to add highlight missing games from collection on games list (Credit to [Belindo152](https://www.trueachievements.com/gamer/Belindo152)),
 - Adds a feature to group achievements by game to gamer achievements (Credit to [Belindo152](https://www.trueachievements.com/gamer/Belindo152)),

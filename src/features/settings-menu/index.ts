@@ -134,8 +134,13 @@ const listen = (): void => {
 
     checkRenderConditions(target);
     
-    const parentAccordionBody = target.closest('.ta-x-settings-menu-settings-accordion-body') as HTMLElement;
+    let parentAccordionBody = target.closest('.ta-x-settings-menu-settings-accordion-body') as HTMLElement;
     if (parentAccordionBody) pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+
+    setTimeout(() => {
+      parentAccordionBody = target.closest('[data-parent-accordion-body]') as HTMLElement;
+      if (parentAccordionBody) pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+    }, 500);
   });
 };
 
