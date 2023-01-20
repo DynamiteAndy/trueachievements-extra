@@ -1,4 +1,7 @@
-{{ includes "@ta-x-partials/checkbox-setting.hbs" label="Forum Improvements" id="chkForumImprovements"
-    config-path="forumImprovements.enabled" }}
+<div class="ta-x-settings-menu-settings-accordion">
+    {{ includes "@ta-x-partials/accordion-header.hbs" title="Forum Improvements" expanded=false config-path="forumImprovements.enabled" asCheckbox=true id="chkForumImprovements" }}
 
-{{ includes "./walkthroughs/settings.hbs" }}
+    <div class="ta-x-settings-menu-settings-accordion-body t-settings" data-parent-accordion-body>
+        {{ includes "./walkthroughs/settings.hbs" }}
+    </div>
+</div>

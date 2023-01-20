@@ -1,6 +1,6 @@
 import { getDuplicates, waitForElement, allConcurrently } from '@ta-x-utilities';
-import { Constants } from '@ta-x-globals';
-import { StaffRegex } from 'globals/regex';
+import { Constants, StaffRegex } from '@ta-x-globals';
+import { until } from '@ta-x-helpers';
 import html from './manage-walkthrough.html';
 import { changeToDefaultStatus } from './default-status';
 import { makeTableLinksClickable } from './clickable-table-links';
@@ -16,7 +16,7 @@ const applyBody = async(): Promise<void> => {
 
   const editWalkthrough = await waitForElement('#chEditWalkthrough', walkthroughContainer);
 
-  if (editWalkthrough && walkthroughContainer.childElementCount > 2) {
+  if (editWalkthrough && await until(() => walkthroughContainer.childElementCount > 2, 1000)) {
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
     editWalkthrough.after(parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
 

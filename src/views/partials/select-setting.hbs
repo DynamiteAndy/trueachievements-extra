@@ -6,6 +6,8 @@
         id="{{id}}"
         name="{{#if name}}{{name}}{{else}}{{id}}{{/if}}" 
         data-config-path="{{config-path}}"
+        data-is-array="{{#if is-array}}true{{else}}false{{/if}}" 
+        data-array-split="{{#if is-array}}{{array-split}}{{/if}}" 
         class="dropdown">
         {{#each options}}
             <option
@@ -13,8 +15,11 @@
                 selected="{{this.selected}}">{{this.text}}</option>
         {{/each}}
     </select>
-    {{#if helper-text}}
-        <div class="ta-x-flex-break"></div>
-        <p data-render-condition="{{helper-render-condition}}" class="{{#if helper-render-condition}}ta-x-hide{{/if}}">{{helper-text}}</p>
-    {{/if}}
 </div>
+
+{{#if helper-text}}
+    <div data-render-condition="{{render-condition}}" class="{{#if render-condition}}ta-x-hide{{/if}}">
+        <div class="ta-x-flex-break"></div>
+        <p data-render-condition="{{helper-render-condition}}" class="ta-x-checkbox-help-text {{#if helper-render-condition}}ta-x-hide{{/if}}">{{helper-text}}</p>
+    </div>
+{{/if}}

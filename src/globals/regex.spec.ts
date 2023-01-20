@@ -1,4 +1,6 @@
-import { AchievementsRegex, GamesRegex, StaffRegex, DatesRegex, AjaxRegex, SentencesRegex } from './regex';
+import { AchievementsRegex, GamesRegex,
+  StaffRegex, GamerRegex, DatesRegex,
+  AjaxRegex, SentencesRegex, NewsRegex } from './regex';
 
 describe('regex', () => {
   describe('achievementsRegex', () => {
@@ -40,6 +42,53 @@ describe('regex', () => {
       testCases.forEach((test, index) => {
         it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
           expect(GamesRegex.Test.gameUrl(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+  });
+
+  describe('gamerRegex', () => {
+    describe('all', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/gamer/Dynamite+Andy', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/Belindo152', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/Dynamite+Andy/achievements', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/Amoa/achievements', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371/achievements', expected: true }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamerRegex.Test.all(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+
+    describe('gamerUrl', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/gamer/Dynamite+Andy', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/Belindo152', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371', expected: true }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamerRegex.Test.gamerUrl(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+
+    describe('gamerAchievementsUrl', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/gamer/Dynamite+Andy/achievements', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/Amoa/achievements', expected: true },
+        { case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371/achievements', expected: true }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamerRegex.Test.gamerAchievementsUrl(test.case)).toEqual(test.expected);
         });
       });
     });
@@ -226,6 +275,22 @@ describe('regex', () => {
       testCases.forEach((test, index) => {
         it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
           expect(SentencesRegex.walkthroughPublished.test(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+  });
+
+  describe('newsRegex', () => {
+    describe('newsUrl', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/n52547/xbox-sale-roundup-january-17th-2023', expected: true },
+        { case: 'https://www.trueachievements.com/n46401/xbox-ultimate-game-sale-roundup-july-23rd-2021', expected: true },
+        { case: 'https://www.trueachievements.com/n52555/easy-achievements-gamerscore-xbox-sale-january-17', expected: true }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(NewsRegex.Test.newsUrl(test.case)).toEqual(test.expected);
         });
       });
     });

@@ -40,6 +40,36 @@ export class Constants {
       static readonly featureStyle = `${classStylePrefix}-sticky-header`;
     };
 
+    static NewsImprovements = class {
+      static readonly featureJs = `${jsStylePrefix}-news-improvements`;
+      static readonly featureStyle = `${classStylePrefix}-news-improvements`;
+
+      static Walkthroughs = class {
+        static readonly featureJs = `${jsStylePrefix}-forum-improvements-walkthroughs`;
+        static readonly featureStyle = `${classStylePrefix}-forum-improvements-walkthroughs`;
+        static readonly showOwnerProgressJs = `${this.featureJs}-show-owner-progress`;
+        static readonly showOwnerProgressStyle = `${this.featureStyle}-show-owner-progress`;
+        static readonly showOwnerProgressEditorWrapperStyle = `${this.showOwnerProgressStyle}-editor-wrapper`;
+        static readonly showOwnerProgressEditorRowStyle = `${this.showOwnerProgressStyle}-editor-row`;
+        static readonly showOwnerProgressEditorStyle = `${this.showOwnerProgressStyle}-editor`;
+        static readonly askForWalkthroughWalkthroughJs = `${this.showOwnerProgressJs}-ask-for-walkthrough`;
+        static readonly saveWalkthroughInputJs = `${this.showOwnerProgressJs}-save-walkthrough-input`;
+        static readonly saveWalkthroughButtonJs = `${this.showOwnerProgressJs}-save-walkthrough-button`;
+      };
+    };
+
+    static GamesImprovements = class {
+      static readonly featureJs = `${jsStylePrefix}-games-improvements`;
+      static readonly featureStyle = `${classStylePrefix}-games-improvements`;
+      static readonly highlightGamesButtonJs = `${this.featureJs}-highlight-games-collection-button`;
+    };
+
+    static GamerImprovements = class {
+      static readonly featureJs = `${jsStylePrefix}-gamer-improvements`;
+      static readonly featureStyle = `${classStylePrefix}-gamer-improvements`;
+      static readonly groupByGameButtonJs = `${this.featureJs}-group-by-game-button`;
+    };
+
     static ForumImprovements = class {
       static readonly featureJs = `${jsStylePrefix}-forum-improvements`;
       static readonly featureStyle = `${classStylePrefix}-forum-improvements`;

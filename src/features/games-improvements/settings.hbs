@@ -1,0 +1,12 @@
+<div class="ta-x-settings-menu-settings-accordion">
+    {{ includes "@ta-x-partials/accordion-header.hbs" title="Games Improvements" expanded=false config-path="gamesImprovements.enabled" asCheckbox=true id="chkGamesImprovements" }}
+
+    <div class="ta-x-settings-menu-settings-accordion-body t-settings" data-parent-accordion-body>
+        {{ includes "@ta-x-partials/checkbox-setting.hbs"
+            label="Add Highlight Games Not In Collection Button"
+            id="chkGamesImprovementsHighlightGamesNotInCollectionButton"
+            config-path="gamesImprovements.games.addHighlightGamesNotInCollectionButton"
+            helper-render-condition='{ "selector": "#chkGamesImprovementsHighlightGamesNotInCollectionButton", "checked": true }'
+            helper-text="This feature is unstyled, let me know if you have any ideas for how to make this look!" }}
+    </div>
+</div>

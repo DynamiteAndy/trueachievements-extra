@@ -1,7 +1,12 @@
 # Changelog
 
 ## 2.6.0
-- Adds a feature to readd the missing buttons when adding a new page on manage walkthrough.
+- Adds a feature to readd the missing buttons when adding a new page on manage walkthrough,
+- Adds a feature to add highlight missing games from collection on games list (Credit to [Belindo152](https://www.trueachievements.com/gamer/Belindo152)),
+- Adds a feature to group achievements by game to gamer achievements (Credit to [Belindo152](https://www.trueachievements.com/gamer/Belindo152)),
+- Adds a feature to auto sort sale article tables by column,
+- Adds a credits section to the changelog view,
+- Redesign the settings menu,
 - Fixed a error thrown when adding a page on manage walkthrough.
 
 ## 2.5.0

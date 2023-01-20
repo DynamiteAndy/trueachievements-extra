@@ -21,6 +21,7 @@ const achievementUrl = new RegExp('^/a[0-9]*/.*', 'i');
 const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*', 'i');
 const achievementsUrl = new RegExp('^/game/.*/achievements$', 'i');
 const walkthroughUrl = new RegExp('^/game/.*/walkthrough$', 'i');
+const gamesUrl = new RegExp('^/games.aspx', 'i');
 const gameUrl = new RegExp('^/game/.*$', 'i');
 const editWalkthroughUrl = new RegExp('^/staff/walkthrough/editwalkthroughpage.aspx', 'i');
 const manageWalkthroughUrl = new RegExp('^/staff/walkthrough/managewalkthrough.aspx', 'i');
@@ -32,6 +33,9 @@ const autosave = new RegExp('^/ajaxfunctions.aspx/AutoSave', 'i');
 const forumsUrl = new RegExp('^/forum/forums.aspx', 'i');
 const viewBoardUrlWithBoardId = new RegExp('^/forum/viewboard.aspx\\?messageboardid=[0-9]*', 'i');
 const viewThreadUrlWithThreadId = new RegExp('^/forum/viewthread.aspx\\?tid=[0-9]*', 'i');
+const newsUrl = new RegExp('^/n[0-9]*/*', 'i');
+const gamerUrl = new RegExp('^/gamer/.*$', 'i');
+const gamerAchievementsUrl = new RegExp('^/gamer/.*/achievements$', 'i');
 
 export const AchievementsRegex = {
   achievementUrl,
@@ -45,11 +49,25 @@ export const AchievementsRegex = {
 export const GamesRegex = {
   achievementsUrl,
   gameUrl,
+  gamesUrl,
   walkthroughUrl,
   Test: {
     achievementsUrl: (str: string = window.location.href): boolean => achievementsUrl.test(getUrlProperties(str, 'pathname')),
     gameUrl: (str: string = window.location.href): boolean => gameUrl.test(getUrlProperties(str, 'pathname')),
+    gamesUrl: (str: string = window.location.href): boolean => gamesUrl.test(getUrlProperties(str, 'pathname')),
     walkthroughUrl: (str: string = window.location.href): boolean => walkthroughUrl.test(getUrlProperties(str, 'pathname'))
+  }
+};
+
+export const GamerRegex = {
+  gamerUrl,
+  gamerAchievementsUrl,
+  Test: {
+    all: (str: string = window.location.href): boolean => gamerUrl.test(getUrlProperties(str, 'pathname')) ||
+    gamerAchievementsUrl.test(getUrlProperties(str, 'pathname')),
+
+    gamerUrl: (str: string = window.location.href): boolean => gamerUrl.test(getUrlProperties(str, 'pathname')),
+    gamerAchievementsUrl: (str: string = window.location.href): boolean => gamerAchievementsUrl.test(getUrlProperties(str, 'pathname'))
   }
 };
 
@@ -100,6 +118,13 @@ export const ForumRegex = {
   }
 };
 
+export const NewsRegex = {
+  newsUrl,
+  Test: {
+    newsUrl: (str: string = window.location.href): boolean => newsUrl.test(getUrlProperties(str, 'pathname'))
+  }
+};
+
 export const DatesRegex = {
   today: new RegExp('Today', 'i'),
   yesterday: new RegExp('Yesterday', 'i')
@@ -113,8 +138,10 @@ export const SentencesRegex = {
 export default {
   AchievementsRegex,
   GamesRegex,
+  GamerRegex,
   StaffRegex,
   ForumRegex,
   DatesRegex,
-  SentencesRegex
+  SentencesRegex,
+  NewsRegex
 };
