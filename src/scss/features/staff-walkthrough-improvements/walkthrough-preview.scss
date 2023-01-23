@@ -1,1 +1,23 @@
-// There are no styles for this page yet.
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff-walkthrough-improvements {
+      main {
+        max-width: unset;
+
+        .admin-page {
+          .walkthroughsummary {
+            +.walkthroughpagelinks {
+              flex-direction: column;
+
+              a {
+                &.next {
+                  margin-left: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

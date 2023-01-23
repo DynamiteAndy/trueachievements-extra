@@ -48,7 +48,7 @@ export const improveImageSelector = async(): Promise<void> => {
 
   ([...imageViewer.querySelectorAll('.ivimage a')] as HTMLElement[]).forEach(imageAnchor => {
     const clonedImageTitle = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`).cloneNode(true);
-    const imageTitle = template(clonedImageTitle as HTMLElement, { image: imageAnchor.querySelector('img') });
+    const imageTitle = template(clonedImageTitle as HTMLElement, { element: imageAnchor.querySelector('img') });
     imageTitle.innerText = extractBetween("'", imageTitle.innerText);
 
     imageAnchor.appendChild(imageTitle);

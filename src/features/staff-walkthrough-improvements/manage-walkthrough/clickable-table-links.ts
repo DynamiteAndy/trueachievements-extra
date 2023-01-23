@@ -25,10 +25,11 @@ const clickableAchievements = async(walkthroughContainer: HTMLElement, walthroug
 
           await allConcurrently('ClickableAchievements - Achievements', gameAchievements.map((gameAchievement: HTMLElement) => ({
             name: `manage-walkthrough-clickable-table-links-clickable-achievements-${game.innerText}-${gameAchievement.innerText.trim()}`,
-            task: async () => {
+            task: async (): Promise<void> => {
               const achievementName = gameAchievement.innerText.trim();
               const walkthroughAchievement = walkthroughAchievements.find(walkthroughAchievement => walkthroughAchievement.innerText.toLowerCase() === achievementName.toLowerCase());
 
+              console.log(achievementName, walkthroughAchievement);
               if (walkthroughAchievement) {
                 walkthroughAchievement.innerText = '';
                 walkthroughAchievement.innerHTML = gameAchievement.outerHTML;
@@ -104,7 +105,7 @@ export const makeTableLinksClickable = async(): Promise<void> => {
     { name: 'manage-walkthrough-clickable-table-links-clickable-achievements', task: async() => clickableAchievements(walkthroughContainer, walthroughPreviewDocument) },
     { name: 'manage-walkthrough-clickable-table-links-clickable-games', task: async() => clickableGames(walkthroughContainer, walthroughPreviewDocument) },
     { name: 'manage-walkthrough-clickable-table-links-clickable-gamers', task: async() => clickableGamers(walkthroughContainer, walthroughPreviewDocument) }
-  ], 1);
+  ]);
 };
 
 export default { makeTableLinksClickable };

@@ -1,7 +1,7 @@
 import { Cache, Constants, forumImprovements, ForumRegex, GamesRegex, SentencesRegex } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
 import { memoizeFetch } from '@ta-x-helpers';
-import html from './walkthroughs.html';
+import html from './walkthroughs.hbs';
 
 // Elements -------
 let extensionBody: HTMLElement;
@@ -16,14 +16,14 @@ const applyBody = async(): Promise<void> => {
   firstSection);
 
   extensionBody = asideColumn.querySelector(`.${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`);
-  askForWalkthroughBody = extensionBody.querySelector(`.${Constants.Styles.ForumImprovements.Walkthroughs.askForWalkthroughWalkthroughJs}`);
+  askForWalkthroughBody = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`);
 
   getAchievementWalkthroughUrl();
 };
 
 const listen = (): void => {
-  const button = extensionBody.querySelector(`.${Constants.Styles.ForumImprovements.Walkthroughs.saveWalkthroughButtonJs}`);
-  const input = extensionBody.querySelector(`.${Constants.Styles.ForumImprovements.Walkthroughs.saveWalkthroughInputJs}`) as HTMLInputElement;
+  const button = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.buttonJs}`);
+  const input = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
 
   button.addEventListener('click', async (e: Event) => {
     if (!(e.target instanceof HTMLElement)) return;

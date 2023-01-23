@@ -1,0 +1,37 @@
+{{ includes "@ta-x-partials/ask-loader-section.hbs"
+    section-classes="js-ta-x-staff-walkthrough-improvements-walkthrough-preview-populate-aside-content ta-x-staff-walkthrough-improvements-walkthrough-preview-populate-aside-content"
+    section-title="Walkthrough Information"
+    ask-information="Can't automate them all sadly! Please enter the walkthrough id to link this page to the walkthrough, I'll try remember it next time! If this is not a \"In Progress\" walkthrough, I'll probably ask again."
+    ask-label="Walkthrough Id"
+    label-id="txtStaffWalkthroughImprovementsWalkthroughsPreviewPopulateAsideContentWalkthroughId"
+    input-id="btnStaffWalkthroughImprovementsWalkthroughsPreviewPopulateAsideContentWalkthroughId" }}
+
+<section class="green walkthrough-right js-ta-x-staff-walkthrough-improvements-walkthrough-preview-populate-aside-content-walkthrough-achievements">
+    <div>Walkthrough Achievements</div>
+    <article>
+        <ul class="il">
+        </ul>
+    </article>
+</section>
+
+<section class="purple page-index js-ta-x-staff-walkthrough-improvements-walkthrough-preview-populate-aside-content-walkthrough-pages">
+    <div>Pages In This Walkthrough</div>
+    <article>
+        <table class="wt-pl">
+            <tbody>
+            </tbody>
+        </table>
+    </article>
+</section>
+
+<section class="purple walkthroughthanks js-ta-x-staff-walkthrough-improvements-walkthrough-preview-populate-aside-content-walkthrough-thanks">
+    <div>Walkthrough Thanks</div>
+    <article>
+        <div class="thanks">
+            <span>{populateAsideContentPreviewThanks.total}</span>
+            <img class="thumbsup" src="/images/walkthroughs/thumbs_up.png" alt="Thanks" width="64" height="64">
+        </div>
+        <p>community members have thanked the author.</p>
+        <p class="thread">Discuss this walkthrough in its <a href="{populateAsideContentPreviewThanks.thread}">Walkthrough Thread</a>.</p>
+    </article>
+</section>

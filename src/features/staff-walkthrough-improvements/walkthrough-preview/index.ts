@@ -1,17 +1,13 @@
-import { waitForElement } from '@ta-x-utilities';
-import { StaffRegex } from '../../../globals/regex';
-
-const applyBody = async(): Promise<void> => {
-  const main = await waitForElement('.page main');
-  main.parentElement.classList.add('no-aside');
-  main.classList.add('no-aside');
-
-  const aside = await waitForElement('.page aside');
-  aside.remove();
-};
+import { allConcurrently } from '@ta-x-utilities';
+import { StaffRegex } from '@ta-x-globals';
+import { removeAside } from './remove-aside';
+import { populateAsideContent } from './populate-aside-content';
 
 export default async(): Promise<void> => {
   if (!StaffRegex.Walkthroughs.Test.preview()) return;
 
-  await applyBody();
+  allConcurrently('Walkthrough Preview', [ 
+    { name: 'walkthrough-preview-remove-aside', task: removeAside },
+    { name: 'walkthrough-preview-populate-aside-content', task: populateAsideContent }
+   ]);
 };

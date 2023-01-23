@@ -1,0 +1,52 @@
+@import './animations';
+
+body {
+  &.trueachievement-extras {
+    .ta-x-ask-loader-container {
+      &:not([data-ta-x-loaded]) {
+        article {
+          display: block;
+        }
+      }
+
+      article {
+        display: flex;
+        justify-content: space-between;
+
+        .ta-x-article-loader {
+          svg {
+            animation-name: spin;
+            animation-duration: 2000ms;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            display: block;
+            margin: auto;
+            margin-bottom: .8rem;
+            width: 5rem;
+          }
+        }
+
+        .ta-x-ask-loader-ask {
+          >div {
+            display: flex;
+            flex-direction: column;
+
+            label {
+              margin-bottom: .9rem;
+            }
+
+            +input {
+              width: 100%;
+              margin: 0;
+              margin-top: .9rem;
+
+              &:hover {
+                margin-bottom: 2px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

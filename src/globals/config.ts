@@ -50,12 +50,18 @@ export const walkthroughPage = {
   set highlightPageLocked(value: boolean) { GM_setValue('highlightPageLocked', value); }
 };
 
+export const walkthroughPreview = {
+  get populateAsideContent(): boolean { return GM_getValue('populateAsideContent', false); },
+  set populateAsideContent(value: boolean) { GM_setValue('populateAsideContent', value); }
+};
+
 export const staffWalkthroughImprovements = {
   get enabled(): boolean { return migrateGet('trueachievements-extra-staffWalkthroughImprovements-enabled','staffWalkthroughImprovements-enabled',  false); },
   set enabled(value: boolean) { GM_setValue('staffWalkthroughImprovements-enabled', value); },
   editWalkthrough,
   manageWalkthrough,
-  walkthroughPage
+  walkthroughPage,
+  walkthroughPreview
 };
 
 export const walkthroughs = {
@@ -92,10 +98,18 @@ export const games = {
   set addHighlightGamesNotInCollectionButton(value: boolean) { GM_setValue('addHighlightGamesNotInCollectionButton-enabled', value); }
 };
 
+export const gameAchievements = {
+  get gameAchievementsDefaultStatus(): boolean { return GM_getValue('gameAchievementsDefaultStatus', false); },
+  set gameAchievementsDefaultStatus(value: boolean) { GM_setValue('gameAchievementsDefaultStatus', value); },
+  get gameAchievementsDefaultStatusValue(): string { return GM_getValue('gameAchievementsDefaultStatusValue', 'rdoAllAchievements'); },
+  set gameAchievementsDefaultStatusValue(value: string) { GM_setValue('gameAchievementsDefaultStatusValue', value); }
+};
+
 export const gamesImprovements = {
   get enabled(): boolean { return GM_getValue('gamesImprovements-enabled', false); },
   set enabled(value: boolean) { GM_setValue('gamesImprovements-enabled', value); },
-  games
+  games,
+  achievements: gameAchievements
 };
 
 export const achievements = {

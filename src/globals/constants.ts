@@ -1,16 +1,29 @@
+import { getCookie } from '../utilities/document-util';
+
 const classStylePrefix = 'ta-x';
 const jsStylePrefix = 'js-ta-x';
 const variableStylePrefix = '--ta-x';
 const templatePrefix = 'ta-x-template';
 
 export class Constants {
+  static readonly gamerId = getCookie('GamerID');
+
   static Styles = class {
     static readonly root = 'trueachievement-extras';
 
     static Components = class {
       static readonly accordion = `${jsStylePrefix}-accordion`;
+      static readonly askLoader = `${jsStylePrefix}-ask-loader-container`;
       static readonly snackbar = `${jsStylePrefix}-snackbar`;
       static readonly showSnackbar = `${classStylePrefix}-snackbar-show`;
+
+      static AskLoader = class {
+        static readonly featureJs = `${jsStylePrefix}-ask-loader`;
+        static readonly containerJs = `${this.featureJs}-container`;
+        static readonly askJs = `${this.featureJs}-ask`;
+        static readonly inputJs = `${this.askJs}-input`;
+        static readonly buttonJs = `${this.askJs}-button`;
+      };
     };
 
     static Animations = class {
@@ -134,6 +147,15 @@ export class Constants {
         static readonly stickyTinymceToolbarJs = `${this.featureJs}-sticky-tinymce-toolbar`;
         static readonly stickyTinymceToolbarStyles = `${this.featureStyle}-sticky-tinymce-toolbar`;
       };
+
+      static readonly WalkthroughPreview = class {
+        static readonly featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-walkthrough-preview`;
+        static readonly featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-walkthrough-preview`;
+        static readonly populateAsideContentJs = `${this.featureJs}-populate-aside-content`;
+        static readonly populateAsideContentWalkthroughPagesJs = `${this.populateAsideContentJs}-walkthrough-pages`;
+        static readonly populateAsideContentWalkthroughThanksJs = `${this.populateAsideContentJs}-walkthrough-thanks`;
+        static readonly populateAsideContentWalkthroughAchievementsJs = `${this.populateAsideContentJs}-walkthrough-achievements`;
+      };
     };
 
     static Variables = class {
@@ -163,6 +185,14 @@ export class Constants {
       static readonly ManageWalkthroughPage = class {
         static readonly featureTemplatePrefix = `${templatePrefix}-manage-walkthrough`;
         static readonly achievementRow = `${this.featureTemplatePrefix}-achievement-row`;
+      };
+      
+      static readonly WalkthroughPreview = class {
+        static readonly featureTemplatePrefix = `${templatePrefix}-walkthrough-preview`;
+        static readonly walkthroughPagesSummary = `${this.featureTemplatePrefix}-walkthrough-pages-summary`;
+        static readonly walkthroughPagesNumbered = `${this.featureTemplatePrefix}-walkthrough-pages-numbered`;
+        static readonly walkthroughPagesNumberedSelected = `${this.featureTemplatePrefix}-walkthrough-pages-numbered-selected`;
+        static readonly walkthroughAchievements = `${this.featureTemplatePrefix}-walkthrough-achievements`;
       };
     };
   };

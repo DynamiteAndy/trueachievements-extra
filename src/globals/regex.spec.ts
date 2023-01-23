@@ -17,6 +17,20 @@ describe('regex', () => {
         });
       });
     });
+
+    describe('achievementUrlWithGamerId', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/a299748/first-boss-achievement', expected: false },
+        { case: 'https://www.trueachievements.com/a223526/and-were-back-achievement?gamerid=96119', expected: true },
+        { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(AchievementsRegex.Test.achievementUrlWithGamerId(test.case)).toEqual(test.expected);
+        });
+      });
+    });
   });
 
   describe('gamesRegex', () => {
@@ -29,6 +43,19 @@ describe('regex', () => {
       testCases.forEach((test, index) => {
         it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
           expect(GamesRegex.Test.achievementsUrl(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+
+    describe('achievementsUrlWithGamerId', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false },
+        { case: 'https://www.trueachievements.com/game/Digimon-Survive/achievements?gamerid=96119', expected: true }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamesRegex.Test.achievementsUrlWithGamerId(test.case)).toEqual(test.expected);
         });
       });
     });
