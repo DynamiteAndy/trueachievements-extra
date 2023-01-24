@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.7.0
+- Adds a feature to auto select a default achievement state on a game,
+- Adds a feature to populate the walkthrough preview sidebar content.
+
 ## 2.6.1
 - Fixed a bug with the settings not expanding correctly,
 - Adds a feature to readd the missing buttons when adding a new page on manage walkthrough,

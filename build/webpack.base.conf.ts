@@ -70,9 +70,7 @@ export const baseConfig = {
       },
       {
         test: /\.m?ts$/,
-        use: {
-          loader: 'ts-loader'
-        }
+        loader: 'ts-loader'
       },
       {
         test: /\.s?[ac]ss$/i,

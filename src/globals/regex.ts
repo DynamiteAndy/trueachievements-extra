@@ -1,4 +1,4 @@
-const getUrlProperties = (str: string, props: string|string[] = []) => {
+export const getUrlProperties = (str: string, props: string|string[] = []) => {
   props = Array.isArray(props) ? props : [props];
 
   try {
@@ -18,8 +18,9 @@ const getUrlProperties = (str: string, props: string|string[] = []) => {
 };
 
 const achievementUrl = new RegExp('^/a[0-9]*/.*', 'i');
-const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*', 'i');
+const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*\\?gamerid=[0-9]*', 'i');
 const achievementsUrl = new RegExp('^/game/.*/achievements$', 'i');
+const achievementsUrlWithGamerId = new RegExp('^/game/.*/achievements\\?gamerid=[0-9]*', 'i');
 const walkthroughUrl = new RegExp('^/game/.*/walkthrough$', 'i');
 const gamesUrl = new RegExp('^/games.aspx', 'i');
 const gameUrl = new RegExp('^/game/.*$', 'i');
@@ -28,7 +29,9 @@ const manageWalkthroughUrl = new RegExp('^/staff/walkthrough/managewalkthrough.a
 const manageWalkthroughUrlWithWalkthroughId = new RegExp('^/staff/walkthrough/managewalkthrough.aspx\\?walkthroughid=[0-9]*', 'i');
 const walkthroughPageUrl = new RegExp('^/staff/walkthrough/walkthroughpage.aspx', 'i');
 const walkthroughPreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpreview.aspx', 'i');
+const walkthroughPreviewUrlWithWalkthroughId = new RegExp('^/staff/walkthrough/walkthroughpreview.aspx\\?walkthroughid=[0-9]*', 'i');
 const walkthroughPagePreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpagepreview.aspx', 'i');
+const walkthroughPagePreviewUrlWithPageId = new RegExp('^/staff/walkthrough/walkthroughpagepreview.aspx\\?pageid=[0-9]*', 'i');
 const autosave = new RegExp('^/ajaxfunctions.aspx/AutoSave', 'i');
 const forumsUrl = new RegExp('^/forum/forums.aspx', 'i');
 const viewBoardUrlWithBoardId = new RegExp('^/forum/viewboard.aspx\\?messageboardid=[0-9]*', 'i');
@@ -48,11 +51,13 @@ export const AchievementsRegex = {
 
 export const GamesRegex = {
   achievementsUrl,
+  achievementsUrlWithGamerId,
   gameUrl,
   gamesUrl,
   walkthroughUrl,
   Test: {
     achievementsUrl: (str: string = window.location.href): boolean => achievementsUrl.test(getUrlProperties(str, 'pathname')),
+    achievementsUrlWithGamerId: (str: string = window.location.href): boolean => achievementsUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
     gameUrl: (str: string = window.location.href): boolean => gameUrl.test(getUrlProperties(str, 'pathname')),
     gamesUrl: (str: string = window.location.href): boolean => gamesUrl.test(getUrlProperties(str, 'pathname')),
     walkthroughUrl: (str: string = window.location.href): boolean => walkthroughUrl.test(getUrlProperties(str, 'pathname'))
@@ -85,12 +90,13 @@ export const StaffRegex = {
     manageWalkthroughUrlWithWalkthroughId,
     walkthroughPageUrl,
     walkthroughPreviewUrl,
+    walkthroughPreviewUrlWithWalkthroughId,
     walkthroughPagePreviewUrl,
+    walkthroughPagePreviewUrlWithPageId,
     Test: {
       all: (str: string = window.location.href): boolean => editWalkthroughUrl.test(getUrlProperties(str, 'pathname')) ||
-      manageWalkthroughUrl.test(getUrlProperties(str, 'pathname')) || manageWalkthroughUrlWithWalkthroughId.test(getUrlProperties(str, ['pathname','search'])) ||
-      walkthroughPageUrl.test(getUrlProperties(str, 'pathname')) || walkthroughPreviewUrl.test(getUrlProperties(str, 'pathname')) ||
-      walkthroughPagePreviewUrl.test(getUrlProperties(str, 'pathname')),
+      manageWalkthroughUrl.test(getUrlProperties(str, 'pathname')) || walkthroughPageUrl.test(getUrlProperties(str, 'pathname')) ||
+      walkthroughPreviewUrl.test(getUrlProperties(str, 'pathname')) || walkthroughPagePreviewUrl.test(getUrlProperties(str, 'pathname')),
       preview: (str: string = window.location.href): boolean => walkthroughPreviewUrl.test(getUrlProperties(str, 'pathname')) || walkthroughPagePreviewUrl.test(getUrlProperties(str, 'pathname')),
 
       editWalkthroughUrl: (str: string = window.location.href): boolean => editWalkthroughUrl.test(getUrlProperties(str, 'pathname')),
@@ -98,7 +104,9 @@ export const StaffRegex = {
       manageWalkthroughUrlWithWalkthroughId: (str: string = window.location.href): boolean => manageWalkthroughUrlWithWalkthroughId.test(getUrlProperties(str, ['pathname','search'])),
       walkthroughPageUrl: (str: string = window.location.href): boolean => walkthroughPageUrl.test(getUrlProperties(str, 'pathname')),
       walkthroughPreviewUrl: (str: string = window.location.href): boolean => walkthroughPreviewUrl.test(getUrlProperties(str, 'pathname')),
-      walkthroughPagePreviewUrl: (str: string = window.location.href): boolean => walkthroughPagePreviewUrl.test(getUrlProperties(str, 'pathname'))
+      walkthroughPreviewUrlWithWalkthroughId: (str: string = window.location.href): boolean => walkthroughPreviewUrlWithWalkthroughId.test(getUrlProperties(str, ['pathname','search'])),
+      walkthroughPagePreviewUrl: (str: string = window.location.href): boolean => walkthroughPagePreviewUrl.test(getUrlProperties(str, 'pathname')),
+      walkthroughPagePreviewUrlWithPageId: (str: string = window.location.href): boolean => walkthroughPagePreviewUrlWithPageId.test(getUrlProperties(str, ['pathname','search']))
     }
   }
 };

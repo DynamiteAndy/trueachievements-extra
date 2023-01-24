@@ -7,6 +7,7 @@ type Events = {
   'accordion:setMaxHeight': HTMLElement;
   'accordion:toggleState': HTMLElement;
   'tinymce:repositionFloatingMenus': null;
+  'walkthroughPreview:removeAside': null;
 };
 
 function PubSub<E>(): PubSubType<E> {

@@ -27,27 +27,6 @@ body {
             }
           }
 
-          .ta-x-forum-improvements-walkthroughs-show-owner-progress-ask-for-walkthrough {
-            >div {
-              display: flex;
-              flex-direction: column;
-
-              label {
-                margin-bottom: .9rem;
-              }
-
-              +input {
-                width: 100%;
-                margin: 0;
-                margin-top: .9rem;
-
-                &:hover {
-                  margin-bottom: 2px;
-                }
-              }
-            }
-          }
-
           .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor-wrapper {
             display: flex;
             flex-direction: column;
