@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.8.0
+- Fixed walthrough preview caching, changed it to 4 hours instead of 7 days,
+- Tweaked some styles on the homepage relating to highlighted articles,
+- Added support for "Ready for Review" walkthroughs with sidebar content,
+- Adds a new feature to select default values for game clips.
+
 ## 2.7.0
 - Adds a feature to auto select a default achievement state on a game,
 - Adds a feature to populate the walkthrough preview sidebar content.

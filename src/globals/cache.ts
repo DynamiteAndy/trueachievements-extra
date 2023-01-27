@@ -1,6 +1,6 @@
 import { isBeforeNow } from '../utilities/date-util';
 import { MemoizedFetch } from '../models/memoized-fetch';
-import { GamesRegex, getUrlProperties } from './regex';
+import { GamesRegex } from './regex';
 
 export class Cache {
   static get memoize(): Map<string, MemoizedFetch> { 
@@ -37,6 +37,15 @@ export class Cache {
   static set gameAchievementsDefaultStatusPathName(value: string) {
     GM_setValue('gameAchievementsDefaultStatusPathName', value);
   }
+
+  static get gameClipsDefaultStatusSelectors(): string[] { 
+    const value = GM_getValue('gameClipsDefaultStatusSelectors', '') as string;
+    return value.length !== 0 ? JSON.parse(value) : [];
+  }
+
+  static set gameClipsDefaultStatusSelectors(value: string[]) {
+    GM_setValue('gameClipsDefaultStatusSelectors', JSON.stringify(value));
+  }
   
   static forceClear(): void {
     GM_deleteValue('memoized');
@@ -50,6 +59,10 @@ export class Cache {
 
     if (!GamesRegex.Test.achievementsUrl()) {
       GM_deleteValue('gameAchievementsDefaultStatusPathName');
+    }
+
+    if (!GamesRegex.Test.clipsUrl()) {
+      GM_deleteValue('gameClipsDefaultStatusSelectors');
     }
   }
   

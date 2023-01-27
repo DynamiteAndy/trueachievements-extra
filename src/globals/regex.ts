@@ -20,6 +20,7 @@ export const getUrlProperties = (str: string, props: string|string[] = []) => {
 const achievementUrl = new RegExp('^/a[0-9]*/.*', 'i');
 const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*\\?gamerid=[0-9]*', 'i');
 const achievementsUrl = new RegExp('^/game/.*/achievements$', 'i');
+const clipsUrl = new RegExp('^/game/.*/videos$', 'i');
 const achievementsUrlWithGamerId = new RegExp('^/game/.*/achievements\\?gamerid=[0-9]*', 'i');
 const walkthroughUrl = new RegExp('^/game/.*/walkthrough$', 'i');
 const gamesUrl = new RegExp('^/games.aspx', 'i');
@@ -52,12 +53,14 @@ export const AchievementsRegex = {
 export const GamesRegex = {
   achievementsUrl,
   achievementsUrlWithGamerId,
+  clipsUrl,
   gameUrl,
   gamesUrl,
   walkthroughUrl,
   Test: {
     achievementsUrl: (str: string = window.location.href): boolean => achievementsUrl.test(getUrlProperties(str, 'pathname')),
     achievementsUrlWithGamerId: (str: string = window.location.href): boolean => achievementsUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
+    clipsUrl: (str: string = window.location.href): boolean => clipsUrl.test(getUrlProperties(str, 'pathname')),
     gameUrl: (str: string = window.location.href): boolean => gameUrl.test(getUrlProperties(str, 'pathname')),
     gamesUrl: (str: string = window.location.href): boolean => gamesUrl.test(getUrlProperties(str, 'pathname')),
     walkthroughUrl: (str: string = window.location.href): boolean => walkthroughUrl.test(getUrlProperties(str, 'pathname'))

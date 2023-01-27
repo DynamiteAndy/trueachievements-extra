@@ -69,10 +69,11 @@ const getAsideContent = async(walkthroughId: string): Promise<void> => {
   const asideColumn = await waitForElement('.main aside');
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const parsedTemplateDocument = new DOMParser().parseFromString(templatedPageRows, 'text/html');
-  const manageWalkthroughResponse = await memoizeFetch(`https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=${walkthroughId}`);
+  const manageWalkthroughResponse = await memoizeFetch(`https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=${walkthroughId}`, {}, { deleteAfter: { value: 4, period: 'hours' }});
   const manageWalkthroughDocument = new DOMParser().parseFromString(manageWalkthroughResponse, 'text/html');
 
-  if ((manageWalkthroughDocument.querySelector('#txtStatusReadOnly') as HTMLInputElement).value !== 'In progress') {
+  if ((manageWalkthroughDocument.querySelector('#txtStatusReadOnly') as HTMLInputElement).value !== 'In progress' &&
+  (manageWalkthroughDocument.querySelector('#txtStatusReadOnly') as HTMLInputElement).value !== 'Ready for review') {
     extensionBody.remove();
     pubSub.publish('walkthroughPreview:removeAside');
     return;

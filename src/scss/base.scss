@@ -15,6 +15,24 @@ body {
         width: 100%;
         max-width: 1200px;
       }
+
+      @media (min-width: 576px) {
+        .news-section {
+          &.list {
+            >section {
+              &.highlight {
+                margin: 5px 0;
+
+                +section {
+                  &.highlight {
+                    margin-top: 1rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     .ta-x-flex-break {

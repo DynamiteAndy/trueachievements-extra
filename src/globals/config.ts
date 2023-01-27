@@ -105,11 +105,25 @@ export const gameAchievements = {
   set gameAchievementsDefaultStatusValue(value: string) { GM_setValue('gameAchievementsDefaultStatusValue', value); }
 };
 
+export const gameClips = {
+  get gameClipsDefaultStatus(): boolean { return GM_getValue('gameClipsDefaultStatus', false); },
+  set gameClipsDefaultStatus(value: boolean) { GM_setValue('gameClipsDefaultStatus', value); },
+  get gameClipsDefaultRecordedByValue(): string { return GM_getValue('gameClipsDefaultRecordedByValue', ''); },
+  set gameClipsDefaultRecordedByValue(value: string) { GM_setValue('gameClipsDefaultRecordedByValue', value); },
+  get gameClipsDefaultSavedByValue(): string { return GM_getValue('gameClipsDefaultSavedByValue', 'Gamer'); },
+  set gameClipsDefaultSavedByValue(value: string) { GM_setValue('gameClipsDefaultSavedByValue', value); },
+  get gameClipsDefaultRecordedValue(): string { return GM_getValue('gameClipsDefaultRecordedValue', '7'); },
+  set gameClipsDefaultRecordedValue(value: string) { GM_setValue('gameClipsDefaultRecordedValue', value); },
+  get gameClipsDefaultSortByValue(): string { return GM_getValue('gameClipsDefaultSortByValue', 'Most viewed'); },
+  set gameClipsDefaultSortByValue(value: string) { GM_setValue('gameClipsDefaultSortByValue', value); }
+};
+
 export const gamesImprovements = {
   get enabled(): boolean { return GM_getValue('gamesImprovements-enabled', false); },
   set enabled(value: boolean) { GM_setValue('gamesImprovements-enabled', value); },
   games,
-  achievements: gameAchievements
+  achievements: gameAchievements,
+  clips: gameClips
 };
 
 export const achievements = {
