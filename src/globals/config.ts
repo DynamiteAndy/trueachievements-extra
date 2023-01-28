@@ -17,6 +17,11 @@ export const stickyHeader = {
   set remainStuck(value: boolean) { GM_setValue('stickyHeader-remainStuck', value); }
 };
 
+export const emojis = {
+  get enabled(): boolean { return GM_getValue('emojis-enabled', false); },
+  set enabled(value: boolean) { GM_setValue('emojis-enabled', value); }
+};
+
 export const editWalkthrough = {
   get improvedImageSelector(): boolean { return migrateGet('trueachievements-extra-staffWalkthroughImprovements-improvedImageSelector', 'improvedImageSelector', false); },
   set improvedImageSelector(value: boolean) { GM_setValue('improvedImageSelector', value); },
@@ -139,6 +144,7 @@ export const gamerImprovements = {
 
 export const config = {
   stickyHeader,
+  emojis,
   staffWalkthroughImprovements,
   forumImprovements,
   newsImprovements,

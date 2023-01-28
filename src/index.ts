@@ -1,8 +1,8 @@
 import { default as ajaxInterceptor } from 'ajax-interceptor';
 import { Cache } from '@ta-x-globals';
 import { allConcurrently } from '@ta-x-utilities';
-import { accordion, pubSub, snackbar } from '@ta-x-components';
-import { SettingsMenu, StickyHeader,
+import { accordion, pubSub, snackbar, tabs } from '@ta-x-components';
+import { SettingsMenu, StickyHeader, Emojis,
   StaffWalkthroughImprovements, Styles,
   ForumImprovements, NewsImprovements,
   GamesImprovements, GamerImprovements} from '@ta-x-features';
@@ -14,7 +14,8 @@ ajaxInterceptor.wire();
 (async () => {
   allConcurrently('Components', [
     { name: 'component:snackbar', task: snackbar },
-    { name: 'component:accordion', task: accordion }
+    { name: 'component:accordion', task: accordion },
+    { name: 'component:tabs', task: tabs }
   ]);
   
   allConcurrently('Features', [
@@ -25,7 +26,8 @@ ajaxInterceptor.wire();
     { name: 'feature:forum-improvements', task: ForumImprovements },
     { name: 'feature:news-improvements', task: NewsImprovements },
     { name: 'feature:games-improvements', task: GamesImprovements },
-    { name: 'feature:gamer-improvements', task: GamerImprovements }
+    { name: 'feature:gamer-improvements', task: GamerImprovements },
+    { name: 'feature:emojis', task: Emojis }
   ], 4);
 
   allConcurrently('Cache', [

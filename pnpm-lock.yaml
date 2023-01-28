@@ -15,6 +15,7 @@ specifiers:
   c8: ^7.12.0
   concurrently: ^7.6.0
   cross-env: ^7.0.3
+  emoji.json: ^14.0.0
   eslint: ^8.32.0
   eslint-import-resolver-typescript: ^3.5.3
   eslint-plugin-import: ^2.27.5
@@ -47,6 +48,7 @@ specifiers:
 
 dependencies:
   ajax-interceptor: 1.0.1
+  emoji.json: 14.0.0
 
 devDependencies:
   '@minify-html/node': 0.10.7
@@ -1474,6 +1476,10 @@ packages:
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
+
+  /emoji.json/14.0.0:
+    resolution: {integrity: sha512-2rpEIAs1VDc6eHpqX3l1xpijXWu2F+zzj79+IyRu6wTcnsjQX4+vG43PxCk/2mQFB7e9MLuWl29g8hYd1DYI6Q==}
+    dev: false
 
   /enhanced-resolve/5.12.0:
     resolution: {integrity: sha512-QHTXI/sZQmko1cbDoNAa3mJ5qhWUUNAq3vR0/YiD379fWQrcfuoX1+HW2S0MTt7XmoPLapdaDKUtelUSPic7hQ==}

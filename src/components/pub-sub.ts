@@ -6,6 +6,7 @@ type Events = {
   'snackbar:show': { text: string, type: string };
   'accordion:setMaxHeight': HTMLElement;
   'accordion:toggleState': HTMLElement;
+  'tabs:set': HTMLElement;
   'tinymce:repositionFloatingMenus': null;
   'walkthroughPreview:removeAside': null;
 };

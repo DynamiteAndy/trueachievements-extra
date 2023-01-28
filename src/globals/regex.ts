@@ -37,6 +37,7 @@ const autosave = new RegExp('^/ajaxfunctions.aspx/AutoSave', 'i');
 const forumsUrl = new RegExp('^/forum/forums.aspx', 'i');
 const viewBoardUrlWithBoardId = new RegExp('^/forum/viewboard.aspx\\?messageboardid=[0-9]*', 'i');
 const viewThreadUrlWithThreadId = new RegExp('^/forum/viewthread.aspx\\?tid=[0-9]*', 'i');
+const pollUrl = new RegExp('^/poll/[0-9]*/*', 'i');
 const newsUrl = new RegExp('^/n[0-9]*/*', 'i');
 const gamerUrl = new RegExp('^/gamer/.*$', 'i');
 const gamerAchievementsUrl = new RegExp('^/gamer/.*/achievements$', 'i');
@@ -130,8 +131,10 @@ export const ForumRegex = {
 };
 
 export const NewsRegex = {
+  pollUrl,
   newsUrl,
   Test: {
+    pollUrl: (str: string = window.location.href): boolean => pollUrl.test(getUrlProperties(str, 'pathname')),
     newsUrl: (str: string = window.location.href): boolean => newsUrl.test(getUrlProperties(str, 'pathname'))
   }
 };

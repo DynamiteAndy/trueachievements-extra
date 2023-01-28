@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.9.0
+- Changes default game status so it will not change state for 100% achievements,
+- Adds emojis for replies,
+- Fixes styles on settings menu for light mode users ([ManicMetalhead](https://www.trueachievements.com/gamer/ManicMetalhead) comes to mind).
+
 ## 2.8.0
 - Fixed walthrough preview caching, changed it to 4 hours instead of 7 days,
 - Tweaked some styles on the homepage relating to highlighted articles,

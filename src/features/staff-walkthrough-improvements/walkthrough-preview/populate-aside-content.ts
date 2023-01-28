@@ -83,7 +83,7 @@ const getAsideContent = async(walkthroughId: string): Promise<void> => {
   const gameResponse = await memoizeFetch(gameUrl);
   const gameDocument = new DOMParser().parseFromString(gameResponse, 'text/html');
 
-  const thanks = await getWalkthroughThanks(walkthroughId, manageWalkthroughDocument, parsedDocument);
+  const thanks = await getWalkthroughThanks(walkthroughId, parsedDocument);
   const achievements = getAchievementsInWalkthrough(manageWalkthroughDocument, gameDocument, parsedDocument, parsedTemplateDocument);
 
   let asideContent = [thanks, achievements];
@@ -195,7 +195,7 @@ const getAchievementsInWalkthrough = (manageWalkthroughDocument: Document,
   return achievementsInWalkthroughSection as HTMLElement;
 };
 
-const getWalkthroughThanks = async (walkthroughId: string, manageWalkthroughDocument: Document, featureDocument: Document): Promise<HTMLElement> => {
+const getWalkthroughThanks = async (walkthroughId: string, featureDocument: Document): Promise<HTMLElement> => {
   const thanks = featureDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughThanksJs}`);
   const walkthroughPreviewResponse = await memoizeFetch(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
   const walkthroughPreviewDocument = new DOMParser().parseFromString(walkthroughPreviewResponse, 'text/html');

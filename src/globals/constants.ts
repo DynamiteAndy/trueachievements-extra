@@ -24,6 +24,16 @@ export class Constants {
         static readonly inputJs = `${this.askJs}-input`;
         static readonly buttonJs = `${this.askJs}-button`;
       };
+
+      static Tab = class {
+        static readonly featureStyle = `${classStylePrefix}-tabs`;
+        static readonly featureJs = `${jsStylePrefix}-tabs`;
+        static readonly tabLinkContainer = `${this.featureJs}-link-container`;
+        static readonly tabLink = `${this.featureJs}-link`;
+        static readonly tabContent = `${this.featureJs}-content`;
+        static readonly tabSelected = `${this.featureStyle}-selected`;
+        static readonly tabScroll = `${this.featureStyle}-scroll`;
+      };
     };
 
     static Animations = class {
@@ -46,6 +56,11 @@ export class Constants {
       static readonly changelogView = `${this.featureJs}-changelog`;
       static readonly settingsView = `${this.featureJs}-settings`;
       static readonly settingsContentShow = `${this.featureStyle}-settings-item-show`;
+    };
+
+    static Emojis = class {
+      static readonly featureJs = `${jsStylePrefix}-emojis`;
+      static readonly featureStyle = `${classStylePrefix}-emojis`;
     };
 
     static StickyHeader = class {
@@ -181,13 +196,21 @@ export class Constants {
   };
 
   static Templates = class {
+    static Components = class {
+      static Tab = class {
+        static readonly featureTemplatePrefix = `${templatePrefix}-tabs`;
+        static readonly tabLink = `${this.featureTemplatePrefix}-link`;
+        static readonly tabContent = `${this.featureTemplatePrefix}-content`;
+      };
+    };
+
     static StaffWalkthroughImprovements = class {
-      static readonly ManageWalkthroughPage = class {
+      static ManageWalkthroughPage = class {
         static readonly featureTemplatePrefix = `${templatePrefix}-manage-walkthrough`;
         static readonly achievementRow = `${this.featureTemplatePrefix}-achievement-row`;
       };
       
-      static readonly WalkthroughPreview = class {
+      static WalkthroughPreview = class {
         static readonly featureTemplatePrefix = `${templatePrefix}-walkthrough-preview`;
         static readonly walkthroughPagesSummary = `${this.featureTemplatePrefix}-walkthrough-pages-summary`;
         static readonly walkthroughPagesNumbered = `${this.featureTemplatePrefix}-walkthrough-pages-numbered`;

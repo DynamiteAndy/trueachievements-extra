@@ -1,0 +1,23 @@
+body {
+  &.trueachievement-extras {
+    .ta-x-emojis {
+      .ta-x-tabs-content {
+        &[data-tab-visible] {
+          height: 10rem;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          text-align: center;
+        }
+
+        a {
+          font-size: 2.2rem;
+          user-select: none;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
