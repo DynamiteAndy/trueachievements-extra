@@ -1,6 +1,7 @@
 import { isBeforeNow } from '../utilities/date-util';
 import { MemoizedFetch } from '../models/memoized-fetch';
 import { GamesRegex } from './regex';
+import { gameDLC } from './config';
 
 export class Cache {
   static get memoize(): Map<string, MemoizedFetch> { 
@@ -38,6 +39,22 @@ export class Cache {
     GM_setValue('gameAchievementsDefaultStatusPathName', value);
   }
 
+  static get gameDLCDefaultStatusPathName(): string { 
+    return (gameDLC.gameDLCOverride ? GM_getValue('gameDLCDefaultStatusPathName', '') : Cache.gameAchievementsDefaultStatusPathName) as string;
+  }
+
+  static set gameDLCDefaultStatusPathName(value: string) {
+    gameDLC.gameDLCOverride ? GM_setValue('gameDLCDefaultStatusPathName', value) : null;
+  }
+
+  static get gameChallengesDefaultStatusPathName(): string { 
+    return GM_getValue('gameChallengesDefaultStatusPathName', '') as string;
+  }
+
+  static set gameChallengesDefaultStatusPathName(value: string) {
+    GM_setValue('gameChallengesDefaultStatusPathName', value);
+  }
+
   static get gameClipsDefaultStatusSelectors(): string[] { 
     const value = GM_getValue('gameClipsDefaultStatusSelectors', '') as string;
     return value.length !== 0 ? JSON.parse(value) : [];
@@ -59,6 +76,14 @@ export class Cache {
 
     if (!GamesRegex.Test.achievementsUrl()) {
       GM_deleteValue('gameAchievementsDefaultStatusPathName');
+    }
+
+    if (!GamesRegex.Test.dlcUrl()) {
+      GM_deleteValue('gameDLCDefaultStatusPathName');
+    }
+
+    if (!GamesRegex.Test.challengesUrl()) {
+      GM_deleteValue('gameChallengesDefaultStatusPathName');
     }
 
     if (!GamesRegex.Test.clipsUrl()) {

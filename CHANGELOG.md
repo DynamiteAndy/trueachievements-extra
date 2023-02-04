@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.10.0
+- Added support for "Ready for publish" walkthroughs with sidebar content,
+- Adds a new feature to games and dlc to show as XX/XX instead of XX,
+- Extends achievement based features to include dlc pages,
+- Extends achievement based features to include challenge pages,
+- Adds a documentation view for detailing features,
+- Some styling changes around credits, changelog and documentation
+- Fixed paragraph menu not showing correctly on walkthrough page,
+- Refactor svg's to be more reuseable.
+
 ## 2.9.0
 - Changes default game status so it will not change state for 100% achievements,
 - Adds emojis for replies,

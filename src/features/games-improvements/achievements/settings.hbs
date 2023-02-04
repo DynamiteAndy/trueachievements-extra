@@ -2,6 +2,11 @@
     {{ includes "@ta-x-partials/accordion-header.hbs" title="Achievements" expanded=false }}
 
     <div class="ta-x-settings-menu-settings-accordion-body t-settings">
+        {{ includes "@ta-x-partials/checkbox-setting.hbs"
+            label="Show progress as XX/XX"
+            id="chkGamesImprovementsGameAchievementsIndividualProgress"
+            config-path="gamesImprovements.achievements.gameAchievementsIndividualProgress" }}
+
         <div class="ta-x-settings-menu-columned-setting">
             {{ includes "@ta-x-partials/checkbox-setting.hbs"
                 label="Default Status for Game Achievements"

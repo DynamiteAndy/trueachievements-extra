@@ -20,3 +20,8 @@ export const memoizeFetch = async(url: string, fetchOpts = {}, memoizeOptions?: 
   Cache.memoize = cachedCalls;
   return body;
 };
+
+export const updateMemoizedFetch = (url: string, body: string, memoizeOptions?: MemoizedFetchOptions) => {
+  cachedCalls.set(url, new MemoizedFetch(memoizeOptions).setResponse(body));
+  Cache.memoize = cachedCalls;
+};

@@ -60,6 +60,61 @@ describe('regex', () => {
       });
     });
 
+    describe('dlcUrl', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc', expected: true },
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119', expected: true },
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack', expected: false }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamesRegex.Test.dlcUrl(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+
+    describe('dlcUrlWithGamerId', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119', expected: true },
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack?gamerid=96119', expected: false }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamesRegex.Test.dlcUrlWithGamerId(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+
+    describe('individualDlcUrl', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc', expected: false },
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119', expected: false },
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack', expected: true }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamesRegex.Test.individualDlcUrl(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+
+    describe('individualDlcUrlWithGamerId', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119', expected: false },
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack', expected: false },
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack?gamerid=96119', expected: true }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamesRegex.Test.individualDlcUrlWithGamerId(test.case)).toEqual(test.expected);
+        });
+      });
+    });
+
     describe('gameUrl', () => {
       const testCases = [
         { case: 'https://www.trueachievements.com/game/Colt-Canyon', expected: true },

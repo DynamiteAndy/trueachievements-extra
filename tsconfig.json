@@ -22,6 +22,7 @@
       "@ta-x-scss/*": ["./scss/*"],
       "@ta-x-tinymce-scss/*": ["./scss/features/staff-walkthrough-improvements/tinymce/*"],
       "@ta-x-views/*": ["./views/*"],
+      "@ta-x-svgs/*": ["./resources/svgs/*"],
       "@ta-x-project-root/*": ["../*"],
       "@ta-x-jasmine": ["../test/jasmine/index"]
     }

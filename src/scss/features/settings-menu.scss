@@ -51,7 +51,8 @@ body {
           }
 
           .ta-x-settings-menu-credits-wrapper,
-          .ta-x-settings-menu-changelog-wrapper {
+          .ta-x-settings-menu-changelog-wrapper,
+          .ta-x-settings-menu-documentation-wrapper {
             display: flex;
             flex-wrap: wrap;
 
@@ -62,6 +63,7 @@ body {
             h1,
             h2 {
               width: 100%;
+              line-height: unset;
             }
 
             h1 {
@@ -72,22 +74,63 @@ body {
               border-top: 2px solid #0e5814;
               border-bottom: 2px solid #0e5814;
               padding: .5rem;
+              font-size: 1.6rem;
+              margin: 1rem 0;
             }
+
+            p {
+              font-size: 1.4rem;
+            }
+          }
+
+          .ta-x-settings-menu-documentation-wrapper {
+            padding-bottom: 0;
+
+            h1 {
+              &:not(:first-of-type) {
+                padding: .5rem 0;
+                margin-top: 1rem;
+                border-bottom: 2px solid #0552b5;
+                border-top: 2px solid #0552b5;
+              }
+            }
+
+            h2 {
+              &:first-of-type {
+                margin-top: 0;
+                margin-bottom: 1rem;
+              }
+            }
+
+            border: 0;
           }
 
           .ta-x-settings-menu-credits-wrapper {
             padding-top: 0;
+            padding-bottom: 0;
+            border: 0;
 
             h1 {
-              border-top: 2px solid #0e5814;
-              border-bottom: 2px solid #0e5814;
-              padding: .5rem;
-              margin-bottom: .5rem;
+              border-top: 2px solid #e9b949;
+              border-bottom: 2px solid #e9b949;
+              padding: .5rem 0;
+              margin-top: .5rem;
+              margin-bottom: 0;
             }
           }
 
           .ta-x-settings-menu-changelog-wrapper {
             border-bottom: 0;
+
+            h2 {
+              &:first-of-type {
+                margin: 0;
+              }
+            }
+
+            ul {
+              margin-bottom: .5rem;
+            }
           }
 
           .ta-x-markdown-marker {

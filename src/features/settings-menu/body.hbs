@@ -29,7 +29,10 @@
                     </div>
                     <div class="t-settings js-ta-x-settings-menu-changelog ta-x-settings-menu-settings-item" >
                         {{ changelog (markdown "@ta-x-project-root/CHANGELOG.md" false "ta-x-settings-menu-changelog-wrapper") }}
-                        {{ credits (markdown "@ta-x-project-root/CREDITS.md" false "ta-x-settings-menu-credits-wrapper") }}
+                        {{ markdown "@ta-x-project-root/CREDITS.md" true "ta-x-settings-menu-credits-wrapper" }}
+                    </div>
+                    <div class="t-settings js-ta-x-settings-menu-feature-documentation ta-x-settings-menu-settings-item" >
+                        {{ markdown "@ta-x-project-root/FEATURE-DOCUMENTATION.md" true "ta-x-settings-menu-documentation-wrapper" }}
                     </div>
                 </div>
                 <div class="t-settings open ta-x-settings-menu-bottom">
@@ -41,6 +44,8 @@
                         <span>TrueAchievements Extra</span>
                         <div class="ta-x-flex-break"></div>
                         <a href="#" class="js-ta-x-settings-menu-version">Version {GM_info.script.version}</a>
+                        <span>|</span>
+                        <a href="#" class="js-ta-x-settings-menu-documentation">Feature Documentation</a>
                     </div>
                 </div>
             </div>

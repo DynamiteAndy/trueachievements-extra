@@ -1,7 +1,7 @@
 import achievementRow from '@ta-x-views/templates/manage-walkthrough-achievement-row.html';
 import { Constants, manageWalkthrough, AchievementsRegex } from '@ta-x-globals';
 import { memoizeFetch, template } from '@ta-x-helpers';
-import { allConcurrently, toInt, waitForElement, extractAllBetween } from '@ta-x-utilities';
+import { allConcurrently, waitForElement } from '@ta-x-utilities';
 
 const clickableAchievements = async(walkthroughContainer: HTMLElement, walthroughPreviewDocument: Document) => {
   if (await waitForElement('#chWalkthroughAchievements', walkthroughContainer)) {
@@ -29,7 +29,6 @@ const clickableAchievements = async(walkthroughContainer: HTMLElement, walthroug
               const achievementName = gameAchievement.innerText.trim();
               const walkthroughAchievement = walkthroughAchievements.find(walkthroughAchievement => walkthroughAchievement.innerText.toLowerCase() === achievementName.toLowerCase());
 
-              console.log(achievementName, walkthroughAchievement);
               if (walkthroughAchievement) {
                 walkthroughAchievement.innerText = '';
                 walkthroughAchievement.innerHTML = gameAchievement.outerHTML;
@@ -97,7 +96,7 @@ export const makeTableLinksClickable = async(): Promise<void> => {
   }
 
   const walkthroughContainer = document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`) as HTMLElement;
-  const walkthroughId = toInt(extractAllBetween("'", selectedWalkthrough.href)[1]);
+  const walkthroughId = selectedWalkthrough.getAttribute('data-walkthrough-id');
   const walthroughPreviewResponse = await memoizeFetch(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
   const walthroughPreviewDocument = new DOMParser().parseFromString(walthroughPreviewResponse, 'text/html');
 

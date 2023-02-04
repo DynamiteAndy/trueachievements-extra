@@ -4,7 +4,7 @@ import { addToggleThemeButton } from './toggle-theme-button';
 import { setFullWidthToolbar } from './set-fullwidth-toolbar';
 import { fixFloatingMenus } from './fix-floating-menus';
 import { addSourceCodeButton } from './source-code-button';
-import html from './tinymce.html';
+import html from './tinymce.hbs';
 
 export const tinymce = async(): Promise<void> => {
   if (!await waitForElement('[href*="skin.min.css"]', document.head)) return;

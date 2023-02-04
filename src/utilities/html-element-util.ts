@@ -59,3 +59,9 @@ export const getElementCoordinates = (element: HTMLElement): { top: number, left
 
   return { top: Math.round(top), left: Math.round(left) };
 };
+
+export const removeAllChildren = (element: HTMLElement): void => {
+  while (element.firstChild) {
+    element.removeChild(element.lastChild);
+  }
+};

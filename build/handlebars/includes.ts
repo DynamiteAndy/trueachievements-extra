@@ -31,6 +31,10 @@ export const markdown = (): void => {
     const dom = new JSDOM(`<div class="${wrapperClass}">${htmlString}</div`);
     const domContent = dom.window.document.body;
 
+    [...domContent.querySelectorAll('ul')].forEach(ul => {
+      [...ul.querySelectorAll('li')].forEach(el => el.innerHTML = `<span class="ta-x-markdown-marker">➤</span><p>${el.innerHTML}</p>`);
+    });
+
     if (render) {
       const domTemplate = Handlebars.compile(domContent.innerHTML);
 
@@ -48,15 +52,9 @@ export const changelog = (): void => {
     const wrapperBody = changelogDocument.body.firstElementChild;
     const changelogElement = wrapperBody.querySelector('ul');
 
-    wrapperBody.removeChild(wrapperBody.firstElementChild);
-
     while (changelogElement.nextElementSibling) {
       wrapperBody.removeChild(changelogElement.nextElementSibling);
     }
-
-    [...changelogElement.querySelectorAll('li')].map(el => {
-      el.innerHTML = `<span class="ta-x-markdown-marker">></span><p>${el.innerHTML}</p>`;
-    });
 
     const changelogLink = changelogDocument.createElement('a');
     changelogLink.classList.add('ta-x-settings-menu-changelog-link');
@@ -70,21 +68,5 @@ export const changelog = (): void => {
   });
 };
 
-export const credits = (): void => {
-  Handlebars.registerHelper('credits', (_, options) => {
-    const dom = new JSDOM(options.data.root.markdown);
-    const changelogDocument = dom.window.document;
-    const wrapperBody = changelogDocument.body.firstElementChild;
-    const changelogElement = wrapperBody.querySelector('ul');
 
-    [...changelogElement.querySelectorAll('li')].map(el => {
-      el.innerHTML = `<span class="ta-x-markdown-marker">></span><p>${el.innerHTML}</p>`;
-    });
-
-    const domTemplate = Handlebars.compile(changelogDocument.body.innerHTML);
-
-    return new Handlebars.SafeString(domTemplate(options.hash));
-  });
-};
-
-export default { includes, markdown, changelog, credits };
+export default { includes, markdown, changelog };

@@ -107,7 +107,9 @@ export const gameAchievements = {
   get gameAchievementsDefaultStatus(): boolean { return GM_getValue('gameAchievementsDefaultStatus', false); },
   set gameAchievementsDefaultStatus(value: boolean) { GM_setValue('gameAchievementsDefaultStatus', value); },
   get gameAchievementsDefaultStatusValue(): string { return GM_getValue('gameAchievementsDefaultStatusValue', 'rdoAllAchievements'); },
-  set gameAchievementsDefaultStatusValue(value: string) { GM_setValue('gameAchievementsDefaultStatusValue', value); }
+  set gameAchievementsDefaultStatusValue(value: string) { GM_setValue('gameAchievementsDefaultStatusValue', value); },
+  get gameAchievementsIndividualProgress(): boolean { return GM_getValue('gameAchievementsIndividualProgress', false); },
+  set gameAchievementsIndividualProgress(value: boolean) { GM_setValue('gameAchievementsIndividualProgress', value); }
 };
 
 export const gameClips = {
@@ -123,12 +125,36 @@ export const gameClips = {
   set gameClipsDefaultSortByValue(value: string) { GM_setValue('gameClipsDefaultSortByValue', value); }
 };
 
+export const gameDLC = {
+  get gameDLCOverride(): boolean { return GM_getValue('gameDLCOverride', false); },
+  set gameDLCOverride(value: boolean) { GM_setValue('gameDLCOverride', value); },
+  get gameDLCDefaultStatus(): boolean { return gameDLC.gameDLCOverride ? GM_getValue('gameDLCDefaultStatus', false) : gameAchievements.gameAchievementsDefaultStatus; },
+  set gameDLCDefaultStatus(value: boolean) { gameDLC.gameDLCOverride ? GM_setValue('gameDLCDefaultStatus', value) : null; },
+  get gameDLCDefaultStatusValue(): string { return gameDLC.gameDLCOverride ? GM_getValue('gameDLCDefaultStatusValue', 'rdoAllAchievements') : gameAchievements.gameAchievementsDefaultStatusValue; },
+  set gameDLCDefaultStatusValue(value: string) { gameDLC.gameDLCOverride ? GM_setValue('gameDLCDefaultStatusValue', value) : null; },
+  get gameDLCIndividualProgress(): boolean { return gameDLC.gameDLCOverride ? GM_getValue('gameDLCIndividualProgress', false) : gameAchievements.gameAchievementsIndividualProgress; },
+  set gameDLCIndividualProgress(value: boolean) { gameDLC.gameDLCOverride ? GM_setValue('gameDLCIndividualProgress', value) : null; }
+};
+
+export const gameChallenges = {
+  get gameChallengesOverride(): boolean { return GM_getValue('gameChallengesOverride', false); },
+  set gameChallengesOverride(value: boolean) { GM_setValue('gameChallengesOverride', value); },
+  get gameChallengesDefaultStatus(): boolean { return GM_getValue('gameChallengesDefaultStatus', false); },
+  set gameChallengesDefaultStatus(value: boolean) {GM_setValue('gameChallengesDefaultStatus', value); },
+  get gameChallengesDefaultStatusValue(): string { return GM_getValue('gameChallengesDefaultStatusValue', 'rdoAllChallenges'); },
+  set gameChallengesDefaultStatusValue(value: string) { GM_setValue('gameChallengesDefaultStatusValue', value); },
+  get gameChallengesIndividualProgress(): boolean { return gameChallenges.gameChallengesOverride ? GM_getValue('gameChallengesIndividualProgress', false) : gameAchievements.gameAchievementsIndividualProgress; },
+  set gameChallengesIndividualProgress(value: boolean) { gameChallenges.gameChallengesOverride ? GM_setValue('gameChallengesIndividualProgress', value) : null; }
+};
+
 export const gamesImprovements = {
   get enabled(): boolean { return GM_getValue('gamesImprovements-enabled', false); },
   set enabled(value: boolean) { GM_setValue('gamesImprovements-enabled', value); },
   games,
   achievements: gameAchievements,
-  clips: gameClips
+  challenges: gameChallenges,
+  clips: gameClips,
+  dlc: gameDLC
 };
 
 export const achievements = {

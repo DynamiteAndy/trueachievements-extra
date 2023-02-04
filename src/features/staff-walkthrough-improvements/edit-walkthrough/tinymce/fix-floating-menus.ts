@@ -7,12 +7,20 @@ const variableProperty = Constants.Styles.Variables.StaffWalkthroughImprovements
 
 const setTopPosition = (): void => {
   const actualTopPosition = getElementCoordinates(tinymceToolbar);
+
   document.documentElement.style.setProperty(variableProperty, `${tinymceToolbar.offsetHeight + actualTopPosition.top}px`);
 };
 
-const listen = (): void => {
-  window.addEventListener('scroll', setTopPosition);
-  pubSub.subscribe('tinymce:repositionFloatingMenus', setTopPosition);
+const listen = async(): Promise<void> => {
+  const iframe =  await waitForElement('#txtWalkthrough_ifr') as HTMLIFrameElement;
+  
+  iframe.addEventListener('load', () => {
+    setTopPosition();
+
+    window.addEventListener('scroll', setTopPosition);
+    pubSub.subscribe('tinymce:repositionFloatingMenus', setTopPosition);
+    iframe.removeEventListener('load', this);
+  });
 };
 
 export const fixFloatingMenus = async(container: HTMLElement): Promise<void> => {
@@ -20,8 +28,7 @@ export const fixFloatingMenus = async(container: HTMLElement): Promise<void> => 
 
   if (!tinymceToolbar) return;
 
-  setTopPosition();
-  listen();
+  await listen();
 };
 
 export default { fixFloatingMenus };

@@ -53,7 +53,9 @@ export class Constants {
       static readonly wrenchJs = `${this.featureJs}-wrench`;
       static readonly closeJs = `${this.featureJs}-close`;
       static readonly versionLink = `${this.featureJs}-version`;
+      static readonly documentationLink = `${this.featureJs}-documentation`;
       static readonly changelogView = `${this.featureJs}-changelog`;
+      static readonly featureDocumentationView = `${this.featureJs}-feature-documentation`;
       static readonly settingsView = `${this.featureJs}-settings`;
       static readonly settingsContentShow = `${this.featureStyle}-settings-item-show`;
     };

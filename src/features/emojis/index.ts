@@ -16,12 +16,6 @@ const applyBody = async(replyContainer: HTMLElement): Promise<void> => {
     return accumulator;
   }, new Map([['TrueAchievements', []]]));
 
-  // const filteredEmojis = [ '263A FE0F', '263A', '2639', '2620', '2763', '2764',
-  //   '1F5E3', '1F3FB', '1F3FC', '1F3FD', '1F3FE', '1F3FF', '1F573', '1F54A', '1F577',
-  //   '1F578', '1F3F5', '2618', '1F336', '1F37D', '1F310', '1F3F3', '26A0', '2622',
-  //   '2623', '1F5E8', '1F5EF', '1F441', '26F7', '1F43F', '1F576', '1F6CD', '26D1',
-  //   '1F39A', '1F399', '1F39B', '260E'];
-
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const parsedTemplateDocument = new DOMParser().parseFromString(templatedTabs, 'text/html');
 
@@ -41,7 +35,6 @@ const applyBody = async(replyContainer: HTMLElement): Promise<void> => {
 
     let emojiHtml = '';
     emojiGroup[1].forEach((emoji: { char: string, name: string, codes: string }) => {
-      // if (filteredEmojis.includes(emoji.codes)) return;
       emojiHtml += `<a href='#' data-emoji-code='${emoji.codes}' onclick="InsertAtCursor('txtQuickReply','${emoji.char}', 'ta-x-emoji-dropdown'); return false;" title='${emoji.name}'>${emoji.char}</a>`;
     });
 

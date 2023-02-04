@@ -43,48 +43,53 @@ body {
         }
 
         &:nth-child(1),
-        &:nth-child(10) {
+        &:nth-child(11) {
           border-color: #58bb12;
         }
 
         &:nth-child(2),
-        &:nth-child(11) {
+        &:nth-child(12) {
           border-color: #2871a4;
         }
 
         &:nth-child(3),
-        &:nth-child(12) {
+        &:nth-child(13) {
           border-color: #cf1812;
         }
 
         &:nth-child(4),
-        &:nth-child(13) {
+        &:nth-child(14) {
           border-color: #c42d78;
         }
 
         &:nth-child(5),
-        &:nth-child(14) {
+        &:nth-child(15) {
           border-color: #9b30ff;
         }
 
         &:nth-child(6),
-        &:nth-child(15) {
+        &:nth-child(16) {
           border-color: #f57921;
         }
 
         &:nth-child(7),
-        &:nth-child(16) {
+        &:nth-child(17) {
           border-color: #294a7d;
         }
 
         &:nth-child(8),
-        &:nth-child(17) {
+        &:nth-child(18) {
           border-color: #000;
         }
 
         &:nth-child(9),
-        &:nth-child(18) {
+        &:nth-child(19) {
           border-color: #fff;
+        }
+
+        &:nth-child(10),
+        &:nth-child(20) {
+          border-color: #e9b949;
         }
       }
 

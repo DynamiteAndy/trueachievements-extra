@@ -20,8 +20,14 @@ export const getUrlProperties = (str: string, props: string|string[] = []) => {
 const achievementUrl = new RegExp('^/a[0-9]*/.*', 'i');
 const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*\\?gamerid=[0-9]*', 'i');
 const achievementsUrl = new RegExp('^/game/.*/achievements$', 'i');
-const clipsUrl = new RegExp('^/game/.*/videos$', 'i');
 const achievementsUrlWithGamerId = new RegExp('^/game/.*/achievements\\?gamerid=[0-9]*', 'i');
+const challengesUrl = new RegExp('^/game/.*/challenges$', 'i');
+const challengesUrlWithGamerId = new RegExp('^/game/.*/challenges\\?gamerid=[0-9]*', 'i');
+const clipsUrl = new RegExp('^/game/.*/videos$', 'i');
+const dlcUrl = new RegExp('^/game/.*/dlc$', 'i');
+const dlcUrlWithGamerId = new RegExp('^/game/.*/dlc\\?gamerid=[0-9]*', 'i');
+const individualDlcUrl = new RegExp('^/game/.*/dlc/.*$', 'i');
+const individualDlcUrlWithGamerId = new RegExp('^/game/.*/dlc/.*\\?gamerid=[0-9]*', 'i');
 const walkthroughUrl = new RegExp('^/game/.*/walkthrough$', 'i');
 const gamesUrl = new RegExp('^/games.aspx', 'i');
 const gameUrl = new RegExp('^/game/.*$', 'i');
@@ -54,14 +60,29 @@ export const AchievementsRegex = {
 export const GamesRegex = {
   achievementsUrl,
   achievementsUrlWithGamerId,
+  challengesUrl,
+  challengesUrlWithGamerId,
   clipsUrl,
+  dlcUrl,
+  dlcUrlWithGamerId,
+  individualDlcUrl,
+  individualDlcUrlWithGamerId,
   gameUrl,
   gamesUrl,
   walkthroughUrl,
   Test: {
+    dlc: (str: string = window.location.href): boolean => dlcUrl.test(getUrlProperties(str, 'pathname')) || individualDlcUrl.test(getUrlProperties(str, 'pathname')),
+    dlcWithGamerId: (str: string = window.location.href): boolean => dlcUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])) || individualDlcUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
+
     achievementsUrl: (str: string = window.location.href): boolean => achievementsUrl.test(getUrlProperties(str, 'pathname')),
     achievementsUrlWithGamerId: (str: string = window.location.href): boolean => achievementsUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
     clipsUrl: (str: string = window.location.href): boolean => clipsUrl.test(getUrlProperties(str, 'pathname')),
+    dlcUrl: (str: string = window.location.href): boolean => dlcUrl.test(getUrlProperties(str, 'pathname')),
+    dlcUrlWithGamerId: (str: string = window.location.href): boolean => dlcUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
+    challengesUrl: (str: string = window.location.href): boolean => challengesUrl.test(getUrlProperties(str, 'pathname')),
+    challengesUrlWithGamerId: (str: string = window.location.href): boolean => challengesUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
+    individualDlcUrl: (str: string = window.location.href): boolean => individualDlcUrl.test(getUrlProperties(str, 'pathname')),
+    individualDlcUrlWithGamerId: (str: string = window.location.href): boolean => individualDlcUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
     gameUrl: (str: string = window.location.href): boolean => gameUrl.test(getUrlProperties(str, 'pathname')),
     gamesUrl: (str: string = window.location.href): boolean => gamesUrl.test(getUrlProperties(str, 'pathname')),
     walkthroughUrl: (str: string = window.location.href): boolean => walkthroughUrl.test(getUrlProperties(str, 'pathname'))

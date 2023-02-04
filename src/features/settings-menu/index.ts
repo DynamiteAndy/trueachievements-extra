@@ -48,22 +48,8 @@ const checkRenderConditions = (el?: HTMLElement): void => {
   const querySelector = el ? `[data-render-condition*="#${el.id}"]` : '[data-render-condition]';
 
   ([...extensionBody.querySelectorAll(querySelector)] as HTMLElement[]).forEach(hiddenSetting => {
-    const condition = new ConditionalRender(hiddenSetting.getAttribute('data-render-condition'));
-
-    if (!condition.isValid()) return;
-
-    const setting = extensionBody.querySelector(condition.selector) as HTMLElement;
-    let method: string = null;
-
-    if (isCheckboxElement(setting)) {
-      method = (setting as HTMLInputElement).checked === condition.checked ? 'remove' : 'add';
-    } else if (isSelectElement(setting)) {
-      if (toBool(setting.getAttribute('data-is-array'))) {
-        method = condition.value.some(val => (setting as HTMLSelectElement).value.split(setting.getAttribute('data-array-split')).includes(val)) ? 'remove' : 'add';
-      } else {
-        method = condition.value.includes((setting as HTMLSelectElement).value) ? 'remove' : 'add';
-      }
-    }
+    const condition = ConditionalRender.fromString(hiddenSetting.getAttribute('data-render-condition'));
+    const method = condition?.test(extensionBody);
 
     if (method) {
       hiddenSetting.classList[method](Constants.Styles.Base.hide);
@@ -111,13 +97,24 @@ const listen = (): void => {
 
   extensionBody.addEventListener('click', ({ target }): void => {
     if (!(target instanceof HTMLElement)) return;
-    if (!target.classList.contains(Constants.Styles.SettingsMenu.versionLink)) return;
+    if (!target.classList.contains(Constants.Styles.SettingsMenu.versionLink) &&
+      !target.classList.contains(Constants.Styles.SettingsMenu.documentationLink)) return;
 
-    extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.changelogView}`)
-    .classList.toggle(Constants.Styles.SettingsMenu.settingsContentShow);
-    
-    extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.settingsView}`)
-    .classList.toggle(Constants.Styles.SettingsMenu.settingsContentShow);
+    const changelogView = extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.changelogView}`);
+    const documentationView = extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.featureDocumentationView}`);
+    const settingsView = extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.settingsView}`);
+    const currentView = extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.settingsContentShow}`);
+    const nextView = target.classList.contains(Constants.Styles.SettingsMenu.versionLink)
+      ? changelogView
+      : documentationView;
+
+    if (currentView === nextView) {
+      nextView.classList.toggle(Constants.Styles.SettingsMenu.settingsContentShow);
+      settingsView.classList.toggle(Constants.Styles.SettingsMenu.settingsContentShow);
+    } else {
+      currentView.classList.toggle(Constants.Styles.SettingsMenu.settingsContentShow);
+      nextView.classList.toggle(Constants.Styles.SettingsMenu.settingsContentShow);
+    }
   });
 
   extensionBody.addEventListener('change', ({ target }): void => {

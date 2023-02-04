@@ -1,4 +1,4 @@
-import { getDuplicates, waitForElement, allConcurrently } from '@ta-x-utilities';
+import { getDuplicates, waitForElement, allConcurrently, extractAllBetween, toInt } from '@ta-x-utilities';
 import { Constants, StaffRegex } from '@ta-x-globals';
 import { until } from '@ta-x-helpers';
 import html from './manage-walkthrough.html';
@@ -21,6 +21,7 @@ const applyBody = async(): Promise<void> => {
     editWalkthrough.after(parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
 
     allConcurrently('Manage Walkthrough', [
+      { name: 'manage-walkthrough-adjust-left-sidebar', task: adjustLeftSidebar },
       { name: 'manage-walkthrough-adjust-right-sidebar', task: adjustRightSidebar },
       { name: 'manage-walkthrough-adjust-buttons', task: adjustButtons }
     ]);
@@ -63,6 +64,16 @@ const adjustRightSidebar = async(): Promise<void> => {
     sideBarContainer.appendChild(await waitForElement('#chWalkthroughGamers', walkthroughContainer));
     sideBarContainer.appendChild(await waitForElement('#chWalkthroughOtherSiteLink', walkthroughContainer));
   }
+};
+
+const adjustLeftSidebar = async(): Promise<void> => {
+  const walkthroughList = await waitForElement('#scrolllstWalkthroughID', walkthroughContainer);
+
+  ([...walkthroughList.querySelectorAll('td a')] as HTMLElement[]).forEach((anchor: HTMLAnchorElement) => {
+    const walkthroughId = toInt(extractAllBetween("'", anchor.href)[1]);
+    anchor.href = `?walkthroughId=${walkthroughId}`;
+    anchor.setAttribute('data-walkthrough-id', walkthroughId.toString());
+  });
 };
 
 const deDupeAchievements = (walkthroughAchievementsContainer: HTMLElement): void => {

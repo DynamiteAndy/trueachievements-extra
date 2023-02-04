@@ -7,7 +7,7 @@
 body {
   &.trueachievement-extras {
     .ta-x-hide {
-      display: none;
+      display: none !important;
     }
 
     .middle {
