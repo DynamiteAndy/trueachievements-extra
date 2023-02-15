@@ -71,7 +71,6 @@ const adjustLeftSidebar = async(): Promise<void> => {
 
   ([...walkthroughList.querySelectorAll('td a')] as HTMLElement[]).forEach((anchor: HTMLAnchorElement) => {
     const walkthroughId = toInt(extractAllBetween("'", anchor.href)[1]);
-    anchor.href = `?walkthroughId=${walkthroughId}`;
     anchor.setAttribute('data-walkthrough-id', walkthroughId.toString());
   });
 };

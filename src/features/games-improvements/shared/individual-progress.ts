@@ -12,11 +12,13 @@ const createAchievementGroup = (header: HTMLElement): AchievementGroup => ({
 });
 
 const getBaseAchievementGroup = (el: HTMLElement): AchievementGroup[] => {
-  const baseAchievementHeader = el.querySelector('.ach-panels .pnl-hd.game') as HTMLElement;
+  const baseAchievementHeader = el.querySelector('.pnl-hd.no-pills.no-pr.game:not(.gamer)') as HTMLElement;
 
   if (!baseAchievementHeader) return [];
   
   const baseAchievementGroup = createAchievementGroup(baseAchievementHeader);
+
+  if (baseAchievementGroup.title === 'Overall DLC Stats') return [];
   
   for (let child = el.querySelector('.ach-panels') as HTMLElement; child; child = child.nextSibling as HTMLElement) {
     if (child.tagName !== 'UL') {

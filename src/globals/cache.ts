@@ -1,7 +1,6 @@
 import { isBeforeNow } from '../utilities/date-util';
 import { MemoizedFetch } from '../models/memoized-fetch';
 import { GamesRegex } from './regex';
-import { gameDLC } from './config';
 
 export class Cache {
   static get memoize(): Map<string, MemoizedFetch> { 
@@ -40,11 +39,11 @@ export class Cache {
   }
 
   static get gameDLCDefaultStatusPathName(): string { 
-    return (gameDLC.gameDLCOverride ? GM_getValue('gameDLCDefaultStatusPathName', '') : Cache.gameAchievementsDefaultStatusPathName) as string;
+    return GM_getValue('gameDLCDefaultStatusPathName', '') as string;
   }
 
   static set gameDLCDefaultStatusPathName(value: string) {
-    gameDLC.gameDLCOverride ? GM_setValue('gameDLCDefaultStatusPathName', value) : null;
+    GM_setValue('gameDLCDefaultStatusPathName', value);
   }
 
   static get gameChallengesDefaultStatusPathName(): string { 
