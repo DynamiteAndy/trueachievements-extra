@@ -14,7 +14,7 @@ export const includes = (): void => {
     const actualPath = getPath(filePath, options.data?.parentPartialDirectory);
     const includedFiles = fs.readFileSync(actualPath, 'utf8');
     const dom = new JSDOM(includedFiles);
-    const domContent = dom.window.document.body.innerHTML;
+    const domContent = dom.window.document.body.innerHTML || dom.window.document.head.innerHTML;
     const domTemplate = Handlebars.compile(domContent);
 
     return new Handlebars.SafeString(domTemplate(options.hash, { data: { parentPartialDirectory: dirname(actualPath) } }));

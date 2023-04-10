@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.11.1
+- Fixed emojis missing all the TrueAchievement emotes,
+- Fixed Manage walkthrough buttons appearing in wrong place
+
+## 2.11.0
+- Added support for emojis in private messages,
+- Added support for emojis in game comments,
+- Made a change so that Walkthrough Team button will only show if the button is not already showing,
+- Added support for JSColor on Edit Walkthrough Table properties.
+
 ## 2.10.1
 - Fixed base game being excluded from show as XX/XX,
 - Fixed filter by walkthrough status resetting to default,

@@ -4,6 +4,7 @@ import { addToggleThemeButton } from './toggle-theme-button';
 import { setFullWidthToolbar } from './set-fullwidth-toolbar';
 import { fixFloatingMenus } from './fix-floating-menus';
 import { addSourceCodeButton } from './source-code-button';
+import { appendColorPicker } from './append-color-picker';
 import html from './tinymce.hbs';
 
 export const tinymce = async(): Promise<void> => {
@@ -22,8 +23,9 @@ export const tinymce = async(): Promise<void> => {
     { name: 'tinymce-set-full-width-toolbar', task: async() => setFullWidthToolbar(container) },
     { name: 'tinymce-add-fix-floating-menus', task: async() => fixFloatingMenus(container) },
     { name: 'tinymce-add-source-code-button', task: async() => addSourceCodeButton() },
-    { name: 'tinymce-add-toggle-theme-button', task: async() => addToggleThemeButton(toolbar) }
+    { name: 'tinymce-add-toggle-theme-button', task: async() => addToggleThemeButton(toolbar) },
+    { name: 'tinymce-append-color-picker', task: async() => appendColorPicker() }
   ]);
 };
 
-export default { tinymce };
+export default { tinymce }; 

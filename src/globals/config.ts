@@ -77,6 +77,11 @@ export const walkthroughs = {
 export const forumImprovements = {
   get enabled(): boolean { return GM_getValue('forumImprovements-enabled', false); },
   set enabled(value: boolean) { GM_setValue('forumImprovements-enabled', value); },
+  get threadFilterKeywords(): string[] { 
+    const value = GM_getValue('threadFilterKeywords', '') as string;
+    return value.length !== 0 ? JSON.parse(value) : [ ];
+  },
+  set threadFilterKeywords(value: string[]) { GM_setValue('threadFilterKeywords', JSON.stringify(value)); },
   walkthroughs
 };
 
