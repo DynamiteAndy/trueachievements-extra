@@ -45,7 +45,7 @@ const adjustButtons = async (): Promise<void> => {
   });
 
   if (buttonsContainer) {
-    buttonsContainer.parentNode.insertBefore(buttonsContainer, buttonsContainer.previousElementSibling);
+    buttonsContainer.parentNode.insertBefore(buttonsContainer, buttonsContainer.nextSibling);
   }
 };
 

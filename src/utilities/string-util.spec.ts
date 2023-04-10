@@ -1,4 +1,4 @@
-import { toInt, toBool, toDate } from './string-util';
+import { toInt, toBool, toDate, extractBetween } from './string-util';
 
 describe('string-util', () => {
   describe('toInt', () => {
@@ -91,6 +91,20 @@ describe('string-util', () => {
     negativeTestCases.forEach((test, index) => {
       it(`should parse "${test.case}" correctly (testcase: ${index + 1})`, () => {
         expect(toBool(test.case)).toEqual(test.expected);
+      });
+    });
+  });
+
+  describe('extractBetween', () => {
+    const positiveTestCases = [
+      { case: `ƒ onclick(event) {
+        InsertAtCursor('aebMessage','[smile]', 'smileydropdown'); return false;
+        }`, expected: 'aebMessage', between: "'" }
+    ];
+
+    positiveTestCases.forEach((test, index) => {
+      it(`should extract "${test.expected}" correctly (testcase: ${index + 1})`, () => {
+        expect(extractBetween(test.between, test.case)).toEqual(test.expected);
       });
     });
   });

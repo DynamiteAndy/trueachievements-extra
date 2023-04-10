@@ -1,7 +1,7 @@
 import { Constants, config } from '@ta-x-globals';
-import { ConditionalRender } from '@ta-x-models';
+import { ConditionalRender, ListSetting } from '@ta-x-models';
 import { pubSub } from '@ta-x-components';
-import { waitForElement, getValue, isCheckboxElement, isSelectElement, setValue, toBool } from '@ta-x-utilities';
+import { waitForElement, getValue, isCheckboxElement, isSelectElement, setValue, toBool, isTAXChildListElement } from '@ta-x-utilities';
 import { template } from '@ta-x-helpers';
 import html from './body.hbs';
 
@@ -38,6 +38,19 @@ const addSettings = (): void => {
       } else {
         (setting as HTMLSelectElement).value = getValue(config, configPath, '');
       }
+    } else if (isTAXChildListElement(setting)) {
+      const listElement = new ListSetting(setting);
+      let values: string[];
+
+      if (toBool(setting.getAttribute('data-is-array'))) {
+        values = getValue<string[]>(config, configPath, []);
+      } else {
+        values = [getValue(config, configPath, '')];
+      }
+
+      values.forEach(value => {
+        listElement.list.appendChild(createListElement(listElement, value));
+      });
     }
   });
 
@@ -70,6 +83,18 @@ const setAccordionStates = (): void => {
   });
 };
 
+const createListElement = (listSetting: ListSetting, value: string): HTMLElement => {
+  const templateListItem = listSetting.parent.querySelector(listSetting.parent.getAttribute('data-template-id')) as HTMLTemplateElement;
+  const templatedListItem = template(templateListItem.content.firstElementChild.cloneNode(true), {
+    listSetting: {
+      id: listSetting.listId,
+      value: value
+    }
+  });
+
+  return templatedListItem;
+};
+
 const listen = (): void => {
   const extensionTrigger = document.querySelector(`.${Constants.Styles.SettingsMenu.wrenchJs}`);
 
@@ -83,6 +108,35 @@ const listen = (): void => {
 
     extensionBody.setAttribute('data-previously-opened', '');
     setAccordionStates();
+  });
+
+  extensionBody.addEventListener('click', ({ target }): void => {
+    if (!(target instanceof HTMLElement)) return;
+    if (!isTAXChildListElement(target)) return;
+
+    const listElement = new ListSetting(target);
+    const configPath = (listElement.parent.querySelector('[data-config-path]') as HTMLElement).getAttribute('data-config-path');
+
+    if (target.hasAttribute('data-add')) {
+      const textbox = listElement.parent.querySelector(`#${listElement.listId}-inpit`) as HTMLInputElement;
+      if (textbox.value === '') return;
+
+      listElement.list.appendChild(createListElement(listElement, textbox.value));
+      textbox.value = '';
+    } else if (target.hasAttribute('data-remove')) {
+      listElement.list.removeChild(target.closest('li'));
+    }
+
+    setValue(config, configPath, ([...listElement.list.querySelectorAll('[data-value]')] as HTMLElement[])
+      .map((val: HTMLElement) => val.getAttribute('data-value')));
+
+    let parentAccordionBody = target.closest('.ta-x-settings-menu-settings-accordion-body') as HTMLElement;
+    if (parentAccordionBody) pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+
+    setTimeout(() => {
+      parentAccordionBody = target.closest('[data-parent-accordion-body]') as HTMLElement;
+      if (parentAccordionBody) pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+    }, 500);
   });
 
   extensionBody.addEventListener('click', ({ target }): void => {

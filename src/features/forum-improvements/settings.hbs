@@ -2,6 +2,17 @@
     {{ includes "@ta-x-partials/accordion-header.hbs" title="Forum Improvements" expanded=false config-path="forumImprovements.enabled" asCheckbox=true id="chkForumImprovements" }}
 
     <div class="ta-x-settings-menu-settings-accordion-body t-settings" data-parent-accordion-body>
+        {{!-- {{ includes "@ta-x-partials/list-setting.hbs"
+            render-condition='{ "selector": "#chkForumImprovements", "checked": true }'
+            item-list-template='@ta-x-views/templates/forum-improvements-thread-filter-keywords.html'
+            template-id='#ta-x-template-forum-improvements-thread-filter-keywords'
+            config-path="forumImprovements.threadFilterKeywords" 
+            label="Filter Threads By Keyword"
+            id="txtThreadKeywordFilter"
+            is-array="true"
+            array-split=","
+            button-text="Add Filter" }} --}}
+
         {{ includes "./walkthroughs/settings.hbs" }}
     </div>
 </div>

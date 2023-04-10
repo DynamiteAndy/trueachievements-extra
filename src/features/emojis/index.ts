@@ -1,12 +1,40 @@
 import emojiJson from 'emoji.json';
 import { pubSub } from '@ta-x-components';
 import { Constants, emojis } from '@ta-x-globals';
-import { waitForElement } from '@ta-x-utilities';
+import { allConcurrently, extractBetween, waitForElement, waitForElements, waitForImages } from '@ta-x-utilities';
 import { template } from '@ta-x-helpers';
 import templatedTabs from '@ta-x-views/templates/tab-link.html';
 import html from './emojis.html';
 
-const applyBody = async(replyContainer: HTMLElement): Promise<void> => {
+const apply = async (containers: HTMLElement[], emojiContent: Element): Promise<void> => {
+  for (let i = 0; i < containers.length; i++) {
+    const container = containers[i];
+    const trueAchievementsContent = emojiContent.querySelector('#ta-x-tabs-trueachievements');
+    let insertAtCursorElement: string = null;
+
+    await waitForImages(container);
+
+    ([...container.querySelectorAll('.smileydropdown span')] as HTMLElement[]).forEach(smiley => {
+      if (!insertAtCursorElement) {
+        insertAtCursorElement = extractBetween("'", smiley.onclick.toString());
+      }
+
+      trueAchievementsContent.appendChild(smiley);
+    });
+
+    ([...container.querySelectorAll('.smileydropdown')] as HTMLElement[]).forEach(smiley => smiley.parentElement.remove());
+
+    const quickReplyEmojiToolbar = await waitForElement('.toolbar .formatbuttons:last-child', container);
+    emojiContent = template(emojiContent, { emojis: { id: insertAtCursorElement }});
+    quickReplyEmojiToolbar.appendChild(emojiContent);
+
+    const firstTab = await waitForElement(`.${Constants.Styles.Components.Tab.tabLink}:first-child`, container);
+
+    pubSub.publish('tabs:set', firstTab);
+  }
+};
+
+const buildEmojis = (): Element => {
   const groupedEmojis = emojiJson.reduce((accumulator, emoji) => {
     const category = accumulator.get(emoji.group) || [];
     category.push(emoji);
@@ -35,7 +63,7 @@ const applyBody = async(replyContainer: HTMLElement): Promise<void> => {
 
     let emojiHtml = '';
     emojiGroup[1].forEach((emoji: { char: string, name: string, codes: string }) => {
-      emojiHtml += `<a href='#' data-emoji-code='${emoji.codes}' onclick="InsertAtCursor('txtQuickReply','${emoji.char}', 'ta-x-emoji-dropdown'); return false;" title='${emoji.name}'>${emoji.char}</a>`;
+      emojiHtml += `<span data-emoji-code='${emoji.codes}' onclick="InsertAtCursor('{emojis.id}','${emoji.char}', 'ta-x-emoji-dropdown'); return false;" title='${emoji.name}'>${emoji.char}</span>`;
     });
 
     const templatedTabContent = template(tabContent as HTMLElement, { tab: { content: emojiHtml, link: emojiGroup[0], id: tabId }});
@@ -43,23 +71,25 @@ const applyBody = async(replyContainer: HTMLElement): Promise<void> => {
     emojiTabs.parentNode.append(templatedTabContent);
   });
 
-  const trueAchievementsContent = emojiButton.querySelector('#ta-x-tabs-trueachievements');
-  ([...replyContainer.querySelectorAll('.smileydropdown a')] as HTMLElement[]).forEach(smiley => trueAchievementsContent.appendChild(smiley));
-  ([...replyContainer.querySelectorAll('.smileydropdown')] as HTMLElement[]).forEach(smiley => smiley.parentElement.remove());
-
-  const quickReplyEmojiToolbar = await waitForElement('.toolbar .formatbuttons:last-child', replyContainer);
-  quickReplyEmojiToolbar.appendChild(emojiButton);
-
-  const firstTab = await waitForElement(`.${Constants.Styles.Components.Tab.tabLink}:first-child`, replyContainer);
-
-  pubSub.publish('tabs:set', firstTab);
+  return emojiButton;
 };
 
 export default async(): Promise<void> => {
   if (!emojis.enabled) return;
-  const replyContainer = await waitForElement('#aeb_txtQuickReply, #aeb_aebMessageBody');
+  const elementSelectors = [ '#aeb_txtQuickReply', '#aeb_aebMessageBody', '#aeb_aebMessage', '#aeb_txtAddSubComment', '#aeb_aebComment' ];
+  const replyContainer = await waitForElement(elementSelectors.join(', '));
 
   if (!replyContainer) return;
 
-  await applyBody(replyContainer);
+  const emojiContent = buildEmojis();
+
+  allConcurrently('Emojis - Apply', elementSelectors.map((selector: string) => ({
+    name: `emojis-${selector}`,
+    task: async () => {
+      const containers = await waitForElements(selector);
+
+      if (!containers || containers.length === 0) return;
+    
+      await apply(containers, emojiContent);
+    }})), elementSelectors.length);
 };

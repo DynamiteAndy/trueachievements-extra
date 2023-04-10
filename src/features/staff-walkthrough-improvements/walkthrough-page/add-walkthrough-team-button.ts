@@ -9,6 +9,8 @@ export const addWalkthroughTeamButton = async(walkthroughContainer: HTMLElement,
   const walkthroughPageButtons =  await waitForElement('.content .buttons', walkthoughPageVersions);
 
   if (walkthroughPageButtons) {
+    if (document.querySelector('#btnBackToWalkthrough')) return;
+
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
 
     walkthroughPageButtons.appendChild(parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonJs}`));

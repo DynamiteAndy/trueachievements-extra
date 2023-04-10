@@ -38,6 +38,51 @@ body {
             font-size: 1.2rem;
             padding-top: .5rem;
           }
+
+          .ta-x-listbox {
+            border-bottom: 0;
+
+            >label {
+              padding-bottom: 1rem;
+            }
+
+            .frm-lst {
+              width: 100%;
+              flex-wrap: wrap;
+              justify-content: space-between;
+
+              input {
+                &.textbox {
+                  flex: 1;
+                }
+
+                &[type='submit'] {
+                  margin-left: 1rem;
+                }
+              }
+
+              ul {
+                width: 100%;
+                
+                li {
+                  >div {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+
+                    p {
+                      word-break: break-all;
+                    }
+
+                    a {
+                      margin-left: 1rem;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
 
         .ta-x-settings-menu-settings-item {

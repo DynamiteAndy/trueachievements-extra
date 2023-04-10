@@ -168,6 +168,15 @@ body {
             ) !important;
         }
       }
+
+      &[data-ta-x-theme='dark'] {
+        .jscolor-wrap {
+          .jscolor-border {
+            border: 1px solid #232b33 !important;
+            background: #404952 !important;
+          }
+        }
+      }
     }
   }
 }

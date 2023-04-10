@@ -19,7 +19,6 @@ const applyBody = async(): Promise<void> => {
           await wait();
         } while (!tableHeader.classList.contains(`sorting-${newsImprovements.sales.autoSortByOrder}`));
     }})));
-  
 };
 
 export default async (): Promise<void> => {
