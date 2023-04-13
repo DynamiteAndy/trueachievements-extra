@@ -40,10 +40,12 @@ body {
           }
 
           .ta-x-listbox {
+            padding-top: 1rem;
             border-bottom: 0;
 
             >label {
-              padding-bottom: 1rem;
+              padding-bottom: .5rem;
+              display: block;
             }
 
             .frm-lst {

@@ -29,6 +29,7 @@ const dlcUrlWithGamerId = new RegExp('^/game/.*/dlc\\?gamerid=[0-9]*', 'i');
 const individualDlcUrl = new RegExp('^/game/.*/dlc/.*$', 'i');
 const individualDlcUrlWithGamerId = new RegExp('^/game/.*/dlc/.*\\?gamerid=[0-9]*', 'i');
 const walkthroughUrl = new RegExp('^/game/.*/walkthrough$', 'i');
+const gameForumUrl = new RegExp('^/game/.*/forum$', 'i');
 const gamesUrl = new RegExp('^/games.aspx', 'i');
 const gameUrl = new RegExp('^/game/.*$', 'i');
 const editWalkthroughUrl = new RegExp('^/staff/walkthrough/editwalkthroughpage.aspx', 'i');
@@ -41,6 +42,7 @@ const walkthroughPagePreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpag
 const walkthroughPagePreviewUrlWithPageId = new RegExp('^/staff/walkthrough/walkthroughpagepreview.aspx\\?pageid=[0-9]*', 'i');
 const autosave = new RegExp('^/ajaxfunctions.aspx/AutoSave', 'i');
 const forumsUrl = new RegExp('^/forum/forums.aspx', 'i');
+const myTheadsUrl = new RegExp('^/forum/viewthreads.aspx', 'i');
 const viewBoardUrlWithBoardId = new RegExp('^/forum/viewboard.aspx\\?messageboardid=[0-9]*', 'i');
 const viewThreadUrlWithThreadId = new RegExp('^/forum/viewthread.aspx\\?tid=[0-9]*', 'i');
 const pollUrl = new RegExp('^/poll/[0-9]*/*', 'i');
@@ -67,6 +69,7 @@ export const GamesRegex = {
   dlcUrlWithGamerId,
   individualDlcUrl,
   individualDlcUrlWithGamerId,
+  forumUrl: gameForumUrl,
   gameUrl,
   gamesUrl,
   walkthroughUrl,
@@ -83,6 +86,7 @@ export const GamesRegex = {
     challengesUrlWithGamerId: (str: string = window.location.href): boolean => challengesUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
     individualDlcUrl: (str: string = window.location.href): boolean => individualDlcUrl.test(getUrlProperties(str, 'pathname')),
     individualDlcUrlWithGamerId: (str: string = window.location.href): boolean => individualDlcUrlWithGamerId.test(getUrlProperties(str, ['pathname','search'])),
+    forumUrl: (str: string = window.location.href): boolean => gameForumUrl.test(getUrlProperties(str, 'pathname')),
     gameUrl: (str: string = window.location.href): boolean => gameUrl.test(getUrlProperties(str, 'pathname')),
     gamesUrl: (str: string = window.location.href): boolean => gamesUrl.test(getUrlProperties(str, 'pathname')),
     walkthroughUrl: (str: string = window.location.href): boolean => walkthroughUrl.test(getUrlProperties(str, 'pathname'))
@@ -140,12 +144,15 @@ export const ForumRegex = {
   forumsUrl,
   viewBoardUrlWithBoardId,
   viewThreadUrlWithThreadId,
+  myTheadsUrl,
   Test: {
     all: (str: string = window.location.href): boolean => forumsUrl.test(getUrlProperties(str, 'pathname')) ||
       viewBoardUrlWithBoardId.test(getUrlProperties(str, ['pathname','search'])) ||
-      viewThreadUrlWithThreadId.test(getUrlProperties(str, ['pathname','search'])),
+      viewThreadUrlWithThreadId.test(getUrlProperties(str, ['pathname','search'])) ||
+      myTheadsUrl.test(getUrlProperties(str, 'pathname')),
 
     forumsUrl: (str: string = window.location.href): boolean => forumsUrl.test(getUrlProperties(str, 'pathname')),
+    myTheadsUrl: (str: string = window.location.href): boolean => myTheadsUrl.test(getUrlProperties(str, 'pathname')),
     viewBoardUrlWithBoardId: (str: string = window.location.href): boolean => viewBoardUrlWithBoardId.test(getUrlProperties(str, ['pathname','search'])),
     viewThreadUrlWithThreadId: (str: string = window.location.href): boolean => viewThreadUrlWithThreadId.test(getUrlProperties(str, ['pathname','search']))
   }

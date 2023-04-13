@@ -118,11 +118,10 @@ const listen = (): void => {
     const configPath = (listElement.parent.querySelector('[data-config-path]') as HTMLElement).getAttribute('data-config-path');
 
     if (target.hasAttribute('data-add')) {
-      const textbox = listElement.parent.querySelector(`#${listElement.listId}-inpit`) as HTMLInputElement;
-      if (textbox.value === '') return;
+      if (listElement.input.value === '') return;
 
-      listElement.list.appendChild(createListElement(listElement, textbox.value));
-      textbox.value = '';
+      listElement.list.appendChild(createListElement(listElement, listElement.input.value));
+      listElement.input.value = '';
     } else if (target.hasAttribute('data-remove')) {
       listElement.list.removeChild(target.closest('li'));
     }

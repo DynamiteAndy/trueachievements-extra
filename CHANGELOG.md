@@ -1,8 +1,11 @@
 # Changelog
 
+## 2.12.0
+- Adds a new feature for filtering, game threads, my threads and forum threads by keywords.
+
 ## 2.11.1
 - Fixed emojis missing all the TrueAchievement emotes,
-- Fixed Manage walkthrough buttons appearing in wrong place
+- Fixed Manage walkthrough buttons appearing in wrong place.
 
 ## 2.11.0
 - Added support for emojis in private messages,
