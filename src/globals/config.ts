@@ -10,6 +10,11 @@ const migrateGet = <T>(oldSetting: string, newSetting: string, defaultValue: T):
   return oldValue;
 };
 
+const arrayGet = <T>(setting: string, defaultValue: T[]): T[] => {
+  const value = GM_getValue(setting, '') as string;
+  return value.length !== 0 ? JSON.parse(value) : defaultValue;
+};
+
 export const stickyHeader = {
   get enabled(): boolean { return migrateGet('trueachievements-extra-stickyHeader-enabled', 'stickyHeader-enabled', false); },
   set enabled(value: boolean) { GM_setValue('stickyHeader-enabled', value); },
@@ -69,7 +74,16 @@ export const staffWalkthroughImprovements = {
   walkthroughPreview
 };
 
-export const walkthroughs = {
+export const myThreads = {
+  get myThreadsForumOverride(): boolean { return GM_getValue('myThreadsForumOverride', false); },
+  set myThreadsForumOverride(value: boolean) { GM_setValue('myThreadsForumOverride', value); },
+  get myThreadsThreadFilter(): boolean { return myThreads.myThreadsForumOverride ? GM_getValue('myThreadsThreadFilter', false) : forumImprovements.forumImprovementsThreadFilter; },
+  set myThreadsThreadFilter(value: boolean) { myThreads.myThreadsForumOverride ? GM_setValue('myThreadsThreadFilter', value) : null; },
+  get threadFilterKeywords(): string[] { return myThreads.myThreadsForumOverride ? arrayGet<string>('myThreadsThreadFilterKeywords', []) : forumImprovements.threadFilterKeywords; },
+  set threadFilterKeywords(value: string[]) { myThreads.myThreadsForumOverride ? GM_setValue('myThreadsThreadFilterKeywords', JSON.stringify(value)) : null; }
+};
+
+export const walkthroughsForum = {
   get showOwnerProgress(): boolean { return GM_getValue('showOwnerProgress', false); },
   set showOwnerProgress(value: boolean) { GM_setValue('showOwnerProgress', value); }
 };
@@ -77,21 +91,18 @@ export const walkthroughs = {
 export const forumImprovements = {
   get enabled(): boolean { return GM_getValue('forumImprovements-enabled', false); },
   set enabled(value: boolean) { GM_setValue('forumImprovements-enabled', value); },
-  get threadFilterKeywords(): string[] { 
-    const value = GM_getValue('threadFilterKeywords', '') as string;
-    return value.length !== 0 ? JSON.parse(value) : [ ];
-  },
-  set threadFilterKeywords(value: string[]) { GM_setValue('threadFilterKeywords', JSON.stringify(value)); },
-  walkthroughs
+  get forumImprovementsThreadFilter(): boolean { return GM_getValue('forumImprovementsThreadFilter', false); },
+  set forumImprovementsThreadFilter(value: boolean) { GM_setValue('forumImprovementsThreadFilter', value); },
+  get threadFilterKeywords(): string[] { return arrayGet<string>('forumImprovementsThreadFilterKeywords', []); },
+  set threadFilterKeywords(value: string[]) { GM_setValue('forumImprovementsThreadFilterKeywords', JSON.stringify(value)); },
+  walkthroughs: walkthroughsForum,
+  myThreads
 };
 
 export const sales = {
   get autoSortBy(): boolean { return GM_getValue('autoSortBy', false); },
   set autoSortBy(value: boolean) { GM_setValue('autoSortBy', value); },
-  get autoSortByValue(): string[] { 
-    const value = GM_getValue('autoSortByValue', '') as string;
-    return value.length !== 0 ? JSON.parse(value) : [ 'product', 'game' ];
-  },
+  get autoSortByValue(): string[] { return arrayGet<string>('autoSortByValue', [ 'product', 'game' ]); },
   set autoSortByValue(value: string[]) { GM_setValue('autoSortByValue', JSON.stringify(value)); },
   get autoSortByOrder(): string { return GM_getValue('autoSortByOrder', 'asc'); },
   set autoSortByOrder(value: string) { GM_setValue('autoSortByOrder', value); }
@@ -152,12 +163,22 @@ export const gameChallenges = {
   set gameChallengesIndividualProgress(value: boolean) { gameChallenges.gameChallengesOverride ? GM_setValue('gameChallengesIndividualProgress', value) : null; }
 };
 
+export const gameForums = {
+  get gameForumsForumOverride(): boolean { return GM_getValue('gameForumsForumOverride', false); },
+  set gameForumsForumOverride(value: boolean) { GM_setValue('gameForumsForumOverride', value); },
+  get gameForumsThreadFilter(): boolean { return gameForums.gameForumsForumOverride ? GM_getValue('gameForumsThreadFilter', false) : forumImprovements.forumImprovementsThreadFilter; },
+  set gameForumsThreadFilter(value: boolean) { gameForums.gameForumsForumOverride ? GM_setValue('gameForumsThreadFilter', value) : null; },
+  get threadFilterKeywords(): string[] { return gameForums.gameForumsForumOverride ? arrayGet<string>('gameForumsThreadFilterKeywords', []) : forumImprovements.threadFilterKeywords; },
+  set threadFilterKeywords(value: string[]) { gameForums.gameForumsForumOverride ? GM_setValue('gameForumsThreadFilterKeywords', JSON.stringify(value)) : null; }
+};
+
 export const gamesImprovements = {
   get enabled(): boolean { return GM_getValue('gamesImprovements-enabled', false); },
   set enabled(value: boolean) { GM_setValue('gamesImprovements-enabled', value); },
   games,
   achievements: gameAchievements,
   challenges: gameChallenges,
+  forums: gameForums,
   clips: gameClips,
   dlc: gameDLC
 };

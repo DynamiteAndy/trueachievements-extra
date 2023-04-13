@@ -1,0 +1,34 @@
+<div class="ta-x-settings-menu-settings-accordion" data-render-condition='{ "selector": "#chkGamesImprovements", "checked": true }'>
+    {{ includes "@ta-x-partials/accordion-header.hbs" title="Forums" expanded=false }}
+
+    <div class="ta-x-settings-menu-settings-accordion-body t-settings">
+        {{ includes "@ta-x-partials/checkbox-setting.hbs"
+            label="Override Forum Settings"
+            id="chkGamesImprovementsGameForumsForumOverride"
+            config-path="gamesImprovements.forums.gameForumsForumOverride"
+            helper-render-condition='{ "selector": "#chkGamesImprovementsGameForumsForumOverride", "checked": false }'
+            helper-text="Some settings will be inherited from Forums." }}
+
+        <div class="ta-x-settings-menu-columned-setting">
+            {{ includes "@ta-x-partials/checkbox-setting.hbs"
+                render-condition='{ "selector": "#chkGamesImprovementsGameForumsForumOverride", "checked": true }'
+                label="Enable Thread Filter"
+                id="chkGameImprovementsGameForumsThreadFilter"
+                config-path="gamesImprovements.forums.gameForumsThreadFilter" }}
+        
+            {{ includes "@ta-x-partials/list-setting.hbs"
+                render-condition='[
+                    { "selector": "#chkGamesImprovementsGameForumsForumOverride", "checked": true },
+                    { "selector": "#chkGameImprovementsGameForumsThreadFilter", "checked": true }
+                ]'
+                item-list-template='@ta-x-views/templates/forum-improvements-thread-filter-keywords.html'
+                template-id='#ta-x-template-forum-improvements-thread-filter-keywords'
+                config-path="gamesImprovements.forums.threadFilterKeywords"
+                label="Keywords"
+                id="txtGameImprovementsGameForumsThreadKeywordFilter"
+                is-array="true"
+                array-split=","
+                button-text="Add Filter" }}
+        </div>
+    </div>
+</div>
