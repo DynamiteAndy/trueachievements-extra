@@ -111,7 +111,7 @@ export const isTAXChildListElement = (el: HTMLElement): boolean => {
   const parent = el.closest('.frm-lst');
   
   if (parent === null) return false;
-  return parent.querySelector(`#${el.getAttribute('data-list-id')}`) !== null;
+  return parent.querySelector(`#${parent.getAttribute('data-list-id')}`) !== null;
 };
 
 export const waitForImages = (el: HTMLElement): Promise<void> => {

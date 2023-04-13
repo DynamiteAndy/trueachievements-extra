@@ -92,6 +92,11 @@ export class Constants {
       static readonly featureJs = `${jsStylePrefix}-games-improvements`;
       static readonly featureStyle = `${classStylePrefix}-games-improvements`;
       static readonly highlightGamesButtonJs = `${this.featureJs}-highlight-games-collection-button`;
+
+      static ForumImprovements = class {
+        static readonly featureJs = `${jsStylePrefix}-games-improvements-forum-improvements`;
+        static readonly featureStyle = `${classStylePrefix}-games-improvements-forum-improvements`;
+      };
     };
 
     static GamerImprovements = class {
@@ -103,6 +108,9 @@ export class Constants {
     static ForumImprovements = class {
       static readonly featureJs = `${jsStylePrefix}-forum-improvements`;
       static readonly featureStyle = `${classStylePrefix}-forum-improvements`;
+      static readonly filterThreadsTitleStyle = `${this.featureStyle}-filter-threads-title`;
+      static readonly filterThreadsUnhideStyle = `${this.featureStyle}-filter-threads-unhide`;
+      static readonly filterThreadsUnhideJs = `${this.featureJs}-filter-threads-unhide`;
 
       static Walkthroughs = class {
         static readonly featureJs = `${jsStylePrefix}-forum-improvements-walkthroughs`;

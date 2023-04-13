@@ -5,6 +5,7 @@ import achievements from './achievements';
 import clips from './clips';
 import challenges from './challenges';
 import dlc from './dlc';
+import forums from './forums';
 
 export default async(): Promise<void> => {
   if (!gamesImprovements.enabled) return;
@@ -14,6 +15,7 @@ export default async(): Promise<void> => {
     { name: 'games-improvements-achievements', task: achievements },
     { name: 'games-improvements-clips', task: clips },
     { name: 'games-improvements-challenges', task: challenges },
-    { name: 'games-improvements-dlc', task: dlc }
+    { name: 'games-improvements-dlc', task: dlc },
+    { name: 'games-improvements-forums', task: forums }
    ]);
 };
