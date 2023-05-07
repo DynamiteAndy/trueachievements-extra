@@ -1,5 +1,5 @@
 import { merge } from 'webpack-merge';
-import { default as UserScriptMetaDataPlugin } from 'userscript-metadata-webpack-plugin';
+import { UserScriptMetaDataPlugin } from 'userscript-metadata-webpack-plugin';
 import  TerserPlugin from 'terser-webpack-plugin';
 import { baseConfig } from './webpack.base.conf';
 import metadata from './metadata';

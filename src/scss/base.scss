@@ -16,6 +16,11 @@ body {
         max-width: 1200px;
       }
 
+      @media (max-width: 1199px) {
+        width: auto;
+        max-width: 1200px;
+      }
+
       @media (min-width: 576px) {
         .news-section {
           &.list {

@@ -1,3 +1,4 @@
+import { Metadata } from 'userscript-metadata-webpack-plugin';
 import {
   author,
   url,
@@ -8,7 +9,7 @@ import {
 
 export default {
   name: {
-    '': 'TrueAchievements Extra'
+    '$': 'TrueAchievements Extra'
   },
   namespace: 'dynamite-andy',
   version: version,
@@ -23,4 +24,4 @@ export default {
   'run-at': 'document-start',
   grant: ['GM_getValue', 'GM_setValue', 'GM_deleteValue', 'GM_addStyle'],
   require: []
-};
+} as Metadata;

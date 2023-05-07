@@ -3,6 +3,7 @@ import { dirname } from 'path';
 import Handlebars from 'handlebars';
 import { JSDOM } from 'jsdom';
 import { marked } from 'marked';
+import { mangle } from 'marked-mangle';
 import sanitizeHtml from 'sanitize-html';
 import { url } from '../../package.json';
 import { default as getPath } from './get-path-by-alias';
@@ -24,6 +25,8 @@ export const includes = (): void => {
 export const markdown = (): void => {
   Handlebars.registerHelper('markdown', (filePath: string, render: boolean, wrapperClass: string, options) => {
     if (!filePath) return;
+
+    marked.use(mangle());
 
     const actualPath = getPath(filePath, options.data?.parentPartialDirectory);
     const includedFiles = fs.readFileSync(actualPath, 'utf8');

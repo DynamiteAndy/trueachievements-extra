@@ -2,6 +2,7 @@ import { Constants, stickyHeader } from '@ta-x-globals';
 import { toBool, waitForElement } from '@ta-x-utilities';
 
 let extensionBody: HTMLElement;
+let fakeElement: HTMLElement;
 let previousScrollTop: number;
 let previousMenuOpen: boolean;
 
@@ -10,7 +11,7 @@ const atTopOfPage = (): boolean => window.pageYOffset <= extensionBody.offsetTop
 const applyBody = async(): Promise<void> => {
   extensionBody = await waitForElement('header');
   
-  const fakeElement = document.createElement('div');
+  fakeElement = document.createElement('div');
   fakeElement.style.height = `${extensionBody.offsetHeight}px`;
 
   extensionBody.parentNode.insertBefore(fakeElement, extensionBody);
@@ -50,6 +51,12 @@ const listen = async(): Promise<void> => {
     }
 
     previousScrollTop = currentScrollTop;
+  });
+
+  window.addEventListener('resize', () => {
+    if (fakeElement.style.height !== `${extensionBody.offsetHeight}px`) {
+      fakeElement.style.height = `${extensionBody.offsetHeight}px`;
+    }
   });
 
   const observer = new MutationObserver((mutations: MutationRecord[]) => { 

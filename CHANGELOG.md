@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.12.1
+- Fixed body resizing when at 1199px, a random greybar wont appear on the right anymore,
+- Fixed the header not resizing when at 767px.
+
 ## 2.12.0
 - Adds a new feature for filtering, game threads, my threads and forum threads by keywords.
 
