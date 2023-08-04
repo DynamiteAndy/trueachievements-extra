@@ -15,20 +15,20 @@ export default (aliasPath: string, parentPartialDirectory?: string): string => {
     aliases = {};
 
     for (const key in paths) {
-      const from = key
-        .replace(ASTERISK, '')
-        .replace(ENDING_SLASH, '');
-  
-      const to = join(process.cwd(), baseUrl, paths[key][0]
-        .replace(LEADING_DOT_SLASH, '')
-        .replace(ASTERISK, '')
-        .replace(/index$/, ''));
-  
+      const from = key.replace(ASTERISK, '').replace(ENDING_SLASH, '');
+
+      const to = join(
+        process.cwd(),
+        baseUrl,
+        paths[key][0]
+          .replace(LEADING_DOT_SLASH, '')
+          .replace(ASTERISK, '')
+          .replace(/index$/, '')
+      );
+
       aliases[from] = to;
     }
   }
 
-  return aliases[alias]
-    ? join(aliases[alias], filePath.join('/'))
-    : join(parentPartialDirectory || '', aliasPath);
+  return aliases[alias] ? join(aliases[alias], filePath.join('/')) : join(parentPartialDirectory || '', aliasPath);
 };

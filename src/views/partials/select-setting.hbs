@@ -1,25 +1,42 @@
-{{ parseProperty 'options' options }}
+{{parseProperty "options" options}}
 
-<div data-render-condition="{{render-condition}}" class="frm-grp frm-sel {{#if render-condition}}ta-x-hide{{/if}}">
-    {{#if label}}<label>{{label}}</label>{{/if}}
-    <select
-        id="{{id}}"
-        name="{{#if name}}{{name}}{{else}}{{id}}{{/if}}" 
-        data-config-path="{{config-path}}"
-        data-is-array="{{#if is-array}}true{{else}}false{{/if}}" 
-        data-array-split="{{#if is-array}}{{array-split}}{{/if}}" 
-        class="dropdown">
-        {{#each options}}
-            <option
-                value="{{this.value}}"
-                selected="{{this.selected}}">{{this.text}}</option>
-        {{/each}}
-    </select>
+<div
+  data-render-condition="{{render-condition}}"
+  class="frm-grp frm-sel {{conditional (object ta-x-hide=render-condition)}}"
+>
+  {{#if label}}
+    <label>
+      {{label}}
+    </label>
+  {{/if}}
+  <select
+    id="{{id}}"
+    name="{{ternary name name id}}"
+    data-config-path="{{config-path}}"
+    data-is-array="{{ternary is-array 'true' 'false'}}"
+    data-array-split="{{ternary is-array array-split ''}}"
+    class="dropdown"
+  >
+    {{#each options}}
+      <option value="{{this.value}}" selected="{{this.selected}}">
+        {{this.text}}
+      </option>
+    {{/each}}
+  </select>
 </div>
 
 {{#if helper-text}}
-    <div data-render-condition="{{render-condition}}" class="{{#if render-condition}}ta-x-hide{{/if}}">
-        <div class="ta-x-flex-break"></div>
-        <p data-render-condition="{{helper-render-condition}}" class="ta-x-checkbox-help-text {{#if helper-render-condition}}ta-x-hide{{/if}}">{{helper-text}}</p>
-    </div>
+  <div
+    data-render-condition="{{render-condition}}"
+    class="{{conditional (object ta-x-hide=render-condition)}}"
+  >
+    <div class="ta-x-flex-break"></div>
+    <p
+      data-render-condition="{{helper-render-condition}}"
+      class="ta-x-checkbox-help-text
+        {{conditional (object ta-x-hide=helper-render-condition)}}"
+    >
+      {{helper-text}}
+    </p>
+  </div>
 {{/if}}

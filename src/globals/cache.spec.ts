@@ -1,23 +1,25 @@
 import { setLocalStorage } from '@ta-x-jasmine';
 import { MemoizedFetch } from '@ta-x-models';
-import { Cache } from './cache'; 
+import { Cache } from './cache';
 
-describe('cache', () => { 
+describe('cache', () => {
   describe('memoize - get', () => {
     const testCases = [
       { case: new Map<string, MemoizedFetch>(), expected: 0 },
       {
-        case: new Map([[
-          'memoized',
-          JSON.stringify([['key1', 'value']])
-        ]]),
+        case: new Map([['memoized', JSON.stringify([['key1', 'value']])]]),
         expected: 1
       },
       {
-        case: new Map([[
-          'memoized',
-          JSON.stringify([['key1', 'value'], ['key2', 'value']])
-        ]]),
+        case: new Map([
+          [
+            'memoized',
+            JSON.stringify([
+              ['key1', 'value'],
+              ['key2', 'value']
+            ])
+          ]
+        ]),
         expected: 2
       }
     ];
@@ -34,15 +36,14 @@ describe('cache', () => {
     const testCases = [
       { case: new Map<string, MemoizedFetch>(), expected: 0 },
       {
-        case: new Map([[
-          'key1', new MemoizedFetch()
-        ]]),
+        case: new Map([['key1', new MemoizedFetch()]]),
         expected: 1
       },
       {
-        case: new Map(
-          [['key1', new MemoizedFetch()], ['key2', new MemoizedFetch()]]
-        ),
+        case: new Map([
+          ['key1', new MemoizedFetch()],
+          ['key2', new MemoizedFetch()]
+        ]),
         expected: 2
       }
     ];
@@ -60,17 +61,19 @@ describe('cache', () => {
       const testCases = [
         { case: new Map<string, string>(), expected: 0 },
         {
-          case: new Map([[
-            'memoized',
-            JSON.stringify([['key1', 'value']])
-          ]]),
+          case: new Map([['memoized', JSON.stringify([['key1', 'value']])]]),
           expected: 0
         },
         {
-          case: new Map([[
-            'memoized',
-            JSON.stringify([['key1', 'value'], ['key2', 'value']])
-          ]]),
+          case: new Map([
+            [
+              'memoized',
+              JSON.stringify([
+                ['key1', 'value'],
+                ['key2', 'value']
+              ])
+            ]
+          ]),
           expected: 0
         }
       ];

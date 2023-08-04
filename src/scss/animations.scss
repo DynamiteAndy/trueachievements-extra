@@ -2,12 +2,12 @@ body {
   &.trueachievement-extras {
     .ta-x-y-show {
       transform: translateY(0);
-      transition: transform .5s ease;
+      transition: transform 0.5s ease;
     }
 
     .ta-x-y-hide {
       transform: translateY(-100%);
-      transition: transform .5s ease;
+      transition: transform 0.5s ease;
 
       &-no-transition {
         transform: translateY(-100%);

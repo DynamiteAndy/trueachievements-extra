@@ -219,7 +219,7 @@ export class Constants {
         static readonly featureTemplatePrefix = `${templatePrefix}-manage-walkthrough`;
         static readonly achievementRow = `${this.featureTemplatePrefix}-achievement-row`;
       };
-      
+
       static WalkthroughPreview = class {
         static readonly featureTemplatePrefix = `${templatePrefix}-walkthrough-preview`;
         static readonly walkthroughPagesSummary = `${this.featureTemplatePrefix}-walkthrough-pages-summary`;

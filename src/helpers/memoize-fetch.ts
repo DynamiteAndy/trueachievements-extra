@@ -6,7 +6,11 @@ import fetch from './fetch';
 
 const cachedCalls: Map<string, MemoizedFetch> = Cache.memoize;
 
-export const memoizeFetch = async(url: string, fetchOpts = {}, memoizeOptions?: MemoizedFetchOptions): Promise<string> => {
+export const memoizeFetch = async (
+  url: string,
+  fetchOpts = {},
+  memoizeOptions?: MemoizedFetchOptions
+): Promise<string> => {
   const cachedRequest = cachedCalls.get(url);
 
   if (cachedRequest && isBeforeNow(new Date(cachedRequest.expiryTime))) {

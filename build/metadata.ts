@@ -1,15 +1,9 @@
 import { Metadata } from 'userscript-metadata-webpack-plugin';
-import {
-  author,
-  url,
-  description,
-  version,
-  bugs
-}  from '../package.json';
+import { author, url, description, version, bugs } from '../package.json';
 
 export default {
   name: {
-    '$': 'TrueAchievements Extra'
+    $: 'TrueAchievements Extra'
   },
   namespace: 'dynamite-andy',
   version: version,

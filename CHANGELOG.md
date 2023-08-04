@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.13.0
+- Compress Emoji json to reduce package size,
+- Behind the scenes, moved from stylelint to prettier for hbs, html and scss,
+- Remove some unused Emoji json properties to reduce package size.
+
 ## 2.12.1
 - Fixed body resizing when at 1199px, a random greybar wont appear on the right anymore,
 - Fixed the header not resizing when at 767px.

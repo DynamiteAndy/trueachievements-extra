@@ -97,9 +97,13 @@ describe('string-util', () => {
 
   describe('extractBetween', () => {
     const positiveTestCases = [
-      { case: `ƒ onclick(event) {
+      {
+        case: `ƒ onclick(event) {
         InsertAtCursor('aebMessage','[smile]', 'smileydropdown'); return false;
-        }`, expected: 'aebMessage', between: "'" }
+        }`,
+        expected: 'aebMessage',
+        between: "'"
+      }
     ];
 
     positiveTestCases.forEach((test, index) => {

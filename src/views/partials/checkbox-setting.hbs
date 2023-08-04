@@ -1,19 +1,31 @@
-<div data-render-condition="{{render-condition}}" class="ta-x-checkbox {{#if render-condition}}ta-x-hide{{/if}}" style="{{style}}">
-    <label>{{label}}</label>
-    <div class="frm-grp frm-tgl">
-        <input
-            type="checkbox"
-            id="{{id}}"
-            name="{{#if name}}{{name}}{{else}}{{id}}{{/if}}"
-            data-config-path="{{config-path}}"
-            checked="">
+<div
+  data-render-condition="{{render-condition}}"
+  class="ta-x-checkbox {{conditional (object ta-x-hide=render-condition)}}"
+  style="{{style}}"
+>
+  <label>
+    {{label}}
+  </label>
+  <div class="frm-grp frm-tgl">
+    <input
+      type="checkbox"
+      id="{{id}}"
+      name="{{ternary name name id}}"
+      data-config-path="{{config-path}}"
+      checked=""
+    />
 
-        <label
-            for="{{#if name}}{{name}}{{else}}{{id}}{{/if}}">
-        </label>
-    </div>
-    {{#if helper-text}}
-        <div class="ta-x-flex-break"></div>
-        <p data-render-condition="{{helper-render-condition}}" class="ta-x-checkbox-help-text {{#if helper-render-condition}}ta-x-hide{{/if}}">{{helper-text}}</p>
-    {{/if}}
+    <label for="{{ternary name name id}}">
+    </label>
+  </div>
+  {{#if helper-text}}
+    <div class="ta-x-flex-break"></div>
+    <p
+      data-render-condition="{{helper-render-condition}}"
+      class="ta-x-checkbox-help-text
+        {{conditional (object ta-x-hide=helper-render-condition)}}"
+    >
+      {{helper-text}}
+    </p>
+  {{/if}}
 </div>

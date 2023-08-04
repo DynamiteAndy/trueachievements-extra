@@ -19,8 +19,8 @@ export const accordion = (): void => {
     const content = target.nextElementSibling as HTMLElement;
     const parentBodyHeight = content.style.maxHeight ? -content.scrollHeight : content.scrollHeight;
     content.style.maxHeight
-      ? content.style.maxHeight = null
-      : content.style.maxHeight = `${content.scrollHeight}px`;
+      ? (content.style.maxHeight = null)
+      : (content.style.maxHeight = `${content.scrollHeight}px`);
 
     const parentAccordionBody = target.closest('[data-parent-accordion-body]') as HTMLElement;
 
@@ -36,7 +36,7 @@ export const accordion = (): void => {
 
   pubSub.subscribe('accordion:toggleState', (header: HTMLElement) => {
     header.classList.toggle('expanded');
-    
+
     const content = header.nextElementSibling as HTMLElement;
     content.style.maxHeight = `${content.scrollHeight}px`;
   });

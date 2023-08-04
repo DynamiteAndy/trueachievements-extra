@@ -24,11 +24,11 @@ body {
       @media (min-width: 576px) {
         .news-section {
           &.list {
-            >section {
+            > section {
               &.highlight {
                 margin: 5px 0;
 
-                +section {
+                + section {
                   &.highlight {
                     margin-top: 1rem;
                   }
@@ -55,7 +55,7 @@ body {
         width: 25px;
         height: 25px;
         margin: 0 auto;
-        margin-bottom: .8rem;
+        margin-bottom: 0.8rem;
       }
     }
 

@@ -1,13 +1,23 @@
-import { AchievementsRegex, GamesRegex,
-  StaffRegex, GamerRegex, DatesRegex,
-  AjaxRegex, SentencesRegex, NewsRegex } from './regex';
+import {
+  AchievementsRegex,
+  GamesRegex,
+  StaffRegex,
+  GamerRegex,
+  DatesRegex,
+  AjaxRegex,
+  SentencesRegex,
+  NewsRegex
+} from './regex';
 
 describe('regex', () => {
   describe('achievementsRegex', () => {
     describe('achievementUrl', () => {
       const testCases = [
         { case: 'https://www.trueachievements.com/a299748/first-boss-achievement', expected: true },
-        { case: 'https://www.trueachievements.com/a223526/and-were-back-achievement?gamerid=96119', expected: true },
+        {
+          case: 'https://www.trueachievements.com/a223526/and-were-back-achievement?gamerid=96119',
+          expected: true
+        },
         { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false }
       ];
 
@@ -20,8 +30,14 @@ describe('regex', () => {
 
     describe('achievementUrlWithGamerId', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/a299748/first-boss-achievement', expected: false },
-        { case: 'https://www.trueachievements.com/a223526/and-were-back-achievement?gamerid=96119', expected: true },
+        {
+          case: 'https://www.trueachievements.com/a299748/first-boss-achievement',
+          expected: false
+        },
+        {
+          case: 'https://www.trueachievements.com/a223526/and-were-back-achievement?gamerid=96119',
+          expected: true
+        },
         { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false }
       ];
 
@@ -50,7 +66,10 @@ describe('regex', () => {
     describe('achievementsUrlWithGamerId', () => {
       const testCases = [
         { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false },
-        { case: 'https://www.trueachievements.com/game/Digimon-Survive/achievements?gamerid=96119', expected: true }
+        {
+          case: 'https://www.trueachievements.com/game/Digimon-Survive/achievements?gamerid=96119',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -63,8 +82,14 @@ describe('regex', () => {
     describe('dlcUrl', () => {
       const testCases = [
         { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc', expected: true },
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119', expected: true },
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack', expected: false }
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -76,8 +101,14 @@ describe('regex', () => {
 
     describe('dlcUrlWithGamerId', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119', expected: true },
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack?gamerid=96119', expected: false }
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack?gamerid=96119',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -90,8 +121,14 @@ describe('regex', () => {
     describe('individualDlcUrl', () => {
       const testCases = [
         { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc', expected: false },
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119', expected: false },
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack', expected: true }
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119',
+          expected: false
+        },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -103,9 +140,18 @@ describe('regex', () => {
 
     describe('individualDlcUrlWithGamerId', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119', expected: false },
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack', expected: false },
-        { case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack?gamerid=96119', expected: true }
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc?gamerid=96119',
+          expected: false
+        },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack',
+          expected: false
+        },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack?gamerid=96119',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -135,9 +181,15 @@ describe('regex', () => {
         { case: 'https://www.trueachievements.com/gamer/Dynamite+Andy', expected: true },
         { case: 'https://www.trueachievements.com/gamer/Belindo152', expected: true },
         { case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371', expected: true },
-        { case: 'https://www.trueachievements.com/gamer/Dynamite+Andy/achievements', expected: true },
+        {
+          case: 'https://www.trueachievements.com/gamer/Dynamite+Andy/achievements',
+          expected: true
+        },
         { case: 'https://www.trueachievements.com/gamer/Amoa/achievements', expected: true },
-        { case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371/achievements', expected: true }
+        {
+          case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371/achievements',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -163,9 +215,15 @@ describe('regex', () => {
 
     describe('gamerAchievementsUrl', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/gamer/Dynamite+Andy/achievements', expected: true },
+        {
+          case: 'https://www.trueachievements.com/gamer/Dynamite+Andy/achievements',
+          expected: true
+        },
         { case: 'https://www.trueachievements.com/gamer/Amoa/achievements', expected: true },
-        { case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371/achievements', expected: true }
+        {
+          case: 'https://www.trueachievements.com/gamer/粉丝游戏-1371/achievements',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -179,12 +237,30 @@ describe('regex', () => {
   describe('staffWalkthroughsRegex', () => {
     describe('staff - walkthrough - all', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/staff/walkthrough/editwalkthroughpage.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=2757', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpagepreview.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx', expected: true }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/editwalkthroughpage.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=2757',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpagepreview.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -196,12 +272,30 @@ describe('regex', () => {
 
     describe('staff - walkthrough - preview', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/staff/walkthrough/editwalkthroughpage.aspx', expected: false },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx', expected: false },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=2757', expected: false },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx', expected: false },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpagepreview.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx', expected: true }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/editwalkthroughpage.aspx',
+          expected: false
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx',
+          expected: false
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=2757',
+          expected: false
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx',
+          expected: false
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpagepreview.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -213,8 +307,14 @@ describe('regex', () => {
 
     describe('editWalkthroughUrl', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/staff/walkthrough/editwalkthroughpage.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx', expected: false }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/editwalkthroughpage.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -226,9 +326,18 @@ describe('regex', () => {
 
     describe('manageWalkthroughUrl', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=2757', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/editwalkthroughpage.aspx', expected: false }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=2757',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/editwalkthroughpage.aspx',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -240,8 +349,14 @@ describe('regex', () => {
 
     describe('manageWalkthroughUrlWithWalkthroughId', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=2757', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx', expected: false }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=2757',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -253,8 +368,14 @@ describe('regex', () => {
 
     describe('walkthroughPageUrl', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx', expected: false }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -266,8 +387,14 @@ describe('regex', () => {
 
     describe('walkthroughPreviewUrl', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpagepreview.aspx', expected: false }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpagepreview.aspx',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -279,8 +406,14 @@ describe('regex', () => {
 
     describe('walkthroughPagePreviewUrl', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpagepreview.aspx', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx', expected: false }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpagepreview.aspx',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -295,7 +428,10 @@ describe('regex', () => {
     describe('autosave', () => {
       const testCases = [
         { case: 'https://www.trueachievements.com/ajaxfunctions.aspx/AutoSave', expected: true },
-        { case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx', expected: false }
+        {
+          case: 'https://www.trueachievements.com/staff/walkthrough/walkthroughpage.aspx',
+          expected: false
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -337,8 +473,14 @@ describe('regex', () => {
   describe('sentencesRegex', () => {
     describe('discussWalkthrough', () => {
       const testCases = [
-        { case: 'Please use this thread to discuss the The Witcher 2: Assassins of Kings (EU Ver) walkthrough', expected: true },
-        { case: 'Please use this thread to discuss the Jurassic World Evolution 2 walkthrough.', expected: true }
+        {
+          case: 'Please use this thread to discuss the The Witcher 2: Assassins of Kings (EU Ver) walkthrough',
+          expected: true
+        },
+        {
+          case: 'Please use this thread to discuss the Jurassic World Evolution 2 walkthrough.',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -350,8 +492,14 @@ describe('regex', () => {
 
     describe('walkthroughPublished', () => {
       const testCases = [
-        { case: 'The walkthrough has now been published.\n\nYou can find it here: The Witcher 2: Assassins of Kings (EU Ver) Walkthrough', expected: true },
-        { case: 'The walkthrough has now been published.\n\nYou can find it here: Outer Wilds Walkthrough', expected: true }
+        {
+          case: 'The walkthrough has now been published.\n\nYou can find it here: The Witcher 2: Assassins of Kings (EU Ver) Walkthrough',
+          expected: true
+        },
+        {
+          case: 'The walkthrough has now been published.\n\nYou can find it here: Outer Wilds Walkthrough',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {
@@ -365,9 +513,18 @@ describe('regex', () => {
   describe('newsRegex', () => {
     describe('newsUrl', () => {
       const testCases = [
-        { case: 'https://www.trueachievements.com/n52547/xbox-sale-roundup-january-17th-2023', expected: true },
-        { case: 'https://www.trueachievements.com/n46401/xbox-ultimate-game-sale-roundup-july-23rd-2021', expected: true },
-        { case: 'https://www.trueachievements.com/n52555/easy-achievements-gamerscore-xbox-sale-january-17', expected: true }
+        {
+          case: 'https://www.trueachievements.com/n52547/xbox-sale-roundup-january-17th-2023',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/n46401/xbox-ultimate-game-sale-roundup-july-23rd-2021',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/n52555/easy-achievements-gamerscore-xbox-sale-january-17',
+          expected: true
+        }
       ];
 
       testCases.forEach((test, index) => {

@@ -5,11 +5,12 @@ import { classListContains, waitForElement } from '@ta-x-utilities';
 
 let tinymceContainer: HTMLElement;
 let tinymceToolbar: HTMLElement;
-const variableProperty = Constants.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarTop;
+const variableProperty =
+  Constants.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarTop;
 
 const listen = async (): Promise<void> => {
-  window.addEventListener('scroll', async() => { await applyStickyElementStyle(variableProperty, tinymceToolbar, tinymceContainer,
-    {
+  window.addEventListener('scroll', async () => {
+    await applyStickyElementStyle(variableProperty, tinymceToolbar, tinymceContainer, {
       noTransitionStyle: !classListContains(tinymceToolbar, [
         Constants.Styles.Animations.yHideNoTransition,
         Constants.Styles.Animations.yHide,
@@ -22,16 +23,24 @@ const listen = async (): Promise<void> => {
   });
 };
 
-export const setFullWidthToolbar = async(container: HTMLElement): Promise<void> => {
+export const setFullWidthToolbar = async (container: HTMLElement): Promise<void> => {
   tinymceContainer = container;
   tinymceToolbar = await waitForElement('.mce-container-body .mce-toolbar-grp', container);
 
   if (!tinymceToolbar) return;
 
-  tinymceToolbar.classList.add(Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarStyles);
-  document.documentElement.style.setProperty(Constants.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarWidth, `${tinymceToolbar.parentElement.scrollWidth}px`);
+  tinymceToolbar.classList.add(
+    Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarStyles
+  );
+  document.documentElement.style.setProperty(
+    Constants.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarWidth,
+    `${tinymceToolbar.parentElement.scrollWidth}px`
+  );
 
-  await applyStickyElementStyle(variableProperty, tinymceToolbar, tinymceContainer, { noTransitionStyle: true, isRelativeToParent: true });
+  await applyStickyElementStyle(variableProperty, tinymceToolbar, tinymceContainer, {
+    noTransitionStyle: true,
+    isRelativeToParent: true
+  });
   await listen();
 };
 

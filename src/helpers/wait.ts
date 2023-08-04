@@ -1,5 +1,5 @@
 export const until = async (f: () => boolean, timeoutMs = 10000) => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const timeWas = new Date();
     const wait = setInterval(() => {
       if (f()) {
@@ -13,4 +13,4 @@ export const until = async (f: () => boolean, timeoutMs = 10000) => {
   });
 };
 
-export const wait = async(timeoutMs = 250) => new Promise(resolve => setTimeout(resolve, timeoutMs));
+export const wait = async (timeoutMs = 250) => new Promise((resolve) => setTimeout(resolve, timeoutMs));

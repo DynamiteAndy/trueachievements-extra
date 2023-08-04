@@ -6,7 +6,11 @@ export const changeToDefaultStatus = (): void => {
 
   const status = document.querySelector(`#${gameDLC.gameDLCDefaultStatusValue}`) as HTMLSelectElement;
 
-  setDefaultStatus(status, 'gameDLCDefaultStatusPathName', GamesRegex.Test.dlcUrl() ? GamesRegex.Test.dlcWithGamerId : GamesRegex.Test.individualDlcUrlWithGamerId);
+  setDefaultStatus(
+    status,
+    'gameDLCDefaultStatusPathName',
+    GamesRegex.Test.dlcUrl() ? GamesRegex.Test.dlcWithGamerId : GamesRegex.Test.individualDlcUrlWithGamerId
+  );
 };
 
 export default { changeToDefaultStatus };

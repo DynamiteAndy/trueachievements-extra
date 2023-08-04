@@ -1,7 +1,7 @@
 import { pubSub } from '@ta-x-components';
 import { AjaxRegex, editWalkthrough } from '@ta-x-globals';
 
-export const autoSaveNotification = async(): Promise<void> => {
+export const autoSaveNotification = async (): Promise<void> => {
   if (!editWalkthrough.autoSaveNotification) return;
 
   pubSub.subscribe('ajaxIntercept:response', (response: XMLHttpRequest) => {

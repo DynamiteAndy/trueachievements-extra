@@ -11,10 +11,10 @@ export class ConditionalRender {
     if (!json || json.length === 0) return null;
 
     const parsedObj = JSON.parse(json);
-  
+
     if (Array.isArray(parsedObj)) {
       const conditionalRender = new ConditionalRender();
-      conditionalRender.conditions = parsedObj.map(cdr => ConditionalRender.fromObject(cdr));
+      conditionalRender.conditions = parsedObj.map((cdr) => ConditionalRender.fromObject(cdr));
 
       return conditionalRender;
     } else {
@@ -22,7 +22,7 @@ export class ConditionalRender {
     }
   }
 
-  static fromObject(obj: { selector: string, checked: boolean, value: string }): ConditionalRender {
+  static fromObject(obj: { selector: string; checked: boolean; value: string }): ConditionalRender {
     const conditionalRender = new ConditionalRender();
 
     try {
@@ -41,9 +41,7 @@ export class ConditionalRender {
   }
 
   isValid(): boolean {
-    return this.conditions
-      ? true
-      : this.selector !== null && (this.checked !== null || this.value !== null);
+    return this.conditions ? true : this.selector !== null && (this.checked !== null || this.value !== null);
   }
 
   toString(): string {
@@ -55,7 +53,7 @@ export class ConditionalRender {
 
     if (!this.isValid()) return method;
     if (this.conditions) {
-      return this.conditions.every(cdr => cdr.test(el) === 'remove') ? 'remove' : 'add';
+      return this.conditions.every((cdr) => cdr.test(el) === 'remove') ? 'remove' : 'add';
     } else {
       const setting = el.querySelector(this.selector) as HTMLElement;
 
@@ -63,12 +61,16 @@ export class ConditionalRender {
         method = (setting as HTMLInputElement).checked === this.checked ? 'remove' : 'add';
       } else if (isSelectElement(setting)) {
         if (toBool(setting.getAttribute('data-is-array'))) {
-          method = this.value.some(val => (setting as HTMLSelectElement).value.split(setting.getAttribute('data-array-split')).includes(val)) ? 'remove' : 'add';
+          method = this.value.some((val) =>
+            (setting as HTMLSelectElement).value.split(setting.getAttribute('data-array-split')).includes(val)
+          )
+            ? 'remove'
+            : 'add';
         } else {
           method = this.value.includes((setting as HTMLSelectElement).value) ? 'remove' : 'add';
         }
       }
-  
+
       return method;
     }
   }

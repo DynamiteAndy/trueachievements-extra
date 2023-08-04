@@ -1,60 +1,102 @@
 <div class="js-ta-x-settings-menu-wrench gamer-page" aria-haspopup="true">
-    <i class="fa fa-wrench"></i>
+  <i class="fa fa-wrench"></i>
 </div>
 
 <div class="js-ta-x-settings-menu ta-x-settings-menu ta-x-hide">
-    <div class="middle">
-        <div class="wrap">
-            <div class="labels">
-                <label class="js-ta-x-settings-menu-close close">
-                    <i class="fa fa-close"></i>
-                </label>
-            </div>
-            <div class="contents">
-                <div class="contents open ta-x-settings-menu-settings">
-                    <div class="t-settings js-ta-x-settings-menu-settings ta-x-settings-menu-settings-item ta-x-settings-menu-settings-item-show" >
-                        {{ includes "@ta-x-features/sticky-header/settings.hbs" }}
+  <div class="middle">
+    <div class="wrap">
+      <div class="labels">
+        <label class="js-ta-x-settings-menu-close close">
+          <i class="fa fa-close"></i>
+        </label>
+      </div>
+      <div class="contents">
+        <div class="contents open ta-x-settings-menu-settings">
+          <div
+            class="t-settings js-ta-x-settings-menu-settings ta-x-settings-menu-settings-item ta-x-settings-menu-settings-item-show"
+          >
+            {{includes "@ta-x-features/sticky-header/settings.hbs"}}
 
-                        {{ includes "@ta-x-features/emojis/settings.hbs" }}
+            {{includes "@ta-x-features/emojis/settings.hbs"}}
 
-                        {{ includes "@ta-x-features/forum-improvements/settings.hbs" }}
+            {{includes "@ta-x-features/forum-improvements/settings.hbs"}}
 
-                        {{ includes "@ta-x-features/gamer-improvements/settings.hbs" }}
+            {{includes "@ta-x-features/gamer-improvements/settings.hbs"}}
 
-                        {{ includes "@ta-x-features/games-improvements/settings.hbs" }}
+            {{includes "@ta-x-features/games-improvements/settings.hbs"}}
 
-                        {{ includes "@ta-x-features/news-improvements/settings.hbs" }}
+            {{includes "@ta-x-features/news-improvements/settings.hbs"}}
 
-                        {{ includes "@ta-x-features/staff-walkthrough-improvements/settings.hbs" }}
-                    </div>
-                    <div class="t-settings js-ta-x-settings-menu-changelog ta-x-settings-menu-settings-item" >
-                        {{ changelog (markdown "@ta-x-project-root/CHANGELOG.md" false "ta-x-settings-menu-changelog-wrapper") }}
-                        {{ markdown "@ta-x-project-root/CREDITS.md" true "ta-x-settings-menu-credits-wrapper" }}
-                    </div>
-                    <div class="t-settings js-ta-x-settings-menu-feature-documentation ta-x-settings-menu-settings-item" >
-                        {{ markdown "@ta-x-project-root/FEATURE-DOCUMENTATION.md" true "ta-x-settings-menu-documentation-wrapper" }}
-                    </div>
-                </div>
-                <div class="t-settings open ta-x-settings-menu-bottom">
-                    <ul class="list-links buttons">
-                        <li><a href="https://github.com/andrewcartwright1/trueachievements-extra/issues/new">Raise a Bug</a></li>
-                        <li><a href="https://github.com/andrewcartwright1/trueachievements-extra/issues/new">Request a Feature</a></li>
-                    </ul>
-                    <div class="title">
-                        <span>TrueAchievements Extra</span>
-                        <div class="ta-x-flex-break"></div>
-                        <a href="#" class="js-ta-x-settings-menu-version">Version {GM_info.script.version}</a>
-                        <span>|</span>
-                        <a href="#" class="js-ta-x-settings-menu-documentation">Feature Documentation</a>
-                    </div>
-                </div>
-            </div>
+            {{includes
+              "@ta-x-features/staff-walkthrough-improvements/settings.hbs"
+            }}
+          </div>
+          <div
+            class="t-settings js-ta-x-settings-menu-changelog ta-x-settings-menu-settings-item"
+          >
+            {{changelog
+              (markdown
+                "@ta-x-project-root/CHANGELOG.md"
+                false
+                "ta-x-settings-menu-changelog-wrapper"
+              )
+            }}
+            {{markdown
+              "@ta-x-project-root/CREDITS.md"
+              true
+              "ta-x-settings-menu-credits-wrapper"
+            }}
+          </div>
+          <div
+            class="t-settings js-ta-x-settings-menu-feature-documentation ta-x-settings-menu-settings-item"
+          >
+            {{markdown
+              "@ta-x-project-root/FEATURE-DOCUMENTATION.md"
+              true
+              "ta-x-settings-menu-documentation-wrapper"
+            }}
+          </div>
         </div>
+        <div class="t-settings open ta-x-settings-menu-bottom">
+          <ul class="list-links buttons">
+            <li>
+              <a
+                href="https://github.com/andrewcartwright1/trueachievements-extra/issues/new"
+              >
+                Raise a Bug
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/andrewcartwright1/trueachievements-extra/issues/new"
+              >
+                Request a Feature
+              </a>
+            </li>
+          </ul>
+          <div class="title">
+            <span>
+              TrueAchievements Extra
+            </span>
+            <div class="ta-x-flex-break"></div>
+            <a href="#" class="js-ta-x-settings-menu-version">
+              Version {GM_info.script.version}
+            </a>
+            <span>
+              |
+            </span>
+            <a href="#" class="js-ta-x-settings-menu-documentation">
+              Feature Documentation
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="js-ta-x-settings-menu-close close"></div>
+  </div>
+  <div class="js-ta-x-settings-menu-close close"></div>
 </div>
 
-                    <!-- <div>
+<!-- <div>
                         <label>Show recent winners</label>
                         <div class="frm-grp frm-tgl">
                             <input type="checkbox" id="chkRecentWinners" name="chkRecentWinners"

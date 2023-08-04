@@ -1,4 +1,8 @@
-import { AsideContentPreviewPage, AsideContentPreviewAchievement, AsideContentPreviewThanks } from './features/staff-walkthrough-improvements/walkthrough-preview/populate-aside-contents';
+import {
+  AsideContentPreviewPage,
+  AsideContentPreviewAchievement,
+  AsideContentPreviewThanks
+} from './features/staff-walkthrough-improvements/walkthrough-preview/populate-aside-contents';
 import { ListSettingItemOptions } from './components/list-setting-item';
 import { TabTemplateOptions } from './components/tabs';
 import { EmojiTemplateOptions } from './features/emojis';

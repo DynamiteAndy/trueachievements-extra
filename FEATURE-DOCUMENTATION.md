@@ -12,6 +12,15 @@ This feature remains a work in progress as I'm still finding all the locations w
 
 This enables extended features to be enabled.
 
+## Enable Thread Filter
+
+This feature will hide thread titles if they match specified keywords
+
+## My Threads - Override Forum Settings
+
+This feature will override any feature shared between forums, current features shared:
+- Enable Thread Filter
+
 ## Walkthroughs - Show Owner/Progress
 
 This feature appends information to the right sidebar which shows either:
@@ -57,6 +66,11 @@ This feature will auto select the selected values should they not be  selected.
 This feature will override any feature shared between achievements and dlc, current features shared:
 - Show Progress as XX/XX
 - Default Status for Game Achievements
+
+## Forums - Override Forum Settings
+
+This feature will override any feature shared between forums, current features shared:
+- Enable Thread Filter
 
 # News Improvements
 

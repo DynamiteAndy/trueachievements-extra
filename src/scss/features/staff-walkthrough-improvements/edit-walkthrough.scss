@@ -106,16 +106,14 @@ body {
 
         .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar {
           border-bottom: 1px solid #ddd;
-          width:
-            var(
-              --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width,
-              $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width
-            );
-          top:
-            var(
-              --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top,
-              $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top
-            ) !important;
+          width: var(
+            --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width,
+            $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width
+          );
+          top: var(
+            --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top,
+            $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top
+          ) !important;
         }
       }
 
@@ -148,24 +146,31 @@ body {
             border-color: #232b33;
 
             &.ta-x-y-hide {
-              transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)));
-              transition: transform .5s ease;
+              transform: translateY(
+                calc(
+                  -1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)
+                )
+              );
+              transition: transform 0.5s ease;
 
               &-no-transition {
-                transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)));
+                transform: translateY(
+                  calc(
+                    -1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)
+                  )
+                );
               }
             }
           }
         }
       }
 
-      >.mce-menu {
+      > .mce-menu {
         &.mce-floatpanel {
-          top:
-            var(
-              --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu,
-              $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu
-            ) !important;
+          top: var(
+            --ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu,
+            $ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu
+          ) !important;
         }
       }
 

@@ -5,8 +5,9 @@ const wrapper = document.createElement('template');
 export const template = (el: HTMLElement | Node, opts: TemplateOptions = {}): HTMLElement => {
   wrapper.appendChild(el);
 
-  let html = (el as HTMLElement).outerHTML.replace(/(\r\n|\n|\r)/gm, '')
-  .replace(/{GM_info.script.version}/g, GM_info.script.version || '');
+  let html = (el as HTMLElement).outerHTML
+    .replace(/(\r\n|\n|\r)/gm, '')
+    .replace(/{GM_info.script.version}/g, GM_info.script.version || '');
 
   for (const opt in opts) {
     for (const prop in opts[opt]) {

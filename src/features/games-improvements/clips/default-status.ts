@@ -1,15 +1,31 @@
-import { Cache, gameClips} from '@ta-x-globals';
+import { Cache, gameClips } from '@ta-x-globals';
 import { allConcurrently, waitForElement } from '@ta-x-utilities';
 
-export const changeToDefaultStatus = async(): Promise<void> => {
+export const changeToDefaultStatus = async (): Promise<void> => {
   if (!gameClips.gameClipsDefaultStatus) return;
 
-  await allConcurrently('game-clips-change-to-default-status', [
-    { name: 'game-clips-change-to-default-status-recorded-by', task: async() => changeSelectOption('#ddlRecordedBy', gameClips.gameClipsDefaultRecordedByValue, '') },
-    { name: 'game-clips-change-to-default-status-saved-by', task: async() => changeSelectOption('#ddlSavedBy', gameClips.gameClipsDefaultSavedByValue, 'Gamer') },
-    { name: 'game-clips-change-to-default-status-recorded', task: async() => changeSelectOption('#ddlUploaded', gameClips.gameClipsDefaultRecordedValue, '7') },
-    { name: 'game-clips-change-to-default-status-sort-by', task: async() => changeSelectOption('#ddlOrder', gameClips.gameClipsDefaultSortByValue, 'Most viewed') }
-  ], 1);
+  await allConcurrently(
+    'game-clips-change-to-default-status',
+    [
+      {
+        name: 'game-clips-change-to-default-status-recorded-by',
+        task: async () => changeSelectOption('#ddlRecordedBy', gameClips.gameClipsDefaultRecordedByValue, '')
+      },
+      {
+        name: 'game-clips-change-to-default-status-saved-by',
+        task: async () => changeSelectOption('#ddlSavedBy', gameClips.gameClipsDefaultSavedByValue, 'Gamer')
+      },
+      {
+        name: 'game-clips-change-to-default-status-recorded',
+        task: async () => changeSelectOption('#ddlUploaded', gameClips.gameClipsDefaultRecordedValue, '7')
+      },
+      {
+        name: 'game-clips-change-to-default-status-sort-by',
+        task: async () => changeSelectOption('#ddlOrder', gameClips.gameClipsDefaultSortByValue, 'Most viewed')
+      }
+    ],
+    1
+  );
 };
 
 const changeSelectOption = async (selector: string, newValue: string, defaultValue: string): Promise<void> => {
@@ -21,7 +37,7 @@ const changeSelectOption = async (selector: string, newValue: string, defaultVal
   selectorArray.push(selector);
   Cache.gameClipsDefaultStatusSelectors = selectorArray;
 
-  const selectOption = await waitForElement(selector) as HTMLSelectElement;
+  const selectOption = (await waitForElement(selector)) as HTMLSelectElement;
 
   if (selectOption.value === newValue) return;
 

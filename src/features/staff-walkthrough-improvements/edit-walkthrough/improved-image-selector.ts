@@ -6,9 +6,16 @@ import html from './edit-walkthrough.html';
 const listen = (): void => {
   document.addEventListener('click', ({ target }) => {
     if (!(target instanceof HTMLElement)) return;
-    if (target.closest(`[aria-label='Add Image'], .${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`) !== null) return;
-    
-    const imageSelector = document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`) as HTMLElement;
+    if (
+      target.closest(
+        `[aria-label='Add Image'], .${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
+      ) !== null
+    )
+      return;
+
+    const imageSelector = document.querySelector(
+      `.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
+    ) as HTMLElement;
 
     if (imageSelector.style.display === 'block') {
       imageSelector.style.display = 'none';
@@ -17,7 +24,9 @@ const listen = (): void => {
 
   window.addEventListener('blur', () => {
     if (document.activeElement === document.querySelector('#txtWalkthrough_ifr')) {
-      const imageSelector = document.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`) as HTMLElement;
+      const imageSelector = document.querySelector(
+        `.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
+      ) as HTMLElement;
 
       if (imageSelector.style.display !== 'block') return;
 
@@ -26,7 +35,7 @@ const listen = (): void => {
   });
 };
 
-export const improveImageSelector = async(): Promise<void> => {
+export const improveImageSelector = async (): Promise<void> => {
   if (!editWalkthrough.improvedImageSelector) return;
 
   const imageContainer = await waitForElement('#oWalkthroughImageViewer');
@@ -35,10 +44,13 @@ export const improveImageSelector = async(): Promise<void> => {
 
   imageContainer.classList.add(
     Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle,
-    Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs);
-  
+    Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs
+  );
+
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-  const stickyImageHeader = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorContainerJs}`);
+  const stickyImageHeader = parsedDocument.querySelector(
+    `.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorContainerJs}`
+  );
   const imageViewer = await waitForElement('.imageviewer', imageContainer);
   const imageLink = await waitForElement('.addimages a', imageContainer);
 
@@ -46,9 +58,15 @@ export const improveImageSelector = async(): Promise<void> => {
   stickyImageHeader.appendChild(imageViewer.querySelector('.itemname, .noimages'));
   stickyImageHeader.appendChild(imageLink);
 
-  ([...imageViewer.querySelectorAll('.ivimage a')] as HTMLElement[]).forEach(imageAnchor => {
-    const clonedImageTitle = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`).cloneNode(true);
-    const imageTitle = template(clonedImageTitle as HTMLElement, { element: imageAnchor.querySelector('img') });
+  ([...imageViewer.querySelectorAll('.ivimage a')] as HTMLElement[]).forEach((imageAnchor) => {
+    const clonedImageTitle = parsedDocument
+      .querySelector(
+        `.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`
+      )
+      .cloneNode(true);
+    const imageTitle = template(clonedImageTitle as HTMLElement, {
+      element: imageAnchor.querySelector('img')
+    });
     imageTitle.innerText = extractBetween("'", imageTitle.innerText);
 
     imageAnchor.appendChild(imageTitle);

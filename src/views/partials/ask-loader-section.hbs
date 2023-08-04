@@ -1,25 +1,41 @@
-<section class="purple js-ta-x-ask-loader-container ta-x-ask-loader-container {{section-classes}}">
-    <div>{{section-title}}</div>
-    <article>
-        <div class="ta-x-article-loader">
-            <p>Please wait, loading.</p>
+<section
+  class="purple js-ta-x-ask-loader-container ta-x-ask-loader-container
+    {{section-classes}}"
+>
+  <div>
+    {{section-title}}
+  </div>
+  <article>
+    <div class="ta-x-article-loader">
+      <p>
+        Please wait, loading.
+      </p>
 
-            {{ includes "@ta-x-svgs/loader.hbs" }}
-        </div>
-        <div class="js-ta-x-ask-loader-ask ta-x-ask-loader-ask ta-x-hide">
-            <p>{{ask-information}}</p>
-            <div>
-                <label class="small">{{ask-label}}</label>
-                <input type="text"
-                    id="{{label-id}}"
-                    name="{{#if label-name}}{{label-name}}{{else}}{{label-id}}{{/if}}" 
-                    value=""
-                    class="textbox cs-n js-ta-x-ask-loader-ask-input">
-            </div>
-            <input type="submit"
-                id="{{input-id}}"
-                name="{{#if input-name}}{{input-name}}{{else}}{{input-id}}{{/if}}"
-                value="Save" class="button js-ta-x-ask-loader-ask-button">
-        </div>
-    </article>
+      {{includes "@ta-x-svgs/loader.hbs"}}
+    </div>
+    <div class="js-ta-x-ask-loader-ask ta-x-ask-loader-ask ta-x-hide">
+      <p>
+        {{ask-information}}
+      </p>
+      <div>
+        <label class="small">
+          {{ask-label}}
+        </label>
+        <input
+          type="text"
+          id="{{label-id}}"
+          name="{{ternary label-name label-name label-id}}"
+          value=""
+          class="textbox cs-n js-ta-x-ask-loader-ask-input"
+        />
+      </div>
+      <input
+        type="submit"
+        id="{{input-id}}"
+        name="{{ternary input-name input-name input-id}}"
+        value="Save"
+        class="button js-ta-x-ask-loader-ask-button"
+      />
+    </div>
+  </article>
 </section>

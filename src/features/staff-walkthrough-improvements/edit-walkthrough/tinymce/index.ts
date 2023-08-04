@@ -7,8 +7,8 @@ import { addSourceCodeButton } from './source-code-button';
 import { appendColorPicker } from './append-color-picker';
 import html from './tinymce.hbs';
 
-export const tinymce = async(): Promise<void> => {
-  if (!await waitForElement('[href*="skin.min.css"]', document.head)) return;
+export const tinymce = async (): Promise<void> => {
+  if (!(await waitForElement('[href*="skin.min.css"]', document.head))) return;
 
   const container = await waitForElement('.mce-tinymce');
   const toolbar = await waitForElement('.mce-toolbar.mce-last .mce-container-body', container);
@@ -16,16 +16,18 @@ export const tinymce = async(): Promise<void> => {
   if (!container || !toolbar) return;
 
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-  const addedGroup = parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
+  const addedGroup = parsedDocument.querySelector(
+    `.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`
+  );
   toolbar.appendChild(addedGroup);
 
   allConcurrently('Edit Walkthrough', [
-    { name: 'tinymce-set-full-width-toolbar', task: async() => setFullWidthToolbar(container) },
-    { name: 'tinymce-add-fix-floating-menus', task: async() => fixFloatingMenus(container) },
-    { name: 'tinymce-add-source-code-button', task: async() => addSourceCodeButton() },
-    { name: 'tinymce-add-toggle-theme-button', task: async() => addToggleThemeButton(toolbar) },
-    { name: 'tinymce-append-color-picker', task: async() => appendColorPicker() }
+    { name: 'tinymce-set-full-width-toolbar', task: async () => setFullWidthToolbar(container) },
+    { name: 'tinymce-add-fix-floating-menus', task: async () => fixFloatingMenus(container) },
+    { name: 'tinymce-add-source-code-button', task: async () => addSourceCodeButton() },
+    { name: 'tinymce-add-toggle-theme-button', task: async () => addToggleThemeButton(toolbar) },
+    { name: 'tinymce-append-color-picker', task: async () => appendColorPicker() }
   ]);
 };
 
-export default { tinymce }; 
+export default { tinymce };

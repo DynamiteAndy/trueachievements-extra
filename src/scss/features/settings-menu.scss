@@ -9,7 +9,7 @@ body {
         height: 100%;
         position: relative;
 
-        >div {
+        > div {
           display: block;
           padding: 0;
         }
@@ -26,25 +26,25 @@ body {
         }
 
         .t-settings {
-          >div {
+          > div {
             flex-wrap: wrap;
 
-            >label {
+            > label {
               max-width: 80%;
             }
           }
 
           .ta-x-checkbox-help-text {
             font-size: 1.2rem;
-            padding-top: .5rem;
+            padding-top: 0.5rem;
           }
 
           .ta-x-listbox {
             padding-top: 1rem;
             border-bottom: 0;
 
-            >label {
-              padding-bottom: .5rem;
+            > label {
+              padding-bottom: 0.5rem;
               display: block;
             }
 
@@ -65,9 +65,9 @@ body {
 
               ul {
                 width: 100%;
-                
+
                 li {
-                  >div {
+                  > div {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
@@ -120,7 +120,7 @@ body {
             h2 {
               border-top: 2px solid #0e5814;
               border-bottom: 2px solid #0e5814;
-              padding: .5rem;
+              padding: 0.5rem;
               font-size: 1.6rem;
               margin: 1rem 0;
             }
@@ -135,7 +135,7 @@ body {
 
             h1 {
               &:not(:first-of-type) {
-                padding: .5rem 0;
+                padding: 0.5rem 0;
                 margin-top: 1rem;
                 border-bottom: 2px solid #0552b5;
                 border-top: 2px solid #0552b5;
@@ -160,8 +160,8 @@ body {
             h1 {
               border-top: 2px solid #e9b949;
               border-bottom: 2px solid #e9b949;
-              padding: .5rem 0;
-              margin-top: .5rem;
+              padding: 0.5rem 0;
+              margin-top: 0.5rem;
               margin-bottom: 0;
             }
           }
@@ -176,7 +176,7 @@ body {
             }
 
             ul {
-              margin-bottom: .5rem;
+              margin-bottom: 0.5rem;
             }
           }
 
@@ -238,7 +238,7 @@ body {
 
             &.collapsed {
               svg {
-                transition: all .5s linear;
+                transition: all 0.5s linear;
               }
             }
 
@@ -251,7 +251,7 @@ body {
 
           &-body {
             max-height: 0;
-            transition: max-height .5s ease-out;
+            transition: max-height 0.5s ease-out;
             overflow: hidden;
 
             &[data-parent-accordion-body] {
@@ -289,14 +289,14 @@ body {
         flex-direction: column;
         align-items: flex-start;
 
-        >div:first-of-type {
+        > div:first-of-type {
           display: flex;
           flex-wrap: wrap;
           align-items: center;
           justify-content: space-between;
           width: 100%;
 
-          >label {
+          > label {
             max-width: 80%;
           }
         }

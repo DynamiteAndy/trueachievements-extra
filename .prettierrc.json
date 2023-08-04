@@ -1,0 +1,22 @@
+{
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "bracketSameLine": true,
+    "htmlWhitespaceSensitivity": "ignore",
+    "endOfLine":"crlf",
+    "overrides": [
+        {
+            "files": "*.hbs",
+            "options": {
+                "singleQuote": false 
+            }
+        },
+        {
+            "files": "*.ts",
+            "options": {
+                "printWidth": 120 
+            }
+        }
+    ]
+}

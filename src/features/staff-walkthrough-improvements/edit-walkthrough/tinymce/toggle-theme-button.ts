@@ -6,8 +6,8 @@ import { waitForElement } from '@ta-x-utilities';
 let themeToggle: HTMLElement;
 let globalTheme: HTMLElement;
 
-const getTinymceTheme = async(): Promise<string> => {
-  globalTheme = globalTheme ? globalTheme : await waitForElement('.page, [data-theme]') as HTMLElement;
+const getTinymceTheme = async (): Promise<string> => {
+  globalTheme = globalTheme ? globalTheme : ((await waitForElement('.page, [data-theme]')) as HTMLElement);
 
   if (editWalkthrough.tinymceTheme !== null) {
     return editWalkthrough.tinymceTheme;
@@ -16,22 +16,22 @@ const getTinymceTheme = async(): Promise<string> => {
   }
 };
 
-const listen = async(): Promise<void> => {
+const listen = async (): Promise<void> => {
   themeToggle.addEventListener('click', ({ target }) => {
     if (!(target instanceof HTMLElement)) return;
 
-      const currentTheme = target.getAttribute('data-ta-x-tinymce-theme');
-      const newTheme = currentTheme === 'dark' ? '' : 'dark';
+    const currentTheme = target.getAttribute('data-ta-x-tinymce-theme');
+    const newTheme = currentTheme === 'dark' ? '' : 'dark';
 
-      editWalkthrough.tinymceTheme = newTheme;
-      target.setAttribute('data-ta-x-tinymce-theme', newTheme);
+    editWalkthrough.tinymceTheme = newTheme;
+    target.setAttribute('data-ta-x-tinymce-theme', newTheme);
   });
 
-  const iframe =  await waitForElement('#txtWalkthrough_ifr') as HTMLIFrameElement;
-  iframe.addEventListener('load', async() => {
+  const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
+  iframe.addEventListener('load', async () => {
     const iframeDocument = iframe && iframe.contentDocument;
 
-    const bodyEl = await waitForElement('#tinymce', iframeDocument) as HTMLElement;
+    const bodyEl = (await waitForElement('#tinymce', iframeDocument)) as HTMLElement;
     bodyEl.classList.add(Constants.Styles.root, Constants.Styles.StaffWalkthroughImprovements.featureStyle);
     bodyEl.setAttribute('data-ta-x-tinymce-theme', await getTinymceTheme());
 
@@ -80,7 +80,7 @@ const listen = async(): Promise<void> => {
       }
     });
   });
-  
+
   observer.observe(themeToggle, {
     attributes: true
   });
@@ -90,10 +90,12 @@ const listen = async(): Promise<void> => {
   });
 };
 
-export const addToggleThemeButton = async(toolbar: HTMLElement): Promise<void> => {
+export const addToggleThemeButton = async (toolbar: HTMLElement): Promise<void> => {
   GM_addStyle(skin);
-  
-  themeToggle = toolbar.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs} [data-ta-x-tinymce-theme]`);
+
+  themeToggle = toolbar.querySelector(
+    `.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs} [data-ta-x-tinymce-theme]`
+  );
 
   const theme = await getTinymceTheme();
   themeToggle.setAttribute('data-ta-x-tinymce-theme', theme);

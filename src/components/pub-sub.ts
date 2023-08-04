@@ -3,7 +3,7 @@ import { PubSubType } from '@ta-x-types';
 type Events = {
   'ajaxIntercept:request': XMLHttpRequest;
   'ajaxIntercept:response': XMLHttpRequest;
-  'snackbar:show': { text: string, type: string };
+  'snackbar:show': { text: string; type: string };
   'accordion:setMaxHeight': HTMLElement;
   'accordion:toggleState': HTMLElement;
   'tabs:set': HTMLElement;

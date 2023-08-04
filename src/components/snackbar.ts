@@ -4,8 +4,8 @@ import { waitForElement } from '../utilities/html-element-util';
 import pubSub from './pub-sub';
 
 export const snackbar = async (): Promise<void> => {
-  if (!await waitForElement('body')) return;
-  
+  if (!(await waitForElement('body'))) return;
+
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   document.body.appendChild(parsedDocument.querySelector(`.${Constants.Styles.Components.snackbar}`));
 

@@ -5,9 +5,7 @@ import { baseConfig } from './webpack.base.conf';
 import metadata from './metadata';
 
 metadata.name['$'] += ' - Development';
-metadata.require.push(
-  'file://' + resolve(__dirname, '../dist/trueachievements-extras.debug.js')
-);
+(metadata.require as string[]).push('file://' + resolve(__dirname, '../dist/trueachievements-extras.debug.js'));
 
 delete metadata.downloadURL;
 delete metadata.updateURL;
