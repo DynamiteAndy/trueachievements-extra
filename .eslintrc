@@ -22,7 +22,8 @@
     "import/no-unresolved": "error",
     "import/named": "error",
     "import/order": ["error", {"groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object"]}],
-    "comma-dangle": ["error", "never"]
+    "comma-dangle": ["error", "never"],
+    "curly": "error"
   },
   "settings": {
     "import/resolver": {

@@ -43,5 +43,25 @@
         button-text="Add Filter"
       }}
     </div>
+
+    <div class="ta-x-settings-menu-columned-setting">
+      {{includes
+        "@ta-x-partials/checkbox-setting.hbs"
+        label="Default Thread Type for Game Forums"
+        id="chkGamesImprovementsGameForumsDefaultThread"
+        config-path="gamesImprovements.forums.gameForumsDefaultThread"
+      }}
+
+      {{includes
+        "@ta-x-partials/select-setting.hbs"
+        render-condition='{ "selector": "#chkGamesImprovementsGameForumsDefaultThread", "checked": true }'
+        id="selGamesImprovementsGameForumsDefaultThreadValue"
+        config-path="gamesImprovements.forums.gameForumsDefaultThreadValue"
+        options='[
+      { "value": "all", "text": "All Threads", "selected": true },
+      { "value": "community", "text": "Community Threads" },
+      { "value": "gameinfo", "text": "Game Info Threads" }]'
+      }}
+    </div>
   </div>
 </div>

@@ -12,6 +12,15 @@ export class Cache {
     GM_setValue('memoized', JSON.stringify(Array.from(value.entries())));
   }
 
+  static get gameAchievementsXboxAchievementsGuideUrl(): Map<string, string> {
+    const value = GM_getValue('gameAchievementsXboxAchievementsGuideUrl', '') as string;
+    return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+  }
+
+  static set gameAchievementsXboxAchievementsGuideUrl(value: Map<string, string>) {
+    GM_setValue('gameAchievementsXboxAchievementsGuideUrl', JSON.stringify(Array.from(value.entries())));
+  }
+
   static get walkthroughForumOwnerProgressUrl(): Map<string, string> {
     const value = GM_getValue('walkthroughOwnerProgressUrl', '') as string;
     return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
@@ -63,6 +72,14 @@ export class Cache {
     GM_setValue('gameClipsDefaultStatusSelectors', JSON.stringify(value));
   }
 
+  static get gameForumsDefaultThreadPathName(): string {
+    return GM_getValue('gameForumsDefaultThreadPathName', '') as string;
+  }
+
+  static set gameForumsDefaultThreadPathName(value: string) {
+    GM_setValue('gameForumsDefaultThreadPathName', value);
+  }
+
   static forceClear(): void {
     GM_deleteValue('memoized');
     GM_deleteValue('walkthroughOwnerProgressUrl');
@@ -87,6 +104,10 @@ export class Cache {
 
     if (!GamesRegex.Test.clipsUrl()) {
       GM_deleteValue('gameClipsDefaultStatusSelectors');
+    }
+
+    if (!GamesRegex.Test.forum()) {
+      GM_deleteValue('gameForumsDefaultThreadPathName');
     }
   }
 

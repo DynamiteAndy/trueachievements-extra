@@ -18,7 +18,9 @@ const listen = () => {
 export const removeAside = async (): Promise<void> => {
   listen();
 
-  if (walkthroughPreview.populateAsideContent) return;
+  if (walkthroughPreview.populateAsideContent) {
+    return;
+  }
 
   await applyBody();
 };

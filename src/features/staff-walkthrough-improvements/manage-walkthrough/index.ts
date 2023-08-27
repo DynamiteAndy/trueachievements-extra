@@ -12,7 +12,9 @@ let walkthroughContainer: HTMLElement;
 const applyBody = async (): Promise<void> => {
   walkthroughContainer = await waitForElement('#divWalkthroughHolder');
 
-  if (!walkthroughContainer) return;
+  if (!walkthroughContainer) {
+    return;
+  }
 
   const editWalkthrough = await waitForElement('#chEditWalkthrough', walkthroughContainer);
 
@@ -35,7 +37,9 @@ const applyBody = async (): Promise<void> => {
 const adjustButtons = async (): Promise<void> => {
   const buttonContainer = await waitForElement('#btnWalkthrough_Options', walkthroughContainer);
 
-  if (buttonContainer === null) return;
+  if (buttonContainer === null) {
+    return;
+  }
 
   let buttonsContainer: HTMLElement = null;
 
@@ -122,7 +126,9 @@ const deDupeAchievements = (walkthroughAchievementsContainer: HTMLElement): void
 };
 
 export default async (): Promise<void> => {
-  if (!StaffRegex.Walkthroughs.Test.manageWalkthroughUrl()) return;
+  if (!StaffRegex.Walkthroughs.Test.manageWalkthroughUrl()) {
+    return;
+  }
 
   await changeToDefaultStatus();
   await autoSelectFirst();

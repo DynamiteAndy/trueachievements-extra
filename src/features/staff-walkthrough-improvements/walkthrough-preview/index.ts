@@ -4,7 +4,9 @@ import { removeAside } from './remove-aside';
 import { populateAsideContent } from './populate-aside-content';
 
 export default async (): Promise<void> => {
-  if (!StaffRegex.Walkthroughs.Test.preview()) return;
+  if (!StaffRegex.Walkthroughs.Test.preview()) {
+    return;
+  }
 
   allConcurrently('Walkthrough Preview', [
     { name: 'walkthrough-preview-remove-aside', task: removeAside },

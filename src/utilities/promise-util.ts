@@ -10,7 +10,9 @@ export const allConcurrently = async <T>(
   arr: { name: string; task: () => T | Promise<T> }[],
   max = 3
 ): Promise<T[]> => {
-  if (arr.length === 0) return Promise.resolve([]);
+  if (arr.length === 0) {
+    return Promise.resolve([]);
+  }
 
   let index = 0;
   const results = [];

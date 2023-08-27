@@ -87,7 +87,9 @@ const buildEmojis = (): Element => {
 };
 
 export default async (): Promise<void> => {
-  if (!emojis.enabled) return;
+  if (!emojis.enabled) {
+    return;
+  }
   const elementSelectors = [
     '#aeb_txtQuickReply',
     '#aeb_aebMessageBody',
@@ -97,7 +99,9 @@ export default async (): Promise<void> => {
   ];
   const replyContainer = await waitForElement(elementSelectors.join(', '));
 
-  if (!replyContainer) return;
+  if (!replyContainer) {
+    return;
+  }
 
   const emojiContent = buildEmojis();
 
@@ -108,7 +112,9 @@ export default async (): Promise<void> => {
       task: async () => {
         const containers = await waitForElements(selector);
 
-        if (!containers || containers.length === 0) return;
+        if (!containers || containers.length === 0) {
+          return;
+        }
 
         await apply(containers, emojiContent);
       }

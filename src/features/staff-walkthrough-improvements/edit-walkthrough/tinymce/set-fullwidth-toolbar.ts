@@ -27,7 +27,9 @@ export const setFullWidthToolbar = async (container: HTMLElement): Promise<void>
   tinymceContainer = container;
   tinymceToolbar = await waitForElement('.mce-container-body .mce-toolbar-grp', container);
 
-  if (!tinymceToolbar) return;
+  if (!tinymceToolbar) {
+    return;
+  }
 
   tinymceToolbar.classList.add(
     Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarStyles

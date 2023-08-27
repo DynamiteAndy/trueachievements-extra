@@ -7,10 +7,11 @@
       {
         "name": "Debug Chrome",
         "type": "chrome",
-        "request": "attach",
-        "port": 9222,
+        "request": "launch",
         "url": "https://www.trueachievements.com/",
-        "webRoot": "${workspaceFolder}/"
+        "webRoot": "${workspaceFolder}/",
+        "preLaunchTask": "npm: start",
+        "port": 9222
     }
   ]
 }

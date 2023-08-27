@@ -4,15 +4,23 @@ import { waitForElement } from '@ta-x-utilities';
 const listen = (): void => {
   const observer = new MutationObserver((mutations: MutationRecord[]) => {
     mutations.forEach((mutation: MutationRecord) => {
-      if (mutation.type !== 'childList') return;
-      if (!(mutation.target instanceof HTMLElement)) return;
-      if (!mutation.addedNodes || mutation.addedNodes.length === 0) return;
+      if (mutation.type !== 'childList') {
+        return;
+      }
+      if (!(mutation.target instanceof HTMLElement)) {
+        return;
+      }
+      if (!mutation.addedNodes || mutation.addedNodes.length === 0) {
+        return;
+      }
 
       const tablePropertyModal = [...mutation.addedNodes].find(
         (node: HTMLElement) => node.ariaLabel === 'Table properties'
       );
 
-      if (!tablePropertyModal || !(tablePropertyModal instanceof HTMLElement)) return;
+      if (!tablePropertyModal || !(tablePropertyModal instanceof HTMLElement)) {
+        return;
+      }
 
       ([...tablePropertyModal.querySelectorAll('.mce-colorbox input')] as HTMLInputElement[]).forEach(
         (el: HTMLInputElement) => {

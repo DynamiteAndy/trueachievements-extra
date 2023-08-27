@@ -130,7 +130,9 @@ const clickableGamers = async (walkthroughContainer: HTMLElement, walthroughPrev
 };
 
 export const makeTableLinksClickable = async (): Promise<void> => {
-  if (!manageWalkthrough.clickableTableLinks) return;
+  if (!manageWalkthrough.clickableTableLinks) {
+    return;
+  }
 
   const selectedWalkthrough = (await waitForElement('#lstWalkthroughIDselectedrow a')) as HTMLAnchorElement;
 

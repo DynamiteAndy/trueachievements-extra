@@ -2,7 +2,9 @@ import { gameChallenges, GamesRegex } from '@ta-x-globals';
 import { setDefaultStatus } from '../shared';
 
 export const changeToDefaultStatus = (): void => {
-  if (!gameChallenges.gameChallengesDefaultStatus) return;
+  if (!gameChallenges.gameChallengesDefaultStatus) {
+    return;
+  }
 
   const status = document.querySelector(`#${gameChallenges.gameChallengesDefaultStatusValue}`) as HTMLSelectElement;
 

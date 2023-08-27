@@ -21,7 +21,7 @@ export const devConfig = merge(baseConfig as never, {
     filename: 'trueachievements-extras.[name].js',
     path: resolve(__dirname, '../dist')
   },
-  devtool: 'eval-source-map',
+  devtool: 'eval-cheap-module-source-map',
   watch: process.env.webpack_watch ? true : false,
   watchOptions: {
     ignored: /node_modules/

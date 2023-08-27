@@ -173,6 +173,34 @@ describe('regex', () => {
         });
       });
     });
+
+    describe('forum', () => {
+      const testCases = [
+        { case: 'https://www.trueachievements.com/game/Gears-of-War-4/forum', expected: true },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-4/forum?type=all',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-4/forum?type=community',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-4/forum?type=gameinfo',
+          expected: true
+        },
+        {
+          case: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack',
+          expected: false
+        }
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`should test regex "${test.case}" correctly (testcase: ${index + 1})`, () => {
+          expect(GamesRegex.Test.forum(test.case)).toEqual(test.expected);
+        });
+      });
+    });
   });
 
   describe('gamerRegex', () => {

@@ -5,8 +5,12 @@ import { default as pubSub } from './pub-sub';
 
 export const accordion = (): void => {
   document.addEventListener('click', ({ target }): void => {
-    if (!(target instanceof HTMLElement)) return;
-    if (!target.classList.contains(Constants.Styles.Components.accordion)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(Constants.Styles.Components.accordion)) {
+      return;
+    }
 
     target.classList.toggle('expanded');
 
@@ -30,7 +34,9 @@ export const accordion = (): void => {
   });
 
   pubSub.subscribe('accordion:setMaxHeight', (content: HTMLElement) => {
-    if (!content.style.maxHeight) return;
+    if (!content.style.maxHeight) {
+      return;
+    }
     content.style.maxHeight = `${content.scrollHeight}px`;
   });
 

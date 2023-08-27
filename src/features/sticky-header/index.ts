@@ -28,7 +28,9 @@ const applyBody = async (): Promise<void> => {
 };
 
 const listen = async (): Promise<void> => {
-  if (stickyHeader.remainStuck) return;
+  if (stickyHeader.remainStuck) {
+    return;
+  }
 
   const navGamer = await waitForElement(`.nav-gamer:not(.${Constants.Styles.SettingsMenu.featureJs})`);
   const taxSettingsMenu = await waitForElement(`.${Constants.Styles.SettingsMenu.featureJs}`);
@@ -67,7 +69,9 @@ const listen = async (): Promise<void> => {
 
   const observer = new MutationObserver((mutations: MutationRecord[]) => {
     mutations.forEach(({ target, attributeName }) => {
-      if (!(target instanceof HTMLElement)) return;
+      if (!(target instanceof HTMLElement)) {
+        return;
+      }
 
       if (attributeName === 'class') {
         const currentMenuOpen = target.classList.contains('open');
@@ -92,7 +96,9 @@ const listen = async (): Promise<void> => {
 };
 
 export default async (): Promise<void> => {
-  if (!stickyHeader.enabled) return;
+  if (!stickyHeader.enabled) {
+    return;
+  }
 
   await applyBody();
   await listen();

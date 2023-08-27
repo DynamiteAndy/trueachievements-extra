@@ -5,8 +5,12 @@ export const moveButtonsToLeft = async (
   walkthroughContainer: HTMLElement,
   walkthoughPageVersions: HTMLElement
 ): Promise<void> => {
-  if (!walkthroughPage.moveButtonsToLeft) return;
-  if (!walkthroughContainer || !walkthoughPageVersions) return;
+  if (!walkthroughPage.moveButtonsToLeft) {
+    return;
+  }
+  if (!walkthroughContainer || !walkthoughPageVersions) {
+    return;
+  }
 
   const walkthroughContainerButtons = await waitForElement(
     '#btnEditPage, #btnEditPage2, #btnUnlockWalkthroughPage, #btnUnlockWalkthroughPage2',

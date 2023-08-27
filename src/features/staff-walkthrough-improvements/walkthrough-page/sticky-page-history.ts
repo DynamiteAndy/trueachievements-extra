@@ -22,8 +22,12 @@ const listen = async (): Promise<void> => {
 };
 
 export const setPageHistorySticky = async (container: HTMLElement, pageVersions: HTMLElement): Promise<void> => {
-  if (!walkthroughPage.stickyPageHistory) return;
-  if (!container || !pageVersions) return;
+  if (!walkthroughPage.stickyPageHistory) {
+    return;
+  }
+  if (!container || !pageVersions) {
+    return;
+  }
 
   walkthroughContainer = container;
   walkthoughPageVersions = pageVersions;

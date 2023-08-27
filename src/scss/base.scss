@@ -21,7 +21,7 @@ body {
         max-width: 1200px;
       }
 
-      @media (min-width: 576px) {
+      @media (min-width: $ta-x-mobile-breakpoint) {
         .news-section {
           &.list {
             > section {

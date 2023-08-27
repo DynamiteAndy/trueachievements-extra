@@ -33,12 +33,16 @@ const listen = (): void => {
   const input = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
 
   button.addEventListener('click', async (e: Event) => {
-    if (!(e.target instanceof HTMLElement)) return;
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
     e.preventDefault();
     e.stopPropagation();
 
     try {
-      if (input.value === '') return;
+      if (input.value === '') {
+        return;
+      }
 
       toggleAskForWalkthrough();
       await getAsideContent(input.value);
@@ -134,7 +138,9 @@ const getAsideContent = async (walkthroughId: string): Promise<void> => {
 const getGameUrl = async (walkthroughId: string): Promise<string> => {
   const game = document.querySelector('.walkthroughsummary .games a.gamelink') as HTMLAnchorElement;
 
-  if (game) return game.href;
+  if (game) {
+    return game.href;
+  }
 
   const walkthroughPreviewResponse = await memoizeFetch(
     `https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`
@@ -231,7 +237,9 @@ const getAchievementsInWalkthrough = (
         achievementName.toLowerCase()
     );
 
-    if (!walkthroughAchievement) return;
+    if (!walkthroughAchievement) {
+      return;
+    }
 
     const achievementInfo: AsideContentPreviewAchievement = {
       title: achievementName,
@@ -295,7 +303,9 @@ const toggleAskForWalkthrough = (): void => {
 };
 
 export const populateAsideContent = async (): Promise<void> => {
-  if (!walkthroughPreview.populateAsideContent) return;
+  if (!walkthroughPreview.populateAsideContent) {
+    return;
+  }
 
   await applyBody();
   listen();

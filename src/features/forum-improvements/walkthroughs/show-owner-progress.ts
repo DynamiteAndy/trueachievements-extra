@@ -28,13 +28,19 @@ const listen = (): void => {
   const input = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
 
   button.addEventListener('click', async (e: Event) => {
-    if (!(e.target instanceof HTMLElement)) return;
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
     e.preventDefault();
     e.stopPropagation();
 
     try {
-      if (input.value === '') return;
-      if (!GamesRegex.Test.walkthroughUrl(input.value)) return;
+      if (input.value === '') {
+        return;
+      }
+      if (!GamesRegex.Test.walkthroughUrl(input.value)) {
+        return;
+      }
 
       toggleAskForWalkthrough();
       await getOwnerProgress(input.value);
@@ -53,7 +59,9 @@ const getAchievementWalkthroughUrl = async (): Promise<void> => {
     const posts = await waitForElement('.posts');
 
     ([...posts.querySelectorAll('li .body')] as HTMLElement[]).forEach((el: HTMLElement) => {
-      if (url) return;
+      if (url) {
+        return;
+      }
       if (
         SentencesRegex.discussWalkthrough.test(el.textContent) ||
         SentencesRegex.walkthroughPublished.test(el.textContent)
@@ -174,11 +182,17 @@ const toggleAskForWalkthrough = (): void => {
 };
 
 export default async (): Promise<void> => {
-  if (!forumImprovements.walkthroughs.showOwnerProgress) return;
-  if (!ForumRegex.Test.viewThreadUrlWithThreadId()) return;
+  if (!forumImprovements.walkthroughs.showOwnerProgress) {
+    return;
+  }
+  if (!ForumRegex.Test.viewThreadUrlWithThreadId()) {
+    return;
+  }
 
   const pageTitle = (await waitForElement('#oMessageThread .pagetitle')) as HTMLElement;
-  if (!pageTitle || pageTitle.innerText.toLowerCase() !== 'walkthroughs') return;
+  if (!pageTitle || pageTitle.innerText.toLowerCase() !== 'walkthroughs') {
+    return;
+  }
 
   await applyBody();
   listen();

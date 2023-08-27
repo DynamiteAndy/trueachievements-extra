@@ -10,7 +10,9 @@ import { default as getPath } from './get-path-by-alias';
 
 export const includes = (): void => {
   Handlebars.registerHelper('includes', (filePath: string, options) => {
-    if (!filePath) return;
+    if (!filePath) {
+      return;
+    }
 
     const actualPath = getPath(filePath, options.data?.parentPartialDirectory);
     const includedFiles = fs.readFileSync(actualPath, 'utf8');
@@ -26,9 +28,11 @@ export const includes = (): void => {
 
 export const markdown = (): void => {
   Handlebars.registerHelper('markdown', (filePath: string, render: boolean, wrapperClass: string, options) => {
-    if (!filePath) return;
+    if (!filePath) {
+      return;
+    }
 
-    marked.use({ headerIds: false }, mangle());
+    marked.use({}, mangle());
 
     const actualPath = getPath(filePath, options.data?.parentPartialDirectory);
     const includedFiles = fs.readFileSync(actualPath, 'utf8');

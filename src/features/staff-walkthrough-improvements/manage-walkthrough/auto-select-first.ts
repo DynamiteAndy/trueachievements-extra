@@ -3,8 +3,12 @@ import { waitForElement } from '@ta-x-utilities';
 import { StaffRegex } from 'globals/regex';
 
 export const autoSelectFirst = async (): Promise<void> => {
-  if (!manageWalkthrough.autoSelectFirst) return;
-  if (StaffRegex.Walkthroughs.Test.manageWalkthroughUrlWithWalkthroughId()) return;
+  if (!manageWalkthrough.autoSelectFirst) {
+    return;
+  }
+  if (StaffRegex.Walkthroughs.Test.manageWalkthroughUrlWithWalkthroughId()) {
+    return;
+  }
 
   const walkthroughList = (await waitForElement('#scrolllstWalkthroughID')) as HTMLSelectElement;
 

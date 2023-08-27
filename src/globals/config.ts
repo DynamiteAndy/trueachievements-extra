@@ -1,7 +1,9 @@
 const migrateGet = <T>(oldSetting: string, newSetting: string, defaultValue: T): T => {
   const newValue = GM_getValue(newSetting);
 
-  if (newValue !== undefined) return newValue as T;
+  if (newValue !== undefined) {
+    return newValue as T;
+  }
 
   const oldValue = GM_getValue(oldSetting, defaultValue);
   GM_setValue(newSetting, oldValue);
@@ -285,6 +287,12 @@ export const gameAchievements = {
   },
   set gameAchievementsIndividualProgress(value: boolean) {
     GM_setValue('gameAchievementsIndividualProgress', value);
+  },
+  get gameAchievementsShowXboxAchievementGuides(): boolean {
+    return GM_getValue('gameAchievementsShowXboxAchievementGuides', false);
+  },
+  set gameAchievementsShowXboxAchievementGuides(value: boolean) {
+    GM_setValue('gameAchievementsShowXboxAchievementGuides', value);
   }
 };
 
@@ -405,6 +413,18 @@ export const gameForums = {
   },
   set threadFilterKeywords(value: string[]) {
     gameForums.gameForumsForumOverride ? GM_setValue('gameForumsThreadFilterKeywords', JSON.stringify(value)) : null;
+  },
+  get gameForumsDefaultThread(): boolean {
+    return GM_getValue('gameForumsDefaultThread', false);
+  },
+  set gameForumsDefaultThread(value: boolean) {
+    GM_setValue('gameForumsDefaultThread', value);
+  },
+  get gameForumsDefaultThreadValue(): string {
+    return GM_getValue('gameForumsDefaultThreadValue', 'all');
+  },
+  set gameForumsDefaultThreadValue(value: string) {
+    GM_setValue('gameForumsDefaultThreadValue', value);
   }
 };
 

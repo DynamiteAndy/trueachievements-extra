@@ -5,8 +5,12 @@ let listenApplied = false;
 
 const listen = () => {
   document.addEventListener('click', (e: MouseEvent): void => {
-    if (!(e.target instanceof HTMLElement)) return;
-    if (!e.target.classList.contains(Constants.Styles.ForumImprovements.filterThreadsUnhideJs)) return;
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+    if (!e.target.classList.contains(Constants.Styles.ForumImprovements.filterThreadsUnhideJs)) {
+      return;
+    }
 
     e.preventDefault();
     e.stopPropagation();
@@ -18,7 +22,9 @@ const listen = () => {
 };
 
 export const applyThreadFilters = async (filters: string[]) => {
-  if (!filters.length) return;
+  if (!filters.length) {
+    return;
+  }
 
   const board = await waitForElement('main .view-board, main .messageboard-index');
   ([...board.querySelectorAll('li:not(.header)')] as HTMLElement[]).forEach((thread: HTMLElement) => {
@@ -26,13 +32,19 @@ export const applyThreadFilters = async (filters: string[]) => {
     let activeFilter: string = null;
 
     filters.forEach((filter: string) => {
-      if (activeFilter != null) return;
-      if (!threadTitleAnchor.innerText.trim().toLowerCase().includes(filter.toLowerCase())) return;
+      if (activeFilter != null) {
+        return;
+      }
+      if (!threadTitleAnchor.innerText.trim().toLowerCase().includes(filter.toLowerCase())) {
+        return;
+      }
 
       activeFilter = filter;
     });
 
-    if (!activeFilter) return;
+    if (!activeFilter) {
+      return;
+    }
 
     const threadLi = threadTitleAnchor.closest('li') as HTMLLIElement;
     const threadTitleParagraph = document.createElement('p') as HTMLParagraphElement;

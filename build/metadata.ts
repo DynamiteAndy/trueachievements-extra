@@ -13,6 +13,7 @@ export default {
   downloadURL: `${url}/raw/main/dist/`,
   supportURL: bugs.url,
   description: description,
+  connect: ['xboxachievements.com'],
   author: author,
   match: ['http*://*.trueachievements.com/*'],
   'run-at': 'document-start',

@@ -5,7 +5,9 @@ const today = new Date(new Date().setHours(0, 0, 0, 0));
 const yesterday = new Date(new Date(today).setDate(today.getDate() - 1));
 
 export const toInt = (value: string | boolean | number): number => {
-  if (value === null || value === undefined) return null;
+  if (value === null || value === undefined) {
+    return null;
+  }
 
   if (typeof value === 'string') {
     const parsedValue = parseInt(value.replace(/,/g, ''), 10);
@@ -33,7 +35,9 @@ export const toDate = (value: string): Date => {
 };
 
 export const toBool = (str: string | boolean | number): boolean => {
-  if (str === null || str === undefined) return null;
+  if (str === null || str === undefined) {
+    return null;
+  }
 
   if (typeof str === 'string') {
     return str.toLowerCase() === 'true' ? true : str.toLowerCase() === 'false' ? false : null;

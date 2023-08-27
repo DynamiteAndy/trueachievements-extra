@@ -5,7 +5,9 @@ import { improveImageSelector } from './improved-image-selector';
 import { tinymce } from './tinymce';
 
 export default async (): Promise<void> => {
-  if (!StaffRegex.Walkthroughs.Test.editWalkthroughUrl()) return;
+  if (!StaffRegex.Walkthroughs.Test.editWalkthroughUrl()) {
+    return;
+  }
 
   allConcurrently(
     'Edit Walkthrough',

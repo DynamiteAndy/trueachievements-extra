@@ -18,7 +18,9 @@ const getTinymceTheme = async (): Promise<string> => {
 
 const listen = async (): Promise<void> => {
   themeToggle.addEventListener('click', ({ target }) => {
-    if (!(target instanceof HTMLElement)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
 
     const currentTheme = target.getAttribute('data-ta-x-tinymce-theme');
     const newTheme = currentTheme === 'dark' ? '' : 'dark';
@@ -60,8 +62,12 @@ const listen = async (): Promise<void> => {
     }
 
     mutations.forEach((mutation: MutationRecord) => {
-      if (mutation.type !== 'attributes') return;
-      if (!(mutation.target instanceof HTMLElement)) return;
+      if (mutation.type !== 'attributes') {
+        return;
+      }
+      if (!(mutation.target instanceof HTMLElement)) {
+        return;
+      }
 
       let theme: string;
       if (mutation.attributeName === 'data-theme') {

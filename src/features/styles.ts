@@ -3,7 +3,9 @@ import { Constants } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
 
 export default async (): Promise<void> => {
-  if (!(await waitForElement('body'))) return;
+  if (!(await waitForElement('body'))) {
+    return;
+  }
 
   document.body.classList.add(Constants.Styles.root);
   GM_addStyle(styles);

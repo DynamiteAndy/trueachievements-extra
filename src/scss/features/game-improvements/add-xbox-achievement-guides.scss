@@ -1,0 +1,40 @@
+@import '../../variables.scss';
+
+body {
+  &.trueachievement-extras {
+    .ta-x-games-improvements-achievements-achievement-guide {
+      &.gamer {
+        .ta-x-xboxachievements-icon {
+          width: 36px;
+          height: 36px;
+
+          @media (min-width: $ta-x-tablet-breakpoint-max) {
+            width: 70px;
+            height: 70px;
+          }
+        }
+
+        a {
+          flex: none;
+        }
+
+        svg {
+          @media (min-width: $ta-x-desktop-breakpoint-min) {
+            margin-bottom: 1rem;
+          }
+
+          @media (max-width: $ta-x-tablet-breakpoint-max) {
+            margin-right: 1rem;
+          }
+        }
+
+        > .info {
+          @media (max-width: $ta-x-tablet-breakpoint-max) {
+            display: block;
+            margin-left: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

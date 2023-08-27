@@ -14,7 +14,9 @@ const applyBody = async (): Promise<void> => {
           newsImprovements.sales.autoSortByValue.includes(th.innerText.replace(' ', '-').toLowerCase().trim())
         );
 
-        if (!tableHeader) return;
+        if (!tableHeader) {
+          return;
+        }
 
         do {
           tableHeader.click();
@@ -27,12 +29,17 @@ const applyBody = async (): Promise<void> => {
 };
 
 export default async (): Promise<void> => {
-  if (!newsImprovements.sales.autoSortBy) return;
-  if (newsImprovements.sales.autoSortByValue.includes('product') && newsImprovements.sales.autoSortByOrder === 'asc')
+  if (!newsImprovements.sales.autoSortBy) {
     return;
+  }
+  if (newsImprovements.sales.autoSortByValue.includes('product') && newsImprovements.sales.autoSortByOrder === 'asc') {
+    return;
+  }
 
   const salesTable = await waitForElement('.newsitem .sale [data-sort]');
-  if (!salesTable) return;
+  if (!salesTable) {
+    return;
+  }
 
   await waitForElement('.author');
 

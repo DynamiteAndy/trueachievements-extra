@@ -2,7 +2,9 @@ import { Constants } from '@ta-x-globals';
 import pubSub from './pub-sub';
 
 const switchTab = (selectedTab: HTMLElement) => {
-  if (selectedTab.classList.contains(Constants.Styles.Components.Tab.tabSelected)) return;
+  if (selectedTab.classList.contains(Constants.Styles.Components.Tab.tabSelected)) {
+    return;
+  }
 
   const parentTabContainer = selectedTab.closest(`.${Constants.Styles.Components.Tab.featureJs}`);
   const prevSelected = parentTabContainer.querySelector(
@@ -43,7 +45,9 @@ const listen = (): void => {
   };
 
   const mouseMoveEvent = (e: MouseEvent) => {
-    if (!isDown) return;
+    if (!isDown) {
+      return;
+    }
     e.preventDefault();
 
     const x = e.pageX - container.offsetLeft;
@@ -85,10 +89,14 @@ const listen = (): void => {
   };
 
   document.addEventListener('mousedown', (e: MouseEvent) => {
-    if (!(e.target instanceof HTMLElement)) return;
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
     container = e.target.closest(`.${Constants.Styles.Components.Tab.tabLinkContainer}`);
 
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     isDown = true;
     container.classList.add(Constants.Styles.Components.Tab.tabScroll);
@@ -105,8 +113,12 @@ const listen = (): void => {
 
 export const tabs = (): void => {
   document.addEventListener('click', ({ target }): void => {
-    if (!(target instanceof HTMLElement)) return;
-    if (!target.classList.contains(Constants.Styles.Components.Tab.tabLink)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(Constants.Styles.Components.Tab.tabLink)) {
+      return;
+    }
 
     switchTab(target);
   });

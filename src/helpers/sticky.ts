@@ -7,7 +7,9 @@ const stickyNavBarStuck = stickyHeader.remainStuck;
 let stickyNavBarElement: HTMLElement;
 
 const setStickyNavElement = async () => {
-  if (stickyNavBarElement) return;
+  if (stickyNavBarElement) {
+    return;
+  }
 
   stickyNavBarElement = stickyNavBarEnabled
     ? await waitForElement(`.${Constants.Styles.StickyHeader.featureJs}`)
@@ -55,7 +57,9 @@ export const applyStickyElementStyle = async (
   document.documentElement.style.setProperty(variableProperty, `${topStylePx}px`);
 
   stickyElement.classList.remove(...removeAnimation);
-  if (addAnimation) stickyElement.classList.add(addAnimation);
+  if (addAnimation) {
+    stickyElement.classList.add(addAnimation);
+  }
 };
 
 export default { applyStickyElementStyle };

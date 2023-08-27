@@ -73,19 +73,6 @@ export class Constants {
     static NewsImprovements = class {
       static readonly featureJs = `${jsStylePrefix}-news-improvements`;
       static readonly featureStyle = `${classStylePrefix}-news-improvements`;
-
-      static Walkthroughs = class {
-        static readonly featureJs = `${jsStylePrefix}-forum-improvements-walkthroughs`;
-        static readonly featureStyle = `${classStylePrefix}-forum-improvements-walkthroughs`;
-        static readonly showOwnerProgressJs = `${this.featureJs}-show-owner-progress`;
-        static readonly showOwnerProgressStyle = `${this.featureStyle}-show-owner-progress`;
-        static readonly showOwnerProgressEditorWrapperStyle = `${this.showOwnerProgressStyle}-editor-wrapper`;
-        static readonly showOwnerProgressEditorRowStyle = `${this.showOwnerProgressStyle}-editor-row`;
-        static readonly showOwnerProgressEditorStyle = `${this.showOwnerProgressStyle}-editor`;
-        static readonly askForWalkthroughWalkthroughJs = `${this.showOwnerProgressJs}-ask-for-walkthrough`;
-        static readonly saveWalkthroughInputJs = `${this.showOwnerProgressJs}-save-walkthrough-input`;
-        static readonly saveWalkthroughButtonJs = `${this.showOwnerProgressJs}-save-walkthrough-button`;
-      };
     };
 
     static GamesImprovements = class {
@@ -93,9 +80,22 @@ export class Constants {
       static readonly featureStyle = `${classStylePrefix}-games-improvements`;
       static readonly highlightGamesButtonJs = `${this.featureJs}-highlight-games-collection-button`;
 
-      static ForumImprovements = class {
+      static Forums = class {
         static readonly featureJs = `${jsStylePrefix}-games-improvements-forum-improvements`;
         static readonly featureStyle = `${classStylePrefix}-games-improvements-forum-improvements`;
+      };
+
+      static Achievements = class {
+        static readonly featureJs = `${jsStylePrefix}-game-achievements`;
+        static readonly featureStyle = `${classStylePrefix}-game-achievements`;
+        static readonly showXboxAchievementGuidesJs = `${this.featureJs}-xbox-achievement-guides`;
+        static readonly showXboxAchievementGuidesStyle = `${this.featureStyle}-xbox-achievement-guides`;
+        static readonly showOwnerProgressEditorWrapperStyle = `${this.showXboxAchievementGuidesStyle}-editor-wrapper`;
+        static readonly showOwnerProgressEditorRowStyle = `${this.showXboxAchievementGuidesStyle}-editor-row`;
+        static readonly showOwnerProgressEditorStyle = `${this.showXboxAchievementGuidesStyle}-editor`;
+        static readonly askForWalkthroughWalkthroughJs = `${this.showXboxAchievementGuidesJs}-ask-for-walkthrough`;
+        static readonly saveWalkthroughInputJs = `${this.showXboxAchievementGuidesJs}-save-walkthrough-input`;
+        static readonly saveWalkthroughButtonJs = `${this.showXboxAchievementGuidesJs}-save-walkthrough-button`;
       };
     };
 
@@ -211,6 +211,13 @@ export class Constants {
         static readonly featureTemplatePrefix = `${templatePrefix}-tabs`;
         static readonly tabLink = `${this.featureTemplatePrefix}-link`;
         static readonly tabContent = `${this.featureTemplatePrefix}-content`;
+      };
+    };
+
+    static GamesImprovements = class {
+      static Achievements = class {
+        static readonly featureTemplatePrefix = `${templatePrefix}-games-improvements-achievements`;
+        static readonly achievementGuideSolution = `${this.featureTemplatePrefix}-achievement-guide`;
       };
     };
 

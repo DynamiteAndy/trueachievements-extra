@@ -6,13 +6,19 @@ export const addWalkthroughTeamButton = async (
   walkthroughContainer: HTMLElement,
   walkthoughPageVersions: HTMLElement
 ): Promise<void> => {
-  if (!walkthroughPage.walkthroughTeamButton) return;
-  if (!walkthroughContainer || !walkthoughPageVersions) return;
+  if (!walkthroughPage.walkthroughTeamButton) {
+    return;
+  }
+  if (!walkthroughContainer || !walkthoughPageVersions) {
+    return;
+  }
 
   const walkthroughPageButtons = await waitForElement('.content .buttons', walkthoughPageVersions);
 
   if (walkthroughPageButtons) {
-    if (document.querySelector('#btnBackToWalkthrough')) return;
+    if (document.querySelector('#btnBackToWalkthrough')) {
+      return;
+    }
 
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
 

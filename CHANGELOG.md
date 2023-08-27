@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2.13.0
+- Added a feature to select a default game forum thread,
+- Added a feature to include guides from [XboxAchievements](https://www.xboxachievements.com/) on achievement guide pages,
 - Compress Emoji json to reduce package size,
 - Behind the scenes, moved from stylelint to prettier for hbs, html and scss,
 - Remove some unused Emoji json properties to reduce package size.

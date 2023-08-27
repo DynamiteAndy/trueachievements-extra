@@ -6,6 +6,7 @@ import {
 import { ListSettingItemOptions } from './components/list-setting-item';
 import { TabTemplateOptions } from './components/tabs';
 import { EmojiTemplateOptions } from './features/emojis';
+import { AchievementGuideSolutionOptions } from './features/games-improvements/achievements/achievement-guide-solution';
 
 export type TemplateOptions = {
   element?: HTMLElement;
@@ -20,4 +21,5 @@ export type TemplateOptions = {
   populateAsideContentPreviewPage?: AsideContentPreviewPage;
   populateAsideContentPreviewAchievement?: AsideContentPreviewAchievement;
   populateAsideContentPreviewThanks?: AsideContentPreviewThanks;
+  achievementGuideSolution?: AchievementGuideSolutionOptions;
 };

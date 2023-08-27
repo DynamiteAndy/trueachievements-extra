@@ -8,7 +8,9 @@ export class ConditionalRender {
   public value: string[];
 
   static fromString(json: string): ConditionalRender {
-    if (!json || json.length === 0) return null;
+    if (!json || json.length === 0) {
+      return null;
+    }
 
     const parsedObj = JSON.parse(json);
 
@@ -51,7 +53,9 @@ export class ConditionalRender {
   test(el: HTMLElement): string {
     let method: string = null;
 
-    if (!this.isValid()) return method;
+    if (!this.isValid()) {
+      return method;
+    }
     if (this.conditions) {
       return this.conditions.every((cdr) => cdr.test(el) === 'remove') ? 'remove' : 'add';
     } else {

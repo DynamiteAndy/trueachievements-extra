@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"problemMatcher": ["$ts-webpack-watch"],
+			"label": "npm: start",
+			"detail": "cross-env webpack_watch=true pnpm run build:dev",
+			"isBackground": true,
+		}
+	]
+}

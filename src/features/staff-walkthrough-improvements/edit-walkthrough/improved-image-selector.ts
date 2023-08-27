@@ -5,13 +5,16 @@ import html from './edit-walkthrough.html';
 
 const listen = (): void => {
   document.addEventListener('click', ({ target }) => {
-    if (!(target instanceof HTMLElement)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
     if (
       target.closest(
         `[aria-label='Add Image'], .${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
       ) !== null
-    )
+    ) {
       return;
+    }
 
     const imageSelector = document.querySelector(
       `.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
@@ -28,7 +31,9 @@ const listen = (): void => {
         `.${Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
       ) as HTMLElement;
 
-      if (imageSelector.style.display !== 'block') return;
+      if (imageSelector.style.display !== 'block') {
+        return;
+      }
 
       imageSelector.style.display = 'none';
     }
@@ -36,11 +41,15 @@ const listen = (): void => {
 };
 
 export const improveImageSelector = async (): Promise<void> => {
-  if (!editWalkthrough.improvedImageSelector) return;
+  if (!editWalkthrough.improvedImageSelector) {
+    return;
+  }
 
   const imageContainer = await waitForElement('#oWalkthroughImageViewer');
 
-  if (!imageContainer) return;
+  if (!imageContainer) {
+    return;
+  }
 
   imageContainer.classList.add(
     Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle,

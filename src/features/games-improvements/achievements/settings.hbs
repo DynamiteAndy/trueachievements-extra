@@ -30,10 +30,19 @@
         id="selGamesImprovementsGameAchievementsDefaultStatusValue"
         config-path="gamesImprovements.achievements.gameAchievementsDefaultStatusValue"
         options='[
-                    { "value": "rdoAllAchievements", "text": "All", "selected": true },
-                    { "value": "rdoWonAchievements", "text": "Won" },
-                    { "value": "rdoNotWonAchievements", "text": "Not Won" }]'
+          { "value": "rdoAllAchievements", "text": "All", "selected": true },
+          { "value": "rdoWonAchievements", "text": "Won" },
+          { "value": "rdoNotWonAchievements", "text": "Not Won" }]'
       }}
     </div>
+
+    {{includes
+      "@ta-x-partials/checkbox-setting.hbs"
+      label="Include Guides From XboxAchievements.com"
+      id="chkGamesImprovementsGameAchievementsShowXboxAchievementGuides"
+      config-path="gamesImprovements.achievements.gameAchievementsShowXboxAchievementGuides"
+      helper-render-condition='{ "selector": "#chkGamesImprovementsGameAchievementsShowXboxAchievementGuides", "checked": true }'
+      helper-text="This feature is tempermental, let me know if you have any issues!"
+    }}
   </div>
 </div>

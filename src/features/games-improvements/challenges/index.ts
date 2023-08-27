@@ -4,7 +4,9 @@ import { changeToDefaultStatus } from './default-status';
 import { individualProgress } from './individual-progress';
 
 export default async (): Promise<void> => {
-  if (!GamesRegex.Test.challengesUrl()) return;
+  if (!GamesRegex.Test.challengesUrl()) {
+    return;
+  }
 
   changeToDefaultStatus();
 

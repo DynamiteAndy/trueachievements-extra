@@ -36,7 +36,9 @@ const moveWalkthroughPagePreview = async (): Promise<void> => {
 };
 
 export default async (): Promise<void> => {
-  if (!StaffRegex.Walkthroughs.Test.walkthroughPageUrl()) return;
+  if (!StaffRegex.Walkthroughs.Test.walkthroughPageUrl()) {
+    return;
+  }
 
   await applyBody();
   allConcurrently('Walkthrough Page', [

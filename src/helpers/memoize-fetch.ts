@@ -29,3 +29,8 @@ export const updateMemoizedFetch = (url: string, body: string, memoizeOptions?: 
   cachedCalls.set(url, new MemoizedFetch(memoizeOptions).setResponse(body));
   Cache.memoize = cachedCalls;
 };
+
+export const deleteMemoizedFetch = (url: string) => {
+  cachedCalls.delete(url);
+  Cache.memoize = cachedCalls;
+};

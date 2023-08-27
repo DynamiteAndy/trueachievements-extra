@@ -3,8 +3,12 @@ import { allConcurrently } from '@ta-x-utilities';
 import { addGroupByGameButton } from './add-group-by-game-button';
 
 export default async (): Promise<void> => {
-  if (!gamerImprovements.enabled) return;
-  if (!GamerRegex.Test.all()) return;
+  if (!gamerImprovements.enabled) {
+    return;
+  }
+  if (!GamerRegex.Test.all()) {
+    return;
+  }
 
   allConcurrently('Gamer Improvements', [
     { name: 'gamer-improvments-add-group-by-game-button', task: addGroupByGameButton }

@@ -2,7 +2,9 @@ import { gameDLC, GamesRegex } from '@ta-x-globals';
 import { setDefaultStatus } from '../shared';
 
 export const changeToDefaultStatus = (): void => {
-  if (!gameDLC.gameDLCDefaultStatus) return;
+  if (!gameDLC.gameDLCDefaultStatus) {
+    return;
+  }
 
   const status = document.querySelector(`#${gameDLC.gameDLCDefaultStatusValue}`) as HTMLSelectElement;
 

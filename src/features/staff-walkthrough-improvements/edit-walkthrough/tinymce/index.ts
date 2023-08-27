@@ -8,12 +8,16 @@ import { appendColorPicker } from './append-color-picker';
 import html from './tinymce.hbs';
 
 export const tinymce = async (): Promise<void> => {
-  if (!(await waitForElement('[href*="skin.min.css"]', document.head))) return;
+  if (!(await waitForElement('[href*="skin.min.css"]', document.head))) {
+    return;
+  }
 
   const container = await waitForElement('.mce-tinymce');
   const toolbar = await waitForElement('.mce-toolbar.mce-last .mce-container-body', container);
 
-  if (!container || !toolbar) return;
+  if (!container || !toolbar) {
+    return;
+  }
 
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const addedGroup = parsedDocument.querySelector(

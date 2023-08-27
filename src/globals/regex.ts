@@ -6,7 +6,9 @@ export const getUrlProperties = (str: string, props: string | string[] = []) => 
     let constructedString = '';
 
     for (let i = 0; i < props.length; i++) {
-      if (!url[props[i]]) continue;
+      if (!url[props[i]]) {
+        continue;
+      }
 
       constructedString += url[props[i]];
     }
@@ -17,7 +19,7 @@ export const getUrlProperties = (str: string, props: string | string[] = []) => 
   }
 };
 
-const achievementUrl = new RegExp('^/a[0-9]*/.*', 'i');
+const achievementUrl = new RegExp('^/a[0-9]*/.*$', 'i');
 const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*\\?gamerid=[0-9]*', 'i');
 const achievementsUrl = new RegExp('^/game/.*/achievements$', 'i');
 const achievementsUrlWithGamerId = new RegExp('^/game/.*/achievements\\?gamerid=[0-9]*', 'i');
@@ -62,6 +64,8 @@ const pollUrl = new RegExp('^/poll/[0-9]*/*', 'i');
 const newsUrl = new RegExp('^/n[0-9]*/*', 'i');
 const gamerUrl = new RegExp('^/gamer/.*$', 'i');
 const gamerAchievementsUrl = new RegExp('^/gamer/.*/achievements$', 'i');
+
+const xboxAchievementsGuide = new RegExp('^/game/.*/guide((/$)|$)', 'i');
 
 export const AchievementsRegex = {
   achievementUrl,
@@ -235,6 +239,15 @@ export const SentencesRegex = {
   )
 };
 
+export const ExternalRegex = {
+  xboxAchievementsGuide,
+
+  Test: {
+    xboxAchievementsGuide: (str: string = window.location.href): boolean =>
+      xboxAchievementsGuide.test(getUrlProperties(str, 'pathname'))
+  }
+};
+
 export default {
   AchievementsRegex,
   GamesRegex,
@@ -243,5 +256,6 @@ export default {
   ForumRegex,
   DatesRegex,
   SentencesRegex,
-  NewsRegex
+  NewsRegex,
+  ExternalRegex
 };

@@ -10,7 +10,9 @@ export const setDefaultStatus = (
   if (status && url !== Cache[cacheProperty]) {
     Cache[cacheProperty] = getUrlProperties(window.location.href, ['pathname', 'search']);
 
-    if (gamerIdRegex() && new URLSearchParams(window.location.search).get('gamerid') !== Constants.gamerId) return;
+    if (gamerIdRegex() && new URLSearchParams(window.location.search).get('gamerid') !== Constants.gamerId) {
+      return;
+    }
     if (!status.hasAttribute('checked')) {
       const totalAchievements = [...document.querySelectorAll('.ach-panels li')].length;
       const wonAchievements = [...document.querySelectorAll('.ach-panels li.w')].length;

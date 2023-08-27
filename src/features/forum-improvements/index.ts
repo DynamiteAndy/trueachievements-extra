@@ -5,9 +5,15 @@ import viewBoard from './view-board';
 import walkthroughs from './walkthroughs';
 
 export default async (): Promise<void> => {
-  if (!forumImprovements.enabled) return;
-  if (!ForumRegex.Test.all()) return;
-  if (!(await waitForElement('body'))) return;
+  if (!forumImprovements.enabled) {
+    return;
+  }
+  if (!ForumRegex.Test.all()) {
+    return;
+  }
+  if (!(await waitForElement('body'))) {
+    return;
+  }
 
   document.body.classList.add(
     Constants.Styles.ForumImprovements.featureJs,

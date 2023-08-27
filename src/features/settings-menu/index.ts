@@ -39,7 +39,9 @@ const addSettings = (): void => {
   ([...extensionBody.querySelectorAll('input, select')] as HTMLElement[]).forEach((setting) => {
     const configPath = setting.getAttribute('data-config-path');
 
-    if (!configPath) return;
+    if (!configPath) {
+      return;
+    }
     if (isCheckboxElement(setting)) {
       (setting as HTMLInputElement).checked = getValue(config, configPath, false);
     } else if (isSelectElement(setting)) {
@@ -118,15 +120,21 @@ const listen = (): void => {
     extensionBody.classList.remove(Constants.Styles.Base.hide);
     extensionBody.classList.add('open');
 
-    if (extensionBody.hasAttribute('data-previously-opened')) return;
+    if (extensionBody.hasAttribute('data-previously-opened')) {
+      return;
+    }
 
     extensionBody.setAttribute('data-previously-opened', '');
     setAccordionStates();
   });
 
   extensionBody.addEventListener('click', ({ target }): void => {
-    if (!(target instanceof HTMLElement)) return;
-    if (!isTAXChildListElement(target)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!isTAXChildListElement(target)) {
+      return;
+    }
 
     const listElement = new ListSetting(target);
     const configPath = (listElement.parent.querySelector('[data-config-path]') as HTMLElement).getAttribute(
@@ -134,7 +142,9 @@ const listen = (): void => {
     );
 
     if (target.hasAttribute('data-add')) {
-      if (listElement.input.value === '') return;
+      if (listElement.input.value === '') {
+        return;
+      }
 
       listElement.list.appendChild(createListElement(listElement, listElement.input.value));
       listElement.input.value = '';
@@ -151,17 +161,25 @@ const listen = (): void => {
     );
 
     let parentAccordionBody = target.closest('.ta-x-settings-menu-settings-accordion-body') as HTMLElement;
-    if (parentAccordionBody) pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+    if (parentAccordionBody) {
+      pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+    }
 
     setTimeout(() => {
       parentAccordionBody = target.closest('[data-parent-accordion-body]') as HTMLElement;
-      if (parentAccordionBody) pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+      if (parentAccordionBody) {
+        pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+      }
     }, 500);
   });
 
   extensionBody.addEventListener('click', ({ target }): void => {
-    if (!(target instanceof HTMLElement)) return;
-    if (!target.classList.contains(Constants.Styles.SettingsMenu.closeJs)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(Constants.Styles.SettingsMenu.closeJs)) {
+      return;
+    }
 
     extensionBody.classList.remove('open');
     extensionBody.classList.add(Constants.Styles.Base.hide);
@@ -170,12 +188,15 @@ const listen = (): void => {
   });
 
   extensionBody.addEventListener('click', ({ target }): void => {
-    if (!(target instanceof HTMLElement)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
     if (
       !target.classList.contains(Constants.Styles.SettingsMenu.versionLink) &&
       !target.classList.contains(Constants.Styles.SettingsMenu.documentationLink)
-    )
+    ) {
       return;
+    }
 
     const changelogView = extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.changelogView}`);
     const documentationView = extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.featureDocumentationView}`);
@@ -195,7 +216,9 @@ const listen = (): void => {
   });
 
   extensionBody.addEventListener('change', ({ target }): void => {
-    if (!(target instanceof HTMLElement)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
     const configPath = target.getAttribute('data-config-path');
 
     if (isSelectElement(target)) {
@@ -208,16 +231,22 @@ const listen = (): void => {
       } else {
         setValue(config, configPath, (target as HTMLSelectElement).value);
       }
-    } else if (isCheckboxElement(target)) setValue(config, configPath, (target as HTMLInputElement).checked);
+    } else if (isCheckboxElement(target)) {
+      setValue(config, configPath, (target as HTMLInputElement).checked);
+    }
 
     checkRenderConditions(target);
 
     let parentAccordionBody = target.closest('.ta-x-settings-menu-settings-accordion-body') as HTMLElement;
-    if (parentAccordionBody) pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+    if (parentAccordionBody) {
+      pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+    }
 
     setTimeout(() => {
       parentAccordionBody = target.closest('[data-parent-accordion-body]') as HTMLElement;
-      if (parentAccordionBody) pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+      if (parentAccordionBody) {
+        pubSub.publish('accordion:setMaxHeight', parentAccordionBody);
+      }
     }, 500);
   });
 };

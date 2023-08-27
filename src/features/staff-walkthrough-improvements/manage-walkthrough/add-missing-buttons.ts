@@ -3,9 +3,15 @@ import { waitForElement } from '@ta-x-utilities';
 import html from './manage-walkthrough.html';
 
 export const addMissingButtons = async (): Promise<void> => {
-  if (!manageWalkthrough.addMissingButtons) return;
-  if ((await waitForElement('#lstWalkthroughIDselectedrow', undefined, 1000)) === null) return;
-  if ((await waitForElement('#txtPageName', undefined, 1000)) === null) return;
+  if (!manageWalkthrough.addMissingButtons) {
+    return;
+  }
+  if ((await waitForElement('#lstWalkthroughIDselectedrow', undefined, 1000)) === null) {
+    return;
+  }
+  if ((await waitForElement('#txtPageName', undefined, 1000)) === null) {
+    return;
+  }
 
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
 

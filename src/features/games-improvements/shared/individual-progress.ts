@@ -16,11 +16,15 @@ const createAchievementGroup = (header: HTMLElement): AchievementGroup => ({
 const getBaseAchievementGroup = (el: HTMLElement): AchievementGroup[] => {
   const baseAchievementHeader = el.querySelector('.pnl-hd.no-pills.no-pr.game:not(.gamer)') as HTMLElement;
 
-  if (!baseAchievementHeader) return [];
+  if (!baseAchievementHeader) {
+    return [];
+  }
 
   const baseAchievementGroup = createAchievementGroup(baseAchievementHeader);
 
-  if (baseAchievementGroup.title === 'Overall DLC Stats') return [];
+  if (baseAchievementGroup.title === 'Overall DLC Stats') {
+    return [];
+  }
 
   for (let child = el.querySelector('.ach-panels') as HTMLElement; child; child = child.nextSibling as HTMLElement) {
     if (child.tagName !== 'UL') {
@@ -99,7 +103,9 @@ const setGroupProgress = async (groups: AchievementGroup[]): Promise<void> => {
         const groupName = (achievementGroup.querySelector('h2 a') as HTMLElement).innerText;
         const grouping = groups.find((groups) => groups.title.toLowerCase() === groupName.toLowerCase());
 
-        if (!grouping) return;
+        if (!grouping) {
+          return;
+        }
 
         const maxTAScore = achievementGroup.querySelector('[title="Maximum TrueAchievement"]') as HTMLElement;
         const maxGamerscore = achievementGroup.querySelector('[title="Maximum Gamerscore"]') as HTMLElement;

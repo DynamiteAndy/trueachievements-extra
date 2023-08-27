@@ -30,7 +30,9 @@ const listen = async (): Promise<void> => {
 export const fixFloatingMenus = async (container: HTMLElement): Promise<void> => {
   tinymceToolbar = await waitForElement('.mce-container-body .mce-toolbar-grp', container);
 
-  if (!tinymceToolbar) return;
+  if (!tinymceToolbar) {
+    return;
+  }
 
   await listen();
 };

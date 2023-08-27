@@ -52,6 +52,10 @@ This feature calculates the progress made for each game + dlc and shows it as xx
 
 This feature will auto select the selected filter should it not be selected/all achievements not unlocked.
 
+## Achievements - Include Guides From XboxAchievements.com
+
+This feature will include guides from [XboxAchievements.com](https://www.xboxachievements.com/) when viewing a achievement solution, it can be buggy/look broken but is helpful for achievements which may not have a guide available.
+
 ## Challenges - Override Achievement Settings
 
 This feature will override any feature shared between achievements and challenges, current features shared:
@@ -59,7 +63,7 @@ This feature will override any feature shared between achievements and challenge
 
 ## Clips - Default Status for Game Clips
 
-This feature will auto select the selected values should they not be  selected.
+This feature will auto select the selected values should they not be selected.
 
 ## DLC - Override Achievement Settings
 
@@ -71,6 +75,10 @@ This feature will override any feature shared between achievements and dlc, curr
 
 This feature will override any feature shared between forums, current features shared:
 - Enable Thread Filter
+
+## Forums - Default Thread Type for Game Forums
+
+This feature will auto select the selected thread type should it not be selected/all.
 
 # News Improvements
 

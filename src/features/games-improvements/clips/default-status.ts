@@ -2,7 +2,9 @@ import { Cache, gameClips } from '@ta-x-globals';
 import { allConcurrently, waitForElement } from '@ta-x-utilities';
 
 export const changeToDefaultStatus = async (): Promise<void> => {
-  if (!gameClips.gameClipsDefaultStatus) return;
+  if (!gameClips.gameClipsDefaultStatus) {
+    return;
+  }
 
   await allConcurrently(
     'game-clips-change-to-default-status',
@@ -31,15 +33,21 @@ export const changeToDefaultStatus = async (): Promise<void> => {
 const changeSelectOption = async (selector: string, newValue: string, defaultValue: string): Promise<void> => {
   const selectorArray = Cache.gameClipsDefaultStatusSelectors;
 
-  if (newValue === defaultValue) return;
-  if (selectorArray.includes(selector)) return;
+  if (newValue === defaultValue) {
+    return;
+  }
+  if (selectorArray.includes(selector)) {
+    return;
+  }
 
   selectorArray.push(selector);
   Cache.gameClipsDefaultStatusSelectors = selectorArray;
 
   const selectOption = (await waitForElement(selector)) as HTMLSelectElement;
 
-  if (selectOption.value === newValue) return;
+  if (selectOption.value === newValue) {
+    return;
+  }
 
   selectOption.value = newValue;
   selectOption.onchange(null);
