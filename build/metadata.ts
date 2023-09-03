@@ -1,15 +1,9 @@
 import { Metadata } from 'userscript-metadata-webpack-plugin';
-import {
-  author,
-  url,
-  description,
-  version,
-  bugs
-}  from '../package.json';
+import { author, url, description, version, bugs } from '../package.json';
 
 export default {
   name: {
-    '$': 'TrueAchievements Extra'
+    $: 'TrueAchievements Extra'
   },
   namespace: 'dynamite-andy',
   version: version,
@@ -19,6 +13,7 @@ export default {
   downloadURL: `${url}/raw/main/dist/`,
   supportURL: bugs.url,
   description: description,
+  connect: ['xboxachievements.com'],
   author: author,
   match: ['http*://*.trueachievements.com/*'],
   'run-at': 'document-start',

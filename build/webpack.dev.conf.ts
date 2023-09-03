@@ -5,9 +5,7 @@ import { baseConfig } from './webpack.base.conf';
 import metadata from './metadata';
 
 metadata.name['$'] += ' - Development';
-metadata.require.push(
-  'file://' + resolve(__dirname, '../dist/trueachievements-extras.debug.js')
-);
+(metadata.require as string[]).push('file://' + resolve(__dirname, '../dist/trueachievements-extras.debug.js'));
 
 delete metadata.downloadURL;
 delete metadata.updateURL;
@@ -23,7 +21,7 @@ export const devConfig = merge(baseConfig as never, {
     filename: 'trueachievements-extras.[name].js',
     path: resolve(__dirname, '../dist')
   },
-  devtool: 'eval-source-map',
+  devtool: 'eval-cheap-module-source-map',
   watch: process.env.webpack_watch ? true : false,
   watchOptions: {
     ignored: /node_modules/

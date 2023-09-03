@@ -5,8 +5,12 @@ import { default as pubSub } from './pub-sub';
 
 export const accordion = (): void => {
   document.addEventListener('click', ({ target }): void => {
-    if (!(target instanceof HTMLElement)) return;
-    if (!target.classList.contains(Constants.Styles.Components.accordion)) return;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(Constants.Styles.Components.accordion)) {
+      return;
+    }
 
     target.classList.toggle('expanded');
 
@@ -19,8 +23,8 @@ export const accordion = (): void => {
     const content = target.nextElementSibling as HTMLElement;
     const parentBodyHeight = content.style.maxHeight ? -content.scrollHeight : content.scrollHeight;
     content.style.maxHeight
-      ? content.style.maxHeight = null
-      : content.style.maxHeight = `${content.scrollHeight}px`;
+      ? (content.style.maxHeight = null)
+      : (content.style.maxHeight = `${content.scrollHeight}px`);
 
     const parentAccordionBody = target.closest('[data-parent-accordion-body]') as HTMLElement;
 
@@ -30,13 +34,15 @@ export const accordion = (): void => {
   });
 
   pubSub.subscribe('accordion:setMaxHeight', (content: HTMLElement) => {
-    if (!content.style.maxHeight) return;
+    if (!content.style.maxHeight) {
+      return;
+    }
     content.style.maxHeight = `${content.scrollHeight}px`;
   });
 
   pubSub.subscribe('accordion:toggleState', (header: HTMLElement) => {
     header.classList.toggle('expanded');
-    
+
     const content = header.nextElementSibling as HTMLElement;
     content.style.maxHeight = `${content.scrollHeight}px`;
   });

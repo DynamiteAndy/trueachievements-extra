@@ -36,7 +36,7 @@ export class MemoizedFetch {
   fromString(json: string): void {
     try {
       const parsedObj = JSON.parse(json) as MemoizedFetch;
-    
+
       this.expiryTime = parsedObj.expiryTime;
       this.response = parsedObj.response;
     } catch (e) {

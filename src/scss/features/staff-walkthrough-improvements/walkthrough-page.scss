@@ -24,19 +24,26 @@ body {
 
             &.ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history {
               position: relative;
-              top:
-                var(
-                  --ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top,
-                  $ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top
-                );
+              top: var(
+                --ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top,
+                $ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top
+              );
             }
 
             &.ta-x-y-hide {
-              transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)));
-              transition: transform .5s ease;
+              transform: translateY(
+                calc(
+                  -1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)
+                )
+              );
+              transition: transform 0.5s ease;
 
               &-no-transition {
-                transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)));
+                transform: translateY(
+                  calc(
+                    -1 * var(--ta-x-sticky-header-height, $ta-x-sticky-header-height)
+                  )
+                );
               }
             }
 

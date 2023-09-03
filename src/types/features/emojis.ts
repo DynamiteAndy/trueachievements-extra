@@ -1,3 +1,3 @@
 export type EmojiTemplateOptions = {
-  id?: string
-}
+  id?: string;
+};

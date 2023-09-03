@@ -1,16 +1,16 @@
 import { waitForElement } from '@ta-x-utilities';
 
 const createScript = (id: string, innerHtml: string): HTMLScriptElement => {
-    const script = document.createElement('script');
-    script.id = id;
-    script.innerHTML = innerHtml;
+  const script = document.createElement('script');
+  script.id = id;
+  script.innerHTML = innerHtml;
 
-    return script;
+  return script;
 };
 
 const buildSourceCodeCommandScript = (): HTMLScriptElement => {
-    const id = 'ta-x-staff-walkthrough-improvements-add-code-editor-command';
-    const script = `tinymce.PluginManager.add("code", function(e) {
+  const id = 'ta-x-staff-walkthrough-improvements-add-code-editor-command';
+  const script = `tinymce.PluginManager.add("code", function(e) {
         function o() {
             var o = tinymce.editors.txtWalkthrough.windowManager.open({
                 title: "Source code",
@@ -39,25 +39,25 @@ const buildSourceCodeCommandScript = (): HTMLScriptElement => {
         tinymce.editors.txtWalkthrough.addCommand("mceCodeEditor", o)
     })();`;
 
-    return createScript(id, script);
+  return createScript(id, script);
 };
 
 const buildShowSourceCodeButtonScript = (): HTMLScriptElement => {
-    const id = 'ta-x-staff-walkthrough-improvements-show-code-editor';
-    const script = `document.querySelector(".js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code").addEventListener("click", function(e) {
+  const id = 'ta-x-staff-walkthrough-improvements-show-code-editor';
+  const script = `document.querySelector(".js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code").addEventListener("click", function(e) {
         tinymce.activeEditor.execCommand("mceCodeEditor");
     });`;
 
-    return createScript(id, script);
+  return createScript(id, script);
 };
 
-export const addSourceCodeButton = async(): Promise<void> => {
-  const iframe =  await waitForElement('#txtWalkthrough_ifr') as HTMLIFrameElement;
-  
-  iframe.addEventListener('load', async() => {
+export const addSourceCodeButton = async (): Promise<void> => {
+  const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
+
+  iframe.addEventListener('load', async () => {
     const sourceCodeCommand = buildSourceCodeCommandScript();
     const sourceCodeButton = buildShowSourceCodeButtonScript();
-    
+
     document.body.appendChild(sourceCodeCommand);
     document.body.appendChild(sourceCodeButton);
 

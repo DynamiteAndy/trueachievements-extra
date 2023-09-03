@@ -9,16 +9,22 @@ import { addMissingButtons } from './add-missing-buttons';
 
 let walkthroughContainer: HTMLElement;
 
-const applyBody = async(): Promise<void> => {
+const applyBody = async (): Promise<void> => {
   walkthroughContainer = await waitForElement('#divWalkthroughHolder');
 
-  if (!walkthroughContainer) return;
+  if (!walkthroughContainer) {
+    return;
+  }
 
   const editWalkthrough = await waitForElement('#chEditWalkthrough', walkthroughContainer);
 
-  if (editWalkthrough && await until(() => walkthroughContainer.childElementCount > 2, 1000)) {
+  if (editWalkthrough && (await until(() => walkthroughContainer.childElementCount > 2, 1000))) {
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-    editWalkthrough.after(parsedDocument.querySelector(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
+    editWalkthrough.after(
+      parsedDocument.querySelector(
+        `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`
+      )
+    );
 
     allConcurrently('Manage Walkthrough', [
       { name: 'manage-walkthrough-adjust-left-sidebar', task: adjustLeftSidebar },
@@ -30,12 +36,14 @@ const applyBody = async(): Promise<void> => {
 
 const adjustButtons = async (): Promise<void> => {
   const buttonContainer = await waitForElement('#btnWalkthrough_Options', walkthroughContainer);
-  
-  if (buttonContainer === null) return;
+
+  if (buttonContainer === null) {
+    return;
+  }
 
   let buttonsContainer: HTMLElement = null;
 
-  [...buttonContainer.querySelectorAll('li a')].forEach(button => {
+  [...buttonContainer.querySelectorAll('li a')].forEach((button) => {
     buttonsContainer = buttonsContainer ? buttonsContainer : button.closest('.buttons');
 
     if (buttonsContainer) {
@@ -49,12 +57,15 @@ const adjustButtons = async (): Promise<void> => {
   }
 };
 
-const adjustRightSidebar = async(): Promise<void> => {
-  const sideBarContainer =  await waitForElement(`.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`, walkthroughContainer);
-  
+const adjustRightSidebar = async (): Promise<void> => {
+  const sideBarContainer = await waitForElement(
+    `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`,
+    walkthroughContainer
+  );
+
   if (sideBarContainer) {
     const walkthroughAchievementsContainer = await waitForElement('#chWalkthroughAchievements', walkthroughContainer);
-    
+
     if (walkthroughAchievementsContainer) {
       deDupeAchievements(walkthroughAchievementsContainer);
       sideBarContainer.appendChild(walkthroughAchievementsContainer);
@@ -66,7 +77,7 @@ const adjustRightSidebar = async(): Promise<void> => {
   }
 };
 
-const adjustLeftSidebar = async(): Promise<void> => {
+const adjustLeftSidebar = async (): Promise<void> => {
   const walkthroughList = await waitForElement('#scrolllstWalkthroughID', walkthroughContainer);
 
   ([...walkthroughList.querySelectorAll('td a')] as HTMLElement[]).forEach((anchor: HTMLAnchorElement) => {
@@ -76,15 +87,23 @@ const adjustLeftSidebar = async(): Promise<void> => {
 };
 
 const deDupeAchievements = (walkthroughAchievementsContainer: HTMLElement): void => {
-  const walkthroughAchievements = [...walkthroughAchievementsContainer.querySelectorAll('#scrolllstWalkthroughAchievementID .c1')] as HTMLElement[];
-  const duplicateAchievements = getDuplicates(walkthroughAchievements.map(el => el.innerText), true);
-  
+  const walkthroughAchievements = [
+    ...walkthroughAchievementsContainer.querySelectorAll('#scrolllstWalkthroughAchievementID .c1')
+  ] as HTMLElement[];
+  const duplicateAchievements = getDuplicates(
+    walkthroughAchievements.map((el) => el.innerText),
+    true
+  );
+
   if (duplicateAchievements.length > 0) {
     const currentCount = walkthroughAchievements.length;
     let removedRows = 0;
 
     for (let i = 0; i < duplicateAchievements.length; i++) {
-      const dupeAchievementRows = walkthroughAchievements.filter(walkthroughAchievement => walkthroughAchievement.innerText.toLowerCase() === duplicateAchievements[i].toLowerCase());
+      const dupeAchievementRows = walkthroughAchievements.filter(
+        (walkthroughAchievement) =>
+          walkthroughAchievement.innerText.toLowerCase() === duplicateAchievements[i].toLowerCase()
+      );
       const firstInstancePageColumn = dupeAchievementRows[0].nextElementSibling as HTMLTableElement;
 
       for (let j = 1; j < dupeAchievementRows.length; j++) {
@@ -96,20 +115,27 @@ const deDupeAchievements = (walkthroughAchievementsContainer: HTMLElement): void
       }
     }
 
-    const achievementsTotal = walkthroughAchievementsContainer.querySelector('#lstWalkthroughAchievementID .total') as HTMLElement;
-    achievementsTotal.innerText = achievementsTotal.innerText.replace(currentCount.toString(), (currentCount - removedRows).toString());
+    const achievementsTotal = walkthroughAchievementsContainer.querySelector(
+      '#lstWalkthroughAchievementID .total'
+    ) as HTMLElement;
+    achievementsTotal.innerText = achievementsTotal.innerText.replace(
+      currentCount.toString(),
+      (currentCount - removedRows).toString()
+    );
   }
 };
 
-export default async(): Promise<void> => {
-  if (!StaffRegex.Walkthroughs.Test.manageWalkthroughUrl()) return;
-  
+export default async (): Promise<void> => {
+  if (!StaffRegex.Walkthroughs.Test.manageWalkthroughUrl()) {
+    return;
+  }
+
   await changeToDefaultStatus();
   await autoSelectFirst();
   await applyBody();
 
-  allConcurrently('Manage Walkthrough', [ 
+  allConcurrently('Manage Walkthrough', [
     { name: 'manage-walkthrough-make-table-links-clickable', task: makeTableLinksClickable },
     { name: 'manage-walkthrough-add-missing-buttons', task: addMissingButtons }
-   ]);
+  ]);
 };

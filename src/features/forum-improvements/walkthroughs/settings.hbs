@@ -1,10 +1,19 @@
-<div class="ta-x-settings-menu-settings-accordion" data-render-condition='{ "selector": "#chkForumImprovements", "checked": true }'>
-    {{ includes "@ta-x-partials/accordion-header.hbs" title="Walkthroughs" expanded=false }}
+<div
+  class="ta-x-settings-menu-settings-accordion"
+  data-render-condition='{ "selector": "#chkForumImprovements", "checked": true }'
+>
+  {{includes
+    "@ta-x-partials/accordion-header.hbs"
+    title="Walkthroughs"
+    expanded=false
+  }}
 
-    <div class="ta-x-settings-menu-settings-accordion-body t-settings">
-        {{ includes "@ta-x-partials/checkbox-setting.hbs"
-            label="Show Owner/Progress"
-            id="chkForumImprovementsShowOwnerProgress"
-            config-path="forumImprovements.walkthroughs.showOwnerProgress" }}
-    </div>
+  <div class="ta-x-settings-menu-settings-accordion-body t-settings">
+    {{includes
+      "@ta-x-partials/checkbox-setting.hbs"
+      label="Show Owner/Progress"
+      id="chkForumImprovementsShowOwnerProgress"
+      config-path="forumImprovements.walkthroughs.showOwnerProgress"
+    }}
+  </div>
 </div>

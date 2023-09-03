@@ -1,6 +1,8 @@
 // Device Breakpoints
 $ta-x-mobile-breakpoint: 576px;
-$ta-x-tablet-breakpoint: 768px;
+
+$ta-x-tablet-breakpoint-max: 768px;
+$ta-x-desktop-breakpoint-min: $ta-x-tablet-breakpoint-max + 1px;
 
 // Both Themes
 $ta-x-both-theme-online-status: #107c10;

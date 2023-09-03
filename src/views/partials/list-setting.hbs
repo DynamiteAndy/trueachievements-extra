@@ -1,29 +1,49 @@
-<div data-render-condition="{{render-condition}}" class="ta-x-listbox {{#if render-condition}}ta-x-hide{{/if}}" style="{{style}}">
-    <label>{{label}}</label>
-    <div class="frm-grp frm-lst" data-template-id="{{template-id}}" data-list-id="{{id}}">
-        {{#if item-list-template}}
-            {{ includes item-list-template }}
-        {{/if}}
-
-        <input type="text"
-            id="{{id}}-input"
-            name="{{#if name}}{{name}}{{else}}{{id}}-input{{/if}}"
-            value=""
-            class="textbox cs-n">
-        <input type="submit"
-            data-for-list="{{id}}"
-            data-config-path="{{config-path}}"
-            data-is-array="{{#if is-array}}true{{else}}false{{/if}}" 
-            data-array-split="{{#if is-array}}{{array-split}}{{/if}}"
-            data-add
-            value="{{button-text}}"
-            onclick="event.preventDefault()">
-        
-        <ul class="item-list" id="{{id}}">
-        </ul>
-    </div>
-    {{#if helper-text}}
-        <div class="ta-x-flex-break"></div>
-        <p data-render-condition="{{helper-render-condition}}" class="ta-x-listbox-help-text {{#if helper-render-condition}}ta-x-hide{{/if}}">{{helper-text}}</p>
+<div
+  data-render-condition="{{render-condition}}"
+  class="ta-x-listbox {{conditional (object ta-x-hide=render-condition)}}"
+  style="{{style}}"
+>
+  <label>
+    {{label}}
+  </label>
+  <div
+    class="frm-grp frm-lst"
+    data-template-id="{{template-id}}"
+    data-list-id="{{id}}"
+  >
+    {{#if item-list-template}}
+      {{includes item-list-template}}
     {{/if}}
+
+    <input
+      type="text"
+      id="{{id}}-input"
+      name="{{ternary name name (string id '-input')}}"
+      value=""
+      class="textbox cs-n"
+    />
+    <input
+      type="submit"
+      data-for-list="{{id}}"
+      data-config-path="{{config-path}}"
+      data-is-array="{{ternary is-array 'true' 'false'}}"
+      data-array-split="{{ternary is-array array-split ''}}"
+      data-add
+      value="{{button-text}}"
+      onclick="event.preventDefault()"
+    />
+
+    <ul class="item-list" id="{{id}}">
+    </ul>
+  </div>
+  {{#if helper-text}}
+    <div class="ta-x-flex-break"></div>
+    <p
+      data-render-condition="{{helper-render-condition}}"
+      class="ta-x-listbox-help-text
+        {{conditional (object ta-x-hide=helper-render-condition)}}"
+    >
+      {{helper-text}}
+    </p>
+  {{/if}}
 </div>

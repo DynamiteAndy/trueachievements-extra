@@ -1,32 +1,47 @@
 <template id="ta-x-template-walkthrough-preview-walkthrough-pages-summary">
-    <tr>
-        <td></td>
-        <td>
-            <a href="{urls.walkthroughPreviewWithWalkthroughId}">Walkthrough Summary</a>
-        </td>
-    </tr>
+  <tr>
+    <td></td>
+    <td>
+      <a href="{urls.walkthroughPreviewWithWalkthroughId}">
+        Walkthrough Summary
+      </a>
+    </td>
+  </tr>
 </template>
 
-<template id="ta-x-template-walkthrough-preview-walkthrough-pages-numbered-selected">
-    <tr>
-        <td class="pos">{populateAsideContentPreviewPage.index}</td>
-        <td data-wp="{populateAsideContentPreviewPage.id}">{populateAsideContentPreviewPage.title}</td>
-    </tr>
+<template
+  id="ta-x-template-walkthrough-preview-walkthrough-pages-numbered-selected">
+  <tr>
+    <td class="pos">{populateAsideContentPreviewPage.index}</td>
+    <td data-wp="{populateAsideContentPreviewPage.id}">
+      {populateAsideContentPreviewPage.title}
+    </td>
+  </tr>
 </template>
 
 <template id="ta-x-template-walkthrough-preview-walkthrough-pages-numbered">
-    <tr>
-        <td class="pos">{populateAsideContentPreviewPage.index}</td>
-        <td data-wp="{populateAsideContentPreviewPage.id}">
-            <a href="{urls.walkthroughPreviewWithPageId}">{populateAsideContentPreviewPage.title}</a>
-        </td>
-    </tr>
+  <tr>
+    <td class="pos">{populateAsideContentPreviewPage.index}</td>
+    <td data-wp="{populateAsideContentPreviewPage.id}">
+      <a href="{urls.walkthroughPreviewWithPageId}">
+        {populateAsideContentPreviewPage.title}
+      </a>
+    </td>
+  </tr>
 </template>
 
 <template id="ta-x-template-walkthrough-preview-walkthrough-achievements">
-    <li data-i="{populateAsideContentPreviewAchievement.id}">
-        <img src="{populateAsideContentPreviewAchievement.src}" alt="{populateAsideContentPreviewAchievement.title}" class="smallicon" width="32" height="32" loading="lazy">
-        <a href="{urls.walkthroughPreviewWithPageIdAndAchievementId}">{populateAsideContentPreviewAchievement.title}</a>
-        <p>{populateAsideContentPreviewAchievement.description}</p>
-    </li>
+  <li data-i="{populateAsideContentPreviewAchievement.id}">
+    <img
+      src="{populateAsideContentPreviewAchievement.src}"
+      alt="{populateAsideContentPreviewAchievement.title}"
+      class="smallicon"
+      width="32"
+      height="32"
+      loading="lazy" />
+    <a href="{urls.walkthroughPreviewWithPageIdAndAchievementId}">
+      {populateAsideContentPreviewAchievement.title}
+    </a>
+    <p>{populateAsideContentPreviewAchievement.description}</p>
+  </li>
 </template>

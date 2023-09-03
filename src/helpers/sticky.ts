@@ -7,19 +7,29 @@ const stickyNavBarStuck = stickyHeader.remainStuck;
 let stickyNavBarElement: HTMLElement;
 
 const setStickyNavElement = async () => {
-  if (stickyNavBarElement) return;
+  if (stickyNavBarElement) {
+    return;
+  }
 
   stickyNavBarElement = stickyNavBarEnabled
     ? await waitForElement(`.${Constants.Styles.StickyHeader.featureJs}`)
     : await waitForElement('.header');
 };
 
-export const applyStickyElementStyle = async (variableProperty: string, stickyElement: HTMLElement, containerElement: HTMLElement,
-    opts: StickyElementOptions = {}): Promise<void> => {
+export const applyStickyElementStyle = async (
+  variableProperty: string,
+  stickyElement: HTMLElement,
+  containerElement: HTMLElement,
+  opts: StickyElementOptions = {}
+): Promise<void> => {
   await setStickyNavElement();
 
   let addAnimation: string;
-  let removeAnimation = [Constants.Styles.Animations.yShow, Constants.Styles.Animations.yHide, Constants.Styles.Animations.yHideNoTransition];
+  let removeAnimation = [
+    Constants.Styles.Animations.yShow,
+    Constants.Styles.Animations.yHide,
+    Constants.Styles.Animations.yHideNoTransition
+  ];
   let topStylePx = opts.paddingFromTop || 0;
 
   const containerTop = containerElement.getBoundingClientRect().top;
@@ -33,7 +43,9 @@ export const applyStickyElementStyle = async (variableProperty: string, stickyEl
       topStylePx += stickyNavBarElement.offsetHeight;
 
       if (!stickyNavBarElement.classList.contains(Constants.Styles.Animations.yShow) && !stickyNavBarStuck) {
-        addAnimation = opts.noTransitionStyle ? Constants.Styles.Animations.yHideNoTransition : Constants.Styles.Animations.yHide;
+        addAnimation = opts.noTransitionStyle
+          ? Constants.Styles.Animations.yHideNoTransition
+          : Constants.Styles.Animations.yHide;
         removeAnimation = [Constants.Styles.Animations.yShow];
       } else {
         addAnimation = Constants.Styles.Animations.yShow;
@@ -43,9 +55,11 @@ export const applyStickyElementStyle = async (variableProperty: string, stickyEl
   }
 
   document.documentElement.style.setProperty(variableProperty, `${topStylePx}px`);
-    
+
   stickyElement.classList.remove(...removeAnimation);
-  if (addAnimation) stickyElement.classList.add(addAnimation);
+  if (addAnimation) {
+    stickyElement.classList.add(addAnimation);
+  }
 };
 
 export default { applyStickyElementStyle };

@@ -1,12 +1,15 @@
 export default (eventType: string, element: HTMLElement, opts?: EventInit & { detail: string }) => {
-  const eventOpts = Object.assign({
-    bubbles: true,
-    cancelable: eventType === 'click',
-    detail: null
-  }, opts);
+  const eventOpts = Object.assign(
+    {
+      bubbles: true,
+      cancelable: eventType === 'click',
+      detail: null
+    },
+    opts
+  );
 
   if (eventOpts.detail) {
-    if (typeof (CustomEvent) === 'function') {
+    if (typeof CustomEvent === 'function') {
       element.dispatchEvent(new CustomEvent(eventType, eventOpts));
     } else {
       const event = document.createEvent('CustomEvent');
@@ -14,7 +17,7 @@ export default (eventType: string, element: HTMLElement, opts?: EventInit & { de
       element.dispatchEvent(event);
     }
   } else {
-    if (typeof (Event) === 'function') {
+    if (typeof Event === 'function') {
       element.dispatchEvent(new Event(eventType, eventOpts));
     } else {
       const event = document.createEvent('Event');

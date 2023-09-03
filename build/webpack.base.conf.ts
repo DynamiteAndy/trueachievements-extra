@@ -75,13 +75,19 @@ export const baseConfig = {
       {
         test: /\.s?[ac]ss$/i,
         use: ['sass-to-string', 'sass-loader']
+      },
+      {
+        test: require.resolve('emoji.json'),
+        use: [
+          {
+            loader: resolve(__dirname, './loaders/emoji-loader.ts'),
+            options: {
+              compress: true
+            }
+          }
+        ]
       }
     ]
   },
-  plugins: process.env.webpack_analyse
-    ? [
-        new BundleAnalyzerPlugin(),
-        new StatoscopeWebpackPlugin()
-      ]
-    : []
+  plugins: process.env.webpack_analyse ? [new BundleAnalyzerPlugin(), new StatoscopeWebpackPlugin()] : []
 };

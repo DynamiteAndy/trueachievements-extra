@@ -1,15 +1,26 @@
-<div class="ta-x-settings-menu-settings-accordion" data-render-condition='{ "selector": "#chkStaffWalkthroughImprovements", "checked": true }'>
-    {{ includes "@ta-x-partials/accordion-header.hbs" title="Edit Walkthrough" expanded=false }}
+<div
+  class="ta-x-settings-menu-settings-accordion"
+  data-render-condition='{ "selector": "#chkStaffWalkthroughImprovements", "checked": true }'
+>
+  {{includes
+    "@ta-x-partials/accordion-header.hbs"
+    title="Edit Walkthrough"
+    expanded=false
+  }}
 
-    <div class="ta-x-settings-menu-settings-accordion-body t-settings">
-        {{ includes "@ta-x-partials/checkbox-setting.hbs"
-            label="Improved Image Selector"
-            id="chkStaffWalkthroughImprovementsImproveImageSelector"
-            config-path="staffWalkthroughImprovements.editWalkthrough.improvedImageSelector" }}
+  <div class="ta-x-settings-menu-settings-accordion-body t-settings">
+    {{includes
+      "@ta-x-partials/checkbox-setting.hbs"
+      label="Improved Image Selector"
+      id="chkStaffWalkthroughImprovementsImproveImageSelector"
+      config-path="staffWalkthroughImprovements.editWalkthrough.improvedImageSelector"
+    }}
 
-        {{ includes "@ta-x-partials/checkbox-setting.hbs"
-            label="Auto Save Notifications"
-            id="chkStaffWalkthroughImprovementsAutoSaveNotification"
-            config-path="staffWalkthroughImprovements.editWalkthrough.autoSaveNotification" }}
-    </div>
+    {{includes
+      "@ta-x-partials/checkbox-setting.hbs"
+      label="Auto Save Notifications"
+      id="chkStaffWalkthroughImprovementsAutoSaveNotification"
+      config-path="staffWalkthroughImprovements.editWalkthrough.autoSaveNotification"
+    }}
+  </div>
 </div>

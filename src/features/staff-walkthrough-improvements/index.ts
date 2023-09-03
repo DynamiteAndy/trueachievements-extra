@@ -5,17 +5,30 @@ import walkthroughPage from './walkthrough-page';
 import editWalkthrough from './edit-walkthrough';
 import walkthroughPreview from './walkthrough-preview';
 
-export default async(): Promise<void> => {
-  if (!staffWalkthroughImprovements.enabled) return;
-  if (!StaffRegex.Walkthroughs.Test.all()) return;
-  if (!await waitForElement('body')) return;
+export default async (): Promise<void> => {
+  if (!staffWalkthroughImprovements.enabled) {
+    return;
+  }
+  if (!StaffRegex.Walkthroughs.Test.all()) {
+    return;
+  }
+  if (!(await waitForElement('body'))) {
+    return;
+  }
 
-  document.body.classList.add(Constants.Styles.StaffWalkthroughImprovements.featureJs, Constants.Styles.StaffWalkthroughImprovements.featureStyle);
-  
-  allConcurrently('Staff Walkthrough Improvements', [ 
-    { name: 'staff-walkthrough-improvements-manage-walkthrough', task: manageWalkthrough },
-    { name: 'staff-walkthrough-improvements-walkthrough-preview', task: walkthroughPreview },
-    { name: 'staff-walkthrough-improvements-walkthrough-page', task: walkthroughPage },
-    { name: 'staff-walkthrough-improvements-edit-walkthrough', task: editWalkthrough }
-  ], 4);
+  document.body.classList.add(
+    Constants.Styles.StaffWalkthroughImprovements.featureJs,
+    Constants.Styles.StaffWalkthroughImprovements.featureStyle
+  );
+
+  allConcurrently(
+    'Staff Walkthrough Improvements',
+    [
+      { name: 'staff-walkthrough-improvements-manage-walkthrough', task: manageWalkthrough },
+      { name: 'staff-walkthrough-improvements-walkthrough-preview', task: walkthroughPreview },
+      { name: 'staff-walkthrough-improvements-walkthrough-page', task: walkthroughPage },
+      { name: 'staff-walkthrough-improvements-edit-walkthrough', task: editWalkthrough }
+    ],
+    4
+  );
 };

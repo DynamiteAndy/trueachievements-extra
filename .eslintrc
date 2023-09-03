@@ -4,13 +4,15 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": { "project": ["./tsconfig.json"] },
   "plugins": [
     "@typescript-eslint",
-    "import"
+    "import",
+    "prettier"
   ],
   "rules": { 
     "semi": ["error", "always"],
@@ -20,7 +22,8 @@
     "import/no-unresolved": "error",
     "import/named": "error",
     "import/order": ["error", {"groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object"]}],
-    "comma-dangle": ["error", "never"]
+    "comma-dangle": ["error", "never"],
+    "curly": "error"
   },
   "settings": {
     "import/resolver": {
@@ -28,6 +31,9 @@
       "node": {
         "paths": ["./src"],
         "extensions": [".js", ".ts" ]
+      },
+      "webpack": {
+        "config": "./build/webpack.base.conf.ts"
       }
     }
   }

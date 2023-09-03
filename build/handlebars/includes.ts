@@ -10,7 +10,9 @@ import { default as getPath } from './get-path-by-alias';
 
 export const includes = (): void => {
   Handlebars.registerHelper('includes', (filePath: string, options) => {
-    if (!filePath) return;
+    if (!filePath) {
+      return;
+    }
 
     const actualPath = getPath(filePath, options.data?.parentPartialDirectory);
     const includedFiles = fs.readFileSync(actualPath, 'utf8');
@@ -18,30 +20,38 @@ export const includes = (): void => {
     const domContent = dom.window.document.body.innerHTML || dom.window.document.head.innerHTML;
     const domTemplate = Handlebars.compile(domContent);
 
-    return new Handlebars.SafeString(domTemplate(options.hash, { data: { parentPartialDirectory: dirname(actualPath) } }));
+    return new Handlebars.SafeString(
+      domTemplate(options.hash, { data: { parentPartialDirectory: dirname(actualPath) } })
+    );
   });
 };
 
 export const markdown = (): void => {
   Handlebars.registerHelper('markdown', (filePath: string, render: boolean, wrapperClass: string, options) => {
-    if (!filePath) return;
+    if (!filePath) {
+      return;
+    }
 
-    marked.use(mangle());
+    marked.use({}, mangle());
 
     const actualPath = getPath(filePath, options.data?.parentPartialDirectory);
     const includedFiles = fs.readFileSync(actualPath, 'utf8');
-    const htmlString = sanitizeHtml((marked.parse(includedFiles)));
+    const htmlString = sanitizeHtml(marked.parse(includedFiles));
     const dom = new JSDOM(`<div class="${wrapperClass}">${htmlString}</div`);
     const domContent = dom.window.document.body;
 
-    [...domContent.querySelectorAll('ul')].forEach(ul => {
-      [...ul.querySelectorAll('li')].forEach(el => el.innerHTML = `<span class="ta-x-markdown-marker">➤</span><p>${el.innerHTML}</p>`);
+    [...domContent.querySelectorAll('ul')].forEach((ul) => {
+      [...ul.querySelectorAll('li')].forEach(
+        (el) => (el.innerHTML = `<span class="ta-x-markdown-marker">➤</span><p>${el.innerHTML}</p>`)
+      );
     });
 
     if (render) {
       const domTemplate = Handlebars.compile(domContent.innerHTML);
 
-      return new Handlebars.SafeString(domTemplate(options.hash, { data: { parentPartialDirectory: dirname(actualPath) } }));
+      return new Handlebars.SafeString(
+        domTemplate(options.hash, { data: { parentPartialDirectory: dirname(actualPath) } })
+      );
     } else {
       options.data.root.markdown = domContent.outerHTML;
     }
@@ -70,6 +80,5 @@ export const changelog = (): void => {
     return new Handlebars.SafeString(domTemplate(options.hash));
   });
 };
-
 
 export default { includes, markdown, changelog };

@@ -3,15 +3,15 @@ import { classListContains } from './html-element-util';
 
 describe('html-element-util', () => {
   describe('classListContains', () => {
-    const { document } = (new JSDOM()).window;
+    const { document } = new JSDOM().window;
     const element = document.createElement('div');
     const testCases = [
       { case: 'class-a', expected: true },
       { case: 'class-b', expected: true },
-      { case: [ 'class-a' ], expected: true},
-      { case: [ 'class-b' ], expected: true},
+      { case: ['class-a'], expected: true },
+      { case: ['class-b'], expected: true },
       { case: 'class-d', expected: false },
-      { case: [ 'class-d' ], expected: false }
+      { case: ['class-d'], expected: false }
     ];
 
     beforeAll(() => {

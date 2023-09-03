@@ -2,11 +2,15 @@ import { gamerImprovements, GamerRegex } from '@ta-x-globals';
 import { allConcurrently } from '@ta-x-utilities';
 import { addGroupByGameButton } from './add-group-by-game-button';
 
-export default async(): Promise<void> => {
-  if (!gamerImprovements.enabled) return;
-  if (!GamerRegex.Test.all()) return;
+export default async (): Promise<void> => {
+  if (!gamerImprovements.enabled) {
+    return;
+  }
+  if (!GamerRegex.Test.all()) {
+    return;
+  }
 
-  allConcurrently('Gamer Improvements', [ 
+  allConcurrently('Gamer Improvements', [
     { name: 'gamer-improvments-add-group-by-game-button', task: addGroupByGameButton }
-   ]);
+  ]);
 };

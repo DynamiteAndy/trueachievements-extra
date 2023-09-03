@@ -12,6 +12,15 @@ This feature remains a work in progress as I'm still finding all the locations w
 
 This enables extended features to be enabled.
 
+## Enable Thread Filter
+
+This feature will hide thread titles if they match specified keywords
+
+## My Threads - Override Forum Settings
+
+This feature will override any feature shared between forums, current features shared:
+- Enable Thread Filter
+
 ## Walkthroughs - Show Owner/Progress
 
 This feature appends information to the right sidebar which shows either:
@@ -43,6 +52,10 @@ This feature calculates the progress made for each game + dlc and shows it as xx
 
 This feature will auto select the selected filter should it not be selected/all achievements not unlocked.
 
+## Achievements - Include Guides From XboxAchievements.com
+
+This feature will include guides from [XboxAchievements.com](https://www.xboxachievements.com/) when viewing a achievement solution, it can be buggy/look broken but is helpful for achievements which may not have a guide available.
+
 ## Challenges - Override Achievement Settings
 
 This feature will override any feature shared between achievements and challenges, current features shared:
@@ -50,13 +63,22 @@ This feature will override any feature shared between achievements and challenge
 
 ## Clips - Default Status for Game Clips
 
-This feature will auto select the selected values should they not be  selected.
+This feature will auto select the selected values should they not be selected.
 
 ## DLC - Override Achievement Settings
 
 This feature will override any feature shared between achievements and dlc, current features shared:
 - Show Progress as XX/XX
 - Default Status for Game Achievements
+
+## Forums - Override Forum Settings
+
+This feature will override any feature shared between forums, current features shared:
+- Enable Thread Filter
+
+## Forums - Default Thread Type for Game Forums
+
+This feature will auto select the selected thread type should it not be selected/all.
 
 # News Improvements
 

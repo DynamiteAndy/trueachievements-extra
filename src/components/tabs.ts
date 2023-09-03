@@ -2,10 +2,14 @@ import { Constants } from '@ta-x-globals';
 import pubSub from './pub-sub';
 
 const switchTab = (selectedTab: HTMLElement) => {
-  if (selectedTab.classList.contains(Constants.Styles.Components.Tab.tabSelected)) return;
+  if (selectedTab.classList.contains(Constants.Styles.Components.Tab.tabSelected)) {
+    return;
+  }
 
   const parentTabContainer = selectedTab.closest(`.${Constants.Styles.Components.Tab.featureJs}`);
-  const prevSelected = parentTabContainer.querySelector(`.${Constants.Styles.Components.Tab.tabSelected}`) as HTMLElement;
+  const prevSelected = parentTabContainer.querySelector(
+    `.${Constants.Styles.Components.Tab.tabSelected}`
+  ) as HTMLElement;
   const prevContent = parentTabContainer.querySelector('[data-tab-visible]') as HTMLElement;
   const nextSelected = parentTabContainer.querySelector(selectedTab.getAttribute('data-tab-id'));
 
@@ -25,7 +29,7 @@ const listen = (): void => {
   let scrollLeft: number;
   let momentumID: number;
   let velX = 0;
-  
+
   const mouseUpEvent = () => {
     isDown = false;
     container.classList.remove(Constants.Styles.Components.Tab.tabScroll);
@@ -36,18 +40,20 @@ const listen = (): void => {
   const mouseLeaveEvent = () => {
     isDown = false;
     container.classList.remove(Constants.Styles.Components.Tab.tabScroll);
-    
+
     removeListeners();
   };
 
   const mouseMoveEvent = (e: MouseEvent) => {
-    if (!isDown) return;
+    if (!isDown) {
+      return;
+    }
     e.preventDefault();
-    
+
     const x = e.pageX - container.offsetLeft;
     const walk = (x - startX) * 3;
     const prevScrollLeft = container.scrollLeft;
-    
+
     container.scrollLeft = scrollLeft - walk;
     velX = container.scrollLeft - prevScrollLeft;
   };
@@ -61,7 +67,7 @@ const listen = (): void => {
 
     momentumID = requestAnimationFrame(momentumLoop);
   };
-  
+
   const cancelMomentumTracking = () => {
     cancelAnimationFrame(momentumID);
   };
@@ -70,7 +76,7 @@ const listen = (): void => {
     container.scrollLeft += velX;
     velX *= 0.95;
 
-    if (Math.abs(velX) > 0.5){
+    if (Math.abs(velX) > 0.5) {
       momentumID = requestAnimationFrame(momentumLoop);
     }
   };
@@ -81,12 +87,16 @@ const listen = (): void => {
     container.removeEventListener('mousemove', mouseMoveEvent);
     container.removeEventListener('wheel', wheelEvent);
   };
-  
+
   document.addEventListener('mousedown', (e: MouseEvent) => {
-    if (!(e.target instanceof HTMLElement)) return;
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
     container = e.target.closest(`.${Constants.Styles.Components.Tab.tabLinkContainer}`);
 
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     isDown = true;
     container.classList.add(Constants.Styles.Components.Tab.tabScroll);
@@ -103,9 +113,13 @@ const listen = (): void => {
 
 export const tabs = (): void => {
   document.addEventListener('click', ({ target }): void => {
-    if (!(target instanceof HTMLElement)) return;
-    if (!target.classList.contains(Constants.Styles.Components.Tab.tabLink)) return;
-    
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(Constants.Styles.Components.Tab.tabLink)) {
+      return;
+    }
+
     switchTab(target);
   });
 
