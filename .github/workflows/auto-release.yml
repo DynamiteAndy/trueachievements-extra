@@ -1,0 +1,107 @@
+name: Build and Tag Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-tag:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Fetch tags
+      run: git fetch --tags
+
+    - name: Get Node version
+      run: |
+        nvmrc_version=$(cat .nvmrc)
+        echo "Node.js version from .nvmrc: $nvmrc_version"
+        echo "NVMRC_VERSION=$nvmrc_version" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NVMRC_VERSION }}
+
+    - name: Install semver
+      run: npm install -g semver
+
+    - name: Get versions
+      run: |
+        package_version="v$(cat package.json | jq -r '.version')"
+        echo "Package.json version: $package_version"
+        echo "PACKAGE_VERSION=$package_version" >> $GITHUB_ENV
+
+        tags=$(git tag)
+        latest_tag=""
+
+        for tag in $tags; do
+          if [[ -z $latest_tag ]]; then
+            latest_tag=$tag
+            continue
+          fi
+
+          echo "Comparing $tag to $latest_tag"
+          comparison_result=$(NODE_PATH=$(npm root -g) node -e "console.log(require('semver').gt('$tag', '$latest_tag'))")
+          echo "Compare result: $comparison_result"
+
+          if [[ $comparison_result == true ]]; then
+            echo "Set latest_tag to $tag"
+            latest_tag=$tag
+          fi
+        done
+
+        echo "Latest tag: $latest_tag"
+        echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Check versions and skip steps if they match
+      run: |
+        if [[ "${{ env.PACKAGE_VERSION }}" == "${{ env.LATEST_TAG }}" ]]; then
+          echo "Versions match. No need to build or create a new tag."
+          echo "SKIP_STEPS=true" >> $GITHUB_ENV
+        else
+          echo "SKIP_STEPS=false" >> $GITHUB_ENV
+        fi
+      shell: bash
+
+    - name: Install pnpm
+      run: npm install -g pnpm
+      if: env.SKIP_STEPS != 'true'
+
+    - name: Install dependencies
+      run: pnpm install
+      if: env.SKIP_STEPS != 'true'
+
+    - name: Build
+      run: pnpm run build:release
+      if: env.SKIP_STEPS != 'true'
+
+    - name: Commit dist folder
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add dist/*.js
+        git commit -m "${{ env.PACKAGE_VERSION }}"
+        git push
+      if: env.SKIP_STEPS != 'true'
+      env:
+        HUSKY_SKIP_HOOKS: true
+        
+    - name: Create tag
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          await github.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: `refs/tags/${{ env.PACKAGE_VERSION }}`,
+            sha: context.sha
+          })
+      if: env.SKIP_STEPS != 'true'

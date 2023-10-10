@@ -18,8 +18,7 @@ export const devConfig = merge(baseConfig as never, {
     'dev.user': resolve(__dirname, './empty.ts')
   },
   output: {
-    filename: 'trueachievements-extras.[name].js',
-    path: resolve(__dirname, '../dist')
+    filename: 'trueachievements-extras.[name].js'
   },
   devtool: 'eval-cheap-module-source-map',
   watch: process.env.webpack_watch ? true : false,

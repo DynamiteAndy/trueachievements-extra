@@ -19,7 +19,7 @@ export const getUrlProperties = (str: string, props: string | string[] = []) => 
   }
 };
 
-const achievementUrl = new RegExp('^/a[0-9]*/.*$', 'i');
+const achievementUrl = new RegExp('^/a[0-9]*/(?!.*/).*$', 'i');
 const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*\\?gamerid=[0-9]*', 'i');
 const achievementsUrl = new RegExp('^/game/.*/achievements$', 'i');
 const achievementsUrlWithGamerId = new RegExp('^/game/.*/achievements\\?gamerid=[0-9]*', 'i');
@@ -28,7 +28,7 @@ const challengesUrlWithGamerId = new RegExp('^/game/.*/challenges\\?gamerid=[0-9
 const clipsUrl = new RegExp('^/game/.*/videos$', 'i');
 const dlcUrl = new RegExp('^/game/.*/dlc$', 'i');
 const dlcUrlWithGamerId = new RegExp('^/game/.*/dlc\\?gamerid=[0-9]*', 'i');
-const individualDlcUrl = new RegExp('^/game/.*/dlc/.*$', 'i');
+const individualDlcUrl = new RegExp('^/game/.*/dlc/(?!.*/).*$', 'i');
 const individualDlcUrlWithGamerId = new RegExp('^/game/.*/dlc/.*\\?gamerid=[0-9]*', 'i');
 const walkthroughUrl = new RegExp('^/game/.*/walkthrough$', 'i');
 const gameForumUrl = new RegExp('^/game/.*/forum$', 'i');

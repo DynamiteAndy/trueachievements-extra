@@ -11,19 +11,23 @@ export const changeToDefaultStatus = async (): Promise<void> => {
     [
       {
         name: 'game-clips-change-to-default-status-recorded-by',
-        task: async () => changeSelectOption('#ddlRecordedBy', gameClips.gameClipsDefaultRecordedByValue, '')
+        task: async (): Promise<void> =>
+          await changeSelectOption('#ddlRecordedBy', gameClips.gameClipsDefaultRecordedByValue, '')
       },
       {
         name: 'game-clips-change-to-default-status-saved-by',
-        task: async () => changeSelectOption('#ddlSavedBy', gameClips.gameClipsDefaultSavedByValue, 'Gamer')
+        task: async (): Promise<void> =>
+          await changeSelectOption('#ddlSavedBy', gameClips.gameClipsDefaultSavedByValue, 'Gamer')
       },
       {
         name: 'game-clips-change-to-default-status-recorded',
-        task: async () => changeSelectOption('#ddlUploaded', gameClips.gameClipsDefaultRecordedValue, '7')
+        task: async (): Promise<void> =>
+          await changeSelectOption('#ddlUploaded', gameClips.gameClipsDefaultRecordedValue, '7')
       },
       {
         name: 'game-clips-change-to-default-status-sort-by',
-        task: async () => changeSelectOption('#ddlOrder', gameClips.gameClipsDefaultSortByValue, 'Most viewed')
+        task: async (): Promise<void> =>
+          await changeSelectOption('#ddlOrder', gameClips.gameClipsDefaultSortByValue, 'Most viewed')
       }
     ],
     1

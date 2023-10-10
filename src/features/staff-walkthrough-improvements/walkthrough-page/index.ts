@@ -44,19 +44,19 @@ export default async (): Promise<void> => {
   allConcurrently('Walkthrough Page', [
     {
       name: 'walkthrough-page-set-page-history-sticky',
-      task: async () => setPageHistorySticky(walkthroughContainer, walkthoughPageVersions)
+      task: async (): Promise<void> => await setPageHistorySticky(walkthroughContainer, walkthoughPageVersions)
     },
     {
       name: 'walkthrough-page-add-walkthrough-team-button',
-      task: async () => addWalkthroughTeamButton(walkthroughContainer, walkthoughPageVersions)
+      task: async (): Promise<void> => await addWalkthroughTeamButton(walkthroughContainer, walkthoughPageVersions)
     },
     {
       name: 'walkthrough-page-move-buttons-to-left',
-      task: async () => moveButtonsToLeft(walkthroughContainer, walkthoughPageVersions)
+      task: async (): Promise<void> => await moveButtonsToLeft(walkthroughContainer, walkthoughPageVersions)
     },
     {
       name: 'walkthrough-page-highlight-page-locked',
-      task: async () => highlightPageLocked(walkthroughContainer)
+      task: async (): Promise<void> => await highlightPageLocked(walkthroughContainer)
     }
   ]);
 };

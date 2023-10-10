@@ -1,7 +1,9 @@
 // Device Breakpoints
-$ta-x-mobile-breakpoint: 576px;
+$ta-x-mobile-breakpoint-max: 575px;
 
-$ta-x-tablet-breakpoint-max: 768px;
+$ta-x-tablet-breakpoint-min: $ta-x-mobile-breakpoint-max + 1px;
+$ta-x-tablet-breakpoint-max: 767px;
+
 $ta-x-desktop-breakpoint-min: $ta-x-tablet-breakpoint-max + 1px;
 
 // Both Themes

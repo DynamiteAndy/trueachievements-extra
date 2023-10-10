@@ -18,7 +18,8 @@ describe('regex', () => {
           case: 'https://www.trueachievements.com/a223526/and-were-back-achievement?gamerid=96119',
           expected: true
         },
-        { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false }
+        { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false },
+        { case: 'https://www.trueachievements.com/a12440/suburban-hero-achievement/gamers', expected: false }
       ];
 
       testCases.forEach((test, index) => {
@@ -38,7 +39,8 @@ describe('regex', () => {
           case: 'https://www.trueachievements.com/a223526/and-were-back-achievement?gamerid=96119',
           expected: true
         },
-        { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false }
+        { case: 'https://www.trueachievements.com/game/Colt-Canyon/achievements', expected: false },
+        { case: 'https://www.trueachievements.com/a12440/suburban-hero-achievement/gamers', expected: false }
       ];
 
       testCases.forEach((test, index) => {

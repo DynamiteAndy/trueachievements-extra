@@ -26,11 +26,11 @@ export const tinymce = async (): Promise<void> => {
   toolbar.appendChild(addedGroup);
 
   allConcurrently('Edit Walkthrough', [
-    { name: 'tinymce-set-full-width-toolbar', task: async () => setFullWidthToolbar(container) },
-    { name: 'tinymce-add-fix-floating-menus', task: async () => fixFloatingMenus(container) },
-    { name: 'tinymce-add-source-code-button', task: async () => addSourceCodeButton() },
-    { name: 'tinymce-add-toggle-theme-button', task: async () => addToggleThemeButton(toolbar) },
-    { name: 'tinymce-append-color-picker', task: async () => appendColorPicker() }
+    { name: 'tinymce-set-full-width-toolbar', task: async (): Promise<void> => await setFullWidthToolbar(container) },
+    { name: 'tinymce-add-fix-floating-menus', task: async (): Promise<void> => await fixFloatingMenus(container) },
+    { name: 'tinymce-add-source-code-button', task: addSourceCodeButton },
+    { name: 'tinymce-add-toggle-theme-button', task: async (): Promise<void> => await addToggleThemeButton(toolbar) },
+    { name: 'tinymce-append-color-picker', task: appendColorPicker }
   ]);
 };
 

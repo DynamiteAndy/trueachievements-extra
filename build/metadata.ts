@@ -13,10 +13,10 @@ export default {
   downloadURL: `${url}/raw/main/dist/`,
   supportURL: bugs.url,
   description: description,
-  connect: ['xboxachievements.com'],
+  connect: ['trueachievements.com', 'xboxachievements.com'],
   author: author,
   match: ['http*://*.trueachievements.com/*'],
   'run-at': 'document-start',
-  grant: ['GM_getValue', 'GM_setValue', 'GM_deleteValue', 'GM_addStyle'],
+  grant: ['GM_getValue', 'GM_setValue', 'GM_deleteValue', 'GM_addStyle', 'GM_xmlhttpRequest'],
   require: []
 } as Metadata;

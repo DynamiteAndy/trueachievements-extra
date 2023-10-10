@@ -1,4 +1,4 @@
-import { isTAXChildListElement, isTAXListElement } from '@ta-x-utilities';
+import { isTAXChildListElement, isTAXListElement } from '../utilities/html-element-util';
 
 export class ListSetting {
   public parent: HTMLElement;

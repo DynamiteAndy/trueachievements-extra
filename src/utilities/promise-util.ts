@@ -1,9 +1,15 @@
-type Callback<T> = (args: T) => void;
+const promisify =
+  <T>(fn: (...args: unknown[]) => T) =>
+  async (...args: unknown[]) =>
+    fn(args);
 
-export const promisify =
-  <T>(fn: (cb: Callback<T>) => void): (() => Promise<T>) =>
-  () =>
-    new Promise((resolve) => fn((callbackArgs) => resolve(callbackArgs)));
+export const needsPromisifying = (fn: () => unknown): boolean => {
+  if (fn.constructor.name === 'AsyncFunction') {
+    return false;
+  }
+
+  return true;
+};
 
 export const allConcurrently = async <T>(
   name: string,
@@ -22,10 +28,10 @@ export const allConcurrently = async <T>(
     while (index < arr.length) {
       const curIndex = index++;
       // Use of `curIndex` is important because `index` may change after await is resolved
-      const task =
-        arr[curIndex].task.constructor.name === 'Function' ? promisify(arr[curIndex].task) : arr[curIndex].task;
-
+      const task = needsPromisifying(arr[curIndex].task) ? promisify(arr[curIndex].task) : arr[curIndex].task;
+      console.debug(arr[curIndex].name, `Promisified: ${needsPromisifying(arr[curIndex].task)}`);
       results[curIndex] = await task();
+      console.debug(arr[curIndex].name, results[curIndex]);
     }
   };
 

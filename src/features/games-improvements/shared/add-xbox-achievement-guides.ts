@@ -1,6 +1,6 @@
 import { AchievementsRegex, Cache, Constants, ExternalRegex } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
-import { deleteMemoizedCorsFetch, memoizedCorsFetch, template } from '@ta-x-helpers';
+import { deleteMemoizedCorsFetch, memoizeCorsFetch, template } from '@ta-x-helpers';
 import templatedAchievementGuideSolution from '@ta-x-views/templates/achievement-guide-solution.html';
 import svg from '@ta-x-svgs/xboxachievements-icon.hbs';
 import html from './xbox-achievements.hbs';
@@ -82,7 +82,7 @@ const getAchievementGuide = async (url: string): Promise<void> => {
   const achievementTitle = (
     (await waitForElement('.ach-panel:not([data-secret]) .title')) as HTMLSpanElement
   )?.innerText?.trim();
-  const guideResponse = await memoizedCorsFetch(url);
+  const guideResponse = await memoizeCorsFetch(url, {});
   const guideDocument = new DOMParser().parseFromString(guideResponse, 'text/html');
   const achievementGuides = [...guideDocument.querySelectorAll('.achilist .achilist__guide')].map(
     (el: HTMLLIElement) => ({

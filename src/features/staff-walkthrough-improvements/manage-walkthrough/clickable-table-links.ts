@@ -28,7 +28,7 @@ const clickableAchievements = async (walkthroughContainer: HTMLElement, walthrou
       'ClickableAchievements - Games',
       games.map((game: HTMLAnchorElement) => ({
         name: `manage-walkthrough-clickable-table-links-clickable-achievements-${game.innerText}`,
-        task: async () => {
+        task: async (): Promise<void> => {
           const gameResponse = await memoizeFetch(game.href);
           const gameDocument = new DOMParser().parseFromString(gameResponse, 'text/html');
           const gameAchievements = [...gameDocument.querySelectorAll('main ul.ach-panels li a.title')] as HTMLElement[];
@@ -39,7 +39,7 @@ const clickableAchievements = async (walkthroughContainer: HTMLElement, walthrou
               name: `manage-walkthrough-clickable-table-links-clickable-achievements-${
                 game.innerText
               }-${gameAchievement.innerText.trim()}`,
-              task: async (): Promise<void> => {
+              task: (): void => {
                 const achievementName = gameAchievement.innerText.trim();
                 const walkthroughAchievement = walkthroughAchievements.find(
                   (walkthroughAchievement) =>
@@ -152,15 +152,15 @@ export const makeTableLinksClickable = async (): Promise<void> => {
   await allConcurrently('Manage Walkthrough Page Clickable Table Links', [
     {
       name: 'manage-walkthrough-clickable-table-links-clickable-achievements',
-      task: async () => clickableAchievements(walkthroughContainer, walthroughPreviewDocument)
+      task: async (): Promise<void> => await clickableAchievements(walkthroughContainer, walthroughPreviewDocument)
     },
     {
       name: 'manage-walkthrough-clickable-table-links-clickable-games',
-      task: async () => clickableGames(walkthroughContainer, walthroughPreviewDocument)
+      task: async (): Promise<void> => await clickableGames(walkthroughContainer, walthroughPreviewDocument)
     },
     {
       name: 'manage-walkthrough-clickable-table-links-clickable-gamers',
-      task: async () => clickableGamers(walkthroughContainer, walthroughPreviewDocument)
+      task: async (): Promise<void> => await clickableGamers(walkthroughContainer, walthroughPreviewDocument)
     }
   ]);
 };

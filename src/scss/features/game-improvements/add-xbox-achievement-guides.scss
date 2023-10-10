@@ -8,7 +8,7 @@ body {
           width: 36px;
           height: 36px;
 
-          @media (min-width: $ta-x-tablet-breakpoint-max) {
+          @media (min-width: $ta-x-desktop-breakpoint-min) {
             width: 70px;
             height: 70px;
           }
