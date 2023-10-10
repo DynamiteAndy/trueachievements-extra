@@ -15,7 +15,7 @@
     "prettier.trailingComma": "none",
     "prettier.bracketSameLine": true,
     "prettier.htmlWhitespaceSensitivity": "ignore",
-    "prettier.endOfLine": "crlf",
+    "prettier.endOfLine": "auto",
     "prettier.printWidth": 120,
     "typescript.preferences.quoteStyle": "single"
 }

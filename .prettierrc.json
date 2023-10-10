@@ -4,7 +4,7 @@
     "trailingComma": "none",
     "bracketSameLine": true,
     "htmlWhitespaceSensitivity": "ignore",
-    "endOfLine":"crlf",
+    "endOfLine":"auto",
     "overrides": [
         {
             "files": "*.hbs",

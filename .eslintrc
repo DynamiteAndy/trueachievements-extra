@@ -14,16 +14,35 @@
     "import",
     "prettier"
   ],
-  "rules": { 
+  "rules": {
     "semi": ["error", "always"],
     "no-console": 0,
     "quotes": [2, "single", { "avoidEscape": true }],
     "keyword-spacing": [2, { "after": true }],
     "import/no-unresolved": "error",
     "import/named": "error",
-    "import/order": ["error", {"groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object"]}],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object"
+        ]
+      }
+    ],
     "comma-dangle": ["error", "never"],
-    "curly": "error"
+    "curly": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

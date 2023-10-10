@@ -1,0 +1,41 @@
+name: Lint and Test
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Configure Git line endings
+      run: git config --global core.autocrlf false
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get Node version
+      run: |
+        nvmrc_version=$(cat .nvmrc)
+        echo "Node.js version from .nvmrc: $nvmrc_version"
+        echo "NVMRC_VERSION=$nvmrc_version" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NVMRC_VERSION }}
+
+    - name: Install pnpm
+      run: npm install -g pnpm
+
+    - name: Install dependencies
+      run: pnpm install
+
+    - name: Run lint
+      run: pnpm run lint
+
+    - name: Run tests
+      run: pnpm run test
