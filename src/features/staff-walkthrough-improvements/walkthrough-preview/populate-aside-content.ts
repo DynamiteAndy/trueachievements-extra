@@ -91,7 +91,7 @@ const getAsideContent = async (walkthroughId: string): Promise<void> => {
 
   if (
     !supportedStatuses.includes(
-      (manageWalkthroughDocument.querySelector('#txtStatusReadOnly') as HTMLInputElement).value
+      (manageWalkthroughDocument.querySelector('#txtStatusReadOnly, #txtStatus') as HTMLInputElement).value
     )
   ) {
     extensionBody.remove();

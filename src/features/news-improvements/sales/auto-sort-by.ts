@@ -9,7 +9,7 @@ const applyBody = async (): Promise<void> => {
     'AutoSortBy - Tables',
     saleTables.map((saleTable: HTMLElement) => ({
       name: 'auto-sort-by-table',
-      task: async () => {
+      task: async (): Promise<void> => {
         const tableHeader = ([...saleTable.querySelectorAll('.headers [data-sort]')] as HTMLElement[]).find((th) =>
           newsImprovements.sales.autoSortByValue.includes(th.innerText.replace(' ', '-').toLowerCase().trim())
         );

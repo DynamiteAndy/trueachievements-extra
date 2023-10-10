@@ -1,0 +1,21 @@
+@import '../../variables.scss';
+
+body {
+  &.trueachievement-extras {
+    a {
+      &.ta-x-game-achievements-achievement-leaderboard-links {
+        @media (max-width: $ta-x-mobile-breakpoint-max) {
+          display: none;
+        }
+      }
+    }
+
+    div {
+      &.ta-x-game-achievements-achievement-leaderboard-links {
+        @media (min-width: $ta-x-tablet-breakpoint-min) {
+          display: none;
+        }
+      }
+    }
+  }
+}

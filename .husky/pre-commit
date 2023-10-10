@@ -1,3 +1,17 @@
 #!/usr/bin/env sh
 
+# Check for staged files in the 'dist' directory
+staged_dist_files=$(git diff --cached --name-only | grep '^dist/')
+
+if [ -n "$staged_dist_files" ]; then
+  echo "Unstaging files in the 'dist' directory before commit:"
+  echo "$staged_dist_files"
+  
+  # Unstage the files in 'dist'
+  git reset HEAD -- $staged_dist_files
+
+  # Reset the files in 'dist' to the last committed state
+  git checkout -- $staged_dist_files
+fi
+
 pnpm run lint

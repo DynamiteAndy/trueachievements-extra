@@ -51,7 +51,7 @@ const getDLCAchievementGroups = async (el: HTMLElement): Promise<AchievementGrou
     'individualProgress - Groups',
     dlcAchievementHeaders.map((dlcHeader: HTMLElement) => ({
       name: 'individual-progress-group-dlc-grouping',
-      task: async (): Promise<void> => {
+      task: (): void => {
         const group = createAchievementGroup(dlcHeader);
 
         for (let child = dlcHeader.nextSibling as HTMLElement; child; child = child.nextSibling as HTMLElement) {
@@ -79,11 +79,11 @@ const getAchievementGroups = async (el: HTMLElement): Promise<AchievementGroup[]
   const achievementGroups = await allConcurrently('Game Improvements Individual Progress', [
     {
       name: 'game-improvements-individual-progress-base',
-      task: async () => getBaseAchievementGroup(el)
+      task: (): AchievementGroup[] => getBaseAchievementGroup(el)
     },
     {
       name: 'game-improvements-individual-progress-dlc',
-      task: async () => getDLCAchievementGroups(el)
+      task: async (): Promise<AchievementGroup[]> => await getDLCAchievementGroups(el)
     }
   ]);
 
@@ -99,7 +99,7 @@ const setGroupProgress = async (groups: AchievementGroup[]): Promise<void> => {
     'individualProgress - Groups',
     achievementGroups.map((achievementGroup: HTMLElement) => ({
       name: 'individual-progress-group',
-      task: async (): Promise<void> => {
+      task: (): void => {
         const groupName = (achievementGroup.querySelector('h2 a') as HTMLElement).innerText;
         const grouping = groups.find((groups) => groups.title.toLowerCase() === groupName.toLowerCase());
 

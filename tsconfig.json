@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": "./",
     "outDir": "./dist",
     "baseUrl": "./src",
     "moduleResolution": "node",
@@ -9,6 +10,7 @@
     "allowUnreachableCode": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "sourceMap": true,
     "paths": {
       "@ta-x-features": ["./features/index"],
       "@ta-x-features/*": ["./features/*"],
@@ -20,7 +22,9 @@
       "@ta-x-helpers": ["./helpers/index"],
       "@ta-x-types": ["./types/index"],
       "@ta-x-scss/*": ["./scss/*"],
-      "@ta-x-tinymce-scss/*": ["./scss/features/staff-walkthrough-improvements/tinymce/*"],
+      "@ta-x-tinymce-scss/*": [
+        "./scss/features/staff-walkthrough-improvements/tinymce/*"
+      ],
       "@ta-x-views/*": ["./views/*"],
       "@ta-x-svgs/*": ["./resources/svgs/*"],
       "@ta-x-project-root/*": ["../*"],

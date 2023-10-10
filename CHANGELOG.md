@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0
+- Behind the scenes, Changed from ts-loader to esbuild-loader,
+- Behind the scenes, finally got the vscode debugger working,
+- Behind the scenes, setup github actions to commit dist and push tags,
+- Behind the scenes, updated to latest node,
+- Fixed walkthrough preview aside content not loading,
+- Fixed XboxAchievements not working anymore,
+- Fixed XboxAchievements showing on the gamer leaderboard for an achievement,
+- Fixed some mobile/tablet sizing issues,
+- Fixed some regex issues with dlc
+- Changed progress bars on achievements/challenges to link to achievement/challenge leaderboard.
+
 ## 2.13.0
 - Added a feature to select a default game forum thread,
 - Added a feature to include guides from [XboxAchievements](https://www.xboxachievements.com/) on achievement guide pages,

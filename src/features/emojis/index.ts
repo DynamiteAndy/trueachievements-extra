@@ -109,7 +109,7 @@ export default async (): Promise<void> => {
     'Emojis - Apply',
     elementSelectors.map((selector: string) => ({
       name: `emojis-${selector}`,
-      task: async () => {
+      task: async (): Promise<void> => {
         const containers = await waitForElements(selector);
 
         if (!containers || containers.length === 0) {

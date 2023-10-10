@@ -1,4 +1,5 @@
-import { Cache, Constants, getUrlProperties } from '@ta-x-globals';
+import { Cache, getUrlProperties } from '@ta-x-globals';
+import { getCookie } from '@ta-x-utilities';
 
 export const setDefaultStatus = (
   status: HTMLSelectElement,
@@ -10,7 +11,7 @@ export const setDefaultStatus = (
   if (status && url !== Cache[cacheProperty]) {
     Cache[cacheProperty] = getUrlProperties(window.location.href, ['pathname', 'search']);
 
-    if (gamerIdRegex() && new URLSearchParams(window.location.search).get('gamerid') !== Constants.gamerId) {
+    if (gamerIdRegex() && new URLSearchParams(window.location.search).get('gamerid') !== getCookie('GamerID')) {
       return;
     }
     if (!status.hasAttribute('checked')) {

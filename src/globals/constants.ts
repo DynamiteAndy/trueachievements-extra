@@ -1,13 +1,9 @@
-import { getCookie } from '../utilities/document-util';
-
 const classStylePrefix = 'ta-x';
 const jsStylePrefix = 'js-ta-x';
 const variableStylePrefix = '--ta-x';
 const templatePrefix = 'ta-x-template';
 
 export class Constants {
-  static readonly gamerId = getCookie('GamerID');
-
   static Styles = class {
     static readonly root = 'trueachievement-extras';
 
@@ -96,6 +92,7 @@ export class Constants {
         static readonly askForWalkthroughWalkthroughJs = `${this.showXboxAchievementGuidesJs}-ask-for-walkthrough`;
         static readonly saveWalkthroughInputJs = `${this.showXboxAchievementGuidesJs}-save-walkthrough-input`;
         static readonly saveWalkthroughButtonJs = `${this.showXboxAchievementGuidesJs}-save-walkthrough-button`;
+        static readonly showAchievementLeaderboardLinksStyle = `${this.featureStyle}-achievement-leaderboard-links`;
       };
     };
 
