@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name          TrueAchievements Extra
 // @namespace     dynamite-andy
-// @version       2.13.0
+// @version       3.0.0
 // @iconURL       https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon32x32.ico?raw=true
 // @icon64URL     https://github.com/andrewcartwright1/trueachievements-extra/blob/main/src/resources/icons/favicon64x64.ico?raw=true
 // @updateURL     https://github.com/andrewcartwright1/trueachievements-extra/raw/main/dist/trueachievements-extras.user.js
 // @downloadURL   https://github.com/andrewcartwright1/trueachievements-extra/raw/main/dist/trueachievements-extras.user.js
 // @supportURL    https://github.com/andrewcartwright1/trueachievements-extra/issues
 // @description   Provides a variety of extras for use on TrueAchievements
+// @connect       trueachievements.com
 // @connect       xboxachievements.com
 // @author        Dynamite Andy - dynamiteandy@gmail.com
 // @match         http*://*.trueachievements.com/*
@@ -16,6 +17,7 @@
 // @grant         GM_setValue
 // @grant         GM_deleteValue
 // @grant         GM_addStyle
+// @grant         GM_xmlhttpRequest
 // ==/UserScript==
 
 /******/ (() => { // webpackBootstrap
@@ -4254,20 +4256,6 @@ exports.s_to_num = s_to_num;
 
 /***/ }),
 
-/***/ "./src/features/forum-improvements/walkthroughs/walkthroughs.hbs":
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-// Module
-var code = "<section class=\"purple js-ta-x-ask-loader-container ta-x-ask-loader-container js-ta-x-forum-improvements-walkthroughs-show-owner-progress ta-x-forum-improvements-walkthroughs-show-owner-progress\"><div>Walkthrough Information</div><article><div class=\"ta-x-article-loader\"><p>Please wait, loading.</p><svg viewbox=\"0 0 512 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z\" fill=\"currentColor\"></path></svg></div><div class=\"js-ta-x-ask-loader-ask ta-x-ask-loader-ask ta-x-hide\"><p>Can't automate them all sadly! Please enter a direct link to the walkthrough page to link this thread to the walkthrough, I'll remember it next time!</p><div><label class=\"small\">Walkthrough Url</label><input class=\"textbox cs-n js-ta-x-ask-loader-ask-input\" id=\"txtForumImprovementsWalkthroughsShowOwnerProgress\" name=\"txtForumImprovementsWalkthroughsShowOwnerProgress\"></div><input class=\"button js-ta-x-ask-loader-ask-button\" id=\"btnForumImprovementsWalkthroughsShowOwnerProgressSave\" name=\"btnForumImprovementsWalkthroughsShowOwnerProgressSave\" type=\"submit\" value=\"Save\"></div></article></section>";
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
-
-/***/ }),
-
 /***/ "./src/features/forum-improvements/walkthroughs/show-owner-progress.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -4286,152 +4274,152 @@ var code = "<section class=\"purple js-ta-x-ask-loader-container ta-x-ask-loader
 let extensionBody;
 let askForWalkthroughBody;
 const applyBody = async () => {
-    const parsedDocument = new DOMParser().parseFromString(_walkthroughs_hbs__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, 'text/html');
-    const asideColumn = await (0,_ta_x_utilities__WEBPACK_IMPORTED_MODULE_1__/* .waitForElement */ .br)('.main aside');
-    const firstSection = await (0,_ta_x_utilities__WEBPACK_IMPORTED_MODULE_1__/* .waitForElement */ .br)('section:not(.smallpanel)', asideColumn);
-    asideColumn.insertBefore(parsedDocument.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`), firstSection);
-    extensionBody = asideColumn.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`);
-    askForWalkthroughBody = extensionBody.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.Components.AskLoader.askJs}`);
-    getAchievementWalkthroughUrl();
+  const parsedDocument = new DOMParser().parseFromString(_walkthroughs_hbs__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, "text/html");
+  const asideColumn = await (0,_ta_x_utilities__WEBPACK_IMPORTED_MODULE_1__/* .waitForElement */ .br)(".main aside");
+  const firstSection = await (0,_ta_x_utilities__WEBPACK_IMPORTED_MODULE_1__/* .waitForElement */ .br)("section:not(.smallpanel)", asideColumn);
+  asideColumn.insertBefore(
+    parsedDocument.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`),
+    firstSection
+  );
+  extensionBody = asideColumn.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`);
+  askForWalkthroughBody = extensionBody.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.Components.AskLoader.askJs}`);
+  getAchievementWalkthroughUrl();
 };
 const listen = () => {
-    const button = extensionBody.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.Components.AskLoader.buttonJs}`);
-    const input = extensionBody.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.Components.AskLoader.inputJs}`);
-    button.addEventListener('click', async (e) => {
-        if (!(e.target instanceof HTMLElement)) {
-            return;
-        }
-        e.preventDefault();
-        e.stopPropagation();
-        try {
-            if (input.value === '') {
-                return;
-            }
-            if (!_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .GamesRegex */ .Rv.Test.walkthroughUrl(input.value)) {
-                return;
-            }
-            toggleAskForWalkthrough();
-            await getOwnerProgress(input.value);
-        }
-        catch {
-            return;
-        }
-    });
+  const button = extensionBody.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.Components.AskLoader.buttonJs}`);
+  const input = extensionBody.querySelector(`.${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.Components.AskLoader.inputJs}`);
+  button.addEventListener("click", async (e) => {
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      if (input.value === "") {
+        return;
+      }
+      if (!_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .GamesRegex */ .Rv.Test.walkthroughUrl(input.value)) {
+        return;
+      }
+      toggleAskForWalkthrough();
+      await getOwnerProgress(input.value);
+    } catch {
+      return;
+    }
+  });
 };
 const getAchievementWalkthroughUrl = async () => {
-    const cachedWalkthroughUrls = _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Cache */ .Ct.walkthroughForumOwnerProgressUrl;
-    const threadId = new URLSearchParams(window.location.search).get('tid');
-    let url = threadId ? cachedWalkthroughUrls.get(threadId) : null;
-    if (!url) {
-        const posts = await (0,_ta_x_utilities__WEBPACK_IMPORTED_MODULE_1__/* .waitForElement */ .br)('.posts');
-        [...posts.querySelectorAll('li .body')].forEach((el) => {
-            if (url) {
-                return;
-            }
-            if (_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .SentencesRegex */ .EP.discussWalkthrough.test(el.textContent) ||
-                _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .SentencesRegex */ .EP.walkthroughPublished.test(el.textContent)) {
-                const anchor = el.querySelector('a');
-                if (anchor && _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .GamesRegex */ .Rv.Test.gameUrl(anchor.href)) {
-                    url = anchor.href;
-                    if (!url.endsWith('/walkthrough')) {
-                        url += '/walkthrough';
-                    }
-                    return;
-                }
-            }
-        });
-        if (!url) {
-            toggleAskForWalkthrough();
-            return;
+  const cachedWalkthroughUrls2 = _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Cache */ .Ct.walkthroughForumOwnerProgressUrl;
+  const threadId2 = new URLSearchParams(window.location.search).get("tid");
+  let url2 = threadId2 ? cachedWalkthroughUrls2.get(threadId2) : null;
+  if (!url2) {
+    const posts = await (0,_ta_x_utilities__WEBPACK_IMPORTED_MODULE_1__/* .waitForElement */ .br)(".posts");
+    [...posts.querySelectorAll("li .body")].forEach((el) => {
+      if (url2) {
+        return;
+      }
+      if (_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .SentencesRegex */ .EP.discussWalkthrough.test(el.textContent) || _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .SentencesRegex */ .EP.walkthroughPublished.test(el.textContent)) {
+        const anchor = el.querySelector("a");
+        if (anchor && _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .GamesRegex */ .Rv.Test.gameUrl(anchor.href)) {
+          url2 = anchor.href;
+          if (!url2.endsWith("/walkthrough")) {
+            url2 += "/walkthrough";
+          }
+          return;
         }
+      }
+    });
+    if (!url2) {
+      toggleAskForWalkthrough();
+      return;
     }
-    getOwnerProgress(url);
+  }
+  getOwnerProgress(url2);
 };
 const getOwnerProgress = async (url) => {
-    let walkthroughResponse = await (0,_ta_x_helpers__WEBPACK_IMPORTED_MODULE_2__/* .memoizeFetch */ .FS)(url);
-    let walkthroughDocument = new DOMParser().parseFromString(walkthroughResponse, 'text/html');
-    const walkthroughEditors = walkthroughDocument.querySelector('.editors dl');
-    const extensionArticle = extensionBody.querySelector('article');
-    if (walkthroughEditors) {
-        const gamersInvolved = getGamersInvolved(walkthroughEditors);
-        const walkthroughEditorsWrapper = document.createElement('div');
-        walkthroughEditorsWrapper.classList.add(_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorWrapperStyle);
-        walkthroughEditorsWrapper.append(...gamersInvolved);
-        extensionArticle.appendChild(walkthroughEditorsWrapper);
-        const thanks = walkthroughDocument.querySelector('aside .thanks');
-        if (thanks) {
-            extensionArticle.appendChild(thanks);
-        }
+  let walkthroughResponse = await (0,_ta_x_helpers__WEBPACK_IMPORTED_MODULE_2__/* .memoizeFetch */ .FS)(url);
+  let walkthroughDocument = new DOMParser().parseFromString(walkthroughResponse, "text/html");
+  const walkthroughEditors = walkthroughDocument.querySelector(".editors dl");
+  const extensionArticle = extensionBody.querySelector("article");
+  if (walkthroughEditors) {
+    const gamersInvolved = getGamersInvolved(walkthroughEditors);
+    const walkthroughEditorsWrapper = document.createElement("div");
+    walkthroughEditorsWrapper.classList.add(
+      _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorWrapperStyle
+    );
+    walkthroughEditorsWrapper.append(...gamersInvolved);
+    extensionArticle.appendChild(walkthroughEditorsWrapper);
+    const thanks = walkthroughDocument.querySelector("aside .thanks");
+    if (thanks) {
+      extensionArticle.appendChild(thanks);
     }
-    else {
-        let walkthroughProgress = walkthroughDocument.querySelector('aside section .walthroughprogress');
-        if (walkthroughProgress === null) {
-            url = `${url}?sbonly=1`;
-            walkthroughResponse = await (0,_ta_x_helpers__WEBPACK_IMPORTED_MODULE_2__/* .memoizeFetch */ .FS)(url);
-            walkthroughDocument = new DOMParser().parseFromString(walkthroughResponse, 'text/html');
-            walkthroughProgress = walkthroughDocument.querySelector('aside section .walthroughprogress');
-            if (walkthroughProgress === null) {
-                toggleAskForWalkthrough();
-                return;
-            }
-        }
-        extensionArticle.appendChild(walkthroughProgress);
-        const fillCircleScript = extensionArticle.querySelector('script');
-        if (fillCircleScript) {
-            eval(fillCircleScript.innerHTML);
-        }
+  } else {
+    let walkthroughProgress = walkthroughDocument.querySelector("aside section .walthroughprogress");
+    if (walkthroughProgress === null) {
+      url = `${url}?sbonly=1`;
+      walkthroughResponse = await (0,_ta_x_helpers__WEBPACK_IMPORTED_MODULE_2__/* .memoizeFetch */ .FS)(url);
+      walkthroughDocument = new DOMParser().parseFromString(walkthroughResponse, "text/html");
+      walkthroughProgress = walkthroughDocument.querySelector("aside section .walthroughprogress");
+      if (walkthroughProgress === null) {
+        toggleAskForWalkthrough();
+        return;
+      }
     }
-    const cachedWalkthroughUrls = _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Cache */ .Ct.walkthroughForumOwnerProgressUrl;
-    const threadId = new URLSearchParams(window.location.search).get('tid');
-    if (threadId && !cachedWalkthroughUrls.has(threadId)) {
-        cachedWalkthroughUrls.set(threadId, url);
-        _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Cache */ .Ct.walkthroughForumOwnerProgressUrl = cachedWalkthroughUrls;
+    extensionArticle.appendChild(walkthroughProgress);
+    const fillCircleScript = extensionArticle.querySelector("script");
+    if (fillCircleScript) {
+      eval(fillCircleScript.innerHTML);
     }
-    extensionBody.setAttribute('data-ta-x-loaded', 'true');
+  }
+  const cachedWalkthroughUrls = _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Cache */ .Ct.walkthroughForumOwnerProgressUrl;
+  const threadId = new URLSearchParams(window.location.search).get("tid");
+  if (threadId && !cachedWalkthroughUrls.has(threadId)) {
+    cachedWalkthroughUrls.set(threadId, url);
+    _ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Cache */ .Ct.walkthroughForumOwnerProgressUrl = cachedWalkthroughUrls;
+  }
+  extensionBody.setAttribute("data-ta-x-loaded", "true");
 };
-const getGamersInvolved = (walkthroughEditors) => {
-    let currentRow = document.createElement('div');
-    currentRow.classList.add(_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorRowStyle);
-    return [...walkthroughEditors.childNodes].reduce((rows, current, index, currentArray) => {
-        if (current.tagName === 'DT') {
-            if (currentRow.childElementCount > 0) {
-                rows.push(currentRow);
-                currentRow = document.createElement('div');
-                currentRow.classList.add(_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorRowStyle);
-            }
-            currentRow.innerHTML = current.innerHTML;
-        }
-        else if (current.tagName === 'DD') {
-            currentRow.innerHTML += `<div class="${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorStyle}">${current.innerHTML}</div>`;
-        }
-        if (index === currentArray.length - 1 && currentRow.childElementCount > 0) {
-            rows.push(currentRow);
-        }
-        return rows;
-    }, []);
+const getGamersInvolved = (walkthroughEditors2) => {
+  let currentRow = document.createElement("div");
+  currentRow.classList.add(_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorRowStyle);
+  return [...walkthroughEditors2.childNodes].reduce((rows, current, index, currentArray) => {
+    if (current.tagName === "DT") {
+      if (currentRow.childElementCount > 0) {
+        rows.push(currentRow);
+        currentRow = document.createElement("div");
+        currentRow.classList.add(_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorRowStyle);
+      }
+      currentRow.innerHTML = current.innerHTML;
+    } else if (current.tagName === "DD") {
+      currentRow.innerHTML += `<div class="${_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .Constants */ .gT.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorStyle}">${current.innerHTML}</div>`;
+    }
+    if (index === currentArray.length - 1 && currentRow.childElementCount > 0) {
+      rows.push(currentRow);
+    }
+    return rows;
+  }, []);
 };
 const toggleAskForWalkthrough = () => {
-    askForWalkthroughBody.classList.toggle('ta-x-hide');
-    if (!askForWalkthroughBody.classList.contains('ta-x-hide')) {
-        extensionBody.setAttribute('data-ta-x-loaded', 'true');
-    }
-    else {
-        extensionBody.removeAttribute('data-ta-x-loaded');
-    }
+  askForWalkthroughBody.classList.toggle("ta-x-hide");
+  if (!askForWalkthroughBody.classList.contains("ta-x-hide")) {
+    extensionBody.setAttribute("data-ta-x-loaded", "true");
+  } else {
+    extensionBody.removeAttribute("data-ta-x-loaded");
+  }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (async () => {
-    if (!_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .forumImprovements */ .i_.walkthroughs.showOwnerProgress) {
-        return;
-    }
-    if (!_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .ForumRegex */ .wC.Test.viewThreadUrlWithThreadId()) {
-        return;
-    }
-    const pageTitle = (await (0,_ta_x_utilities__WEBPACK_IMPORTED_MODULE_1__/* .waitForElement */ .br)('#oMessageThread .pagetitle'));
-    if (!pageTitle || pageTitle.innerText.toLowerCase() !== 'walkthroughs') {
-        return;
-    }
-    await applyBody();
-    listen();
+  if (!_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .forumImprovements */ .i_.walkthroughs.showOwnerProgress) {
+    return;
+  }
+  if (!_ta_x_globals__WEBPACK_IMPORTED_MODULE_0__/* .ForumRegex */ .wC.Test.viewThreadUrlWithThreadId()) {
+    return;
+  }
+  const pageTitle = await (0,_ta_x_utilities__WEBPACK_IMPORTED_MODULE_1__/* .waitForElement */ .br)("#oMessageThread .pagetitle");
+  if (!pageTitle || pageTitle.innerText.toLowerCase() !== "walkthroughs") {
+    return;
+  }
+  await applyBody();
+  listen();
 });
 
 
@@ -4488,807 +4476,570 @@ var regex = __webpack_require__("./src/globals/regex.ts");
 
 
 class Cache {
-    static get memoize() {
-        const value = GM_getValue('memoized', '');
-        return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+  static get memoize() {
+    const value = GM_getValue("memoized", "");
+    return value.length !== 0 ? new Map(JSON.parse(value)) : /* @__PURE__ */ new Map();
+  }
+  static set memoize(value) {
+    GM_setValue("memoized", JSON.stringify(Array.from(value.entries())));
+  }
+  static get gameAchievementsXboxAchievementsGuideUrl() {
+    const value = GM_getValue("gameAchievementsXboxAchievementsGuideUrl", "");
+    return value.length !== 0 ? new Map(JSON.parse(value)) : /* @__PURE__ */ new Map();
+  }
+  static set gameAchievementsXboxAchievementsGuideUrl(value) {
+    GM_setValue("gameAchievementsXboxAchievementsGuideUrl", JSON.stringify(Array.from(value.entries())));
+  }
+  static get walkthroughForumOwnerProgressUrl() {
+    const value = GM_getValue("walkthroughOwnerProgressUrl", "");
+    return value.length !== 0 ? new Map(JSON.parse(value)) : /* @__PURE__ */ new Map();
+  }
+  static set walkthroughForumOwnerProgressUrl(value) {
+    GM_setValue("walkthroughOwnerProgressUrl", JSON.stringify(Array.from(value.entries())));
+  }
+  static get walkthroughPreviewWalkthroughId() {
+    const value = GM_getValue("previewWalkthroughId", "");
+    return value.length !== 0 ? new Map(JSON.parse(value)) : /* @__PURE__ */ new Map();
+  }
+  static set walkthroughPreviewWalkthroughId(value) {
+    GM_setValue("previewWalkthroughId", JSON.stringify(Array.from(value.entries())));
+  }
+  static get gameAchievementsDefaultStatusPathName() {
+    return GM_getValue("gameAchievementsDefaultStatusPathName", "");
+  }
+  static set gameAchievementsDefaultStatusPathName(value) {
+    GM_setValue("gameAchievementsDefaultStatusPathName", value);
+  }
+  static get gameDLCDefaultStatusPathName() {
+    return GM_getValue("gameDLCDefaultStatusPathName", "");
+  }
+  static set gameDLCDefaultStatusPathName(value) {
+    GM_setValue("gameDLCDefaultStatusPathName", value);
+  }
+  static get gameChallengesDefaultStatusPathName() {
+    return GM_getValue("gameChallengesDefaultStatusPathName", "");
+  }
+  static set gameChallengesDefaultStatusPathName(value) {
+    GM_setValue("gameChallengesDefaultStatusPathName", value);
+  }
+  static get gameClipsDefaultStatusSelectors() {
+    const value = GM_getValue("gameClipsDefaultStatusSelectors", "");
+    return value.length !== 0 ? JSON.parse(value) : [];
+  }
+  static set gameClipsDefaultStatusSelectors(value) {
+    GM_setValue("gameClipsDefaultStatusSelectors", JSON.stringify(value));
+  }
+  static get gameForumsDefaultThreadPathName() {
+    return GM_getValue("gameForumsDefaultThreadPathName", "");
+  }
+  static set gameForumsDefaultThreadPathName(value) {
+    GM_setValue("gameForumsDefaultThreadPathName", value);
+  }
+  static forceClear() {
+    GM_deleteValue("memoized");
+    GM_deleteValue("walkthroughOwnerProgressUrl");
+    GM_deleteValue("previewWalkthroughId");
+  }
+  static clearExpired() {
+    const updatedCache = Array.from(this.memoize.entries()).filter((item) => (0,date_util/* isBeforeNow */.c)(item[1].expiryTime));
+    this.memoize = new Map(updatedCache);
+    if (!regex/* GamesRegex */.Rv.Test.achievementsUrl()) {
+      GM_deleteValue("gameAchievementsDefaultStatusPathName");
     }
-    static set memoize(value) {
-        GM_setValue('memoized', JSON.stringify(Array.from(value.entries())));
+    if (!regex/* GamesRegex */.Rv.Test.dlcUrl()) {
+      GM_deleteValue("gameDLCDefaultStatusPathName");
     }
-    static get gameAchievementsXboxAchievementsGuideUrl() {
-        const value = GM_getValue('gameAchievementsXboxAchievementsGuideUrl', '');
-        return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+    if (!regex/* GamesRegex */.Rv.Test.challengesUrl()) {
+      GM_deleteValue("gameChallengesDefaultStatusPathName");
     }
-    static set gameAchievementsXboxAchievementsGuideUrl(value) {
-        GM_setValue('gameAchievementsXboxAchievementsGuideUrl', JSON.stringify(Array.from(value.entries())));
+    if (!regex/* GamesRegex */.Rv.Test.clipsUrl()) {
+      GM_deleteValue("gameClipsDefaultStatusSelectors");
     }
-    static get walkthroughForumOwnerProgressUrl() {
-        const value = GM_getValue('walkthroughOwnerProgressUrl', '');
-        return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+    if (!regex/* GamesRegex */.Rv.Test.forum()) {
+      GM_deleteValue("gameForumsDefaultThreadPathName");
     }
-    static set walkthroughForumOwnerProgressUrl(value) {
-        GM_setValue('walkthroughOwnerProgressUrl', JSON.stringify(Array.from(value.entries())));
-    }
-    static get walkthroughPreviewWalkthroughId() {
-        const value = GM_getValue('previewWalkthroughId', '');
-        return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
-    }
-    static set walkthroughPreviewWalkthroughId(value) {
-        GM_setValue('previewWalkthroughId', JSON.stringify(Array.from(value.entries())));
-    }
-    static get gameAchievementsDefaultStatusPathName() {
-        return GM_getValue('gameAchievementsDefaultStatusPathName', '');
-    }
-    static set gameAchievementsDefaultStatusPathName(value) {
-        GM_setValue('gameAchievementsDefaultStatusPathName', value);
-    }
-    static get gameDLCDefaultStatusPathName() {
-        return GM_getValue('gameDLCDefaultStatusPathName', '');
-    }
-    static set gameDLCDefaultStatusPathName(value) {
-        GM_setValue('gameDLCDefaultStatusPathName', value);
-    }
-    static get gameChallengesDefaultStatusPathName() {
-        return GM_getValue('gameChallengesDefaultStatusPathName', '');
-    }
-    static set gameChallengesDefaultStatusPathName(value) {
-        GM_setValue('gameChallengesDefaultStatusPathName', value);
-    }
-    static get gameClipsDefaultStatusSelectors() {
-        const value = GM_getValue('gameClipsDefaultStatusSelectors', '');
-        return value.length !== 0 ? JSON.parse(value) : [];
-    }
-    static set gameClipsDefaultStatusSelectors(value) {
-        GM_setValue('gameClipsDefaultStatusSelectors', JSON.stringify(value));
-    }
-    static get gameForumsDefaultThreadPathName() {
-        return GM_getValue('gameForumsDefaultThreadPathName', '');
-    }
-    static set gameForumsDefaultThreadPathName(value) {
-        GM_setValue('gameForumsDefaultThreadPathName', value);
-    }
-    static forceClear() {
-        GM_deleteValue('memoized');
-        GM_deleteValue('walkthroughOwnerProgressUrl');
-        GM_deleteValue('previewWalkthroughId');
-    }
-    static clearExpired() {
-        const updatedCache = Array.from(this.memoize.entries()).filter((item) => (0,date_util/* isBeforeNow */.c)(item[1].expiryTime));
-        this.memoize = new Map(updatedCache);
-        if (!regex/* GamesRegex */.Rv.Test.achievementsUrl()) {
-            GM_deleteValue('gameAchievementsDefaultStatusPathName');
-        }
-        if (!regex/* GamesRegex */.Rv.Test.dlcUrl()) {
-            GM_deleteValue('gameDLCDefaultStatusPathName');
-        }
-        if (!regex/* GamesRegex */.Rv.Test.challengesUrl()) {
-            GM_deleteValue('gameChallengesDefaultStatusPathName');
-        }
-        if (!regex/* GamesRegex */.Rv.Test.clipsUrl()) {
-            GM_deleteValue('gameClipsDefaultStatusSelectors');
-        }
-        if (!regex/* GamesRegex */.Rv.Test.forum()) {
-            GM_deleteValue('gameForumsDefaultThreadPathName');
-        }
-    }
-    static clearLegacy() {
-        GM_deleteValue('trueachievements-extra-memoized');
-    }
+  }
+  static clearLegacy() {
+    GM_deleteValue("trueachievements-extra-memoized");
+  }
 }
-
-;// CONCATENATED MODULE: ./src/utilities/document-util.ts
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-        return parts.pop().split(';').shift();
-    }
-};
-/* harmony default export */ const document_util = ({ getCookie });
 
 ;// CONCATENATED MODULE: ./src/globals/constants.ts
-var __setFunctionName = (undefined && undefined.__setFunctionName) || function (f, name, prefix) {
-    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
-    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
-};
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9;
-
-const classStylePrefix = 'ta-x';
-const jsStylePrefix = 'js-ta-x';
-const variableStylePrefix = '--ta-x';
-const templatePrefix = 'ta-x-template';
+var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _A, _B, _C, _D, _E, _F, _G, _H;
+const classStylePrefix = "ta-x";
+const jsStylePrefix = "js-ta-x";
+const variableStylePrefix = "--ta-x";
+const templatePrefix = "ta-x-template";
 class Constants {
 }
-Constants.gamerId = getCookie('GamerID');
-Constants.Styles = (_a = class {
-    },
-    __setFunctionName(_a, "Styles"),
-    _a.root = 'trueachievement-extras',
-    _a.Components = (_b = class {
-        },
-        __setFunctionName(_b, "Components"),
-        _b.accordion = `${jsStylePrefix}-accordion`,
-        _b.askLoader = `${jsStylePrefix}-ask-loader-container`,
-        _b.snackbar = `${jsStylePrefix}-snackbar`,
-        _b.showSnackbar = `${classStylePrefix}-snackbar-show`,
-        _b.AskLoader = (_c = class {
-            },
-            __setFunctionName(_c, "AskLoader"),
-            _c.featureJs = `${jsStylePrefix}-ask-loader`,
-            _c.containerJs = `${_c.featureJs}-container`,
-            _c.askJs = `${_c.featureJs}-ask`,
-            _c.inputJs = `${_c.askJs}-input`,
-            _c.buttonJs = `${_c.askJs}-button`,
-            _c),
-        _b.Tab = (_d = class {
-            },
-            __setFunctionName(_d, "Tab"),
-            _d.featureStyle = `${classStylePrefix}-tabs`,
-            _d.featureJs = `${jsStylePrefix}-tabs`,
-            _d.tabLinkContainer = `${_d.featureJs}-link-container`,
-            _d.tabLink = `${_d.featureJs}-link`,
-            _d.tabContent = `${_d.featureJs}-content`,
-            _d.tabSelected = `${_d.featureStyle}-selected`,
-            _d.tabScroll = `${_d.featureStyle}-scroll`,
-            _d),
-        _b),
-    _a.Animations = (_e = class {
-        },
-        __setFunctionName(_e, "Animations"),
-        _e.yShow = `${classStylePrefix}-y-show`,
-        _e.yHide = `${classStylePrefix}-y-hide`,
-        _e.yHideNoTransition = `${_e.yHide}-no-transition`,
-        _e),
-    _a.Base = (_f = class {
-        },
-        __setFunctionName(_f, "Base"),
-        _f.hide = `${classStylePrefix}-hide`,
-        _f),
-    _a.SettingsMenu = (_g = class {
-        },
-        __setFunctionName(_g, "SettingsMenu"),
-        _g.featureJs = `${jsStylePrefix}-settings-menu`,
-        _g.featureStyle = `${classStylePrefix}-settings-menu`,
-        _g.subSetting = `${_g.featureStyle}-sub-setting`,
-        _g.wrenchJs = `${_g.featureJs}-wrench`,
-        _g.closeJs = `${_g.featureJs}-close`,
-        _g.versionLink = `${_g.featureJs}-version`,
-        _g.documentationLink = `${_g.featureJs}-documentation`,
-        _g.changelogView = `${_g.featureJs}-changelog`,
-        _g.featureDocumentationView = `${_g.featureJs}-feature-documentation`,
-        _g.settingsView = `${_g.featureJs}-settings`,
-        _g.settingsContentShow = `${_g.featureStyle}-settings-item-show`,
-        _g),
-    _a.Emojis = (_h = class {
-        },
-        __setFunctionName(_h, "Emojis"),
-        _h.featureJs = `${jsStylePrefix}-emojis`,
-        _h.featureStyle = `${classStylePrefix}-emojis`,
-        _h),
-    _a.StickyHeader = (_j = class {
-        },
-        __setFunctionName(_j, "StickyHeader"),
-        _j.featureJs = `${jsStylePrefix}-sticky-header`,
-        _j.featureStyle = `${classStylePrefix}-sticky-header`,
-        _j),
-    _a.NewsImprovements = (_k = class {
-        },
-        __setFunctionName(_k, "NewsImprovements"),
-        _k.featureJs = `${jsStylePrefix}-news-improvements`,
-        _k.featureStyle = `${classStylePrefix}-news-improvements`,
-        _k),
-    _a.GamesImprovements = (_l = class {
-        },
-        __setFunctionName(_l, "GamesImprovements"),
-        _l.featureJs = `${jsStylePrefix}-games-improvements`,
-        _l.featureStyle = `${classStylePrefix}-games-improvements`,
-        _l.highlightGamesButtonJs = `${_l.featureJs}-highlight-games-collection-button`,
-        _l.Forums = (_m = class {
-            },
-            __setFunctionName(_m, "Forums"),
-            _m.featureJs = `${jsStylePrefix}-games-improvements-forum-improvements`,
-            _m.featureStyle = `${classStylePrefix}-games-improvements-forum-improvements`,
-            _m),
-        _l.Achievements = (_o = class {
-            },
-            __setFunctionName(_o, "Achievements"),
-            _o.featureJs = `${jsStylePrefix}-game-achievements`,
-            _o.featureStyle = `${classStylePrefix}-game-achievements`,
-            _o.showXboxAchievementGuidesJs = `${_o.featureJs}-xbox-achievement-guides`,
-            _o.showXboxAchievementGuidesStyle = `${_o.featureStyle}-xbox-achievement-guides`,
-            _o.showOwnerProgressEditorWrapperStyle = `${_o.showXboxAchievementGuidesStyle}-editor-wrapper`,
-            _o.showOwnerProgressEditorRowStyle = `${_o.showXboxAchievementGuidesStyle}-editor-row`,
-            _o.showOwnerProgressEditorStyle = `${_o.showXboxAchievementGuidesStyle}-editor`,
-            _o.askForWalkthroughWalkthroughJs = `${_o.showXboxAchievementGuidesJs}-ask-for-walkthrough`,
-            _o.saveWalkthroughInputJs = `${_o.showXboxAchievementGuidesJs}-save-walkthrough-input`,
-            _o.saveWalkthroughButtonJs = `${_o.showXboxAchievementGuidesJs}-save-walkthrough-button`,
-            _o),
-        _l),
-    _a.GamerImprovements = (_p = class {
-        },
-        __setFunctionName(_p, "GamerImprovements"),
-        _p.featureJs = `${jsStylePrefix}-gamer-improvements`,
-        _p.featureStyle = `${classStylePrefix}-gamer-improvements`,
-        _p.groupByGameButtonJs = `${_p.featureJs}-group-by-game-button`,
-        _p),
-    _a.ForumImprovements = (_q = class {
-        },
-        __setFunctionName(_q, "ForumImprovements"),
-        _q.featureJs = `${jsStylePrefix}-forum-improvements`,
-        _q.featureStyle = `${classStylePrefix}-forum-improvements`,
-        _q.filterThreadsTitleStyle = `${_q.featureStyle}-filter-threads-title`,
-        _q.filterThreadsUnhideStyle = `${_q.featureStyle}-filter-threads-unhide`,
-        _q.filterThreadsUnhideJs = `${_q.featureJs}-filter-threads-unhide`,
-        _q.Walkthroughs = (_r = class {
-            },
-            __setFunctionName(_r, "Walkthroughs"),
-            _r.featureJs = `${jsStylePrefix}-forum-improvements-walkthroughs`,
-            _r.featureStyle = `${classStylePrefix}-forum-improvements-walkthroughs`,
-            _r.showOwnerProgressJs = `${_r.featureJs}-show-owner-progress`,
-            _r.showOwnerProgressStyle = `${_r.featureStyle}-show-owner-progress`,
-            _r.showOwnerProgressEditorWrapperStyle = `${_r.showOwnerProgressStyle}-editor-wrapper`,
-            _r.showOwnerProgressEditorRowStyle = `${_r.showOwnerProgressStyle}-editor-row`,
-            _r.showOwnerProgressEditorStyle = `${_r.showOwnerProgressStyle}-editor`,
-            _r.askForWalkthroughWalkthroughJs = `${_r.showOwnerProgressJs}-ask-for-walkthrough`,
-            _r.saveWalkthroughInputJs = `${_r.showOwnerProgressJs}-save-walkthrough-input`,
-            _r.saveWalkthroughButtonJs = `${_r.showOwnerProgressJs}-save-walkthrough-button`,
-            _r),
-        _q),
-    _a.StaffWalkthroughImprovements = (_s = class {
-        },
-        __setFunctionName(_s, "StaffWalkthroughImprovements"),
-        _s.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements`,
-        _s.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements`,
-        _s.WalkthroughPage = (_t = class {
-            },
-            __setFunctionName(_t, "WalkthroughPage"),
-            _t.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-walkthrough-page`,
-            _t.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-walkthrough-page`,
-            _t.containerJs = `${_t.featureJs}-container`,
-            _t.containerStyle = `${_t.featureStyle}-container`,
-            _t.stickyPageHistoryJs = `${_t.featureJs}-sticky-page-history`,
-            _t.stickyPageHistoryStyle = `${_t.featureStyle}-sticky-page-history`,
-            _t.moveButtonsToLeftStyle = `${_t.featureStyle}-move-buttons-to-left`,
-            _t.walkthroughTeamButtonJs = `${_t.featureJs}-walkthrough-team-button`,
-            _t),
-        _s.ManageWalkthroughPage = (_u = class {
-            },
-            __setFunctionName(_u, "ManageWalkthroughPage"),
-            _u.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-manage-walkthrough-page`,
-            _u.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-manage-walkthrough-page`,
-            _u.containerJs = `${_u.featureJs}-container`,
-            _u.containerStyle = `${_u.featureStyle}-container`,
-            _u.clickableAchievementsJs = `${_u.featureJs}-clickable-achievements`,
-            _u.missingButtonsContainerJs = `${_u.featureJs}-missing-buttons-container`,
-            _u.addPageButtonJs = `${_u.featureJs}-add-page-button`,
-            _u.previewButtonJs = `${_u.featureJs}-preview-button`,
-            _u.viewContentButtonJs = `${_u.featureJs}-view-content-button`,
-            _u.readyForReviewButtonJs = `${_u.featureJs}-ready-for-review-button`,
-            _u),
-        _s.EditWalkthroughPage = (_v = class {
-            },
-            __setFunctionName(_v, "EditWalkthroughPage"),
-            _v.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`,
-            _v.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`,
-            _v.containerJs = `${_v.featureJs}-container`,
-            _v.containerStyle = `${_v.featureStyle}-container`,
-            _v.improvedImageSelectorJs = `${_v.featureJs}-improved-image-selector`,
-            _v.improvedImageSelectorStyle = `${_v.featureStyle}-improved-image-selector`,
-            _v.improvedImageSelectorContainerJs = `${_v.improvedImageSelectorJs}-container`,
-            _v.improvedImageSelectorContainerStyle = `${_v.improvedImageSelectorStyle}-container`,
-            _v.improvedImageSelectorImageTitleJs = `${_v.improvedImageSelectorJs}-image-title`,
-            _v.improvedImageSelectorImageTitleStyle = `${_v.improvedImageSelectorStyle}-image-title`,
-            _v.themeToggleJs = `${_v.featureJs}-theme-toggle`,
-            _v.themeToggleStyle = `${_v.featureStyle}-theme-toggle`,
-            _v.themeToggleDarkStyle = `${_v.themeToggleStyle}-dark`,
-            _v.themeToggleLightStyle = `${_v.themeToggleStyle}-light`,
-            _v.stickyTinymceToolbarJs = `${_v.featureJs}-sticky-tinymce-toolbar`,
-            _v.stickyTinymceToolbarStyles = `${_v.featureStyle}-sticky-tinymce-toolbar`,
-            _v),
-        _s.WalkthroughPreview = (_w = class {
-            },
-            __setFunctionName(_w, "WalkthroughPreview"),
-            _w.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-walkthrough-preview`,
-            _w.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-walkthrough-preview`,
-            _w.populateAsideContentJs = `${_w.featureJs}-populate-aside-content`,
-            _w.populateAsideContentWalkthroughPagesJs = `${_w.populateAsideContentJs}-walkthrough-pages`,
-            _w.populateAsideContentWalkthroughThanksJs = `${_w.populateAsideContentJs}-walkthrough-thanks`,
-            _w.populateAsideContentWalkthroughAchievementsJs = `${_w.populateAsideContentJs}-walkthrough-achievements`,
-            _w),
-        _s),
-    _a.Variables = (_x = class {
-        },
-        __setFunctionName(_x, "Variables"),
-        _x.StickyHeader = (_y = class {
-            },
-            __setFunctionName(_y, "StickyHeader"),
-            _y.featureVariableStylePrefix = `${variableStylePrefix}-sticky-header`,
-            _y.height = `${_y.featureVariableStylePrefix}-height`,
-            _y),
-        _x.StaffWalkthroughImprovements = (_z = class {
-            },
-            __setFunctionName(_z, "StaffWalkthroughImprovements"),
-            _z.WalkthroughPage = (_0 = class {
-                },
-                __setFunctionName(_0, "WalkthroughPage"),
-                _0.featureVariableStylePrefix = `${variableStylePrefix}-staff-walkthrough-improvements-walkthrough-page`,
-                _0.stickyPageHistoryTop = `${_0.featureVariableStylePrefix}-sticky-page-history-top`,
-                _0),
-            _z.EditWalkthroughPage = (_1 = class {
-                },
-                __setFunctionName(_1, "EditWalkthroughPage"),
-                _1.featureVariableStylePrefix = `${variableStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`,
-                _1.stickyTinymceToolbarWidth = `${_1.featureVariableStylePrefix}-sticky-tinymce-toolbar-width`,
-                _1.stickyTinymceToolbarTop = `${_1.featureVariableStylePrefix}-sticky-tinymce-toolbar-top`,
-                _1.stickyTinymceToolbarFloatingMenu = `${_1.featureVariableStylePrefix}-sticky-tinymce-toolbar-floating-menu`,
-                _1),
-            _z),
-        _x),
-    _a);
-Constants.Templates = (_2 = class {
-    },
-    __setFunctionName(_2, "Templates"),
-    _2.Components = (_3 = class {
-        },
-        __setFunctionName(_3, "Components"),
-        _3.Tab = (_4 = class {
-            },
-            __setFunctionName(_4, "Tab"),
-            _4.featureTemplatePrefix = `${templatePrefix}-tabs`,
-            _4.tabLink = `${_4.featureTemplatePrefix}-link`,
-            _4.tabContent = `${_4.featureTemplatePrefix}-content`,
-            _4),
-        _3),
-    _2.GamesImprovements = (_5 = class {
-        },
-        __setFunctionName(_5, "GamesImprovements"),
-        _5.Achievements = (_6 = class {
-            },
-            __setFunctionName(_6, "Achievements"),
-            _6.featureTemplatePrefix = `${templatePrefix}-games-improvements-achievements`,
-            _6.achievementGuideSolution = `${_6.featureTemplatePrefix}-achievement-guide`,
-            _6),
-        _5),
-    _2.StaffWalkthroughImprovements = (_7 = class {
-        },
-        __setFunctionName(_7, "StaffWalkthroughImprovements"),
-        _7.ManageWalkthroughPage = (_8 = class {
-            },
-            __setFunctionName(_8, "ManageWalkthroughPage"),
-            _8.featureTemplatePrefix = `${templatePrefix}-manage-walkthrough`,
-            _8.achievementRow = `${_8.featureTemplatePrefix}-achievement-row`,
-            _8),
-        _7.WalkthroughPreview = (_9 = class {
-            },
-            __setFunctionName(_9, "WalkthroughPreview"),
-            _9.featureTemplatePrefix = `${templatePrefix}-walkthrough-preview`,
-            _9.walkthroughPagesSummary = `${_9.featureTemplatePrefix}-walkthrough-pages-summary`,
-            _9.walkthroughPagesNumbered = `${_9.featureTemplatePrefix}-walkthrough-pages-numbered`,
-            _9.walkthroughPagesNumberedSelected = `${_9.featureTemplatePrefix}-walkthrough-pages-numbered-selected`,
-            _9.walkthroughAchievements = `${_9.featureTemplatePrefix}-walkthrough-achievements`,
-            _9),
-        _7),
-    _2);
+Constants.Styles = (_z = class {
+}, _z.root = "trueachievement-extras", _z.Components = (_c = class {
+}, _c.accordion = `${jsStylePrefix}-accordion`, _c.askLoader = `${jsStylePrefix}-ask-loader-container`, _c.snackbar = `${jsStylePrefix}-snackbar`, _c.showSnackbar = `${classStylePrefix}-snackbar-show`, _c.AskLoader = (_a = class {
+}, _a.featureJs = `${jsStylePrefix}-ask-loader`, _a.containerJs = `${_a.featureJs}-container`, _a.askJs = `${_a.featureJs}-ask`, _a.inputJs = `${_a.askJs}-input`, _a.buttonJs = `${_a.askJs}-button`, _a), _c.Tab = (_b = class {
+}, _b.featureStyle = `${classStylePrefix}-tabs`, _b.featureJs = `${jsStylePrefix}-tabs`, _b.tabLinkContainer = `${_b.featureJs}-link-container`, _b.tabLink = `${_b.featureJs}-link`, _b.tabContent = `${_b.featureJs}-content`, _b.tabSelected = `${_b.featureStyle}-selected`, _b.tabScroll = `${_b.featureStyle}-scroll`, _b), _c), _z.Animations = (_d = class {
+}, _d.yShow = `${classStylePrefix}-y-show`, _d.yHide = `${classStylePrefix}-y-hide`, _d.yHideNoTransition = `${_d.yHide}-no-transition`, _d), _z.Base = (_e = class {
+}, _e.hide = `${classStylePrefix}-hide`, _e), _z.SettingsMenu = (_f = class {
+}, _f.featureJs = `${jsStylePrefix}-settings-menu`, _f.featureStyle = `${classStylePrefix}-settings-menu`, _f.subSetting = `${_f.featureStyle}-sub-setting`, _f.wrenchJs = `${_f.featureJs}-wrench`, _f.closeJs = `${_f.featureJs}-close`, _f.versionLink = `${_f.featureJs}-version`, _f.documentationLink = `${_f.featureJs}-documentation`, _f.changelogView = `${_f.featureJs}-changelog`, _f.featureDocumentationView = `${_f.featureJs}-feature-documentation`, _f.settingsView = `${_f.featureJs}-settings`, _f.settingsContentShow = `${_f.featureStyle}-settings-item-show`, _f), _z.Emojis = (_g = class {
+}, _g.featureJs = `${jsStylePrefix}-emojis`, _g.featureStyle = `${classStylePrefix}-emojis`, _g), _z.StickyHeader = (_h = class {
+}, _h.featureJs = `${jsStylePrefix}-sticky-header`, _h.featureStyle = `${classStylePrefix}-sticky-header`, _h), _z.NewsImprovements = (_i = class {
+}, _i.featureJs = `${jsStylePrefix}-news-improvements`, _i.featureStyle = `${classStylePrefix}-news-improvements`, _i), _z.GamesImprovements = (_l = class {
+}, _l.featureJs = `${jsStylePrefix}-games-improvements`, _l.featureStyle = `${classStylePrefix}-games-improvements`, _l.highlightGamesButtonJs = `${_l.featureJs}-highlight-games-collection-button`, _l.Forums = (_j = class {
+}, _j.featureJs = `${jsStylePrefix}-games-improvements-forum-improvements`, _j.featureStyle = `${classStylePrefix}-games-improvements-forum-improvements`, _j), _l.Achievements = (_k = class {
+}, _k.featureJs = `${jsStylePrefix}-game-achievements`, _k.featureStyle = `${classStylePrefix}-game-achievements`, _k.showXboxAchievementGuidesJs = `${_k.featureJs}-xbox-achievement-guides`, _k.showXboxAchievementGuidesStyle = `${_k.featureStyle}-xbox-achievement-guides`, _k.showOwnerProgressEditorWrapperStyle = `${_k.showXboxAchievementGuidesStyle}-editor-wrapper`, _k.showOwnerProgressEditorRowStyle = `${_k.showXboxAchievementGuidesStyle}-editor-row`, _k.showOwnerProgressEditorStyle = `${_k.showXboxAchievementGuidesStyle}-editor`, _k.askForWalkthroughWalkthroughJs = `${_k.showXboxAchievementGuidesJs}-ask-for-walkthrough`, _k.saveWalkthroughInputJs = `${_k.showXboxAchievementGuidesJs}-save-walkthrough-input`, _k.saveWalkthroughButtonJs = `${_k.showXboxAchievementGuidesJs}-save-walkthrough-button`, _k.showAchievementLeaderboardLinksStyle = `${_k.featureStyle}-achievement-leaderboard-links`, _k), _l), _z.GamerImprovements = (_m = class {
+}, _m.featureJs = `${jsStylePrefix}-gamer-improvements`, _m.featureStyle = `${classStylePrefix}-gamer-improvements`, _m.groupByGameButtonJs = `${_m.featureJs}-group-by-game-button`, _m), _z.ForumImprovements = (_o = class {
+}, _o.featureJs = `${jsStylePrefix}-forum-improvements`, _o.featureStyle = `${classStylePrefix}-forum-improvements`, _o.filterThreadsTitleStyle = `${_o.featureStyle}-filter-threads-title`, _o.filterThreadsUnhideStyle = `${_o.featureStyle}-filter-threads-unhide`, _o.filterThreadsUnhideJs = `${_o.featureJs}-filter-threads-unhide`, _o.Walkthroughs = (_n = class {
+}, _n.featureJs = `${jsStylePrefix}-forum-improvements-walkthroughs`, _n.featureStyle = `${classStylePrefix}-forum-improvements-walkthroughs`, _n.showOwnerProgressJs = `${_n.featureJs}-show-owner-progress`, _n.showOwnerProgressStyle = `${_n.featureStyle}-show-owner-progress`, _n.showOwnerProgressEditorWrapperStyle = `${_n.showOwnerProgressStyle}-editor-wrapper`, _n.showOwnerProgressEditorRowStyle = `${_n.showOwnerProgressStyle}-editor-row`, _n.showOwnerProgressEditorStyle = `${_n.showOwnerProgressStyle}-editor`, _n.askForWalkthroughWalkthroughJs = `${_n.showOwnerProgressJs}-ask-for-walkthrough`, _n.saveWalkthroughInputJs = `${_n.showOwnerProgressJs}-save-walkthrough-input`, _n.saveWalkthroughButtonJs = `${_n.showOwnerProgressJs}-save-walkthrough-button`, _n), _o), _z.StaffWalkthroughImprovements = (_t = class {
+}, _t.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements`, _t.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements`, _t.WalkthroughPage = (_p = class {
+}, _p.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-walkthrough-page`, _p.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-walkthrough-page`, _p.containerJs = `${_p.featureJs}-container`, _p.containerStyle = `${_p.featureStyle}-container`, _p.stickyPageHistoryJs = `${_p.featureJs}-sticky-page-history`, _p.stickyPageHistoryStyle = `${_p.featureStyle}-sticky-page-history`, _p.moveButtonsToLeftStyle = `${_p.featureStyle}-move-buttons-to-left`, _p.walkthroughTeamButtonJs = `${_p.featureJs}-walkthrough-team-button`, _p), _t.ManageWalkthroughPage = (_q = class {
+}, _q.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-manage-walkthrough-page`, _q.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-manage-walkthrough-page`, _q.containerJs = `${_q.featureJs}-container`, _q.containerStyle = `${_q.featureStyle}-container`, _q.clickableAchievementsJs = `${_q.featureJs}-clickable-achievements`, _q.missingButtonsContainerJs = `${_q.featureJs}-missing-buttons-container`, _q.addPageButtonJs = `${_q.featureJs}-add-page-button`, _q.previewButtonJs = `${_q.featureJs}-preview-button`, _q.viewContentButtonJs = `${_q.featureJs}-view-content-button`, _q.readyForReviewButtonJs = `${_q.featureJs}-ready-for-review-button`, _q), _t.EditWalkthroughPage = (_r = class {
+}, _r.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`, _r.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`, _r.containerJs = `${_r.featureJs}-container`, _r.containerStyle = `${_r.featureStyle}-container`, _r.improvedImageSelectorJs = `${_r.featureJs}-improved-image-selector`, _r.improvedImageSelectorStyle = `${_r.featureStyle}-improved-image-selector`, _r.improvedImageSelectorContainerJs = `${_r.improvedImageSelectorJs}-container`, _r.improvedImageSelectorContainerStyle = `${_r.improvedImageSelectorStyle}-container`, _r.improvedImageSelectorImageTitleJs = `${_r.improvedImageSelectorJs}-image-title`, _r.improvedImageSelectorImageTitleStyle = `${_r.improvedImageSelectorStyle}-image-title`, _r.themeToggleJs = `${_r.featureJs}-theme-toggle`, _r.themeToggleStyle = `${_r.featureStyle}-theme-toggle`, _r.themeToggleDarkStyle = `${_r.themeToggleStyle}-dark`, _r.themeToggleLightStyle = `${_r.themeToggleStyle}-light`, _r.stickyTinymceToolbarJs = `${_r.featureJs}-sticky-tinymce-toolbar`, _r.stickyTinymceToolbarStyles = `${_r.featureStyle}-sticky-tinymce-toolbar`, _r), _t.WalkthroughPreview = (_s = class {
+}, _s.featureJs = `${jsStylePrefix}-staff-walkthrough-improvements-walkthrough-preview`, _s.featureStyle = `${classStylePrefix}-staff-walkthrough-improvements-walkthrough-preview`, _s.populateAsideContentJs = `${_s.featureJs}-populate-aside-content`, _s.populateAsideContentWalkthroughPagesJs = `${_s.populateAsideContentJs}-walkthrough-pages`, _s.populateAsideContentWalkthroughThanksJs = `${_s.populateAsideContentJs}-walkthrough-thanks`, _s.populateAsideContentWalkthroughAchievementsJs = `${_s.populateAsideContentJs}-walkthrough-achievements`, _s), _t), _z.Variables = (_y = class {
+}, _y.StickyHeader = (_u = class {
+}, _u.featureVariableStylePrefix = `${variableStylePrefix}-sticky-header`, _u.height = `${_u.featureVariableStylePrefix}-height`, _u), _y.StaffWalkthroughImprovements = (_x = class {
+}, _x.WalkthroughPage = (_v = class {
+}, _v.featureVariableStylePrefix = `${variableStylePrefix}-staff-walkthrough-improvements-walkthrough-page`, _v.stickyPageHistoryTop = `${_v.featureVariableStylePrefix}-sticky-page-history-top`, _v), _x.EditWalkthroughPage = (_w = class {
+}, _w.featureVariableStylePrefix = `${variableStylePrefix}-staff-walkthrough-improvements-edit-walkthrough-page`, _w.stickyTinymceToolbarWidth = `${_w.featureVariableStylePrefix}-sticky-tinymce-toolbar-width`, _w.stickyTinymceToolbarTop = `${_w.featureVariableStylePrefix}-sticky-tinymce-toolbar-top`, _w.stickyTinymceToolbarFloatingMenu = `${_w.featureVariableStylePrefix}-sticky-tinymce-toolbar-floating-menu`, _w), _x), _y), _z);
+Constants.Templates = (_H = class {
+}, _H.Components = (_B = class {
+}, _B.Tab = (_A = class {
+}, _A.featureTemplatePrefix = `${templatePrefix}-tabs`, _A.tabLink = `${_A.featureTemplatePrefix}-link`, _A.tabContent = `${_A.featureTemplatePrefix}-content`, _A), _B), _H.GamesImprovements = (_D = class {
+}, _D.Achievements = (_C = class {
+}, _C.featureTemplatePrefix = `${templatePrefix}-games-improvements-achievements`, _C.achievementGuideSolution = `${_C.featureTemplatePrefix}-achievement-guide`, _C), _D), _H.StaffWalkthroughImprovements = (_G = class {
+}, _G.ManageWalkthroughPage = (_E = class {
+}, _E.featureTemplatePrefix = `${templatePrefix}-manage-walkthrough`, _E.achievementRow = `${_E.featureTemplatePrefix}-achievement-row`, _E), _G.WalkthroughPreview = (_F = class {
+}, _F.featureTemplatePrefix = `${templatePrefix}-walkthrough-preview`, _F.walkthroughPagesSummary = `${_F.featureTemplatePrefix}-walkthrough-pages-summary`, _F.walkthroughPagesNumbered = `${_F.featureTemplatePrefix}-walkthrough-pages-numbered`, _F.walkthroughPagesNumberedSelected = `${_F.featureTemplatePrefix}-walkthrough-pages-numbered-selected`, _F.walkthroughAchievements = `${_F.featureTemplatePrefix}-walkthrough-achievements`, _F), _G), _H);
 
 ;// CONCATENATED MODULE: ./src/globals/config.ts
 const migrateGet = (oldSetting, newSetting, defaultValue) => {
-    const newValue = GM_getValue(newSetting);
-    if (newValue !== undefined) {
-        return newValue;
-    }
-    const oldValue = GM_getValue(oldSetting, defaultValue);
-    GM_setValue(newSetting, oldValue);
-    GM_deleteValue(oldSetting);
-    return oldValue;
+  const newValue = GM_getValue(newSetting);
+  if (newValue !== void 0) {
+    return newValue;
+  }
+  const oldValue = GM_getValue(oldSetting, defaultValue);
+  GM_setValue(newSetting, oldValue);
+  GM_deleteValue(oldSetting);
+  return oldValue;
 };
 const arrayGet = (setting, defaultValue) => {
-    const value = GM_getValue(setting, '');
-    return value.length !== 0 ? JSON.parse(value) : defaultValue;
+  const value = GM_getValue(setting, "");
+  return value.length !== 0 ? JSON.parse(value) : defaultValue;
 };
 const stickyHeader = {
-    get enabled() {
-        return migrateGet('trueachievements-extra-stickyHeader-enabled', 'stickyHeader-enabled', false);
-    },
-    set enabled(value) {
-        GM_setValue('stickyHeader-enabled', value);
-    },
-    get remainStuck() {
-        return GM_getValue('stickyHeader-remainStuck', false);
-    },
-    set remainStuck(value) {
-        GM_setValue('stickyHeader-remainStuck', value);
-    }
+  get enabled() {
+    return migrateGet("trueachievements-extra-stickyHeader-enabled", "stickyHeader-enabled", false);
+  },
+  set enabled(value) {
+    GM_setValue("stickyHeader-enabled", value);
+  },
+  get remainStuck() {
+    return GM_getValue("stickyHeader-remainStuck", false);
+  },
+  set remainStuck(value) {
+    GM_setValue("stickyHeader-remainStuck", value);
+  }
 };
 const emojis = {
-    get enabled() {
-        return GM_getValue('emojis-enabled', false);
-    },
-    set enabled(value) {
-        GM_setValue('emojis-enabled', value);
-    }
+  get enabled() {
+    return GM_getValue("emojis-enabled", false);
+  },
+  set enabled(value) {
+    GM_setValue("emojis-enabled", value);
+  }
 };
 const editWalkthrough = {
-    get improvedImageSelector() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-improvedImageSelector', 'improvedImageSelector', false);
-    },
-    set improvedImageSelector(value) {
-        GM_setValue('improvedImageSelector', value);
-    },
-    get autoSaveNotification() {
-        return GM_getValue('autoSaveNotification', false);
-    },
-    set autoSaveNotification(value) {
-        GM_setValue('autoSaveNotification', value);
-    },
-    get tinymceTheme() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-tinymceTheme', 'tinymceTheme', null);
-    },
-    set tinymceTheme(value) {
-        GM_setValue('tinymceTheme', value);
-    }
+  get improvedImageSelector() {
+    return migrateGet(
+      "trueachievements-extra-staffWalkthroughImprovements-improvedImageSelector",
+      "improvedImageSelector",
+      false
+    );
+  },
+  set improvedImageSelector(value) {
+    GM_setValue("improvedImageSelector", value);
+  },
+  get autoSaveNotification() {
+    return GM_getValue("autoSaveNotification", false);
+  },
+  set autoSaveNotification(value) {
+    GM_setValue("autoSaveNotification", value);
+  },
+  get tinymceTheme() {
+    return migrateGet("trueachievements-extra-staffWalkthroughImprovements-tinymceTheme", "tinymceTheme", null);
+  },
+  set tinymceTheme(value) {
+    GM_setValue("tinymceTheme", value);
+  }
 };
 const manageWalkthrough = {
-    get manageWalkthroughDefaultStatus() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatus', 'manageWalkthroughDefaultStatus', false);
-    },
-    set manageWalkthroughDefaultStatus(value) {
-        GM_setValue('manageWalkthroughDefaultStatus', value);
-    },
-    get clickableTableLinks() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-clickableTableLinks', 'clickableTableLinks', false);
-    },
-    set clickableTableLinks(value) {
-        GM_setValue('clickableTableLinks', value);
-    },
-    get addMissingButtons() {
-        return GM_getValue('addMissingButtons', false);
-    },
-    set addMissingButtons(value) {
-        GM_setValue('addMissingButtons', value);
-    },
-    get autoSelectFirst() {
-        return GM_getValue('autoSelectFirst', false);
-    },
-    set autoSelectFirst(value) {
-        GM_setValue('autoSelectFirst', value);
-    },
-    get manageWalkthroughDefaultStatusValue() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatusValue', 'manageWalkthroughDefaultStatusValue', '-1');
-    },
-    set manageWalkthroughDefaultStatusValue(value) {
-        GM_setValue('manageWalkthroughDefaultStatusValue', value);
-    }
+  get manageWalkthroughDefaultStatus() {
+    return migrateGet(
+      "trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatus",
+      "manageWalkthroughDefaultStatus",
+      false
+    );
+  },
+  set manageWalkthroughDefaultStatus(value) {
+    GM_setValue("manageWalkthroughDefaultStatus", value);
+  },
+  get clickableTableLinks() {
+    return migrateGet(
+      "trueachievements-extra-staffWalkthroughImprovements-clickableTableLinks",
+      "clickableTableLinks",
+      false
+    );
+  },
+  set clickableTableLinks(value) {
+    GM_setValue("clickableTableLinks", value);
+  },
+  get addMissingButtons() {
+    return GM_getValue("addMissingButtons", false);
+  },
+  set addMissingButtons(value) {
+    GM_setValue("addMissingButtons", value);
+  },
+  get autoSelectFirst() {
+    return GM_getValue("autoSelectFirst", false);
+  },
+  set autoSelectFirst(value) {
+    GM_setValue("autoSelectFirst", value);
+  },
+  get manageWalkthroughDefaultStatusValue() {
+    return migrateGet(
+      "trueachievements-extra-staffWalkthroughImprovements-manageWalkthroughDefaultStatusValue",
+      "manageWalkthroughDefaultStatusValue",
+      "-1"
+    );
+  },
+  set manageWalkthroughDefaultStatusValue(value) {
+    GM_setValue("manageWalkthroughDefaultStatusValue", value);
+  }
 };
 const walkthroughPage = {
-    get stickyPageHistory() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-stickyPageHistory', 'stickyPageHistory', false);
-    },
-    set stickyPageHistory(value) {
-        GM_setValue('stickyPageHistory', value);
-    },
-    get moveButtonsToLeft() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-editPageLeft', 'moveButtonsToLeft', false);
-    },
-    set moveButtonsToLeft(value) {
-        GM_setValue('moveButtonsToLeft', value);
-    },
-    get walkthroughTeamButton() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-walkthroughTeamButton', 'walkthroughTeamButton', false);
-    },
-    set walkthroughTeamButton(value) {
-        GM_setValue('walkthroughTeamButton', value);
-    },
-    get highlightPageLocked() {
-        return GM_getValue('highlightPageLocked', false);
-    },
-    set highlightPageLocked(value) {
-        GM_setValue('highlightPageLocked', value);
-    }
+  get stickyPageHistory() {
+    return migrateGet(
+      "trueachievements-extra-staffWalkthroughImprovements-stickyPageHistory",
+      "stickyPageHistory",
+      false
+    );
+  },
+  set stickyPageHistory(value) {
+    GM_setValue("stickyPageHistory", value);
+  },
+  get moveButtonsToLeft() {
+    return migrateGet("trueachievements-extra-staffWalkthroughImprovements-editPageLeft", "moveButtonsToLeft", false);
+  },
+  set moveButtonsToLeft(value) {
+    GM_setValue("moveButtonsToLeft", value);
+  },
+  get walkthroughTeamButton() {
+    return migrateGet(
+      "trueachievements-extra-staffWalkthroughImprovements-walkthroughTeamButton",
+      "walkthroughTeamButton",
+      false
+    );
+  },
+  set walkthroughTeamButton(value) {
+    GM_setValue("walkthroughTeamButton", value);
+  },
+  get highlightPageLocked() {
+    return GM_getValue("highlightPageLocked", false);
+  },
+  set highlightPageLocked(value) {
+    GM_setValue("highlightPageLocked", value);
+  }
 };
 const walkthroughPreview = {
-    get populateAsideContent() {
-        return GM_getValue('populateAsideContent', false);
-    },
-    set populateAsideContent(value) {
-        GM_setValue('populateAsideContent', value);
-    }
+  get populateAsideContent() {
+    return GM_getValue("populateAsideContent", false);
+  },
+  set populateAsideContent(value) {
+    GM_setValue("populateAsideContent", value);
+  }
 };
 const staffWalkthroughImprovements = {
-    get enabled() {
-        return migrateGet('trueachievements-extra-staffWalkthroughImprovements-enabled', 'staffWalkthroughImprovements-enabled', false);
-    },
-    set enabled(value) {
-        GM_setValue('staffWalkthroughImprovements-enabled', value);
-    },
-    editWalkthrough,
-    manageWalkthrough,
-    walkthroughPage,
-    walkthroughPreview
+  get enabled() {
+    return migrateGet(
+      "trueachievements-extra-staffWalkthroughImprovements-enabled",
+      "staffWalkthroughImprovements-enabled",
+      false
+    );
+  },
+  set enabled(value) {
+    GM_setValue("staffWalkthroughImprovements-enabled", value);
+  },
+  editWalkthrough,
+  manageWalkthrough,
+  walkthroughPage,
+  walkthroughPreview
 };
 const myThreads = {
-    get myThreadsForumOverride() {
-        return GM_getValue('myThreadsForumOverride', false);
-    },
-    set myThreadsForumOverride(value) {
-        GM_setValue('myThreadsForumOverride', value);
-    },
-    get myThreadsThreadFilter() {
-        return myThreads.myThreadsForumOverride
-            ? GM_getValue('myThreadsThreadFilter', false)
-            : forumImprovements.forumImprovementsThreadFilter;
-    },
-    set myThreadsThreadFilter(value) {
-        myThreads.myThreadsForumOverride ? GM_setValue('myThreadsThreadFilter', value) : null;
-    },
-    get threadFilterKeywords() {
-        return myThreads.myThreadsForumOverride
-            ? arrayGet('myThreadsThreadFilterKeywords', [])
-            : forumImprovements.threadFilterKeywords;
-    },
-    set threadFilterKeywords(value) {
-        myThreads.myThreadsForumOverride ? GM_setValue('myThreadsThreadFilterKeywords', JSON.stringify(value)) : null;
-    }
+  get myThreadsForumOverride() {
+    return GM_getValue("myThreadsForumOverride", false);
+  },
+  set myThreadsForumOverride(value) {
+    GM_setValue("myThreadsForumOverride", value);
+  },
+  get myThreadsThreadFilter() {
+    return myThreads.myThreadsForumOverride ? GM_getValue("myThreadsThreadFilter", false) : forumImprovements.forumImprovementsThreadFilter;
+  },
+  set myThreadsThreadFilter(value) {
+    myThreads.myThreadsForumOverride ? GM_setValue("myThreadsThreadFilter", value) : null;
+  },
+  get threadFilterKeywords() {
+    return myThreads.myThreadsForumOverride ? arrayGet("myThreadsThreadFilterKeywords", []) : forumImprovements.threadFilterKeywords;
+  },
+  set threadFilterKeywords(value) {
+    myThreads.myThreadsForumOverride ? GM_setValue("myThreadsThreadFilterKeywords", JSON.stringify(value)) : null;
+  }
 };
 const walkthroughsForum = {
-    get showOwnerProgress() {
-        return GM_getValue('showOwnerProgress', false);
-    },
-    set showOwnerProgress(value) {
-        GM_setValue('showOwnerProgress', value);
-    }
+  get showOwnerProgress() {
+    return GM_getValue("showOwnerProgress", false);
+  },
+  set showOwnerProgress(value) {
+    GM_setValue("showOwnerProgress", value);
+  }
 };
 const forumImprovements = {
-    get enabled() {
-        return GM_getValue('forumImprovements-enabled', false);
-    },
-    set enabled(value) {
-        GM_setValue('forumImprovements-enabled', value);
-    },
-    get forumImprovementsThreadFilter() {
-        return GM_getValue('forumImprovementsThreadFilter', false);
-    },
-    set forumImprovementsThreadFilter(value) {
-        GM_setValue('forumImprovementsThreadFilter', value);
-    },
-    get threadFilterKeywords() {
-        return arrayGet('forumImprovementsThreadFilterKeywords', []);
-    },
-    set threadFilterKeywords(value) {
-        GM_setValue('forumImprovementsThreadFilterKeywords', JSON.stringify(value));
-    },
-    walkthroughs: walkthroughsForum,
-    myThreads
+  get enabled() {
+    return GM_getValue("forumImprovements-enabled", false);
+  },
+  set enabled(value) {
+    GM_setValue("forumImprovements-enabled", value);
+  },
+  get forumImprovementsThreadFilter() {
+    return GM_getValue("forumImprovementsThreadFilter", false);
+  },
+  set forumImprovementsThreadFilter(value) {
+    GM_setValue("forumImprovementsThreadFilter", value);
+  },
+  get threadFilterKeywords() {
+    return arrayGet("forumImprovementsThreadFilterKeywords", []);
+  },
+  set threadFilterKeywords(value) {
+    GM_setValue("forumImprovementsThreadFilterKeywords", JSON.stringify(value));
+  },
+  walkthroughs: walkthroughsForum,
+  myThreads
 };
 const sales = {
-    get autoSortBy() {
-        return GM_getValue('autoSortBy', false);
-    },
-    set autoSortBy(value) {
-        GM_setValue('autoSortBy', value);
-    },
-    get autoSortByValue() {
-        return arrayGet('autoSortByValue', ['product', 'game']);
-    },
-    set autoSortByValue(value) {
-        GM_setValue('autoSortByValue', JSON.stringify(value));
-    },
-    get autoSortByOrder() {
-        return GM_getValue('autoSortByOrder', 'asc');
-    },
-    set autoSortByOrder(value) {
-        GM_setValue('autoSortByOrder', value);
-    }
+  get autoSortBy() {
+    return GM_getValue("autoSortBy", false);
+  },
+  set autoSortBy(value) {
+    GM_setValue("autoSortBy", value);
+  },
+  get autoSortByValue() {
+    return arrayGet("autoSortByValue", ["product", "game"]);
+  },
+  set autoSortByValue(value) {
+    GM_setValue("autoSortByValue", JSON.stringify(value));
+  },
+  get autoSortByOrder() {
+    return GM_getValue("autoSortByOrder", "asc");
+  },
+  set autoSortByOrder(value) {
+    GM_setValue("autoSortByOrder", value);
+  }
 };
 const newsImprovements = {
-    get enabled() {
-        return GM_getValue('newsImprovements-enabled', false);
-    },
-    set enabled(value) {
-        GM_setValue('newsImprovements-enabled', value);
-    },
-    sales
+  get enabled() {
+    return GM_getValue("newsImprovements-enabled", false);
+  },
+  set enabled(value) {
+    GM_setValue("newsImprovements-enabled", value);
+  },
+  sales
 };
 const games = {
-    get addHighlightGamesNotInCollectionButton() {
-        return GM_getValue('addHighlightGamesNotInCollectionButton-enabled', false);
-    },
-    set addHighlightGamesNotInCollectionButton(value) {
-        GM_setValue('addHighlightGamesNotInCollectionButton-enabled', value);
-    }
+  get addHighlightGamesNotInCollectionButton() {
+    return GM_getValue("addHighlightGamesNotInCollectionButton-enabled", false);
+  },
+  set addHighlightGamesNotInCollectionButton(value) {
+    GM_setValue("addHighlightGamesNotInCollectionButton-enabled", value);
+  }
 };
 const gameAchievements = {
-    get gameAchievementsDefaultStatus() {
-        return GM_getValue('gameAchievementsDefaultStatus', false);
-    },
-    set gameAchievementsDefaultStatus(value) {
-        GM_setValue('gameAchievementsDefaultStatus', value);
-    },
-    get gameAchievementsDefaultStatusValue() {
-        return GM_getValue('gameAchievementsDefaultStatusValue', 'rdoAllAchievements');
-    },
-    set gameAchievementsDefaultStatusValue(value) {
-        GM_setValue('gameAchievementsDefaultStatusValue', value);
-    },
-    get gameAchievementsIndividualProgress() {
-        return GM_getValue('gameAchievementsIndividualProgress', false);
-    },
-    set gameAchievementsIndividualProgress(value) {
-        GM_setValue('gameAchievementsIndividualProgress', value);
-    },
-    get gameAchievementsShowXboxAchievementGuides() {
-        return GM_getValue('gameAchievementsShowXboxAchievementGuides', false);
-    },
-    set gameAchievementsShowXboxAchievementGuides(value) {
-        GM_setValue('gameAchievementsShowXboxAchievementGuides', value);
-    }
+  get gameAchievementsDefaultStatus() {
+    return GM_getValue("gameAchievementsDefaultStatus", false);
+  },
+  set gameAchievementsDefaultStatus(value) {
+    GM_setValue("gameAchievementsDefaultStatus", value);
+  },
+  get gameAchievementsDefaultStatusValue() {
+    return GM_getValue("gameAchievementsDefaultStatusValue", "rdoAllAchievements");
+  },
+  set gameAchievementsDefaultStatusValue(value) {
+    GM_setValue("gameAchievementsDefaultStatusValue", value);
+  },
+  get gameAchievementsIndividualProgress() {
+    return GM_getValue("gameAchievementsIndividualProgress", false);
+  },
+  set gameAchievementsIndividualProgress(value) {
+    GM_setValue("gameAchievementsIndividualProgress", value);
+  },
+  get gameAchievementsShowXboxAchievementGuides() {
+    return GM_getValue("gameAchievementsShowXboxAchievementGuides", false);
+  },
+  set gameAchievementsShowXboxAchievementGuides(value) {
+    GM_setValue("gameAchievementsShowXboxAchievementGuides", value);
+  }
 };
 const gameClips = {
-    get gameClipsDefaultStatus() {
-        return GM_getValue('gameClipsDefaultStatus', false);
-    },
-    set gameClipsDefaultStatus(value) {
-        GM_setValue('gameClipsDefaultStatus', value);
-    },
-    get gameClipsDefaultRecordedByValue() {
-        return GM_getValue('gameClipsDefaultRecordedByValue', '');
-    },
-    set gameClipsDefaultRecordedByValue(value) {
-        GM_setValue('gameClipsDefaultRecordedByValue', value);
-    },
-    get gameClipsDefaultSavedByValue() {
-        return GM_getValue('gameClipsDefaultSavedByValue', 'Gamer');
-    },
-    set gameClipsDefaultSavedByValue(value) {
-        GM_setValue('gameClipsDefaultSavedByValue', value);
-    },
-    get gameClipsDefaultRecordedValue() {
-        return GM_getValue('gameClipsDefaultRecordedValue', '7');
-    },
-    set gameClipsDefaultRecordedValue(value) {
-        GM_setValue('gameClipsDefaultRecordedValue', value);
-    },
-    get gameClipsDefaultSortByValue() {
-        return GM_getValue('gameClipsDefaultSortByValue', 'Most viewed');
-    },
-    set gameClipsDefaultSortByValue(value) {
-        GM_setValue('gameClipsDefaultSortByValue', value);
-    }
+  get gameClipsDefaultStatus() {
+    return GM_getValue("gameClipsDefaultStatus", false);
+  },
+  set gameClipsDefaultStatus(value) {
+    GM_setValue("gameClipsDefaultStatus", value);
+  },
+  get gameClipsDefaultRecordedByValue() {
+    return GM_getValue("gameClipsDefaultRecordedByValue", "");
+  },
+  set gameClipsDefaultRecordedByValue(value) {
+    GM_setValue("gameClipsDefaultRecordedByValue", value);
+  },
+  get gameClipsDefaultSavedByValue() {
+    return GM_getValue("gameClipsDefaultSavedByValue", "Gamer");
+  },
+  set gameClipsDefaultSavedByValue(value) {
+    GM_setValue("gameClipsDefaultSavedByValue", value);
+  },
+  get gameClipsDefaultRecordedValue() {
+    return GM_getValue("gameClipsDefaultRecordedValue", "7");
+  },
+  set gameClipsDefaultRecordedValue(value) {
+    GM_setValue("gameClipsDefaultRecordedValue", value);
+  },
+  get gameClipsDefaultSortByValue() {
+    return GM_getValue("gameClipsDefaultSortByValue", "Most viewed");
+  },
+  set gameClipsDefaultSortByValue(value) {
+    GM_setValue("gameClipsDefaultSortByValue", value);
+  }
 };
 const gameDLC = {
-    get gameDLCOverride() {
-        return GM_getValue('gameDLCOverride', false);
-    },
-    set gameDLCOverride(value) {
-        GM_setValue('gameDLCOverride', value);
-    },
-    get gameDLCDefaultStatus() {
-        return gameDLC.gameDLCOverride
-            ? GM_getValue('gameDLCDefaultStatus', false)
-            : gameAchievements.gameAchievementsDefaultStatus;
-    },
-    set gameDLCDefaultStatus(value) {
-        gameDLC.gameDLCOverride ? GM_setValue('gameDLCDefaultStatus', value) : null;
-    },
-    get gameDLCDefaultStatusValue() {
-        return gameDLC.gameDLCOverride
-            ? GM_getValue('gameDLCDefaultStatusValue', 'rdoAllAchievements')
-            : gameAchievements.gameAchievementsDefaultStatusValue;
-    },
-    set gameDLCDefaultStatusValue(value) {
-        gameDLC.gameDLCOverride ? GM_setValue('gameDLCDefaultStatusValue', value) : null;
-    },
-    get gameDLCIndividualProgress() {
-        return gameDLC.gameDLCOverride
-            ? GM_getValue('gameDLCIndividualProgress', false)
-            : gameAchievements.gameAchievementsIndividualProgress;
-    },
-    set gameDLCIndividualProgress(value) {
-        gameDLC.gameDLCOverride ? GM_setValue('gameDLCIndividualProgress', value) : null;
-    }
+  get gameDLCOverride() {
+    return GM_getValue("gameDLCOverride", false);
+  },
+  set gameDLCOverride(value) {
+    GM_setValue("gameDLCOverride", value);
+  },
+  get gameDLCDefaultStatus() {
+    return gameDLC.gameDLCOverride ? GM_getValue("gameDLCDefaultStatus", false) : gameAchievements.gameAchievementsDefaultStatus;
+  },
+  set gameDLCDefaultStatus(value) {
+    gameDLC.gameDLCOverride ? GM_setValue("gameDLCDefaultStatus", value) : null;
+  },
+  get gameDLCDefaultStatusValue() {
+    return gameDLC.gameDLCOverride ? GM_getValue("gameDLCDefaultStatusValue", "rdoAllAchievements") : gameAchievements.gameAchievementsDefaultStatusValue;
+  },
+  set gameDLCDefaultStatusValue(value) {
+    gameDLC.gameDLCOverride ? GM_setValue("gameDLCDefaultStatusValue", value) : null;
+  },
+  get gameDLCIndividualProgress() {
+    return gameDLC.gameDLCOverride ? GM_getValue("gameDLCIndividualProgress", false) : gameAchievements.gameAchievementsIndividualProgress;
+  },
+  set gameDLCIndividualProgress(value) {
+    gameDLC.gameDLCOverride ? GM_setValue("gameDLCIndividualProgress", value) : null;
+  }
 };
 const gameChallenges = {
-    get gameChallengesOverride() {
-        return GM_getValue('gameChallengesOverride', false);
-    },
-    set gameChallengesOverride(value) {
-        GM_setValue('gameChallengesOverride', value);
-    },
-    get gameChallengesDefaultStatus() {
-        return GM_getValue('gameChallengesDefaultStatus', false);
-    },
-    set gameChallengesDefaultStatus(value) {
-        GM_setValue('gameChallengesDefaultStatus', value);
-    },
-    get gameChallengesDefaultStatusValue() {
-        return GM_getValue('gameChallengesDefaultStatusValue', 'rdoAllChallenges');
-    },
-    set gameChallengesDefaultStatusValue(value) {
-        GM_setValue('gameChallengesDefaultStatusValue', value);
-    },
-    get gameChallengesIndividualProgress() {
-        return gameChallenges.gameChallengesOverride
-            ? GM_getValue('gameChallengesIndividualProgress', false)
-            : gameAchievements.gameAchievementsIndividualProgress;
-    },
-    set gameChallengesIndividualProgress(value) {
-        gameChallenges.gameChallengesOverride ? GM_setValue('gameChallengesIndividualProgress', value) : null;
-    }
+  get gameChallengesOverride() {
+    return GM_getValue("gameChallengesOverride", false);
+  },
+  set gameChallengesOverride(value) {
+    GM_setValue("gameChallengesOverride", value);
+  },
+  get gameChallengesDefaultStatus() {
+    return GM_getValue("gameChallengesDefaultStatus", false);
+  },
+  set gameChallengesDefaultStatus(value) {
+    GM_setValue("gameChallengesDefaultStatus", value);
+  },
+  get gameChallengesDefaultStatusValue() {
+    return GM_getValue("gameChallengesDefaultStatusValue", "rdoAllChallenges");
+  },
+  set gameChallengesDefaultStatusValue(value) {
+    GM_setValue("gameChallengesDefaultStatusValue", value);
+  },
+  get gameChallengesIndividualProgress() {
+    return gameChallenges.gameChallengesOverride ? GM_getValue("gameChallengesIndividualProgress", false) : gameAchievements.gameAchievementsIndividualProgress;
+  },
+  set gameChallengesIndividualProgress(value) {
+    gameChallenges.gameChallengesOverride ? GM_setValue("gameChallengesIndividualProgress", value) : null;
+  }
 };
 const gameForums = {
-    get gameForumsForumOverride() {
-        return GM_getValue('gameForumsForumOverride', false);
-    },
-    set gameForumsForumOverride(value) {
-        GM_setValue('gameForumsForumOverride', value);
-    },
-    get gameForumsThreadFilter() {
-        return gameForums.gameForumsForumOverride
-            ? GM_getValue('gameForumsThreadFilter', false)
-            : forumImprovements.forumImprovementsThreadFilter;
-    },
-    set gameForumsThreadFilter(value) {
-        gameForums.gameForumsForumOverride ? GM_setValue('gameForumsThreadFilter', value) : null;
-    },
-    get threadFilterKeywords() {
-        return gameForums.gameForumsForumOverride
-            ? arrayGet('gameForumsThreadFilterKeywords', [])
-            : forumImprovements.threadFilterKeywords;
-    },
-    set threadFilterKeywords(value) {
-        gameForums.gameForumsForumOverride ? GM_setValue('gameForumsThreadFilterKeywords', JSON.stringify(value)) : null;
-    },
-    get gameForumsDefaultThread() {
-        return GM_getValue('gameForumsDefaultThread', false);
-    },
-    set gameForumsDefaultThread(value) {
-        GM_setValue('gameForumsDefaultThread', value);
-    },
-    get gameForumsDefaultThreadValue() {
-        return GM_getValue('gameForumsDefaultThreadValue', 'all');
-    },
-    set gameForumsDefaultThreadValue(value) {
-        GM_setValue('gameForumsDefaultThreadValue', value);
-    }
+  get gameForumsForumOverride() {
+    return GM_getValue("gameForumsForumOverride", false);
+  },
+  set gameForumsForumOverride(value) {
+    GM_setValue("gameForumsForumOverride", value);
+  },
+  get gameForumsThreadFilter() {
+    return gameForums.gameForumsForumOverride ? GM_getValue("gameForumsThreadFilter", false) : forumImprovements.forumImprovementsThreadFilter;
+  },
+  set gameForumsThreadFilter(value) {
+    gameForums.gameForumsForumOverride ? GM_setValue("gameForumsThreadFilter", value) : null;
+  },
+  get threadFilterKeywords() {
+    return gameForums.gameForumsForumOverride ? arrayGet("gameForumsThreadFilterKeywords", []) : forumImprovements.threadFilterKeywords;
+  },
+  set threadFilterKeywords(value) {
+    gameForums.gameForumsForumOverride ? GM_setValue("gameForumsThreadFilterKeywords", JSON.stringify(value)) : null;
+  },
+  get gameForumsDefaultThread() {
+    return GM_getValue("gameForumsDefaultThread", false);
+  },
+  set gameForumsDefaultThread(value) {
+    GM_setValue("gameForumsDefaultThread", value);
+  },
+  get gameForumsDefaultThreadValue() {
+    return GM_getValue("gameForumsDefaultThreadValue", "all");
+  },
+  set gameForumsDefaultThreadValue(value) {
+    GM_setValue("gameForumsDefaultThreadValue", value);
+  }
 };
 const gamesImprovements = {
-    get enabled() {
-        return GM_getValue('gamesImprovements-enabled', false);
-    },
-    set enabled(value) {
-        GM_setValue('gamesImprovements-enabled', value);
-    },
-    games,
-    achievements: gameAchievements,
-    challenges: gameChallenges,
-    forums: gameForums,
-    clips: gameClips,
-    dlc: gameDLC
+  get enabled() {
+    return GM_getValue("gamesImprovements-enabled", false);
+  },
+  set enabled(value) {
+    GM_setValue("gamesImprovements-enabled", value);
+  },
+  games,
+  achievements: gameAchievements,
+  challenges: gameChallenges,
+  forums: gameForums,
+  clips: gameClips,
+  dlc: gameDLC
 };
 const achievements = {
-    get addGroupByGameButton() {
-        return GM_getValue('addGroupByGameButton-enabled', false);
-    },
-    set addGroupByGameButton(value) {
-        GM_setValue('addGroupByGameButton-enabled', value);
-    }
+  get addGroupByGameButton() {
+    return GM_getValue("addGroupByGameButton-enabled", false);
+  },
+  set addGroupByGameButton(value) {
+    GM_setValue("addGroupByGameButton-enabled", value);
+  }
 };
 const gamerImprovements = {
-    get enabled() {
-        return GM_getValue('gamerImprovements-enabled', false);
-    },
-    set enabled(value) {
-        GM_setValue('gamerImprovements-enabled', value);
-    },
-    achievements
+  get enabled() {
+    return GM_getValue("gamerImprovements-enabled", false);
+  },
+  set enabled(value) {
+    GM_setValue("gamerImprovements-enabled", value);
+  },
+  achievements
 };
 const config = {
-    stickyHeader,
-    emojis,
-    staffWalkthroughImprovements,
-    forumImprovements,
-    newsImprovements,
-    gamesImprovements,
-    gamerImprovements
+  stickyHeader,
+  emojis,
+  staffWalkthroughImprovements,
+  forumImprovements,
+  newsImprovements,
+  gamesImprovements,
+  gamerImprovements
 };
 
 ;// CONCATENATED MODULE: ./src/globals/index.ts
@@ -5318,201 +5069,199 @@ const config = {
 /* harmony export */   wC: () => (/* binding */ ForumRegex)
 /* harmony export */ });
 const getUrlProperties = (str, props = []) => {
-    props = Array.isArray(props) ? props : [props];
-    try {
-        const url = new URL(str);
-        let constructedString = '';
-        for (let i = 0; i < props.length; i++) {
-            if (!url[props[i]]) {
-                continue;
-            }
-            constructedString += url[props[i]];
-        }
-        return constructedString;
+  props = Array.isArray(props) ? props : [props];
+  try {
+    const url = new URL(str);
+    let constructedString = "";
+    for (let i = 0; i < props.length; i++) {
+      if (!url[props[i]]) {
+        continue;
+      }
+      constructedString += url[props[i]];
     }
-    catch (ex) {
-        throw `${str} is not a valid url`;
-    }
+    return constructedString;
+  } catch (ex) {
+    throw `${str} is not a valid url`;
+  }
 };
-const achievementUrl = new RegExp('^/a[0-9]*/.*$', 'i');
-const achievementUrlWithGamerId = new RegExp('^/a[0-9]*/.*\\?gamerid=[0-9]*', 'i');
-const achievementsUrl = new RegExp('^/game/.*/achievements$', 'i');
-const achievementsUrlWithGamerId = new RegExp('^/game/.*/achievements\\?gamerid=[0-9]*', 'i');
-const challengesUrl = new RegExp('^/game/.*/challenges$', 'i');
-const challengesUrlWithGamerId = new RegExp('^/game/.*/challenges\\?gamerid=[0-9]*', 'i');
-const clipsUrl = new RegExp('^/game/.*/videos$', 'i');
-const dlcUrl = new RegExp('^/game/.*/dlc$', 'i');
-const dlcUrlWithGamerId = new RegExp('^/game/.*/dlc\\?gamerid=[0-9]*', 'i');
-const individualDlcUrl = new RegExp('^/game/.*/dlc/.*$', 'i');
-const individualDlcUrlWithGamerId = new RegExp('^/game/.*/dlc/.*\\?gamerid=[0-9]*', 'i');
-const walkthroughUrl = new RegExp('^/game/.*/walkthrough$', 'i');
-const gameForumUrl = new RegExp('^/game/.*/forum$', 'i');
-const gameForumUrlWithAll = new RegExp('^/game/.*/forum\\?type=all', 'i');
-const gameForumUrlWithCommunity = new RegExp('^/game/.*/forum\\?type=community', 'i');
-const gameForumUrlWithGameInfo = new RegExp('^/game/.*/forum\\?type=gameinfo', 'i');
-const reviewsUrl = new RegExp('^/game/.*/review$', 'i');
-const gamesUrl = new RegExp('^/games.aspx', 'i');
-const gameUrl = new RegExp('^/game/.*$', 'i');
-const editWalkthroughUrl = new RegExp('^/staff/walkthrough/editwalkthroughpage.aspx', 'i');
-const manageWalkthroughUrl = new RegExp('^/staff/walkthrough/managewalkthrough.aspx', 'i');
-const manageWalkthroughUrlWithWalkthroughId = new RegExp('^/staff/walkthrough/managewalkthrough.aspx\\?walkthroughid=[0-9]*', 'i');
-const walkthroughPageUrl = new RegExp('^/staff/walkthrough/walkthroughpage.aspx', 'i');
-const walkthroughPreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpreview.aspx', 'i');
-const walkthroughPreviewUrlWithWalkthroughId = new RegExp('^/staff/walkthrough/walkthroughpreview.aspx\\?walkthroughid=[0-9]*', 'i');
-const walkthroughPagePreviewUrl = new RegExp('^/staff/walkthrough/walkthroughpagepreview.aspx', 'i');
-const walkthroughPagePreviewUrlWithPageId = new RegExp('^/staff/walkthrough/walkthroughpagepreview.aspx\\?pageid=[0-9]*', 'i');
-const autosave = new RegExp('^/ajaxfunctions.aspx/AutoSave', 'i');
-const forumsUrl = new RegExp('^/forum/forums.aspx', 'i');
-const myTheadsUrl = new RegExp('^/forum/viewthreads.aspx', 'i');
-const viewBoardUrlWithBoardId = new RegExp('^/forum/viewboard.aspx\\?messageboardid=[0-9]*', 'i');
-const viewThreadUrlWithThreadId = new RegExp('^/forum/viewthread.aspx\\?tid=[0-9]*', 'i');
-const pollUrl = new RegExp('^/poll/[0-9]*/*', 'i');
-const newsUrl = new RegExp('^/n[0-9]*/*', 'i');
-const gamerUrl = new RegExp('^/gamer/.*$', 'i');
-const gamerAchievementsUrl = new RegExp('^/gamer/.*/achievements$', 'i');
-const xboxAchievementsGuide = new RegExp('^/game/.*/guide((/$)|$)', 'i');
+const achievementUrl = new RegExp("^/a[0-9]*/(?!.*/).*$", "i");
+const achievementUrlWithGamerId = new RegExp("^/a[0-9]*/.*\\?gamerid=[0-9]*", "i");
+const achievementsUrl = new RegExp("^/game/.*/achievements$", "i");
+const achievementsUrlWithGamerId = new RegExp("^/game/.*/achievements\\?gamerid=[0-9]*", "i");
+const challengesUrl = new RegExp("^/game/.*/challenges$", "i");
+const challengesUrlWithGamerId = new RegExp("^/game/.*/challenges\\?gamerid=[0-9]*", "i");
+const clipsUrl = new RegExp("^/game/.*/videos$", "i");
+const dlcUrl = new RegExp("^/game/.*/dlc$", "i");
+const dlcUrlWithGamerId = new RegExp("^/game/.*/dlc\\?gamerid=[0-9]*", "i");
+const individualDlcUrl = new RegExp("^/game/.*/dlc/(?!.*/).*$", "i");
+const individualDlcUrlWithGamerId = new RegExp("^/game/.*/dlc/.*\\?gamerid=[0-9]*", "i");
+const walkthroughUrl = new RegExp("^/game/.*/walkthrough$", "i");
+const gameForumUrl = new RegExp("^/game/.*/forum$", "i");
+const gameForumUrlWithAll = new RegExp("^/game/.*/forum\\?type=all", "i");
+const gameForumUrlWithCommunity = new RegExp("^/game/.*/forum\\?type=community", "i");
+const gameForumUrlWithGameInfo = new RegExp("^/game/.*/forum\\?type=gameinfo", "i");
+const reviewsUrl = new RegExp("^/game/.*/review$", "i");
+const gamesUrl = new RegExp("^/games.aspx", "i");
+const gameUrl = new RegExp("^/game/.*$", "i");
+const editWalkthroughUrl = new RegExp("^/staff/walkthrough/editwalkthroughpage.aspx", "i");
+const manageWalkthroughUrl = new RegExp("^/staff/walkthrough/managewalkthrough.aspx", "i");
+const manageWalkthroughUrlWithWalkthroughId = new RegExp(
+  "^/staff/walkthrough/managewalkthrough.aspx\\?walkthroughid=[0-9]*",
+  "i"
+);
+const walkthroughPageUrl = new RegExp("^/staff/walkthrough/walkthroughpage.aspx", "i");
+const walkthroughPreviewUrl = new RegExp("^/staff/walkthrough/walkthroughpreview.aspx", "i");
+const walkthroughPreviewUrlWithWalkthroughId = new RegExp(
+  "^/staff/walkthrough/walkthroughpreview.aspx\\?walkthroughid=[0-9]*",
+  "i"
+);
+const walkthroughPagePreviewUrl = new RegExp("^/staff/walkthrough/walkthroughpagepreview.aspx", "i");
+const walkthroughPagePreviewUrlWithPageId = new RegExp(
+  "^/staff/walkthrough/walkthroughpagepreview.aspx\\?pageid=[0-9]*",
+  "i"
+);
+const autosave = new RegExp("^/ajaxfunctions.aspx/AutoSave", "i");
+const forumsUrl = new RegExp("^/forum/forums.aspx", "i");
+const myTheadsUrl = new RegExp("^/forum/viewthreads.aspx", "i");
+const viewBoardUrlWithBoardId = new RegExp("^/forum/viewboard.aspx\\?messageboardid=[0-9]*", "i");
+const viewThreadUrlWithThreadId = new RegExp("^/forum/viewthread.aspx\\?tid=[0-9]*", "i");
+const pollUrl = new RegExp("^/poll/[0-9]*/*", "i");
+const newsUrl = new RegExp("^/n[0-9]*/*", "i");
+const gamerUrl = new RegExp("^/gamer/.*$", "i");
+const gamerAchievementsUrl = new RegExp("^/gamer/.*/achievements$", "i");
+const xboxAchievementsGuide = new RegExp("^/game/.*/guide((/$)|$)", "i");
 const AchievementsRegex = {
-    achievementUrl,
-    achievementUrlWithGamerId,
-    Test: {
-        achievementUrl: (str = window.location.href) => achievementUrl.test(getUrlProperties(str, 'pathname')),
-        achievementUrlWithGamerId: (str = window.location.href) => achievementUrlWithGamerId.test(getUrlProperties(str, ['pathname', 'search']))
-    }
+  achievementUrl,
+  achievementUrlWithGamerId,
+  Test: {
+    achievementUrl: (str = window.location.href) => achievementUrl.test(getUrlProperties(str, "pathname")),
+    achievementUrlWithGamerId: (str = window.location.href) => achievementUrlWithGamerId.test(getUrlProperties(str, ["pathname", "search"]))
+  }
 };
 const GamesRegex = {
-    achievementsUrl,
-    achievementsUrlWithGamerId,
-    challengesUrl,
-    challengesUrlWithGamerId,
-    clipsUrl,
-    dlcUrl,
-    dlcUrlWithGamerId,
-    individualDlcUrl,
-    individualDlcUrlWithGamerId,
-    forumUrl: gameForumUrl,
-    gameUrl,
-    gamesUrl,
-    reviewsUrl,
-    walkthroughUrl,
-    Test: {
-        dlc: (str = window.location.href) => dlcUrl.test(getUrlProperties(str, 'pathname')) || individualDlcUrl.test(getUrlProperties(str, 'pathname')),
-        dlcWithGamerId: (str = window.location.href) => dlcUrlWithGamerId.test(getUrlProperties(str, ['pathname', 'search'])) ||
-            individualDlcUrlWithGamerId.test(getUrlProperties(str, ['pathname', 'search'])),
-        forum: (str = window.location.href) => gameForumUrl.test(getUrlProperties(str, 'pathname')) ||
-            gameForumUrlWithAll.test(getUrlProperties(str, ['pathname', 'search'])) ||
-            gameForumUrlWithCommunity.test(getUrlProperties(str, ['pathname', 'search'])) ||
-            gameForumUrlWithGameInfo.test(getUrlProperties(str, ['pathname', 'search'])),
-        achievementsUrl: (str = window.location.href) => achievementsUrl.test(getUrlProperties(str, 'pathname')),
-        achievementsUrlWithGamerId: (str = window.location.href) => achievementsUrlWithGamerId.test(getUrlProperties(str, ['pathname', 'search'])),
-        clipsUrl: (str = window.location.href) => clipsUrl.test(getUrlProperties(str, 'pathname')),
-        dlcUrl: (str = window.location.href) => dlcUrl.test(getUrlProperties(str, 'pathname')),
-        dlcUrlWithGamerId: (str = window.location.href) => dlcUrlWithGamerId.test(getUrlProperties(str, ['pathname', 'search'])),
-        challengesUrl: (str = window.location.href) => challengesUrl.test(getUrlProperties(str, 'pathname')),
-        challengesUrlWithGamerId: (str = window.location.href) => challengesUrlWithGamerId.test(getUrlProperties(str, ['pathname', 'search'])),
-        individualDlcUrl: (str = window.location.href) => individualDlcUrl.test(getUrlProperties(str, 'pathname')),
-        individualDlcUrlWithGamerId: (str = window.location.href) => individualDlcUrlWithGamerId.test(getUrlProperties(str, ['pathname', 'search'])),
-        forumUrl: (str = window.location.href) => gameForumUrl.test(getUrlProperties(str, 'pathname')),
-        gameForumUrlWithAll: (str = window.location.href) => gameForumUrlWithAll.test(getUrlProperties(str, ['pathname', 'search'])),
-        gameForumUrlWithCommunity: (str = window.location.href) => gameForumUrlWithCommunity.test(getUrlProperties(str, ['pathname', 'search'])),
-        gameForumUrlWithGameInfo: (str = window.location.href) => gameForumUrlWithGameInfo.test(getUrlProperties(str, ['pathname', 'search'])),
-        gameUrl: (str = window.location.href) => gameUrl.test(getUrlProperties(str, 'pathname')),
-        gamesUrl: (str = window.location.href) => gamesUrl.test(getUrlProperties(str, 'pathname')),
-        reviewsUrl: (str = window.location.href) => reviewsUrl.test(getUrlProperties(str, 'pathname')),
-        walkthroughUrl: (str = window.location.href) => walkthroughUrl.test(getUrlProperties(str, 'pathname'))
-    }
+  achievementsUrl,
+  achievementsUrlWithGamerId,
+  challengesUrl,
+  challengesUrlWithGamerId,
+  clipsUrl,
+  dlcUrl,
+  dlcUrlWithGamerId,
+  individualDlcUrl,
+  individualDlcUrlWithGamerId,
+  forumUrl: gameForumUrl,
+  gameUrl,
+  gamesUrl,
+  reviewsUrl,
+  walkthroughUrl,
+  Test: {
+    dlc: (str = window.location.href) => dlcUrl.test(getUrlProperties(str, "pathname")) || individualDlcUrl.test(getUrlProperties(str, "pathname")),
+    dlcWithGamerId: (str = window.location.href) => dlcUrlWithGamerId.test(getUrlProperties(str, ["pathname", "search"])) || individualDlcUrlWithGamerId.test(getUrlProperties(str, ["pathname", "search"])),
+    forum: (str = window.location.href) => gameForumUrl.test(getUrlProperties(str, "pathname")) || gameForumUrlWithAll.test(getUrlProperties(str, ["pathname", "search"])) || gameForumUrlWithCommunity.test(getUrlProperties(str, ["pathname", "search"])) || gameForumUrlWithGameInfo.test(getUrlProperties(str, ["pathname", "search"])),
+    achievementsUrl: (str = window.location.href) => achievementsUrl.test(getUrlProperties(str, "pathname")),
+    achievementsUrlWithGamerId: (str = window.location.href) => achievementsUrlWithGamerId.test(getUrlProperties(str, ["pathname", "search"])),
+    clipsUrl: (str = window.location.href) => clipsUrl.test(getUrlProperties(str, "pathname")),
+    dlcUrl: (str = window.location.href) => dlcUrl.test(getUrlProperties(str, "pathname")),
+    dlcUrlWithGamerId: (str = window.location.href) => dlcUrlWithGamerId.test(getUrlProperties(str, ["pathname", "search"])),
+    challengesUrl: (str = window.location.href) => challengesUrl.test(getUrlProperties(str, "pathname")),
+    challengesUrlWithGamerId: (str = window.location.href) => challengesUrlWithGamerId.test(getUrlProperties(str, ["pathname", "search"])),
+    individualDlcUrl: (str = window.location.href) => individualDlcUrl.test(getUrlProperties(str, "pathname")),
+    individualDlcUrlWithGamerId: (str = window.location.href) => individualDlcUrlWithGamerId.test(getUrlProperties(str, ["pathname", "search"])),
+    forumUrl: (str = window.location.href) => gameForumUrl.test(getUrlProperties(str, "pathname")),
+    gameForumUrlWithAll: (str = window.location.href) => gameForumUrlWithAll.test(getUrlProperties(str, ["pathname", "search"])),
+    gameForumUrlWithCommunity: (str = window.location.href) => gameForumUrlWithCommunity.test(getUrlProperties(str, ["pathname", "search"])),
+    gameForumUrlWithGameInfo: (str = window.location.href) => gameForumUrlWithGameInfo.test(getUrlProperties(str, ["pathname", "search"])),
+    gameUrl: (str = window.location.href) => gameUrl.test(getUrlProperties(str, "pathname")),
+    gamesUrl: (str = window.location.href) => gamesUrl.test(getUrlProperties(str, "pathname")),
+    reviewsUrl: (str = window.location.href) => reviewsUrl.test(getUrlProperties(str, "pathname")),
+    walkthroughUrl: (str = window.location.href) => walkthroughUrl.test(getUrlProperties(str, "pathname"))
+  }
 };
 const GamerRegex = {
-    gamerUrl,
-    gamerAchievementsUrl,
-    Test: {
-        all: (str = window.location.href) => gamerUrl.test(getUrlProperties(str, 'pathname')) || gamerAchievementsUrl.test(getUrlProperties(str, 'pathname')),
-        gamerUrl: (str = window.location.href) => gamerUrl.test(getUrlProperties(str, 'pathname')),
-        gamerAchievementsUrl: (str = window.location.href) => gamerAchievementsUrl.test(getUrlProperties(str, 'pathname'))
-    }
+  gamerUrl,
+  gamerAchievementsUrl,
+  Test: {
+    all: (str = window.location.href) => gamerUrl.test(getUrlProperties(str, "pathname")) || gamerAchievementsUrl.test(getUrlProperties(str, "pathname")),
+    gamerUrl: (str = window.location.href) => gamerUrl.test(getUrlProperties(str, "pathname")),
+    gamerAchievementsUrl: (str = window.location.href) => gamerAchievementsUrl.test(getUrlProperties(str, "pathname"))
+  }
 };
 const AjaxRegex = {
-    autosave,
-    Test: {
-        autosave: (str = window.location.href) => autosave.test(getUrlProperties(str, 'pathname'))
-    }
+  autosave,
+  Test: {
+    autosave: (str = window.location.href) => autosave.test(getUrlProperties(str, "pathname"))
+  }
 };
 const StaffRegex = {
-    Walkthroughs: {
-        editWalkthroughUrl,
-        manageWalkthroughUrl,
-        manageWalkthroughUrlWithWalkthroughId,
-        walkthroughPageUrl,
-        walkthroughPreviewUrl,
-        walkthroughPreviewUrlWithWalkthroughId,
-        walkthroughPagePreviewUrl,
-        walkthroughPagePreviewUrlWithPageId,
-        Test: {
-            all: (str = window.location.href) => editWalkthroughUrl.test(getUrlProperties(str, 'pathname')) ||
-                manageWalkthroughUrl.test(getUrlProperties(str, 'pathname')) ||
-                walkthroughPageUrl.test(getUrlProperties(str, 'pathname')) ||
-                walkthroughPreviewUrl.test(getUrlProperties(str, 'pathname')) ||
-                walkthroughPagePreviewUrl.test(getUrlProperties(str, 'pathname')),
-            preview: (str = window.location.href) => walkthroughPreviewUrl.test(getUrlProperties(str, 'pathname')) ||
-                walkthroughPagePreviewUrl.test(getUrlProperties(str, 'pathname')),
-            editWalkthroughUrl: (str = window.location.href) => editWalkthroughUrl.test(getUrlProperties(str, 'pathname')),
-            manageWalkthroughUrl: (str = window.location.href) => manageWalkthroughUrl.test(getUrlProperties(str, 'pathname')),
-            manageWalkthroughUrlWithWalkthroughId: (str = window.location.href) => manageWalkthroughUrlWithWalkthroughId.test(getUrlProperties(str, ['pathname', 'search'])),
-            walkthroughPageUrl: (str = window.location.href) => walkthroughPageUrl.test(getUrlProperties(str, 'pathname')),
-            walkthroughPreviewUrl: (str = window.location.href) => walkthroughPreviewUrl.test(getUrlProperties(str, 'pathname')),
-            walkthroughPreviewUrlWithWalkthroughId: (str = window.location.href) => walkthroughPreviewUrlWithWalkthroughId.test(getUrlProperties(str, ['pathname', 'search'])),
-            walkthroughPagePreviewUrl: (str = window.location.href) => walkthroughPagePreviewUrl.test(getUrlProperties(str, 'pathname')),
-            walkthroughPagePreviewUrlWithPageId: (str = window.location.href) => walkthroughPagePreviewUrlWithPageId.test(getUrlProperties(str, ['pathname', 'search']))
-        }
+  Walkthroughs: {
+    editWalkthroughUrl,
+    manageWalkthroughUrl,
+    manageWalkthroughUrlWithWalkthroughId,
+    walkthroughPageUrl,
+    walkthroughPreviewUrl,
+    walkthroughPreviewUrlWithWalkthroughId,
+    walkthroughPagePreviewUrl,
+    walkthroughPagePreviewUrlWithPageId,
+    Test: {
+      all: (str = window.location.href) => editWalkthroughUrl.test(getUrlProperties(str, "pathname")) || manageWalkthroughUrl.test(getUrlProperties(str, "pathname")) || walkthroughPageUrl.test(getUrlProperties(str, "pathname")) || walkthroughPreviewUrl.test(getUrlProperties(str, "pathname")) || walkthroughPagePreviewUrl.test(getUrlProperties(str, "pathname")),
+      preview: (str = window.location.href) => walkthroughPreviewUrl.test(getUrlProperties(str, "pathname")) || walkthroughPagePreviewUrl.test(getUrlProperties(str, "pathname")),
+      editWalkthroughUrl: (str = window.location.href) => editWalkthroughUrl.test(getUrlProperties(str, "pathname")),
+      manageWalkthroughUrl: (str = window.location.href) => manageWalkthroughUrl.test(getUrlProperties(str, "pathname")),
+      manageWalkthroughUrlWithWalkthroughId: (str = window.location.href) => manageWalkthroughUrlWithWalkthroughId.test(getUrlProperties(str, ["pathname", "search"])),
+      walkthroughPageUrl: (str = window.location.href) => walkthroughPageUrl.test(getUrlProperties(str, "pathname")),
+      walkthroughPreviewUrl: (str = window.location.href) => walkthroughPreviewUrl.test(getUrlProperties(str, "pathname")),
+      walkthroughPreviewUrlWithWalkthroughId: (str = window.location.href) => walkthroughPreviewUrlWithWalkthroughId.test(getUrlProperties(str, ["pathname", "search"])),
+      walkthroughPagePreviewUrl: (str = window.location.href) => walkthroughPagePreviewUrl.test(getUrlProperties(str, "pathname")),
+      walkthroughPagePreviewUrlWithPageId: (str = window.location.href) => walkthroughPagePreviewUrlWithPageId.test(getUrlProperties(str, ["pathname", "search"]))
     }
+  }
 };
 const ForumRegex = {
-    forumsUrl,
-    viewBoardUrlWithBoardId,
-    viewThreadUrlWithThreadId,
-    myTheadsUrl,
-    Test: {
-        all: (str = window.location.href) => forumsUrl.test(getUrlProperties(str, 'pathname')) ||
-            viewBoardUrlWithBoardId.test(getUrlProperties(str, ['pathname', 'search'])) ||
-            viewThreadUrlWithThreadId.test(getUrlProperties(str, ['pathname', 'search'])) ||
-            myTheadsUrl.test(getUrlProperties(str, 'pathname')),
-        forumsUrl: (str = window.location.href) => forumsUrl.test(getUrlProperties(str, 'pathname')),
-        myTheadsUrl: (str = window.location.href) => myTheadsUrl.test(getUrlProperties(str, 'pathname')),
-        viewBoardUrlWithBoardId: (str = window.location.href) => viewBoardUrlWithBoardId.test(getUrlProperties(str, ['pathname', 'search'])),
-        viewThreadUrlWithThreadId: (str = window.location.href) => viewThreadUrlWithThreadId.test(getUrlProperties(str, ['pathname', 'search']))
-    }
+  forumsUrl,
+  viewBoardUrlWithBoardId,
+  viewThreadUrlWithThreadId,
+  myTheadsUrl,
+  Test: {
+    all: (str = window.location.href) => forumsUrl.test(getUrlProperties(str, "pathname")) || viewBoardUrlWithBoardId.test(getUrlProperties(str, ["pathname", "search"])) || viewThreadUrlWithThreadId.test(getUrlProperties(str, ["pathname", "search"])) || myTheadsUrl.test(getUrlProperties(str, "pathname")),
+    forumsUrl: (str = window.location.href) => forumsUrl.test(getUrlProperties(str, "pathname")),
+    myTheadsUrl: (str = window.location.href) => myTheadsUrl.test(getUrlProperties(str, "pathname")),
+    viewBoardUrlWithBoardId: (str = window.location.href) => viewBoardUrlWithBoardId.test(getUrlProperties(str, ["pathname", "search"])),
+    viewThreadUrlWithThreadId: (str = window.location.href) => viewThreadUrlWithThreadId.test(getUrlProperties(str, ["pathname", "search"]))
+  }
 };
 const NewsRegex = {
-    pollUrl,
-    newsUrl,
-    Test: {
-        pollUrl: (str = window.location.href) => pollUrl.test(getUrlProperties(str, 'pathname')),
-        newsUrl: (str = window.location.href) => newsUrl.test(getUrlProperties(str, 'pathname'))
-    }
+  pollUrl,
+  newsUrl,
+  Test: {
+    pollUrl: (str = window.location.href) => pollUrl.test(getUrlProperties(str, "pathname")),
+    newsUrl: (str = window.location.href) => newsUrl.test(getUrlProperties(str, "pathname"))
+  }
 };
 const DatesRegex = {
-    today: new RegExp('Today', 'i'),
-    yesterday: new RegExp('Yesterday', 'i')
+  today: new RegExp("Today", "i"),
+  yesterday: new RegExp("Yesterday", "i")
 };
 const SentencesRegex = {
-    discussWalkthrough: new RegExp('^Please use this thread to discuss the .* walkthrough?.$'),
-    walkthroughPublished: new RegExp('^The walkthrough has now been published.(?:\\n\\n)?You can find it here: .* Walkthrough?.$')
+  discussWalkthrough: new RegExp("^Please use this thread to discuss the .* walkthrough?.$"),
+  walkthroughPublished: new RegExp(
+    "^The walkthrough has now been published.(?:\\n\\n)?You can find it here: .* Walkthrough?.$"
+  )
 };
 const ExternalRegex = {
-    xboxAchievementsGuide,
-    Test: {
-        xboxAchievementsGuide: (str = window.location.href) => xboxAchievementsGuide.test(getUrlProperties(str, 'pathname'))
-    }
+  xboxAchievementsGuide,
+  Test: {
+    xboxAchievementsGuide: (str = window.location.href) => xboxAchievementsGuide.test(getUrlProperties(str, "pathname"))
+  }
 };
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ({
-    AchievementsRegex,
-    GamesRegex,
-    GamerRegex,
-    StaffRegex,
-    ForumRegex,
-    DatesRegex,
-    SentencesRegex,
-    NewsRegex,
-    ExternalRegex
+  AchievementsRegex,
+  GamesRegex,
+  GamerRegex,
+  StaffRegex,
+  ForumRegex,
+  DatesRegex,
+  SentencesRegex,
+  NewsRegex,
+  ExternalRegex
 });
 
 
@@ -5528,140 +5277,105 @@ __webpack_require__.d(__webpack_exports__, {
   vN: () => (/* reexport */ applyStickyElementStyle),
   Kp: () => (/* reexport */ deleteMemoizedCorsFetch),
   Nu: () => (/* reexport */ dispatch_event),
+  o1: () => (/* reexport */ memoizeCorsFetch),
   FS: () => (/* reexport */ memoizeFetch),
-  Ve: () => (/* reexport */ memoizedCorsFetch),
   XK: () => (/* reexport */ template),
   C4: () => (/* reexport */ until),
   TE: () => (/* reexport */ updateMemoizedFetch),
   Dc: () => (/* reexport */ wait)
 });
 
-// UNUSED EXPORTS: deleteMemoizedFetch, fetch
+// UNUSED EXPORTS: corsFetch, fetch
 
-// EXTERNAL MODULE: ./src/globals/index.ts + 4 modules
-var globals = __webpack_require__("./src/globals/index.ts");
-;// CONCATENATED MODULE: ./src/models/memoized-fetch.ts
-class MemoizedFetch {
-    constructor(opts) {
-        opts = opts ? opts : { deleteAfter: { value: 7, period: 'days' } };
-        const now = new Date();
-        switch (opts.deleteAfter.period) {
-            case 'seconds':
-                this.expiryTime = new Date(now.setSeconds(now.getSeconds() + opts.deleteAfter.value));
-                break;
-            case 'minutes':
-                this.expiryTime = new Date(now.setMinutes(now.getMinutes() + opts.deleteAfter.value));
-                break;
-            case 'hours':
-                this.expiryTime = new Date(now.setHours(now.getHours() + opts.deleteAfter.value));
-                break;
-            case 'days':
-                this.expiryTime = new Date(now.setDate(now.getDate() + opts.deleteAfter.value));
-                break;
-        }
-    }
-    setResponse(response) {
-        this.response = response;
-        return this;
-    }
-    fromString(json) {
-        try {
-            const parsedObj = JSON.parse(json);
-            this.expiryTime = parsedObj.expiryTime;
-            this.response = parsedObj.response;
-        }
-        catch (e) {
-        }
-    }
-    toString() {
-        return JSON.stringify(this);
-    }
-}
-
-// EXTERNAL MODULE: ./src/utilities/date-util.ts
-var date_util = __webpack_require__("./src/utilities/date-util.ts");
+// EXTERNAL MODULE: ./src/models/memoize-fetch.ts + 1 modules
+var memoize_fetch = __webpack_require__("./src/models/memoize-fetch.ts");
 ;// CONCATENATED MODULE: ./src/helpers/fetch.ts
 /* harmony default export */ const helpers_fetch = (async (url, options = {}) => {
-    const opts = Object.assign({
-        headers: new Headers(),
-        method: 'GET'
-    }, options);
-    const response = await fetch(url, opts);
-    if (response.status < 200 || response.status >= 300) {
-        throw response;
-    }
-    return response;
+  const opts = Object.assign(
+    {
+      headers: new Headers(),
+      method: "GET"
+    },
+    options
+  );
+  const response = await fetch(url, opts);
+  if (response.status < 200 || response.status >= 300) {
+    throw response;
+  }
+  return response;
 });
 
 ;// CONCATENATED MODULE: ./src/helpers/memoize-fetch.ts
 
 
+const memoize = new memoize_fetch/* MemoizeFetch */.T(helpers_fetch);
+const memoizeFetch = memoize.memoizeFetch;
+const updateMemoizedFetch = memoize.updateMemoizedFetch;
+
+;// CONCATENATED MODULE: ./src/helpers/cors-fetch.ts
+/* harmony default export */ const cors_fetch = (async (url, options = {
+  url: ""
+}) => {
+  options.url = url;
+  const opts = Object.assign(
+    {
+      method: "GET",
+      fetch: true
+    },
+    options
+  );
+  return new Promise((resolve, reject) => {
+    GM_xmlhttpRequest({
+      ...opts,
+      onload: (response) => resolve(response),
+      onerror: (error) => reject(error)
+    });
+  });
+});
+
+;// CONCATENATED MODULE: ./src/helpers/memoize-cors-fetch.ts
 
 
-const cachedCalls = globals/* Cache */.Ct.memoize;
-const memoizeFetch = async (url, fetchOpts = {}, memoizeOptions) => {
-    const cachedRequest = cachedCalls.get(url);
-    if (cachedRequest && (0,date_util/* isBeforeNow */.c)(new Date(cachedRequest.expiryTime))) {
-        return cachedRequest.response;
-    }
-    const response = await helpers_fetch(url, fetchOpts);
-    const body = await response.text();
-    cachedCalls.set(url, new MemoizedFetch(memoizeOptions).setResponse(body));
-    globals/* Cache */.Ct.memoize = cachedCalls;
-    return body;
-};
-const updateMemoizedFetch = (url, body, memoizeOptions) => {
-    cachedCalls.set(url, new MemoizedFetch(memoizeOptions).setResponse(body));
-    globals/* Cache */.Ct.memoize = cachedCalls;
-};
-const deleteMemoizedFetch = (url) => {
-    cachedCalls.delete(url);
-    globals/* Cache */.Ct.memoize = cachedCalls;
-};
-
-;// CONCATENATED MODULE: ./src/helpers/memoized-cors-fetch.ts
-
-const getProxiedUrl = (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-const memoizedCorsFetch = async (url, fetchOpts = {}, memoizeOptions) => await memoizeFetch(getProxiedUrl(url), fetchOpts, memoizeOptions);
-const deleteMemoizedCorsFetch = (url) => deleteMemoizedFetch(getProxiedUrl(url));
+const memoize_cors_fetch_memoize = new memoize_fetch/* MemoizeFetch */.T(cors_fetch);
+const memoizeCorsFetch = memoize_cors_fetch_memoize.memoizeFetch;
+const deleteMemoizedCorsFetch = memoize_cors_fetch_memoize.deleteMemoizedFetch;
 
 ;// CONCATENATED MODULE: ./src/helpers/template.ts
-const wrapper = document.createElement('template');
+const wrapper = document.createElement("template");
 const template = (el, opts = {}) => {
-    wrapper.appendChild(el);
-    let html = el.outerHTML
-        .replace(/(\r\n|\n|\r)/gm, '')
-        .replace(/{GM_info.script.version}/g, GM_info.script.version || '');
-    for (const opt in opts) {
-        for (const prop in opts[opt]) {
-            const regex = new RegExp(`{${opt}.${prop}}`, 'g');
-            html = html.replace(regex, opts[opt][prop]);
-        }
+  wrapper.appendChild(el);
+  let html = el.outerHTML.replace(/(\r\n|\n|\r)/gm, "").replace(/{GM_info.script.version}/g, GM_info.script.version || "");
+  for (const opt in opts) {
+    for (const prop in opts[opt]) {
+      const regex = new RegExp(`{${opt}.${prop}}`, "g");
+      html = html.replace(regex, opts[opt][prop]);
     }
-    wrapper.innerHTML = html;
-    const newElement = wrapper.content.firstChild;
-    wrapper.innerHTML = '';
-    return newElement;
+  }
+  wrapper.innerHTML = html;
+  const newElement = wrapper.content.firstChild;
+  wrapper.innerHTML = "";
+  return newElement;
 };
 
 ;// CONCATENATED MODULE: ./src/helpers/wait.ts
-const until = async (f, timeoutMs = 10000) => {
-    return new Promise((resolve) => {
-        const timeWas = new Date();
-        const wait = setInterval(() => {
-            if (f()) {
-                clearInterval(wait);
-                resolve(true);
-            }
-            else if (+new Date() - +timeWas > timeoutMs) {
-                clearInterval(wait);
-                resolve(false);
-            }
-        }, 20);
-    });
+const until = async (f, timeoutMs = 1e4) => {
+  return new Promise((resolve) => {
+    const timeWas = /* @__PURE__ */ new Date();
+    const wait2 = setInterval(() => {
+      if (f()) {
+        clearInterval(wait2);
+        resolve(true);
+      } else if (+/* @__PURE__ */ new Date() - +timeWas > timeoutMs) {
+        clearInterval(wait2);
+        resolve(false);
+      }
+    }, 20);
+  });
 };
 const wait = async (timeoutMs = 250) => new Promise((resolve) => setTimeout(resolve, timeoutMs));
 
+// EXTERNAL MODULE: ./src/globals/index.ts + 3 modules
+var globals = __webpack_require__("./src/globals/index.ts");
 // EXTERNAL MODULE: ./src/utilities/html-element-util.ts
 var html_element_util = __webpack_require__("./src/utilities/html-element-util.ts");
 ;// CONCATENATED MODULE: ./src/helpers/sticky.ts
@@ -5671,77 +5385,71 @@ const stickyNavBarEnabled = globals/* stickyHeader */._A.enabled;
 const stickyNavBarStuck = globals/* stickyHeader */._A.remainStuck;
 let stickyNavBarElement;
 const setStickyNavElement = async () => {
-    if (stickyNavBarElement) {
-        return;
-    }
-    stickyNavBarElement = stickyNavBarEnabled
-        ? await (0,html_element_util/* waitForElement */.br)(`.${globals/* Constants */.gT.Styles.StickyHeader.featureJs}`)
-        : await (0,html_element_util/* waitForElement */.br)('.header');
+  if (stickyNavBarElement) {
+    return;
+  }
+  stickyNavBarElement = stickyNavBarEnabled ? await (0,html_element_util/* waitForElement */.br)(`.${globals/* Constants */.gT.Styles.StickyHeader.featureJs}`) : await (0,html_element_util/* waitForElement */.br)(".header");
 };
 const applyStickyElementStyle = async (variableProperty, stickyElement, containerElement, opts = {}) => {
-    await setStickyNavElement();
-    let addAnimation;
-    let removeAnimation = [
-        globals/* Constants */.gT.Styles.Animations.yShow,
-        globals/* Constants */.gT.Styles.Animations.yHide,
-        globals/* Constants */.gT.Styles.Animations.yHideNoTransition
-    ];
-    let topStylePx = opts.paddingFromTop || 0;
-    const containerTop = containerElement.getBoundingClientRect().top;
-    if (containerTop > 0) {
-        topStylePx = 0;
+  await setStickyNavElement();
+  let addAnimation;
+  let removeAnimation = [
+    globals/* Constants */.gT.Styles.Animations.yShow,
+    globals/* Constants */.gT.Styles.Animations.yHide,
+    globals/* Constants */.gT.Styles.Animations.yHideNoTransition
+  ];
+  let topStylePx = opts.paddingFromTop || 0;
+  const containerTop = containerElement.getBoundingClientRect().top;
+  if (containerTop > 0) {
+    topStylePx = 0;
+  } else {
+    topStylePx += opts.isRelativeToParent ? 0 : Math.abs(containerTop);
+    if (stickyNavBarEnabled) {
+      topStylePx += stickyNavBarElement.offsetHeight;
+      if (!stickyNavBarElement.classList.contains(globals/* Constants */.gT.Styles.Animations.yShow) && !stickyNavBarStuck) {
+        addAnimation = opts.noTransitionStyle ? globals/* Constants */.gT.Styles.Animations.yHideNoTransition : globals/* Constants */.gT.Styles.Animations.yHide;
+        removeAnimation = [globals/* Constants */.gT.Styles.Animations.yShow];
+      } else {
+        addAnimation = globals/* Constants */.gT.Styles.Animations.yShow;
+        removeAnimation = [globals/* Constants */.gT.Styles.Animations.yHide, globals/* Constants */.gT.Styles.Animations.yHideNoTransition];
+      }
     }
-    else {
-        topStylePx += opts.isRelativeToParent ? 0 : Math.abs(containerTop);
-        if (stickyNavBarEnabled) {
-            topStylePx += stickyNavBarElement.offsetHeight;
-            if (!stickyNavBarElement.classList.contains(globals/* Constants */.gT.Styles.Animations.yShow) && !stickyNavBarStuck) {
-                addAnimation = opts.noTransitionStyle
-                    ? globals/* Constants */.gT.Styles.Animations.yHideNoTransition
-                    : globals/* Constants */.gT.Styles.Animations.yHide;
-                removeAnimation = [globals/* Constants */.gT.Styles.Animations.yShow];
-            }
-            else {
-                addAnimation = globals/* Constants */.gT.Styles.Animations.yShow;
-                removeAnimation = [globals/* Constants */.gT.Styles.Animations.yHide, globals/* Constants */.gT.Styles.Animations.yHideNoTransition];
-            }
-        }
-    }
-    document.documentElement.style.setProperty(variableProperty, `${topStylePx}px`);
-    stickyElement.classList.remove(...removeAnimation);
-    if (addAnimation) {
-        stickyElement.classList.add(addAnimation);
-    }
+  }
+  document.documentElement.style.setProperty(variableProperty, `${topStylePx}px`);
+  stickyElement.classList.remove(...removeAnimation);
+  if (addAnimation) {
+    stickyElement.classList.add(addAnimation);
+  }
 };
 /* harmony default export */ const sticky = ({ applyStickyElementStyle });
 
 ;// CONCATENATED MODULE: ./src/helpers/dispatch-event.ts
 /* harmony default export */ const dispatch_event = ((eventType, element, opts) => {
-    const eventOpts = Object.assign({
-        bubbles: true,
-        cancelable: eventType === 'click',
-        detail: null
-    }, opts);
-    if (eventOpts.detail) {
-        if (typeof CustomEvent === 'function') {
-            element.dispatchEvent(new CustomEvent(eventType, eventOpts));
-        }
-        else {
-            const event = document.createEvent('CustomEvent');
-            event.initCustomEvent(eventType, eventOpts.bubbles, eventOpts.cancelable, eventOpts.detail);
-            element.dispatchEvent(event);
-        }
+  const eventOpts = Object.assign(
+    {
+      bubbles: true,
+      cancelable: eventType === "click",
+      detail: null
+    },
+    opts
+  );
+  if (eventOpts.detail) {
+    if (typeof CustomEvent === "function") {
+      element.dispatchEvent(new CustomEvent(eventType, eventOpts));
+    } else {
+      const event = document.createEvent("CustomEvent");
+      event.initCustomEvent(eventType, eventOpts.bubbles, eventOpts.cancelable, eventOpts.detail);
+      element.dispatchEvent(event);
     }
-    else {
-        if (typeof Event === 'function') {
-            element.dispatchEvent(new Event(eventType, eventOpts));
-        }
-        else {
-            const event = document.createEvent('Event');
-            event.initEvent(eventType, eventOpts.bubbles, eventOpts.cancelable);
-            element.dispatchEvent(event);
-        }
+  } else {
+    if (typeof Event === "function") {
+      element.dispatchEvent(new Event(eventType, eventOpts));
+    } else {
+      const event = document.createEvent("Event");
+      event.initEvent(eventType, eventOpts.bubbles, eventOpts.cancelable);
+      element.dispatchEvent(event);
     }
+  }
 });
 
 ;// CONCATENATED MODULE: ./src/helpers/index.ts
@@ -5754,6 +5462,91 @@ const applyStickyElementStyle = async (variableProperty, stickyElement, containe
 
 
 
+
+/***/ }),
+
+/***/ "./src/models/memoize-fetch.ts":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  T: () => (/* binding */ MemoizeFetch)
+});
+
+// EXTERNAL MODULE: ./src/globals/index.ts + 3 modules
+var globals = __webpack_require__("./src/globals/index.ts");
+// EXTERNAL MODULE: ./src/utilities/date-util.ts
+var date_util = __webpack_require__("./src/utilities/date-util.ts");
+;// CONCATENATED MODULE: ./src/models/memoized-fetch.ts
+class MemoizedFetch {
+  constructor(opts) {
+    opts = opts ? opts : { deleteAfter: { value: 7, period: "days" } };
+    const now = /* @__PURE__ */ new Date();
+    switch (opts.deleteAfter.period) {
+      case "seconds":
+        this.expiryTime = new Date(now.setSeconds(now.getSeconds() + opts.deleteAfter.value));
+        break;
+      case "minutes":
+        this.expiryTime = new Date(now.setMinutes(now.getMinutes() + opts.deleteAfter.value));
+        break;
+      case "hours":
+        this.expiryTime = new Date(now.setHours(now.getHours() + opts.deleteAfter.value));
+        break;
+      case "days":
+        this.expiryTime = new Date(now.setDate(now.getDate() + opts.deleteAfter.value));
+        break;
+    }
+  }
+  setResponse(response) {
+    this.response = response;
+    return this;
+  }
+  fromString(json) {
+    try {
+      const parsedObj = JSON.parse(json);
+      this.expiryTime = parsedObj.expiryTime;
+      this.response = parsedObj.response;
+    } catch (e) {
+    }
+  }
+  toString() {
+    return JSON.stringify(this);
+  }
+}
+
+;// CONCATENATED MODULE: ./src/models/memoize-fetch.ts
+
+
+
+class MemoizeFetch {
+  constructor(_fetch) {
+    this.cachedCalls = globals/* Cache */.Ct.memoize;
+    this.memoizeFetch = async (url, fetchOpts, memoizeOptions) => {
+      const cachedRequest = this.cachedCalls.get(url);
+      if (cachedRequest && (0,date_util/* isBeforeNow */.c)(new Date(cachedRequest.expiryTime))) {
+        return cachedRequest.response;
+      }
+      const response = await this.fetch(url, fetchOpts);
+      const body = response instanceof Response ? await response.text() : response.responseText;
+      this.cachedCalls.set(url, new MemoizedFetch(memoizeOptions).setResponse(body));
+      globals/* Cache */.Ct.memoize = this.cachedCalls;
+      return body;
+    };
+    this.updateMemoizedFetch = (url, body, memoizeOptions) => {
+      this.cachedCalls.set(url, new MemoizedFetch(memoizeOptions).setResponse(body));
+      globals/* Cache */.Ct.memoize = this.cachedCalls;
+    };
+    this.deleteMemoizedFetch = (url) => {
+      this.cachedCalls.delete(url);
+      globals/* Cache */.Ct.memoize = this.cachedCalls;
+    };
+    this.fetch = _fetch;
+  }
+}
+
+
 /***/ }),
 
 /***/ "./src/utilities/date-util.ts":
@@ -5764,9 +5557,9 @@ const applyStickyElementStyle = async (variableProperty, stickyElement, containe
 /* harmony export */   J: () => (/* binding */ isValid),
 /* harmony export */   c: () => (/* binding */ isBeforeNow)
 /* harmony export */ });
-const getDate = (date) => (typeof date === 'string' ? new Date(date) : date);
-const isValid = (date) => new Date(getDate(date)).toString().toLowerCase() !== 'invalid date';
-const isBeforeNow = (date) => new Date() < getDate(date);
+const getDate = (date) => typeof date === "string" ? new Date(date) : date;
+const isValid = (date) => new Date(getDate(date)).toString().toLowerCase() !== "invalid date";
+const isBeforeNow = (date) => /* @__PURE__ */ new Date() < getDate(date);
 
 
 /***/ }),
@@ -5787,139 +5580,139 @@ const isBeforeNow = (date) => new Date() < getDate(date);
 /* harmony export */   gz: () => (/* binding */ classListContains)
 /* harmony export */ });
 /* unused harmony export removeAllChildren */
-const isSelectElement = (el) => el.nodeName === 'SELECT';
-const isCheckboxElement = (el) => el.nodeName === 'INPUT' && el.type === 'checkbox';
+const isSelectElement = (el) => el.nodeName === "SELECT";
+const isCheckboxElement = (el) => el.nodeName === "INPUT" && el.type === "checkbox";
 const classListContains = (element, classes) => {
-    const classArray = Array.isArray(classes) ? classes : [classes];
-    for (let i = 0; i < classArray.length; i++) {
-        if (element.classList.contains(classArray[i])) {
-            return true;
-        }
+  const classArray = Array.isArray(classes) ? classes : [classes];
+  for (let i = 0; i < classArray.length; i++) {
+    if (element.classList.contains(classArray[i])) {
+      return true;
     }
-    return false;
+  }
+  return false;
 };
-const waitForElement = (selector, element = document.documentElement, timeoutMS = 10000) => new Promise((resolve) => {
-    if (element === null) {
-        return null;
-    }
-    if (element === document.documentElement) {
-        element = document.documentElement;
-    }
+const waitForElement = (selector, element = document.documentElement, timeoutMS = 1e4) => new Promise((resolve) => {
+  if (element === null) {
+    return null;
+  }
+  if (element === document.documentElement) {
+    element = document.documentElement;
+  }
+  if (element.querySelector(selector)) {
+    return resolve(element.querySelector(selector));
+  }
+  let observer;
+  const timeout = setTimeout(() => {
+    observer.disconnect();
+    resolve(null);
+  }, timeoutMS);
+  observer = new MutationObserver(() => {
     if (element.querySelector(selector)) {
-        return resolve(element.querySelector(selector));
+      observer.disconnect();
+      clearTimeout(timeout);
+      resolve(element.querySelector(selector));
     }
-    let observer;
-    const timeout = setTimeout(() => {
-        observer.disconnect();
-        resolve(null);
-    }, timeoutMS);
-    observer = new MutationObserver(() => {
-        if (element.querySelector(selector)) {
-            observer.disconnect();
-            clearTimeout(timeout);
-            resolve(element.querySelector(selector));
-        }
-    });
-    observer.observe(element, {
-        childList: true,
-        subtree: true
-    });
+  });
+  observer.observe(element, {
+    childList: true,
+    subtree: true
+  });
 });
-const waitForElements = (selector, element = document.documentElement, timeoutMS = 10000) => new Promise((resolve) => {
-    if (element === null) {
-        return null;
-    }
-    if (element === document.documentElement) {
-        element = document.documentElement;
-    }
+const waitForElements = (selector, element = document.documentElement, timeoutMS = 1e4) => new Promise((resolve) => {
+  if (element === null) {
+    return null;
+  }
+  if (element === document.documentElement) {
+    element = document.documentElement;
+  }
+  if (element.querySelector(selector)) {
+    return resolve([...element.querySelectorAll(selector)]);
+  }
+  let observer;
+  const timeout = setTimeout(() => {
+    observer.disconnect();
+    resolve(null);
+  }, timeoutMS);
+  observer = new MutationObserver(() => {
     if (element.querySelector(selector)) {
-        return resolve([...element.querySelectorAll(selector)]);
+      observer.disconnect();
+      clearTimeout(timeout);
+      resolve([...element.querySelectorAll(selector)]);
     }
-    let observer;
-    const timeout = setTimeout(() => {
-        observer.disconnect();
-        resolve(null);
-    }, timeoutMS);
-    observer = new MutationObserver(() => {
-        if (element.querySelector(selector)) {
-            observer.disconnect();
-            clearTimeout(timeout);
-            resolve([...element.querySelectorAll(selector)]);
-        }
-    });
-    observer.observe(element, {
-        childList: true,
-        subtree: true
-    });
+  });
+  observer.observe(element, {
+    childList: true,
+    subtree: true
+  });
 });
 const getElementCoordinates = (element) => {
-    const box = element.getBoundingClientRect();
-    const body = document.body;
-    const docEl = document.documentElement;
-    const scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-    const scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-    const clientTop = docEl.clientTop || body.clientTop || 0;
-    const clientLeft = docEl.clientLeft || body.clientLeft || 0;
-    const top = box.top + scrollTop - clientTop;
-    const left = box.left + scrollLeft - clientLeft;
-    return { top: Math.round(top), left: Math.round(left) };
+  const box = element.getBoundingClientRect();
+  const body = document.body;
+  const docEl = document.documentElement;
+  const scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  const scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+  const clientTop = docEl.clientTop || body.clientTop || 0;
+  const clientLeft = docEl.clientLeft || body.clientLeft || 0;
+  const top = box.top + scrollTop - clientTop;
+  const left = box.left + scrollLeft - clientLeft;
+  return { top: Math.round(top), left: Math.round(left) };
 };
 const removeAllChildren = (element) => {
-    while (element.firstChild) {
-        element.removeChild(element.lastChild);
-    }
+  while (element.firstChild) {
+    element.removeChild(element.lastChild);
+  }
 };
 const isTAXListElement = (el) => {
-    if (el.nodeName !== 'DIV' || !el.classList.contains('.frm-lst')) {
-        return false;
-    }
-    return el.querySelector(`#${el.getAttribute('data-list-id')}`) !== null;
+  if (el.nodeName !== "DIV" || !el.classList.contains(".frm-lst")) {
+    return false;
+  }
+  return el.querySelector(`#${el.getAttribute("data-list-id")}`) !== null;
 };
 const isTAXChildListElement = (el) => {
-    if (!el.getAttribute('data-for-list')) {
-        return false;
-    }
-    const parent = el.closest('.frm-lst');
-    if (parent === null) {
-        return false;
-    }
-    return parent.querySelector(`#${parent.getAttribute('data-list-id')}`) !== null;
+  if (!el.getAttribute("data-for-list")) {
+    return false;
+  }
+  const parent = el.closest(".frm-lst");
+  if (parent === null) {
+    return false;
+  }
+  return parent.querySelector(`#${parent.getAttribute("data-list-id")}`) !== null;
 };
 const waitForImages = (el) => {
-    return new Promise((resolve) => {
-        const allImgs = [];
-        const filtered = [...el.querySelectorAll('img')].filter((imgEl) => {
-            if (imgEl.src === '') {
-                return false;
-            }
-            const img = new Image();
-            img.src = imgEl.src;
-            return !img.complete;
-        });
-        filtered.forEach((item) => {
-            allImgs.push({
-                src: item.src,
-                element: item
-            });
-        });
-        const allImgsLength = allImgs.length;
-        let allImgsLoaded = 0;
-        if (allImgsLength === 0) {
-            resolve();
-        }
-        allImgs.forEach((img) => {
-            const image = new Image();
-            const resolveIfLoaded = () => {
-                allImgsLoaded++;
-                if (allImgsLoaded === allImgsLength) {
-                    resolve();
-                }
-            };
-            image.addEventListener('load', resolveIfLoaded);
-            image.addEventListener('error', resolveIfLoaded);
-            image.src = img.src;
-        });
+  return new Promise((resolve) => {
+    const allImgs = [];
+    const filtered = [...el.querySelectorAll("img")].filter((imgEl) => {
+      if (imgEl.src === "") {
+        return false;
+      }
+      const img = new Image();
+      img.src = imgEl.src;
+      return !img.complete;
     });
+    filtered.forEach((item) => {
+      allImgs.push({
+        src: item.src,
+        element: item
+      });
+    });
+    const allImgsLength = allImgs.length;
+    let allImgsLoaded = 0;
+    if (allImgsLength === 0) {
+      resolve();
+    }
+    allImgs.forEach((img) => {
+      const image = new Image();
+      const resolveIfLoaded = () => {
+        allImgsLoaded++;
+        if (allImgsLoaded === allImgsLength) {
+          resolve();
+        }
+      };
+      image.addEventListener("load", resolveIfLoaded);
+      image.addEventListener("error", resolveIfLoaded);
+      image.src = img.src;
+    });
+  });
 };
 
 
@@ -5936,6 +5729,7 @@ __webpack_require__.d(__webpack_exports__, {
   gz: () => (/* reexport */ html_element_util/* classListContains */.gz),
   QF: () => (/* reexport */ string_util/* extractAllBetween */.QF),
   _o: () => (/* reexport */ string_util/* extractBetween */._o),
+  ej: () => (/* reexport */ getCookie),
   VB: () => (/* reexport */ getDuplicates),
   HM: () => (/* reexport */ html_element_util/* getElementCoordinates */.HM),
   NA: () => (/* reexport */ getValue),
@@ -5943,7 +5737,6 @@ __webpack_require__.d(__webpack_exports__, {
   PT: () => (/* reexport */ html_element_util/* isCheckboxElement */.PT),
   Wi: () => (/* reexport */ html_element_util/* isSelectElement */.Wi),
   aF: () => (/* reexport */ html_element_util/* isTAXChildListElement */.aF),
-  PZ: () => (/* reexport */ html_element_util/* isTAXListElement */.PZ),
   sO: () => (/* reexport */ setValue),
   AM: () => (/* reexport */ string_util/* toBool */.AM),
   Hq: () => (/* reexport */ string_util/* toInt */.Hq),
@@ -5952,7 +5745,7 @@ __webpack_require__.d(__webpack_exports__, {
   C7: () => (/* reexport */ html_element_util/* waitForImages */.C7)
 });
 
-// UNUSED EXPORTS: isBeforeNow, isValid, promisify, removeAllChildren, toDate
+// UNUSED EXPORTS: isBeforeNow, isTAXListElement, isValid, needsPromisifying, removeAllChildren, toDate
 
 ;// CONCATENATED MODULE: ./src/utilities/array-util.ts
 const getDuplicates = (arr, unique = false) => unique ? [...new Set(arr.filter((e, i, a) => a.indexOf(e) !== i))] : arr.filter((e, i, a) => a.indexOf(e) !== i);
@@ -5960,35 +5753,54 @@ const getDuplicates = (arr, unique = false) => unique ? [...new Set(arr.filter((
 // EXTERNAL MODULE: ./src/utilities/html-element-util.ts
 var html_element_util = __webpack_require__("./src/utilities/html-element-util.ts");
 ;// CONCATENATED MODULE: ./src/utilities/promise-util.ts
-const promisify = (fn) => () => new Promise((resolve) => fn((callbackArgs) => resolve(callbackArgs)));
+const promisify = (fn) => async (...args) => fn(args);
+const needsPromisifying = (fn) => {
+  if (fn.constructor.name === "AsyncFunction") {
+    return false;
+  }
+  return true;
+};
 const allConcurrently = async (name, arr, max = 3) => {
-    if (arr.length === 0) {
-        return Promise.resolve([]);
+  if (arr.length === 0) {
+    return Promise.resolve([]);
+  }
+  let index = 0;
+  const results = [];
+  const execThread = async () => {
+    while (index < arr.length) {
+      const curIndex = index++;
+      const task = needsPromisifying(arr[curIndex].task) ? promisify(arr[curIndex].task) : arr[curIndex].task;
+      console.debug(arr[curIndex].name, `Promisified: ${needsPromisifying(arr[curIndex].task)}`);
+      results[curIndex] = await task();
+      console.debug(arr[curIndex].name, results[curIndex]);
     }
-    let index = 0;
-    const results = [];
-    const execThread = async () => {
-        while (index < arr.length) {
-            const curIndex = index++;
-            const task = arr[curIndex].task.constructor.name === 'Function' ? promisify(arr[curIndex].task) : arr[curIndex].task;
-            results[curIndex] = await task();
-        }
-    };
-    const threads = [];
-    for (let thread = 0; thread < max; thread++) {
-        threads.push(execThread());
-    }
-    await Promise.all(threads);
-    return results;
+  };
+  const threads = [];
+  for (let thread = 0; thread < max; thread++) {
+    threads.push(execThread());
+  }
+  await Promise.all(threads);
+  return results;
 };
 
 // EXTERNAL MODULE: ./src/utilities/string-util.ts
 var string_util = __webpack_require__("./src/utilities/string-util.ts");
 ;// CONCATENATED MODULE: ./src/utilities/object-util.ts
-const getValue = (object, path, defaultValue) => path.split('.').reduce((o, p) => (o ? o[p] : defaultValue), object);
-const setValue = (object, path, value) => path.split('.').reduce((o, p, i) => (o[p] = path.split('.').length === ++i ? value : o[p] || {}), object);
+const getValue = (object, path, defaultValue) => path.split(".").reduce((o, p) => o ? o[p] : defaultValue, object);
+const setValue = (object, path, value) => path.split(".").reduce((o, p, i) => o[p] = path.split(".").length === ++i ? value : o[p] || {}, object);
+
+;// CONCATENATED MODULE: ./src/utilities/document-util.ts
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    return parts.pop().split(";").shift();
+  }
+};
+/* harmony default export */ const document_util = ({ getCookie });
 
 ;// CONCATENATED MODULE: ./src/utilities/index.ts
+
 
 
 
@@ -6015,62 +5827,76 @@ const setValue = (object, path, value) => path.split('.').reduce((o, p, i) => (o
 /* harmony import */ var _date_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./src/utilities/date-util.ts");
 
 
-const today = new Date(new Date().setHours(0, 0, 0, 0));
+const today = new Date((/* @__PURE__ */ new Date()).setHours(0, 0, 0, 0));
 const yesterday = new Date(new Date(today).setDate(today.getDate() - 1));
 const toInt = (value) => {
-    if (value === null || value === undefined) {
-        return null;
-    }
-    if (typeof value === 'string') {
-        const parsedValue = parseInt(value.replace(/,/g, ''), 10);
-        return !isNaN(parsedValue) ? parsedValue : null;
-    }
-    if (typeof value === 'boolean') {
-        return value ? 1 : 0;
-    }
-    return typeof value === 'number' ? value : null;
+  if (value === null || value === void 0) {
+    return null;
+  }
+  if (typeof value === "string") {
+    const parsedValue = parseInt(value.replace(/,/g, ""), 10);
+    return !isNaN(parsedValue) ? parsedValue : null;
+  }
+  if (typeof value === "boolean") {
+    return value ? 1 : 0;
+  }
+  return typeof value === "number" ? value : null;
 };
 const toDate = (value) => {
-    if (_globals_regex__WEBPACK_IMPORTED_MODULE_0__/* .DatesRegex */ .BL.today.test(value)) {
-        return today;
-    }
-    if (_globals_regex__WEBPACK_IMPORTED_MODULE_0__/* .DatesRegex */ .BL.yesterday.test(value)) {
-        return yesterday;
-    }
-    return (0,_date_util__WEBPACK_IMPORTED_MODULE_1__/* .isValid */ .J)(value) ? new Date(value) : null;
+  if (_globals_regex__WEBPACK_IMPORTED_MODULE_0__/* .DatesRegex */ .BL.today.test(value)) {
+    return today;
+  }
+  if (_globals_regex__WEBPACK_IMPORTED_MODULE_0__/* .DatesRegex */ .BL.yesterday.test(value)) {
+    return yesterday;
+  }
+  return (0,_date_util__WEBPACK_IMPORTED_MODULE_1__/* .isValid */ .J)(value) ? new Date(value) : null;
 };
 const toBool = (str) => {
-    if (str === null || str === undefined) {
-        return null;
-    }
-    if (typeof str === 'string') {
-        return str.toLowerCase() === 'true' ? true : str.toLowerCase() === 'false' ? false : null;
-    }
-    if (typeof str === 'number') {
-        return str === 1 ? true : str === 0 ? false : null;
-    }
-    return typeof str === 'boolean' ? str : null;
+  if (str === null || str === void 0) {
+    return null;
+  }
+  if (typeof str === "string") {
+    return str.toLowerCase() === "true" ? true : str.toLowerCase() === "false" ? false : null;
+  }
+  if (typeof str === "number") {
+    return str === 1 ? true : str === 0 ? false : null;
+  }
+  return typeof str === "boolean" ? str : null;
 };
 const extractBetween = (between, str) => {
-    const regex = new RegExp(`${between}(.*?)${between}`);
-    const matches = str.match(regex);
-    return matches ? matches[1] : str;
+  const regex = new RegExp(`${between}(.*?)${between}`);
+  const matches = str.match(regex);
+  return matches ? matches[1] : str;
 };
 const extractAllBetween = (between, str) => {
-    const regex = new RegExp(`${between}(.*?)${between}`, 'g');
-    const matches = str.match(regex);
-    return matches ? matches.map((str) => str.replace(between, '')) : [str];
+  const regex = new RegExp(`${between}(.*?)${between}`, "g");
+  const matches = str.match(regex);
+  return matches ? matches.map((str2) => str2.replace(between, "")) : [str];
 };
-const insertSeperator = (value, seperator = ',') => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, seperator);
+const insertSeperator = (value, seperator = ",") => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, seperator);
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ({
-    toInt,
-    toDate,
-    toBool,
-    extractBetween,
-    extractAllBetween,
-    insertSeperator
+  toInt,
+  toDate,
+  toBool,
+  extractBetween,
+  extractAllBetween,
+  insertSeperator
 });
 
+
+/***/ }),
+
+/***/ "./src/features/forum-improvements/walkthroughs/walkthroughs.hbs":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Z: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// Module
+var code = "<section class=\"purple js-ta-x-ask-loader-container ta-x-ask-loader-container js-ta-x-forum-improvements-walkthroughs-show-owner-progress ta-x-forum-improvements-walkthroughs-show-owner-progress\"><div>Walkthrough Information</div><article><div class=\"ta-x-article-loader\"><p>Please wait, loading.</p><svg viewbox=\"0 0 512 512\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z\" fill=\"currentColor\"></path></svg></div><div class=\"js-ta-x-ask-loader-ask ta-x-ask-loader-ask ta-x-hide\"><p>Can't automate them all sadly! Please enter a direct link to the walkthrough page to link this thread to the walkthrough, I'll remember it next time!</p><div><label class=\"small\">Walkthrough Url</label><input class=\"textbox cs-n js-ta-x-ask-loader-ask-input\" id=\"txtForumImprovementsWalkthroughsShowOwnerProgress\" name=\"txtForumImprovementsWalkthroughsShowOwnerProgress\"></div><input class=\"button js-ta-x-ask-loader-ask-button\" id=\"btnForumImprovementsWalkthroughsShowOwnerProgressSave\" name=\"btnForumImprovementsWalkthroughsShowOwnerProgressSave\" type=\"submit\" value=\"Save\"></div></article></section>";
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (code);
 
 /***/ })
 
@@ -6138,29 +5964,29 @@ var __webpack_exports__ = {};
 
 // EXTERNAL MODULE: ./node_modules/.pnpm/ajax-interceptor@1.0.1/node_modules/ajax-interceptor/index.js
 var ajax_interceptor = __webpack_require__("./node_modules/.pnpm/ajax-interceptor@1.0.1/node_modules/ajax-interceptor/index.js");
-// EXTERNAL MODULE: ./src/globals/index.ts + 4 modules
+// EXTERNAL MODULE: ./src/globals/index.ts + 3 modules
 var globals = __webpack_require__("./src/globals/index.ts");
-// EXTERNAL MODULE: ./src/utilities/index.ts + 3 modules
+// EXTERNAL MODULE: ./src/utilities/index.ts + 4 modules
 var utilities = __webpack_require__("./src/utilities/index.ts");
 ;// CONCATENATED MODULE: ./src/components/pub-sub.ts
 function PubSub() {
-    const handlers = {};
-    return {
-        publish: (event, msg) => {
-            (handlers[event] ?? []).forEach((h) => h(msg));
-        },
-        subscribe: (event, callback) => {
-            const list = handlers[event] ?? [];
-            list.push(callback);
-            handlers[event] = list;
-            return callback;
-        },
-        unsubscribe: (event, callback) => {
-            let list = handlers[event] ?? [];
-            list = list.filter((h) => h !== callback);
-            handlers[event] = list;
-        }
-    };
+  const handlers = {};
+  return {
+    publish: (event, msg) => {
+      (handlers[event] ?? []).forEach((h) => h(msg));
+    },
+    subscribe: (event, callback) => {
+      const list = handlers[event] ?? [];
+      list.push(callback);
+      handlers[event] = list;
+      return callback;
+    },
+    unsubscribe: (event, callback) => {
+      let list = handlers[event] ?? [];
+      list = list.filter((h) => h !== callback);
+      handlers[event] = list;
+    }
+  };
 }
 /* harmony default export */ const pub_sub = (PubSub());
 
@@ -6172,40 +5998,38 @@ var helpers = __webpack_require__("./src/helpers/index.ts");
 
 
 const accordion = () => {
-    document.addEventListener('click', ({ target }) => {
-        if (!(target instanceof HTMLElement)) {
-            return;
-        }
-        if (!target.classList.contains(globals/* Constants */.gT.Styles.Components.accordion)) {
-            return;
-        }
-        target.classList.toggle('expanded');
-        if (target.hasAttribute('data-checkbox-accordion')) {
-            const toggle = target.querySelector('input');
-            toggle.checked = target.classList.contains('expanded');
-            (0,helpers/* dispatchEvent */.Nu)('change', toggle);
-        }
-        const content = target.nextElementSibling;
-        const parentBodyHeight = content.style.maxHeight ? -content.scrollHeight : content.scrollHeight;
-        content.style.maxHeight
-            ? (content.style.maxHeight = null)
-            : (content.style.maxHeight = `${content.scrollHeight}px`);
-        const parentAccordionBody = target.closest('[data-parent-accordion-body]');
-        if (parentAccordionBody) {
-            parentAccordionBody.style.maxHeight = `${(0,utilities/* toInt */.Hq)(parentAccordionBody.style.maxHeight) + parentBodyHeight}px`;
-        }
-    });
-    pub_sub.subscribe('accordion:setMaxHeight', (content) => {
-        if (!content.style.maxHeight) {
-            return;
-        }
-        content.style.maxHeight = `${content.scrollHeight}px`;
-    });
-    pub_sub.subscribe('accordion:toggleState', (header) => {
-        header.classList.toggle('expanded');
-        const content = header.nextElementSibling;
-        content.style.maxHeight = `${content.scrollHeight}px`;
-    });
+  document.addEventListener("click", ({ target }) => {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(globals/* Constants */.gT.Styles.Components.accordion)) {
+      return;
+    }
+    target.classList.toggle("expanded");
+    if (target.hasAttribute("data-checkbox-accordion")) {
+      const toggle = target.querySelector("input");
+      toggle.checked = target.classList.contains("expanded");
+      (0,helpers/* dispatchEvent */.Nu)("change", toggle);
+    }
+    const content = target.nextElementSibling;
+    const parentBodyHeight = content.style.maxHeight ? -content.scrollHeight : content.scrollHeight;
+    content.style.maxHeight ? content.style.maxHeight = null : content.style.maxHeight = `${content.scrollHeight}px`;
+    const parentAccordionBody = target.closest("[data-parent-accordion-body]");
+    if (parentAccordionBody) {
+      parentAccordionBody.style.maxHeight = `${(0,utilities/* toInt */.Hq)(parentAccordionBody.style.maxHeight) + parentBodyHeight}px`;
+    }
+  });
+  pub_sub.subscribe("accordion:setMaxHeight", (content) => {
+    if (!content.style.maxHeight) {
+      return;
+    }
+    content.style.maxHeight = `${content.scrollHeight}px`;
+  });
+  pub_sub.subscribe("accordion:toggleState", (header) => {
+    header.classList.toggle("expanded");
+    const content = header.nextElementSibling;
+    content.style.maxHeight = `${content.scrollHeight}px`;
+  });
 };
 /* harmony default export */ const components_accordion = ((/* unused pure expression or super */ null && (accordion)));
 
@@ -6213,105 +6037,107 @@ const accordion = () => {
 
 
 const switchTab = (selectedTab) => {
-    if (selectedTab.classList.contains(globals/* Constants */.gT.Styles.Components.Tab.tabSelected)) {
-        return;
-    }
-    const parentTabContainer = selectedTab.closest(`.${globals/* Constants */.gT.Styles.Components.Tab.featureJs}`);
-    const prevSelected = parentTabContainer.querySelector(`.${globals/* Constants */.gT.Styles.Components.Tab.tabSelected}`);
-    const prevContent = parentTabContainer.querySelector('[data-tab-visible]');
-    const nextSelected = parentTabContainer.querySelector(selectedTab.getAttribute('data-tab-id'));
-    if (prevSelected && prevContent) {
-        prevSelected.classList.toggle(globals/* Constants */.gT.Styles.Components.Tab.tabSelected);
-        prevContent.removeAttribute('data-tab-visible');
-    }
-    selectedTab.classList.toggle(globals/* Constants */.gT.Styles.Components.Tab.tabSelected);
-    nextSelected.setAttribute('data-tab-visible', '');
+  if (selectedTab.classList.contains(globals/* Constants */.gT.Styles.Components.Tab.tabSelected)) {
+    return;
+  }
+  const parentTabContainer = selectedTab.closest(`.${globals/* Constants */.gT.Styles.Components.Tab.featureJs}`);
+  const prevSelected = parentTabContainer.querySelector(
+    `.${globals/* Constants */.gT.Styles.Components.Tab.tabSelected}`
+  );
+  const prevContent = parentTabContainer.querySelector("[data-tab-visible]");
+  const nextSelected = parentTabContainer.querySelector(selectedTab.getAttribute("data-tab-id"));
+  if (prevSelected && prevContent) {
+    prevSelected.classList.toggle(globals/* Constants */.gT.Styles.Components.Tab.tabSelected);
+    prevContent.removeAttribute("data-tab-visible");
+  }
+  selectedTab.classList.toggle(globals/* Constants */.gT.Styles.Components.Tab.tabSelected);
+  nextSelected.setAttribute("data-tab-visible", "");
 };
 const listen = () => {
-    let container;
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    let momentumID;
-    let velX = 0;
-    const mouseUpEvent = () => {
-        isDown = false;
-        container.classList.remove(globals/* Constants */.gT.Styles.Components.Tab.tabScroll);
-        beginMomentumTracking();
-        removeListeners();
-    };
-    const mouseLeaveEvent = () => {
-        isDown = false;
-        container.classList.remove(globals/* Constants */.gT.Styles.Components.Tab.tabScroll);
-        removeListeners();
-    };
-    const mouseMoveEvent = (e) => {
-        if (!isDown) {
-            return;
-        }
-        e.preventDefault();
-        const x = e.pageX - container.offsetLeft;
-        const walk = (x - startX) * 3;
-        const prevScrollLeft = container.scrollLeft;
-        container.scrollLeft = scrollLeft - walk;
-        velX = container.scrollLeft - prevScrollLeft;
-    };
-    const wheelEvent = () => {
-        cancelMomentumTracking();
-    };
-    const beginMomentumTracking = () => {
-        cancelMomentumTracking();
-        momentumID = requestAnimationFrame(momentumLoop);
-    };
-    const cancelMomentumTracking = () => {
-        cancelAnimationFrame(momentumID);
-    };
-    const momentumLoop = () => {
-        container.scrollLeft += velX;
-        velX *= 0.95;
-        if (Math.abs(velX) > 0.5) {
-            momentumID = requestAnimationFrame(momentumLoop);
-        }
-    };
-    const removeListeners = () => {
-        container.removeEventListener('mouseup', mouseUpEvent);
-        container.removeEventListener('mouseleave', mouseLeaveEvent);
-        container.removeEventListener('mousemove', mouseMoveEvent);
-        container.removeEventListener('wheel', wheelEvent);
-    };
-    document.addEventListener('mousedown', (e) => {
-        if (!(e.target instanceof HTMLElement)) {
-            return;
-        }
-        container = e.target.closest(`.${globals/* Constants */.gT.Styles.Components.Tab.tabLinkContainer}`);
-        if (!container) {
-            return;
-        }
-        isDown = true;
-        container.classList.add(globals/* Constants */.gT.Styles.Components.Tab.tabScroll);
-        startX = e.pageX - container.offsetLeft;
-        scrollLeft = container.scrollLeft;
-        cancelMomentumTracking();
-        container.addEventListener('mouseup', mouseUpEvent);
-        container.addEventListener('mouseleave', mouseLeaveEvent);
-        container.addEventListener('mousemove', mouseMoveEvent);
-        container.addEventListener('wheel', wheelEvent);
-    });
+  let container;
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+  let momentumID;
+  let velX = 0;
+  const mouseUpEvent = () => {
+    isDown = false;
+    container.classList.remove(globals/* Constants */.gT.Styles.Components.Tab.tabScroll);
+    beginMomentumTracking();
+    removeListeners();
+  };
+  const mouseLeaveEvent = () => {
+    isDown = false;
+    container.classList.remove(globals/* Constants */.gT.Styles.Components.Tab.tabScroll);
+    removeListeners();
+  };
+  const mouseMoveEvent = (e) => {
+    if (!isDown) {
+      return;
+    }
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 3;
+    const prevScrollLeft = container.scrollLeft;
+    container.scrollLeft = scrollLeft - walk;
+    velX = container.scrollLeft - prevScrollLeft;
+  };
+  const wheelEvent = () => {
+    cancelMomentumTracking();
+  };
+  const beginMomentumTracking = () => {
+    cancelMomentumTracking();
+    momentumID = requestAnimationFrame(momentumLoop);
+  };
+  const cancelMomentumTracking = () => {
+    cancelAnimationFrame(momentumID);
+  };
+  const momentumLoop = () => {
+    container.scrollLeft += velX;
+    velX *= 0.95;
+    if (Math.abs(velX) > 0.5) {
+      momentumID = requestAnimationFrame(momentumLoop);
+    }
+  };
+  const removeListeners = () => {
+    container.removeEventListener("mouseup", mouseUpEvent);
+    container.removeEventListener("mouseleave", mouseLeaveEvent);
+    container.removeEventListener("mousemove", mouseMoveEvent);
+    container.removeEventListener("wheel", wheelEvent);
+  };
+  document.addEventListener("mousedown", (e) => {
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+    container = e.target.closest(`.${globals/* Constants */.gT.Styles.Components.Tab.tabLinkContainer}`);
+    if (!container) {
+      return;
+    }
+    isDown = true;
+    container.classList.add(globals/* Constants */.gT.Styles.Components.Tab.tabScroll);
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+    cancelMomentumTracking();
+    container.addEventListener("mouseup", mouseUpEvent);
+    container.addEventListener("mouseleave", mouseLeaveEvent);
+    container.addEventListener("mousemove", mouseMoveEvent);
+    container.addEventListener("wheel", wheelEvent);
+  });
 };
 const tabs = () => {
-    document.addEventListener('click', ({ target }) => {
-        if (!(target instanceof HTMLElement)) {
-            return;
-        }
-        if (!target.classList.contains(globals/* Constants */.gT.Styles.Components.Tab.tabLink)) {
-            return;
-        }
-        switchTab(target);
-    });
-    pub_sub.subscribe('tabs:set', (tab) => {
-        switchTab(tab);
-    });
-    listen();
+  document.addEventListener("click", ({ target }) => {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(globals/* Constants */.gT.Styles.Components.Tab.tabLink)) {
+      return;
+    }
+    switchTab(target);
+  });
+  pub_sub.subscribe("tabs:set", (tab) => {
+    switchTab(tab);
+  });
+  listen();
 };
 /* harmony default export */ const components_tabs = ((/* unused pure expression or super */ null && (tabs)));
 
@@ -6319,7 +6145,7 @@ const tabs = () => {
 // Module
 var code = "<div class=\"ta-x-snackbar js-ta-x-snackbar\"><h2></h2></div>";
 // Exports
-/* harmony default export */ const components_snackbar = (code);
+/* harmony default export */ const snackbar = (code);
 // EXTERNAL MODULE: ./src/utilities/html-element-util.ts
 var html_element_util = __webpack_require__("./src/utilities/html-element-util.ts");
 ;// CONCATENATED MODULE: ./src/components/snackbar.ts
@@ -6327,28 +6153,28 @@ var html_element_util = __webpack_require__("./src/utilities/html-element-util.t
 
 
 
-const snackbar = async () => {
-    if (!(await (0,html_element_util/* waitForElement */.br)('body'))) {
-        return;
+const snackbar_snackbar = async () => {
+  if (!await (0,html_element_util/* waitForElement */.br)("body")) {
+    return;
+  }
+  const parsedDocument = new DOMParser().parseFromString(snackbar, "text/html");
+  document.body.appendChild(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.Components.snackbar}`));
+  const snackbar2 = document.querySelector(`.${globals/* Constants */.gT.Styles.Components.snackbar}`);
+  const textContainer = snackbar2.querySelector("h2");
+  pub_sub.subscribe("snackbar:show", ({ text, type }) => {
+    if (!snackbar2) {
+      return;
     }
-    const parsedDocument = new DOMParser().parseFromString(components_snackbar, 'text/html');
-    document.body.appendChild(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.Components.snackbar}`));
-    const snackbar = document.querySelector(`.${globals/* Constants */.gT.Styles.Components.snackbar}`);
-    const textContainer = snackbar.querySelector('h2');
-    pub_sub.subscribe('snackbar:show', ({ text, type }) => {
-        if (!snackbar) {
-            return;
-        }
-        textContainer.innerText = text;
-        textContainer.classList.add(type);
-        snackbar.classList.toggle(globals/* Constants */.gT.Styles.Components.showSnackbar);
-        setTimeout(() => {
-            snackbar.classList.toggle(globals/* Constants */.gT.Styles.Components.showSnackbar);
-            textContainer.classList.remove(type);
-        }, 3000);
-    });
+    textContainer.innerText = text;
+    textContainer.classList.add(type);
+    snackbar2.classList.toggle(globals/* Constants */.gT.Styles.Components.showSnackbar);
+    setTimeout(() => {
+      snackbar2.classList.toggle(globals/* Constants */.gT.Styles.Components.showSnackbar);
+      textContainer.classList.remove(type);
+    }, 3e3);
+  });
 };
-/* harmony default export */ const src_components_snackbar = ((/* unused pure expression or super */ null && (snackbar)));
+/* harmony default export */ const components_snackbar = ((/* unused pure expression or super */ null && (snackbar_snackbar)));
 
 ;// CONCATENATED MODULE: ./src/components/index.ts
 
@@ -6362,84 +6188,80 @@ var string_util = __webpack_require__("./src/utilities/string-util.ts");
 
 
 class ConditionalRender {
-    static fromString(json) {
-        if (!json || json.length === 0) {
-            return null;
-        }
-        const parsedObj = JSON.parse(json);
-        if (Array.isArray(parsedObj)) {
-            const conditionalRender = new ConditionalRender();
-            conditionalRender.conditions = parsedObj.map((cdr) => ConditionalRender.fromObject(cdr));
-            return conditionalRender;
-        }
-        else {
-            return ConditionalRender.fromObject(parsedObj);
-        }
+  static fromString(json) {
+    if (!json || json.length === 0) {
+      return null;
     }
-    static fromObject(obj) {
-        const conditionalRender = new ConditionalRender();
-        try {
-            conditionalRender.conditions = null;
-            conditionalRender.selector = obj.selector;
-            conditionalRender.checked = (0,string_util/* toBool */.AM)(obj.checked);
-            conditionalRender.value = obj.value ? obj.value.split(',') : null;
-        }
-        catch (e) {
-            conditionalRender.conditions = null;
-            conditionalRender.selector = null;
-            conditionalRender.checked = null;
-            conditionalRender.value = null;
-        }
-        return conditionalRender;
+    const parsedObj = JSON.parse(json);
+    if (Array.isArray(parsedObj)) {
+      const conditionalRender = new ConditionalRender();
+      conditionalRender.conditions = parsedObj.map((cdr) => ConditionalRender.fromObject(cdr));
+      return conditionalRender;
+    } else {
+      return ConditionalRender.fromObject(parsedObj);
     }
-    isValid() {
-        return this.conditions ? true : this.selector !== null && (this.checked !== null || this.value !== null);
+  }
+  static fromObject(obj) {
+    const conditionalRender = new ConditionalRender();
+    try {
+      conditionalRender.conditions = null;
+      conditionalRender.selector = obj.selector;
+      conditionalRender.checked = (0,string_util/* toBool */.AM)(obj.checked);
+      conditionalRender.value = obj.value ? obj.value.split(",") : null;
+    } catch (e) {
+      conditionalRender.conditions = null;
+      conditionalRender.selector = null;
+      conditionalRender.checked = null;
+      conditionalRender.value = null;
     }
-    toString() {
-        return JSON.stringify(this);
+    return conditionalRender;
+  }
+  isValid() {
+    return this.conditions ? true : this.selector !== null && (this.checked !== null || this.value !== null);
+  }
+  toString() {
+    return JSON.stringify(this);
+  }
+  test(el) {
+    let method = null;
+    if (!this.isValid()) {
+      return method;
     }
-    test(el) {
-        let method = null;
-        if (!this.isValid()) {
-            return method;
+    if (this.conditions) {
+      return this.conditions.every((cdr) => cdr.test(el) === "remove") ? "remove" : "add";
+    } else {
+      const setting = el.querySelector(this.selector);
+      if ((0,html_element_util/* isCheckboxElement */.PT)(setting)) {
+        method = setting.checked === this.checked ? "remove" : "add";
+      } else if ((0,html_element_util/* isSelectElement */.Wi)(setting)) {
+        if ((0,string_util/* toBool */.AM)(setting.getAttribute("data-is-array"))) {
+          method = this.value.some(
+            (val) => setting.value.split(setting.getAttribute("data-array-split")).includes(val)
+          ) ? "remove" : "add";
+        } else {
+          method = this.value.includes(setting.value) ? "remove" : "add";
         }
-        if (this.conditions) {
-            return this.conditions.every((cdr) => cdr.test(el) === 'remove') ? 'remove' : 'add';
-        }
-        else {
-            const setting = el.querySelector(this.selector);
-            if ((0,html_element_util/* isCheckboxElement */.PT)(setting)) {
-                method = setting.checked === this.checked ? 'remove' : 'add';
-            }
-            else if ((0,html_element_util/* isSelectElement */.Wi)(setting)) {
-                if ((0,string_util/* toBool */.AM)(setting.getAttribute('data-is-array'))) {
-                    method = this.value.some((val) => setting.value.split(setting.getAttribute('data-array-split')).includes(val))
-                        ? 'remove'
-                        : 'add';
-                }
-                else {
-                    method = this.value.includes(setting.value) ? 'remove' : 'add';
-                }
-            }
-            return method;
-        }
+      }
+      return method;
     }
+  }
 }
 
+// EXTERNAL MODULE: ./src/models/memoize-fetch.ts + 1 modules
+var memoize_fetch = __webpack_require__("./src/models/memoize-fetch.ts");
 ;// CONCATENATED MODULE: ./src/models/list-setting.ts
 
 class ListSetting {
-    constructor(element) {
-        if ((0,utilities/* isTAXChildListElement */.aF)(element)) {
-            this.parent = element.closest('.frm-lst');
-        }
-        else if ((0,utilities/* isTAXListElement */.PZ)(element)) {
-            this.parent = element;
-        }
-        this.listId = this.parent.getAttribute('data-list-id');
-        this.list = this.parent.querySelector(`#${this.listId}`);
-        this.input = this.parent.querySelector(`#${this.listId}-input`);
+  constructor(element) {
+    if ((0,html_element_util/* isTAXChildListElement */.aF)(element)) {
+      this.parent = element.closest(".frm-lst");
+    } else if ((0,html_element_util/* isTAXListElement */.PZ)(element)) {
+      this.parent = element;
     }
+    this.listId = this.parent.getAttribute("data-list-id");
+    this.list = this.parent.querySelector(`#${this.listId}`);
+    this.input = this.parent.querySelector(`#${this.listId}-input`);
+  }
 }
 
 ;// CONCATENATED MODULE: ./src/models/index.ts
@@ -6447,9 +6269,10 @@ class ListSetting {
 
 
 
+
 ;// CONCATENATED MODULE: ./src/features/settings-menu/body.hbs
 // Module
-var body_code = "<div class=\"js-ta-x-settings-menu-wrench gamer-page\" aria-haspopup=\"true\"><i class=\"fa fa-wrench\"></i></div><div class=\"js-ta-x-settings-menu ta-x-settings-menu ta-x-hide\"><div class=\"middle\"><div class=\"wrap\"><div class=\"labels\"><label class=\"js-ta-x-settings-menu-close close\"><i class=\"fa fa-close\"></i></label></div><div class=\"contents\"><div class=\"contents open ta-x-settings-menu-settings\"><div class=\"t-settings js-ta-x-settings-menu-settings ta-x-settings-menu-settings-item ta-x-settings-menu-settings-item-show\"><div class=\"ta-x-checkbox\" data-render-condition><label>Sticky Header</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"stickyHeader.enabled\" id=\"chkStickyHeader\" name=\"chkStickyHeader\" type=\"checkbox\"><label for=\"chkStickyHeader\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStickyHeader\", \"checked\": true }'>This feature may cause some sticky elements to look buggy. Let me know what you spot!</p></div><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStickyHeader\", \"checked\": true }'><label>Remain Stuck</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"stickyHeader.remainStuck\" id=\"chkStickyHeaderRemainStuck\" name=\"chkStickyHeaderRemainStuck\" type=\"checkbox\"><label for=\"chkStickyHeaderRemainStuck\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition style=\"border:0\"><label>Emojis</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"emojis.enabled\" id=\"chkEmojis\" name=\"chkEmojis\" type=\"checkbox\"><label for=\"chkEmojis\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion\" style=\"padding-top:0\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>Forum Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.enabled\" id=\"chkForumImprovements\" name=\"chkForumImprovements\" type=\"checkbox\"><label for=\"chkForumImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Enable Thread Filter</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.forumImprovementsThreadFilter\" id=\"chkForumImprovementsForumImprovementsThreadFilter\" name=\"chkForumImprovementsForumImprovementsThreadFilter\" type=\"checkbox\"><label for=\"chkForumImprovementsForumImprovementsThreadFilter\"></label></div></div><div class=\"ta-x-listbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkForumImprovementsForumImprovementsThreadFilter\", \"checked\": true }'><label>Keywords</label><div class=\"frm-grp frm-lst\" data-list-id=\"txtThreadKeywordFilter\" data-template-id=\"#ta-x-template-forum-improvements-thread-filter-keywords\"><template id=\"ta-x-template-forum-improvements-thread-filter-keywords\"><li><div><p data-value=\"{listSetting.value}\">{listSetting.value}</p><a data-for-list=\"{listSetting.id}\" data-remove href=\"#\" onclick=\"event.preventDefault()\"> Remove </a></div></li></template><input class=\"textbox cs-n\" id=\"txtThreadKeywordFilter-input\" name=\"txtThreadKeywordFilte\"><input value=\"Add Filter\" data-add data-array-split=\",\" data-config-path=\"forumImprovements.threadFilterKeywords\" data-for-list=\"txtThreadKeywordFilter\" data-is-array=\"true\" onclick=\"event.preventDefault()\" type=\"submit\"><ul class=\"item-list\" id=\"txtThreadKeywordFilter\"></ul></div></div></div><div data-render-condition='{ \"selector\": \"#chkForumImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> My Threads </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Override Forum Settings</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.myThreads.myThreadsForumOverride\" id=\"chkForumImprovementsMyThreadsForumOverride\" name=\"chkForumImprovementsMyThreadsForumOverride\" type=\"checkbox\"><label for=\"chkForumImprovementsMyThreadsForumOverride\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkForumImprovementsMyThreadsForumOverride\", \"checked\": false }'>Some settings will be inherited from Forums.</p></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkForumImprovementsMyThreadsForumOverride\", \"checked\": true }'><label>Enable Thread Filter</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.myThreads.myThreadsThreadFilter\" id=\"chkForumImprovementsMyThreadsThreadFilter\" name=\"chkForumImprovementsMyThreadsThreadFilter\" type=\"checkbox\"><label for=\"chkForumImprovementsMyThreadsThreadFilter\"></label></div></div><div class=\"ta-x-listbox ta-x-hide\" data-render-condition='[\n                    { \"selector\": \"#chkForumImprovementsMyThreadsForumOverride\", \"checked\": true },\n                    { \"selector\": \"#chkForumImprovementsMyThreadsThreadFilter\", \"checked\": true }\n                ]'><label>Keywords</label><div class=\"frm-grp frm-lst\" data-list-id=\"txtForumImprovementsMyThreadsThreadKeywordFilter\" data-template-id=\"#ta-x-template-forum-improvements-thread-filter-keywords\"><template id=\"ta-x-template-forum-improvements-thread-filter-keywords\"><li><div><p data-value=\"{listSetting.value}\">{listSetting.value}</p><a data-for-list=\"{listSetting.id}\" data-remove href=\"#\" onclick=\"event.preventDefault()\"> Remove </a></div></li></template><input class=\"textbox cs-n\" id=\"txtForumImprovementsMyThreadsThreadKeywordFilter-input\" name=\"txtForumImprovementsMyThreadsThreadKeywordFilte\"><input value=\"Add Filter\" data-add data-array-split=\",\" data-config-path=\"forumImprovements.myThreads.threadFilterKeywords\" data-for-list=\"txtForumImprovementsMyThreadsThreadKeywordFilter\" data-is-array=\"true\" onclick=\"event.preventDefault()\" type=\"submit\"><ul class=\"item-list\" id=\"txtForumImprovementsMyThreadsThreadKeywordFilter\"></ul></div></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkForumImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Walkthroughs </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Show Owner/Progress</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.walkthroughs.showOwnerProgress\" id=\"chkForumImprovementsShowOwnerProgress\" name=\"chkForumImprovementsShowOwnerProgress\" type=\"checkbox\"><label for=\"chkForumImprovementsShowOwnerProgress\"></label></div></div></div></div></div></div><div class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>Gamer Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamerImprovements.enabled\" id=\"chkGamerImprovements\" name=\"chkGamerImprovements\" type=\"checkbox\"><label for=\"chkGamerImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div class=\"ta-x-checkbox\" data-render-condition><label>Add Group By Game Button</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamerImprovements.achievements.addGroupByGameButton\" id=\"chkGamerImprovementsGroupByGameButton\" name=\"chkGamerImprovementsGroupByGameButton\" type=\"checkbox\"><label for=\"chkGamerImprovementsGroupByGameButton\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamerImprovementsGroupByGameButton\", \"checked\": true }'>This feature is unstyled, let me know if you have any ideas for how to make this look!</p></div></div></div><div class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>Games Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.enabled\" id=\"chkGamesImprovements\" name=\"chkGamesImprovements\" type=\"checkbox\"><label for=\"chkGamesImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div class=\"ta-x-checkbox\" data-render-condition style=\"border:0\"><label>Add Highlight Games Not In Collection Button</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.games.addHighlightGamesNotInCollectionButton\" id=\"chkGamesImprovementsHighlightGamesNotInCollectionButton\" name=\"chkGamesImprovementsHighlightGamesNotInCollectionButton\" type=\"checkbox\"><label for=\"chkGamesImprovementsHighlightGamesNotInCollectionButton\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsHighlightGamesNotInCollectionButton\", \"checked\": true }'>This feature is unstyled, let me know if you have any ideas for how to make this look!</p></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Achievements </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Show progress as XX/XX</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.achievements.gameAchievementsIndividualProgress\" id=\"chkGamesImprovementsGameAchievementsIndividualProgress\" name=\"chkGamesImprovementsGameAchievementsIndividualProgress\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameAchievementsIndividualProgress\"></label></div></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Status for Game Achievements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.achievements.gameAchievementsDefaultStatus\" id=\"chkGamesImprovementsGameAchievementsDefaultStatus\" name=\"chkGamesImprovementsGameAchievementsDefaultStatus\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameAchievementsDefaultStatus\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameAchievementsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.achievements.gameAchievementsDefaultStatusValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameAchievementsDefaultStatusValue\" name=\"selGamesImprovementsGameAchievementsDefaultStatusValue\"><option selected=\"selected\" value=\"rdoAllAchievements\">All</option><option selected=\"selected\" value=\"rdoWonAchievements\">Won</option><option selected=\"selected\" value=\"rdoNotWonAchievements\">Not Won</option></select></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Include Guides From XboxAchievements.com</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.achievements.gameAchievementsShowXboxAchievementGuides\" id=\"chkGamesImprovementsGameAchievementsShowXboxAchievementGuides\" name=\"chkGamesImprovementsGameAchievementsShowXboxAchievementGuides\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameAchievementsShowXboxAchievementGuides\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameAchievementsShowXboxAchievementGuides\", \"checked\": true }'>This feature is tempermental, let me know if you have any issues!</p></div></div></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Challenges </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Override Achievement Settings</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.challenges.gameChallengesOverride\" id=\"chkGamesImprovementsGameChallengesOverride\" name=\"chkGamesImprovementsGameChallengesOverride\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameChallengesOverride\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameChallengesOverride\", \"checked\": false }'>Some settings will be inherited from Achievements.</p></div><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameChallengesOverride\", \"checked\": true }'><label>Show progress as XX/XX</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.challenges.gameChallengesIndividualProgress\" id=\"chkGamesImprovementsGameChallengesIndividualProgress\" name=\"chkGamesImprovementsGameChallengesIndividualProgress\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameChallengesIndividualProgress\"></label></div></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Status for Game Challenges</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.challenges.gameChallengesDefaultStatus\" id=\"chkGamesImprovementsGameChallengesDefaultStatus\" name=\"chkGamesImprovementsGameChallengesDefaultStatus\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameChallengesDefaultStatus\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameChallengesDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.challenges.gameChallengesDefaultStatusValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameChallengesDefaultStatusValue\" name=\"selGamesImprovementsGameChallengesDefaultStatusValue\"><option selected=\"selected\" value=\"rdoAllChallenges\">All</option><option selected=\"selected\" value=\"rdoWonChallenges\">Won</option><option selected=\"selected\" value=\"rdoNotWonChallenges\">Not Won</option></select></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Clips </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Status for Game Clips</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.clips.gameClipsDefaultStatus\" id=\"chkGamesImprovementsGameClipsDefaultStatus\" name=\"chkGamesImprovementsGameClipsDefaultStatus\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameClipsDefaultStatus\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'>This feature will cause multiple page reloads if you change more than one default!</p></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.clips.gameClipsDefaultRecordedByValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameClipsDefaultRecordedByValue\" name=\"selGamesImprovementsGameClipsDefaultRecordedByValue\"><option selected=\"selected\" value>Anyone</option><option value=\"My friends\" selected=\"selected\">My friends</option></select></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.clips.gameClipsDefaultSavedByValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameClipsDefaultSavedByValue\" name=\"selGamesImprovementsGameClipsDefaultSavedByValue\"><option selected=\"selected\" value>Anyone</option><option selected=\"selected\" value=\"Gamer\">Gamer</option><option selected=\"selected\" value=\"Xbox\">Xbox</option></select></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.clips.gameClipsDefaultRecordedValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameClipsDefaultRecordedValue\" name=\"selGamesImprovementsGameClipsDefaultRecordedValue\"><option selected=\"selected\" value=\"7\">This week</option><option selected=\"selected\" value=\"30\">This month</option><option selected=\"selected\" value=\"365\">This year</option><option selected=\"selected\" value=\"0\">All</option></select></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.clips.gameClipsDefaultSortByValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameClipsDefaultSortByValue\" name=\"selGamesImprovementsGameClipsDefaultSortByValue\"><option value=\"Most viewed\" selected=\"selected\">Most viewed</option><option value=\"Most favourited\" selected=\"selected\">Most favourited</option><option value=\"Most commented\" selected=\"selected\">Most commented</option><option selected=\"selected\" value=\"Longest\">Longest</option><option selected=\"selected\" value=\"GamerTag\">GamerTag</option></select></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> DLC </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Override Achievement Settings</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.dlc.gameDLCOverride\" id=\"chkGamesImprovementsGameDLCOverride\" name=\"chkGamesImprovementsGameDLCOverride\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameDLCOverride\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameDLCOverride\", \"checked\": false }'>Some settings will be inherited from Achievements.</p></div><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameDLCOverride\", \"checked\": true }'><label>Show progress as XX/XX</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.dlc.gameDLCIndividualProgress\" id=\"chkGamesImprovementsGameDLCIndividualProgress\" name=\"chkGamesImprovementsGameDLCIndividualProgress\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameDLCIndividualProgress\"></label></div></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameDLCOverride\", \"checked\": true }'><label>Default Status for Game DLC Achievements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.dlc.gameDLCDefaultStatus\" id=\"chkGamesImprovementsGameDLCDefaultStatus\" name=\"chkGamesImprovementsGameDLCDefaultStatus\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameDLCDefaultStatus\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='[\n                { \"selector\": \"#chkGamesImprovementsGameDLCOverride\", \"checked\": true },\n                { \"selector\": \"#chkGamesImprovementsGameDLCDefaultStatus\", \"checked\": true }]'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.dlc.gameDLCDefaultStatusValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameDLCDefaultStatusValue\" name=\"selGamesImprovementsGameDLCDefaultStatusValue\"><option selected=\"selected\" value=\"rdoAllAchievements\">All</option><option selected=\"selected\" value=\"rdoWonAchievements\">Won</option><option selected=\"selected\" value=\"rdoNotWonAchievements\">Not Won</option></select></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Forums </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Override Forum Settings</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.forums.gameForumsForumOverride\" id=\"chkGamesImprovementsGameForumsForumOverride\" name=\"chkGamesImprovementsGameForumsForumOverride\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameForumsForumOverride\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameForumsForumOverride\", \"checked\": false }'>Some settings will be inherited from Forums.</p></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameForumsForumOverride\", \"checked\": true }'><label>Enable Thread Filter</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.forums.gameForumsThreadFilter\" id=\"chkGameImprovementsGameForumsThreadFilter\" name=\"chkGameImprovementsGameForumsThreadFilter\" type=\"checkbox\"><label for=\"chkGameImprovementsGameForumsThreadFilter\"></label></div></div><div class=\"ta-x-listbox ta-x-hide\" data-render-condition='[\n                    { \"selector\": \"#chkGamesImprovementsGameForumsForumOverride\", \"checked\": true },\n                    { \"selector\": \"#chkGameImprovementsGameForumsThreadFilter\", \"checked\": true }\n                ]'><label>Keywords</label><div class=\"frm-grp frm-lst\" data-list-id=\"txtGameImprovementsGameForumsThreadKeywordFilter\" data-template-id=\"#ta-x-template-forum-improvements-thread-filter-keywords\"><template id=\"ta-x-template-forum-improvements-thread-filter-keywords\"><li><div><p data-value=\"{listSetting.value}\">{listSetting.value}</p><a data-for-list=\"{listSetting.id}\" data-remove href=\"#\" onclick=\"event.preventDefault()\"> Remove </a></div></li></template><input class=\"textbox cs-n\" id=\"txtGameImprovementsGameForumsThreadKeywordFilter-input\" name=\"txtGameImprovementsGameForumsThreadKeywordFilte\"><input value=\"Add Filter\" data-add data-array-split=\",\" data-config-path=\"gamesImprovements.forums.threadFilterKeywords\" data-for-list=\"txtGameImprovementsGameForumsThreadKeywordFilter\" data-is-array=\"true\" onclick=\"event.preventDefault()\" type=\"submit\"><ul class=\"item-list\" id=\"txtGameImprovementsGameForumsThreadKeywordFilter\"></ul></div></div></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Thread Type for Game Forums</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.forums.gameForumsDefaultThread\" id=\"chkGamesImprovementsGameForumsDefaultThread\" name=\"chkGamesImprovementsGameForumsDefaultThread\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameForumsDefaultThread\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameForumsDefaultThread\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.forums.gameForumsDefaultThreadValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameForumsDefaultThreadValue\" name=\"selGamesImprovementsGameForumsDefaultThreadValue\"><option selected=\"selected\" value=\"all\">All Threads</option><option selected=\"selected\" value=\"community\">Community Threads</option><option selected=\"selected\" value=\"gameinfo\">Game Info Threads</option></select></div></div></div></div></div></div><div class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>News Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"newsImprovements.enabled\" id=\"chkNewsImprovements\" name=\"chkNewsImprovements\" type=\"checkbox\"><label for=\"chkNewsImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div data-render-condition='{ \"selector\": \"#chkNewsImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Sales </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Sort Sales By</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"newsImprovements.sales.autoSortBy\" id=\"chkNewsImprovementsSalesAutoSortBy\" name=\"chkNewsImprovementsSalesAutoSortBy\" type=\"checkbox\"><label for=\"chkNewsImprovementsSalesAutoSortBy\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkNewsImprovementsSalesAutoSortBy\", \"checked\": true }'><select class=\"dropdown\" data-array-split=\",\" data-config-path=\"newsImprovements.sales.autoSortByValue\" data-is-array=\"true\" id=\"selNewsImprovementsSalesAutoSortByValue\" name=\"selNewsImprovementsSalesAutoSortByValue\"><option selected=\"selected\" value=\"product,game\">Product</option><option selected=\"selected\" value=\"sale-price\">Sale Price</option><option selected=\"selected\" value=\"discount\">Discount</option><option selected=\"selected\" value=\"completion-time\">Completion Time</option><option selected=\"selected\" value=\"ta-ratio\">TA Ratio</option></select></div><div data-render-condition='{ \"selector\": \"#chkNewsImprovementsSalesAutoSortBy\", \"checked\": true }' class=\"ta-x-hide\"><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#selNewsImprovementsSalesAutoSortByValue\", \"value\": \"completion-time,ta-ratio\" }'>This option may not work on some tables. Let me know what you spot!</p></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkNewsImprovementsSalesAutoSortBy\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"newsImprovements.sales.autoSortByOrder\" data-is-array=\"false\" id=\"selNewsImprovementsSalesAutoSortByOrder\" name=\"selNewsImprovementsSalesAutoSortByOrder\"><option selected=\"selected\" value=\"asc\">Ascendening</option><option selected=\"selected\" value=\"desc\">Descending</option></select></div></div></div></div></div></div><div class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>Staff Walkthrough Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.enabled\" id=\"chkStaffWalkthroughImprovements\" name=\"chkStaffWalkthroughImprovements\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Edit Walkthrough </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Improved Image Selector</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.editWalkthrough.improvedImageSelector\" id=\"chkStaffWalkthroughImprovementsImproveImageSelector\" name=\"chkStaffWalkthroughImprovementsImproveImageSelector\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsImproveImageSelector\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Auto Save Notifications</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.editWalkthrough.autoSaveNotification\" id=\"chkStaffWalkthroughImprovementsAutoSaveNotification\" name=\"chkStaffWalkthroughImprovementsAutoSaveNotification\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsAutoSaveNotification\"></label></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Manage Walkthrough </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Clickable Table Links</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.clickableTableLinks\" id=\"chkStaffWalkthroughImprovementsClickableTableLinks\" name=\"chkStaffWalkthroughImprovementsClickableTableLinks\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsClickableTableLinks\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Add Missing Buttons</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.addMissingButtons\" id=\"chkStaffWalkthroughImprovementsAddPageButton\" name=\"chkStaffWalkthroughImprovementsAddPageButton\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsAddPageButton\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Auto Select First Walkthrough</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.autoSelectFirst\" id=\"chkStaffWalkthroughImprovementsAutoSelectFirst\" name=\"chkStaffWalkthroughImprovementsAutoSelectFirst\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsAutoSelectFirst\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\", \"checked\": true }'>This feature runs after the default status has been set.</p></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Status for Manage Walkthrough</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.manageWalkthroughDefaultStatus\" id=\"chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\" name=\"chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.manageWalkthroughDefaultStatusValue\" data-is-array=\"false\" id=\"selStaffWalkthroughImprovementsManageWalkthroughDefaultStatusValue\" name=\"selStaffWalkthroughImprovementsManageWalkthroughDefaultStatusValue\"><option selected=\"selected\" value=\"-1\">(All)</option><option selected=\"selected\" value=\"New\">New</option><option value=\"In progress\" selected=\"selected\">In progress</option><option value=\"Ready for review\" selected=\"selected\">Ready for review</option><option value=\"Ready for publish\" selected=\"selected\">Ready for publish</option><option selected=\"selected\" value=\"Published\">Published</option><option value=\"New owner required\" selected=\"selected\">New owner required</option></select></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Walkthrough Page </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Stick Page History To Left</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPage.stickyPageHistory\" id=\"chkStaffWalkthroughImprovementsStickyPageHistory\" name=\"chkStaffWalkthroughImprovementsStickyPageHistory\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsStickyPageHistory\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Move Buttons To The Left</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPage.moveButtonsToLeft\" id=\"chkStaffWalkthroughImprovementsMoveButtonsToLeft\" name=\"chkStaffWalkthroughImprovementsMoveButtonsToLeft\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsMoveButtonsToLeft\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Add Walkthrough Team Button</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPage.walkthroughTeamButton\" id=\"chkStaffWalkthroughImprovementsWalkthroughTeamButton\" name=\"chkStaffWalkthroughImprovementsWalkthroughTeamButton\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsWalkthroughTeamButton\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Highlight Page Locked</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPage.highlightPageLocked\" id=\"chkStaffWalkthroughImprovementsHighlightPageLocked\" name=\"chkStaffWalkthroughImprovementsHighlightPageLocked\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsHighlightPageLocked\"></label></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Walkthrough Preview </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Populate Side Column Content</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPreview.populateAsideContent\" id=\"chkStaffWalkthroughImprovementsPopulateAsideContent\" name=\"chkStaffWalkthroughImprovementsPopulateAsideContent\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsPopulateAsideContent\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovementsPopulateAsideContent\", \"checked\": true }'>This feature only supports \"In Progress\", \"Ready for review\" and \"Ready for publish\" walkthroughs, let me know if you want it to support others!</p></div></div></div></div></div></div><div class=\"t-settings js-ta-x-settings-menu-changelog ta-x-settings-menu-settings-item\"><div class=\"ta-x-settings-menu-changelog-wrapper\"><h1>Changelog</h1><h2>2.13.0</h2><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Added a feature to select a default game forum thread,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Added a feature to include guides from <a href=\"https://www.xboxachievements.com/\">XboxAchievements</a> on achievement guide pages,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Compress Emoji json to reduce package size,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Behind the scenes, moved from stylelint to prettier for hbs, html and scss,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Remove some unused Emoji json properties to reduce package size.</p></li></ul><a class=\"ta-x-settings-menu-changelog-link\" href=\"https://github.com/andrewcartwright1/trueachievements-extra/blob/main/CHANGELOG.md\">See the full changelog here</a></div><div class=\"ta-x-settings-menu-credits-wrapper\"><h1>Credits</h1><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p><a href=\"https://www.trueachievements.com/gamer/Dynamite+Andy\">Dynamite Andy</a> - Main contributor,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p><a href=\"https://www.trueachievements.com/gamer/Belindo152\">Belindo152</a> for code contributions, bug reports and feature requests,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p><a href=\"https://www.trueachievements.com/gamer/Amoa\">Amoa</a>, <a href=\"https://www.trueachievements.com/gamer/DynamicWolfNLD\">DynamicWolfNLD</a> and <a href=\"https://www.trueachievements.com/gamer/ManicMetalhead\">ManicMetalhead</a>, <a href=\"https://www.trueachievements.com/gamer/zr122\">zr122</a> for feature requests and bug reports,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>You for using this addon and checking out this work, thank you - it mean's alot.</p></li></ul></div></div><div class=\"t-settings js-ta-x-settings-menu-feature-documentation ta-x-settings-menu-settings-item\"><div class=\"ta-x-settings-menu-documentation-wrapper\"><h1>Feature Documentation</h1><h2>Sticky Header</h2><p>This feature will make the header stick to the top of the page, it will auto hide on scroll down and reappear on scroll up providing quick access, this feature has a sister setting titled \"Remain Stuck\" this will keep the header stuck to the top of the page and no longer show/hide on scroll.</p><h2>Emojis</h2><p>This feature remains a work in progress as I'm still finding all the locations we can input comments/replies/etc - but does what it says on the tin! Extends the emojis TA has to offer with unicode emojis.</p><h1>Forum Improvements</h1><p>This enables extended features to be enabled.</p><h2>Enable Thread Filter</h2><p>This feature will hide thread titles if they match specified keywords</p><h2>My Threads - Override Forum Settings</h2><p>This feature will override any feature shared between forums, current features shared:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Enable Thread Filter</p></li></ul><h2>Walkthroughs - Show Owner/Progress</h2><p>This feature appends information to the right sidebar which shows either:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>The progress and the author if the walkthrough is in progress,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>The gamers involved with the walkthrough and the total likes if published,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>A request for a url if the addon is unable to find a link to the walkthrough.</p></li></ul><h1>Gamer Improvements</h1><p>This enables extended features to be enabled.</p><h2>Add Group By Game Button</h2><p>This feature adds a button to the \"My unlocked achievements\" page, to group the achievements unlocked on a page by game, this feature is currently unstyled and looks a bit odd on the page, if you have any ideas for how it should look - let me know!</p><h1>Games Improvements</h1><p>This enables extended features to be enabled.</p><h2>Add Highlight Games Not In Collection Button</h2><p>This feature adds a button to the \"Full Xbox Games List\" page, to highlight games on a page that are not in your game collection, this feature is currently unstyled and looks a bit odd on the page, if you have any ideas for how it should look - let me know!</p><h2>Achievements - Show Progress as XX/XX</h2><p>This feature calculates the progress made for each game + dlc and shows it as xx/xx instead of just the maximum values possible, this feature does not currently support games without any dlc - should it? Let me know!</p><h2>Achievements - Default Status for Game Achievements</h2><p>This feature will auto select the selected filter should it not be selected/all achievements not unlocked.</p><h2>Achievements - Include Guides From XboxAchievements.com</h2><p>This feature will include guides from <a href=\"https://www.xboxachievements.com/\">XboxAchievements.com</a> when viewing a achievement solution, it can be buggy/look broken but is helpful for achievements which may not have a guide available.</p><h2>Challenges - Override Achievement Settings</h2><p>This feature will override any feature shared between achievements and challenges, current features shared:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Show Progress as XX/XX</p></li></ul><h2>Clips - Default Status for Game Clips</h2><p>This feature will auto select the selected values should they not be selected.</p><h2>DLC - Override Achievement Settings</h2><p>This feature will override any feature shared between achievements and dlc, current features shared:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Show Progress as XX/XX</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Default Status for Game Achievements</p></li></ul><h2>Forums - Override Forum Settings</h2><p>This feature will override any feature shared between forums, current features shared:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Enable Thread Filter</p></li></ul><h2>Forums - Default Thread Type for Game Forums</h2><p>This feature will auto select the selected thread type should it not be selected/all.</p><h1>News Improvements</h1><p>This enables extended features to be enabled.</p><h2>Sales - Sort Sales By</h2><p>This feature will auto set the sales page to be ordered the way specified if not already ordered.</p><h1>Staff Walkthrough Improvements</h1><p>This enables tweaks to some styles on the staff walkthrough pages to make it feel more responsive, some tweaks to the tinymce editor to add some new features and styles, but also allow extended features to be enabled.</p><h2>Edit Walkthrough - Improved Image Selector</h2><p>This feature gives the image selector a bit of a visual overhaul, fixing the add image link to the top, making images more presentable and overall giving it a much cleaner feel.</p><h2>Edit Walkthrough - Auto Save Notifications</h2><p>This feature will display a notification when autosave is executed.</p><h2>Manage Walkthrough - Clickable Table Links</h2><p>This feature will make achievements, games, gamers clickable for quick and easy access to its page.</p><h2>Manage Walkthrough - Add Missing Buttons</h2><p>This feature will prevent buttons like add page, edit page etc from going missing when adding/editing pages.</p><h2>Manage Walkthrough - Auto Select First Walkthrough</h2><p>This feature will auto select the first walkthrough in the list if no walkthrough is selected.</p><h2>Manage Walkthrough - Default Status for Manage Walkthrough</h2><p>This feature will auto switch to the selected status for walkthroughs should it not be selected or no walkthrough currently open.</p><h2>Walkthrough Page - Stick Page History To Left</h2><p>This feature will stick the left sidebar to the page, providing quick access to buttons and links for editing the page.</p><h2>Walkthrough Page - Move Buttons To The Left</h2><p>This feature will move the buttons on the right side of the page, to be contained within the left sidebar, handy if \"Stick Page History To Left\" is enabled as provides quick access to them.</p><h2>Walkthrough Page - Add Walkthrough Team Button</h2><p>This feature will add a button to the left sidebar providing quick access to the manage walkthrough page (This is currently missing for editors, but visible for authors).</p><h2>Walkthrough Page - Highlight Page Locked</h2><p>This feature will highlight the page locked message making it more visible.</p><h2>Walkthrough Preview - Populate Side Column Content</h2><p>This feature will generate sidebar content to give a more accurate representation of how the walkthrough will look when previewed.</p></div></div></div><div class=\"t-settings open ta-x-settings-menu-bottom\"><ul class=\"list-links buttons\"><li><a href=\"https://github.com/andrewcartwright1/trueachievements-extra/issues/new\"> Raise a Bug </a></li><li><a href=\"https://github.com/andrewcartwright1/trueachievements-extra/issues/new\"> Request a Feature </a></li></ul><div class=\"title\"><span> TrueAchievements Extra </span><div class=\"ta-x-flex-break\"></div><a class=\"js-ta-x-settings-menu-version\" href=\"#\"> Version {GM_info.script.version} </a><span> | </span><a class=\"js-ta-x-settings-menu-documentation\" href=\"#\"> Feature Documentation </a></div></div></div></div></div><div class=\"js-ta-x-settings-menu-close close\"></div></div>";
+var body_code = "<div class=\"js-ta-x-settings-menu-wrench gamer-page\" aria-haspopup=\"true\"><i class=\"fa fa-wrench\"></i></div><div class=\"js-ta-x-settings-menu ta-x-settings-menu ta-x-hide\"><div class=\"middle\"><div class=\"wrap\"><div class=\"labels\"><label class=\"js-ta-x-settings-menu-close close\"><i class=\"fa fa-close\"></i></label></div><div class=\"contents\"><div class=\"contents open ta-x-settings-menu-settings\"><div class=\"t-settings js-ta-x-settings-menu-settings ta-x-settings-menu-settings-item ta-x-settings-menu-settings-item-show\"><div class=\"ta-x-checkbox\" data-render-condition><label>Sticky Header</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"stickyHeader.enabled\" id=\"chkStickyHeader\" name=\"chkStickyHeader\" type=\"checkbox\"><label for=\"chkStickyHeader\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStickyHeader\", \"checked\": true }'>This feature may cause some sticky elements to look buggy. Let me know what you spot!</p></div><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStickyHeader\", \"checked\": true }'><label>Remain Stuck</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"stickyHeader.remainStuck\" id=\"chkStickyHeaderRemainStuck\" name=\"chkStickyHeaderRemainStuck\" type=\"checkbox\"><label for=\"chkStickyHeaderRemainStuck\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition style=\"border:0\"><label>Emojis</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"emojis.enabled\" id=\"chkEmojis\" name=\"chkEmojis\" type=\"checkbox\"><label for=\"chkEmojis\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion\" style=\"padding-top:0\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>Forum Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.enabled\" id=\"chkForumImprovements\" name=\"chkForumImprovements\" type=\"checkbox\"><label for=\"chkForumImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Enable Thread Filter</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.forumImprovementsThreadFilter\" id=\"chkForumImprovementsForumImprovementsThreadFilter\" name=\"chkForumImprovementsForumImprovementsThreadFilter\" type=\"checkbox\"><label for=\"chkForumImprovementsForumImprovementsThreadFilter\"></label></div></div><div class=\"ta-x-listbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkForumImprovementsForumImprovementsThreadFilter\", \"checked\": true }'><label>Keywords</label><div class=\"frm-grp frm-lst\" data-list-id=\"txtThreadKeywordFilter\" data-template-id=\"#ta-x-template-forum-improvements-thread-filter-keywords\"><template id=\"ta-x-template-forum-improvements-thread-filter-keywords\"><li><div><p data-value=\"{listSetting.value}\">{listSetting.value}</p><a data-for-list=\"{listSetting.id}\" data-remove href=\"#\" onclick=\"event.preventDefault()\"> Remove </a></div></li></template><input class=\"textbox cs-n\" id=\"txtThreadKeywordFilter-input\" name=\"txtThreadKeywordFilte\"><input value=\"Add Filter\" data-add data-array-split=\",\" data-config-path=\"forumImprovements.threadFilterKeywords\" data-for-list=\"txtThreadKeywordFilter\" data-is-array=\"true\" onclick=\"event.preventDefault()\" type=\"submit\"><ul class=\"item-list\" id=\"txtThreadKeywordFilter\"></ul></div></div></div><div data-render-condition='{ \"selector\": \"#chkForumImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> My Threads </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Override Forum Settings</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.myThreads.myThreadsForumOverride\" id=\"chkForumImprovementsMyThreadsForumOverride\" name=\"chkForumImprovementsMyThreadsForumOverride\" type=\"checkbox\"><label for=\"chkForumImprovementsMyThreadsForumOverride\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkForumImprovementsMyThreadsForumOverride\", \"checked\": false }'>Some settings will be inherited from Forums.</p></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkForumImprovementsMyThreadsForumOverride\", \"checked\": true }'><label>Enable Thread Filter</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.myThreads.myThreadsThreadFilter\" id=\"chkForumImprovementsMyThreadsThreadFilter\" name=\"chkForumImprovementsMyThreadsThreadFilter\" type=\"checkbox\"><label for=\"chkForumImprovementsMyThreadsThreadFilter\"></label></div></div><div class=\"ta-x-listbox ta-x-hide\" data-render-condition='[\n                    { \"selector\": \"#chkForumImprovementsMyThreadsForumOverride\", \"checked\": true },\n                    { \"selector\": \"#chkForumImprovementsMyThreadsThreadFilter\", \"checked\": true }\n                ]'><label>Keywords</label><div class=\"frm-grp frm-lst\" data-list-id=\"txtForumImprovementsMyThreadsThreadKeywordFilter\" data-template-id=\"#ta-x-template-forum-improvements-thread-filter-keywords\"><template id=\"ta-x-template-forum-improvements-thread-filter-keywords\"><li><div><p data-value=\"{listSetting.value}\">{listSetting.value}</p><a data-for-list=\"{listSetting.id}\" data-remove href=\"#\" onclick=\"event.preventDefault()\"> Remove </a></div></li></template><input class=\"textbox cs-n\" id=\"txtForumImprovementsMyThreadsThreadKeywordFilter-input\" name=\"txtForumImprovementsMyThreadsThreadKeywordFilte\"><input value=\"Add Filter\" data-add data-array-split=\",\" data-config-path=\"forumImprovements.myThreads.threadFilterKeywords\" data-for-list=\"txtForumImprovementsMyThreadsThreadKeywordFilter\" data-is-array=\"true\" onclick=\"event.preventDefault()\" type=\"submit\"><ul class=\"item-list\" id=\"txtForumImprovementsMyThreadsThreadKeywordFilter\"></ul></div></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkForumImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Walkthroughs </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Show Owner/Progress</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"forumImprovements.walkthroughs.showOwnerProgress\" id=\"chkForumImprovementsShowOwnerProgress\" name=\"chkForumImprovementsShowOwnerProgress\" type=\"checkbox\"><label for=\"chkForumImprovementsShowOwnerProgress\"></label></div></div></div></div></div></div><div class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>Gamer Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamerImprovements.enabled\" id=\"chkGamerImprovements\" name=\"chkGamerImprovements\" type=\"checkbox\"><label for=\"chkGamerImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div class=\"ta-x-checkbox\" data-render-condition><label>Add Group By Game Button</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamerImprovements.achievements.addGroupByGameButton\" id=\"chkGamerImprovementsGroupByGameButton\" name=\"chkGamerImprovementsGroupByGameButton\" type=\"checkbox\"><label for=\"chkGamerImprovementsGroupByGameButton\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamerImprovementsGroupByGameButton\", \"checked\": true }'>This feature is unstyled, let me know if you have any ideas for how to make this look!</p></div></div></div><div class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>Games Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.enabled\" id=\"chkGamesImprovements\" name=\"chkGamesImprovements\" type=\"checkbox\"><label for=\"chkGamesImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div class=\"ta-x-checkbox\" data-render-condition style=\"border:0\"><label>Add Highlight Games Not In Collection Button</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.games.addHighlightGamesNotInCollectionButton\" id=\"chkGamesImprovementsHighlightGamesNotInCollectionButton\" name=\"chkGamesImprovementsHighlightGamesNotInCollectionButton\" type=\"checkbox\"><label for=\"chkGamesImprovementsHighlightGamesNotInCollectionButton\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsHighlightGamesNotInCollectionButton\", \"checked\": true }'>This feature is unstyled, let me know if you have any ideas for how to make this look!</p></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Achievements </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Show progress as XX/XX</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.achievements.gameAchievementsIndividualProgress\" id=\"chkGamesImprovementsGameAchievementsIndividualProgress\" name=\"chkGamesImprovementsGameAchievementsIndividualProgress\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameAchievementsIndividualProgress\"></label></div></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Status for Game Achievements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.achievements.gameAchievementsDefaultStatus\" id=\"chkGamesImprovementsGameAchievementsDefaultStatus\" name=\"chkGamesImprovementsGameAchievementsDefaultStatus\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameAchievementsDefaultStatus\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameAchievementsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.achievements.gameAchievementsDefaultStatusValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameAchievementsDefaultStatusValue\" name=\"selGamesImprovementsGameAchievementsDefaultStatusValue\"><option selected=\"selected\" value=\"rdoAllAchievements\">All</option><option selected=\"selected\" value=\"rdoWonAchievements\">Won</option><option selected=\"selected\" value=\"rdoNotWonAchievements\">Not Won</option></select></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Include Guides From XboxAchievements.com</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.achievements.gameAchievementsShowXboxAchievementGuides\" id=\"chkGamesImprovementsGameAchievementsShowXboxAchievementGuides\" name=\"chkGamesImprovementsGameAchievementsShowXboxAchievementGuides\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameAchievementsShowXboxAchievementGuides\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameAchievementsShowXboxAchievementGuides\", \"checked\": true }'>This feature is tempermental, let me know if you have any issues!</p></div></div></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Challenges </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Override Achievement Settings</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.challenges.gameChallengesOverride\" id=\"chkGamesImprovementsGameChallengesOverride\" name=\"chkGamesImprovementsGameChallengesOverride\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameChallengesOverride\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameChallengesOverride\", \"checked\": false }'>Some settings will be inherited from Achievements.</p></div><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameChallengesOverride\", \"checked\": true }'><label>Show progress as XX/XX</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.challenges.gameChallengesIndividualProgress\" id=\"chkGamesImprovementsGameChallengesIndividualProgress\" name=\"chkGamesImprovementsGameChallengesIndividualProgress\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameChallengesIndividualProgress\"></label></div></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Status for Game Challenges</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.challenges.gameChallengesDefaultStatus\" id=\"chkGamesImprovementsGameChallengesDefaultStatus\" name=\"chkGamesImprovementsGameChallengesDefaultStatus\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameChallengesDefaultStatus\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameChallengesDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.challenges.gameChallengesDefaultStatusValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameChallengesDefaultStatusValue\" name=\"selGamesImprovementsGameChallengesDefaultStatusValue\"><option selected=\"selected\" value=\"rdoAllChallenges\">All</option><option selected=\"selected\" value=\"rdoWonChallenges\">Won</option><option selected=\"selected\" value=\"rdoNotWonChallenges\">Not Won</option></select></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Clips </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Status for Game Clips</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.clips.gameClipsDefaultStatus\" id=\"chkGamesImprovementsGameClipsDefaultStatus\" name=\"chkGamesImprovementsGameClipsDefaultStatus\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameClipsDefaultStatus\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'>This feature will cause multiple page reloads if you change more than one default!</p></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.clips.gameClipsDefaultRecordedByValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameClipsDefaultRecordedByValue\" name=\"selGamesImprovementsGameClipsDefaultRecordedByValue\"><option selected=\"selected\" value>Anyone</option><option value=\"My friends\" selected=\"selected\">My friends</option></select></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.clips.gameClipsDefaultSavedByValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameClipsDefaultSavedByValue\" name=\"selGamesImprovementsGameClipsDefaultSavedByValue\"><option selected=\"selected\" value>Anyone</option><option selected=\"selected\" value=\"Gamer\">Gamer</option><option selected=\"selected\" value=\"Xbox\">Xbox</option></select></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.clips.gameClipsDefaultRecordedValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameClipsDefaultRecordedValue\" name=\"selGamesImprovementsGameClipsDefaultRecordedValue\"><option selected=\"selected\" value=\"7\">This week</option><option selected=\"selected\" value=\"30\">This month</option><option selected=\"selected\" value=\"365\">This year</option><option selected=\"selected\" value=\"0\">All</option></select></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameClipsDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.clips.gameClipsDefaultSortByValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameClipsDefaultSortByValue\" name=\"selGamesImprovementsGameClipsDefaultSortByValue\"><option value=\"Most viewed\" selected=\"selected\">Most viewed</option><option value=\"Most favourited\" selected=\"selected\">Most favourited</option><option value=\"Most commented\" selected=\"selected\">Most commented</option><option selected=\"selected\" value=\"Longest\">Longest</option><option selected=\"selected\" value=\"GamerTag\">GamerTag</option></select></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> DLC </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Override Achievement Settings</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.dlc.gameDLCOverride\" id=\"chkGamesImprovementsGameDLCOverride\" name=\"chkGamesImprovementsGameDLCOverride\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameDLCOverride\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameDLCOverride\", \"checked\": false }'>Some settings will be inherited from Achievements.</p></div><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameDLCOverride\", \"checked\": true }'><label>Show progress as XX/XX</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.dlc.gameDLCIndividualProgress\" id=\"chkGamesImprovementsGameDLCIndividualProgress\" name=\"chkGamesImprovementsGameDLCIndividualProgress\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameDLCIndividualProgress\"></label></div></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameDLCOverride\", \"checked\": true }'><label>Default Status for Game DLC Achievements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.dlc.gameDLCDefaultStatus\" id=\"chkGamesImprovementsGameDLCDefaultStatus\" name=\"chkGamesImprovementsGameDLCDefaultStatus\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameDLCDefaultStatus\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='[\n                { \"selector\": \"#chkGamesImprovementsGameDLCOverride\", \"checked\": true },\n                { \"selector\": \"#chkGamesImprovementsGameDLCDefaultStatus\", \"checked\": true }]'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.dlc.gameDLCDefaultStatusValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameDLCDefaultStatusValue\" name=\"selGamesImprovementsGameDLCDefaultStatusValue\"><option selected=\"selected\" value=\"rdoAllAchievements\">All</option><option selected=\"selected\" value=\"rdoWonAchievements\">Won</option><option selected=\"selected\" value=\"rdoNotWonAchievements\">Not Won</option></select></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkGamesImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Forums </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Override Forum Settings</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.forums.gameForumsForumOverride\" id=\"chkGamesImprovementsGameForumsForumOverride\" name=\"chkGamesImprovementsGameForumsForumOverride\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameForumsForumOverride\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameForumsForumOverride\", \"checked\": false }'>Some settings will be inherited from Forums.</p></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameForumsForumOverride\", \"checked\": true }'><label>Enable Thread Filter</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.forums.gameForumsThreadFilter\" id=\"chkGameImprovementsGameForumsThreadFilter\" name=\"chkGameImprovementsGameForumsThreadFilter\" type=\"checkbox\"><label for=\"chkGameImprovementsGameForumsThreadFilter\"></label></div></div><div class=\"ta-x-listbox ta-x-hide\" data-render-condition='[\n                    { \"selector\": \"#chkGamesImprovementsGameForumsForumOverride\", \"checked\": true },\n                    { \"selector\": \"#chkGameImprovementsGameForumsThreadFilter\", \"checked\": true }\n                ]'><label>Keywords</label><div class=\"frm-grp frm-lst\" data-list-id=\"txtGameImprovementsGameForumsThreadKeywordFilter\" data-template-id=\"#ta-x-template-forum-improvements-thread-filter-keywords\"><template id=\"ta-x-template-forum-improvements-thread-filter-keywords\"><li><div><p data-value=\"{listSetting.value}\">{listSetting.value}</p><a data-for-list=\"{listSetting.id}\" data-remove href=\"#\" onclick=\"event.preventDefault()\"> Remove </a></div></li></template><input class=\"textbox cs-n\" id=\"txtGameImprovementsGameForumsThreadKeywordFilter-input\" name=\"txtGameImprovementsGameForumsThreadKeywordFilte\"><input value=\"Add Filter\" data-add data-array-split=\",\" data-config-path=\"gamesImprovements.forums.threadFilterKeywords\" data-for-list=\"txtGameImprovementsGameForumsThreadKeywordFilter\" data-is-array=\"true\" onclick=\"event.preventDefault()\" type=\"submit\"><ul class=\"item-list\" id=\"txtGameImprovementsGameForumsThreadKeywordFilter\"></ul></div></div></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Thread Type for Game Forums</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"gamesImprovements.forums.gameForumsDefaultThread\" id=\"chkGamesImprovementsGameForumsDefaultThread\" name=\"chkGamesImprovementsGameForumsDefaultThread\" type=\"checkbox\"><label for=\"chkGamesImprovementsGameForumsDefaultThread\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkGamesImprovementsGameForumsDefaultThread\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"gamesImprovements.forums.gameForumsDefaultThreadValue\" data-is-array=\"false\" id=\"selGamesImprovementsGameForumsDefaultThreadValue\" name=\"selGamesImprovementsGameForumsDefaultThreadValue\"><option selected=\"selected\" value=\"all\">All Threads</option><option selected=\"selected\" value=\"community\">Community Threads</option><option selected=\"selected\" value=\"gameinfo\">Game Info Threads</option></select></div></div></div></div></div></div><div class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>News Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"newsImprovements.enabled\" id=\"chkNewsImprovements\" name=\"chkNewsImprovements\" type=\"checkbox\"><label for=\"chkNewsImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div data-render-condition='{ \"selector\": \"#chkNewsImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Sales </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Sort Sales By</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"newsImprovements.sales.autoSortBy\" id=\"chkNewsImprovementsSalesAutoSortBy\" name=\"chkNewsImprovementsSalesAutoSortBy\" type=\"checkbox\"><label for=\"chkNewsImprovementsSalesAutoSortBy\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkNewsImprovementsSalesAutoSortBy\", \"checked\": true }'><select class=\"dropdown\" data-array-split=\",\" data-config-path=\"newsImprovements.sales.autoSortByValue\" data-is-array=\"true\" id=\"selNewsImprovementsSalesAutoSortByValue\" name=\"selNewsImprovementsSalesAutoSortByValue\"><option selected=\"selected\" value=\"product,game\">Product</option><option selected=\"selected\" value=\"sale-price\">Sale Price</option><option selected=\"selected\" value=\"discount\">Discount</option><option selected=\"selected\" value=\"completion-time\">Completion Time</option><option selected=\"selected\" value=\"ta-ratio\">TA Ratio</option></select></div><div data-render-condition='{ \"selector\": \"#chkNewsImprovementsSalesAutoSortBy\", \"checked\": true }' class=\"ta-x-hide\"><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#selNewsImprovementsSalesAutoSortByValue\", \"value\": \"completion-time,ta-ratio\" }'>This option may not work on some tables. Let me know what you spot!</p></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkNewsImprovementsSalesAutoSortBy\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"newsImprovements.sales.autoSortByOrder\" data-is-array=\"false\" id=\"selNewsImprovementsSalesAutoSortByOrder\" name=\"selNewsImprovementsSalesAutoSortByOrder\"><option selected=\"selected\" value=\"asc\">Ascendening</option><option selected=\"selected\" value=\"desc\">Descending</option></select></div></div></div></div></div></div><div class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-checkbox ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\" data-checkbox-accordion><label>Staff Walkthrough Improvements</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.enabled\" id=\"chkStaffWalkthroughImprovements\" name=\"chkStaffWalkthroughImprovements\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovements\"></label></div></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\" data-parent-accordion-body><div data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Edit Walkthrough </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Improved Image Selector</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.editWalkthrough.improvedImageSelector\" id=\"chkStaffWalkthroughImprovementsImproveImageSelector\" name=\"chkStaffWalkthroughImprovementsImproveImageSelector\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsImproveImageSelector\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Auto Save Notifications</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.editWalkthrough.autoSaveNotification\" id=\"chkStaffWalkthroughImprovementsAutoSaveNotification\" name=\"chkStaffWalkthroughImprovementsAutoSaveNotification\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsAutoSaveNotification\"></label></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Manage Walkthrough </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Clickable Table Links</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.clickableTableLinks\" id=\"chkStaffWalkthroughImprovementsClickableTableLinks\" name=\"chkStaffWalkthroughImprovementsClickableTableLinks\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsClickableTableLinks\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Add Missing Buttons</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.addMissingButtons\" id=\"chkStaffWalkthroughImprovementsAddPageButton\" name=\"chkStaffWalkthroughImprovementsAddPageButton\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsAddPageButton\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Auto Select First Walkthrough</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.autoSelectFirst\" id=\"chkStaffWalkthroughImprovementsAutoSelectFirst\" name=\"chkStaffWalkthroughImprovementsAutoSelectFirst\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsAutoSelectFirst\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\", \"checked\": true }'>This feature runs after the default status has been set.</p></div><div class=\"ta-x-settings-menu-columned-setting\"><div class=\"ta-x-checkbox\" data-render-condition><label>Default Status for Manage Walkthrough</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.manageWalkthroughDefaultStatus\" id=\"chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\" name=\"chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\"></label></div></div><div class=\"frm-grp frm-sel ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovementsManageWalkthroughDefaultStatus\", \"checked\": true }'><select class=\"dropdown\" data-array-split data-config-path=\"staffWalkthroughImprovements.manageWalkthrough.manageWalkthroughDefaultStatusValue\" data-is-array=\"false\" id=\"selStaffWalkthroughImprovementsManageWalkthroughDefaultStatusValue\" name=\"selStaffWalkthroughImprovementsManageWalkthroughDefaultStatusValue\"><option selected=\"selected\" value=\"-1\">(All)</option><option selected=\"selected\" value=\"New\">New</option><option value=\"In progress\" selected=\"selected\">In progress</option><option value=\"Ready for review\" selected=\"selected\">Ready for review</option><option value=\"Ready for publish\" selected=\"selected\">Ready for publish</option><option selected=\"selected\" value=\"Published\">Published</option><option value=\"New owner required\" selected=\"selected\">New owner required</option></select></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Walkthrough Page </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Stick Page History To Left</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPage.stickyPageHistory\" id=\"chkStaffWalkthroughImprovementsStickyPageHistory\" name=\"chkStaffWalkthroughImprovementsStickyPageHistory\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsStickyPageHistory\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Move Buttons To The Left</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPage.moveButtonsToLeft\" id=\"chkStaffWalkthroughImprovementsMoveButtonsToLeft\" name=\"chkStaffWalkthroughImprovementsMoveButtonsToLeft\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsMoveButtonsToLeft\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Add Walkthrough Team Button</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPage.walkthroughTeamButton\" id=\"chkStaffWalkthroughImprovementsWalkthroughTeamButton\" name=\"chkStaffWalkthroughImprovementsWalkthroughTeamButton\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsWalkthroughTeamButton\"></label></div></div><div class=\"ta-x-checkbox\" data-render-condition><label>Highlight Page Locked</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPage.highlightPageLocked\" id=\"chkStaffWalkthroughImprovementsHighlightPageLocked\" name=\"chkStaffWalkthroughImprovementsHighlightPageLocked\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsHighlightPageLocked\"></label></div></div></div></div><div data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovements\", \"checked\": true }' class=\"ta-x-settings-menu-settings-accordion\"><div class=\"ta-x-settings-menu-settings-accordion-header labels js-ta-x-accordion collapsed\"><span> Walkthrough Preview </span><svg viewbox=\"0 0 512 512\" class=\"ta-x-settings-menu-settings-accordion-header-icon\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z\" fill=\"currentColor\"></path></svg></div><div class=\"ta-x-settings-menu-settings-accordion-body t-settings\"><div class=\"ta-x-checkbox\" data-render-condition><label>Populate Side Column Content</label><div class=\"frm-grp frm-tgl\"><input checked=\"checked\" data-config-path=\"staffWalkthroughImprovements.walkthroughPreview.populateAsideContent\" id=\"chkStaffWalkthroughImprovementsPopulateAsideContent\" name=\"chkStaffWalkthroughImprovementsPopulateAsideContent\" type=\"checkbox\"><label for=\"chkStaffWalkthroughImprovementsPopulateAsideContent\"></label></div><div class=\"ta-x-flex-break\"></div><p class=\"ta-x-checkbox-help-text ta-x-hide\" data-render-condition='{ \"selector\": \"#chkStaffWalkthroughImprovementsPopulateAsideContent\", \"checked\": true }'>This feature only supports \"In Progress\", \"Ready for review\" and \"Ready for publish\" walkthroughs, let me know if you want it to support others!</p></div></div></div></div></div></div><div class=\"t-settings js-ta-x-settings-menu-changelog ta-x-settings-menu-settings-item\"><div class=\"ta-x-settings-menu-changelog-wrapper\"><h1>Changelog</h1><h2>3.0.0</h2><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Behind the scenes, Changed from ts-loader to esbuild-loader,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Behind the scenes, finally got the vscode debugger working,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Behind the scenes, setup github actions to commit dist and push tags,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Behind the scenes, updated to latest node,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Fixed walkthrough preview aside content not loading,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Fixed XboxAchievements not working anymore,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Fixed XboxAchievements showing on the gamer leaderboard for an achievement,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Fixed some mobile/tablet sizing issues,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Fixed some regex issues with dlc</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Changed progress bars on achievements/challenges to link to achievement/challenge leaderboard.</p></li></ul><a class=\"ta-x-settings-menu-changelog-link\" href=\"https://github.com/andrewcartwright1/trueachievements-extra/blob/main/CHANGELOG.md\">See the full changelog here</a></div><div class=\"ta-x-settings-menu-credits-wrapper\"><h1>Credits</h1><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p><a href=\"https://www.trueachievements.com/gamer/Dynamite+Andy\">Dynamite Andy</a> - Main contributor,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p><a href=\"https://www.trueachievements.com/gamer/Belindo152\">Belindo152</a> for code contributions, bug reports and feature requests,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p><a href=\"https://www.trueachievements.com/gamer/Amoa\">Amoa</a>, <a href=\"https://www.trueachievements.com/gamer/DynamicWolfNLD\">DynamicWolfNLD</a> and <a href=\"https://www.trueachievements.com/gamer/ManicMetalhead\">ManicMetalhead</a>, <a href=\"https://www.trueachievements.com/gamer/zr122\">zr122</a> for feature requests and bug reports,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>You for using this addon and checking out this work, thank you - it mean's alot.</p></li></ul></div></div><div class=\"t-settings js-ta-x-settings-menu-feature-documentation ta-x-settings-menu-settings-item\"><div class=\"ta-x-settings-menu-documentation-wrapper\"><h1>Feature Documentation</h1><h2>Sticky Header</h2><p>This feature will make the header stick to the top of the page, it will auto hide on scroll down and reappear on scroll up providing quick access, this feature has a sister setting titled \"Remain Stuck\" this will keep the header stuck to the top of the page and no longer show/hide on scroll.</p><h2>Emojis</h2><p>This feature remains a work in progress as I'm still finding all the locations we can input comments/replies/etc - but does what it says on the tin! Extends the emojis TA has to offer with unicode emojis.</p><h1>Forum Improvements</h1><p>This enables extended features to be enabled.</p><h2>Enable Thread Filter</h2><p>This feature will hide thread titles if they match specified keywords</p><h2>My Threads - Override Forum Settings</h2><p>This feature will override any feature shared between forums, current features shared:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Enable Thread Filter</p></li></ul><h2>Walkthroughs - Show Owner/Progress</h2><p>This feature appends information to the right sidebar which shows either:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>The progress and the author if the walkthrough is in progress,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>The gamers involved with the walkthrough and the total likes if published,</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>A request for a url if the addon is unable to find a link to the walkthrough.</p></li></ul><h1>Gamer Improvements</h1><p>This enables extended features to be enabled.</p><h2>Add Group By Game Button</h2><p>This feature adds a button to the \"My unlocked achievements\" page, to group the achievements unlocked on a page by game, this feature is currently unstyled and looks a bit odd on the page, if you have any ideas for how it should look - let me know!</p><h1>Games Improvements</h1><p>This enables extended features to be enabled.</p><h2>Add Highlight Games Not In Collection Button</h2><p>This feature adds a button to the \"Full Xbox Games List\" page, to highlight games on a page that are not in your game collection, this feature is currently unstyled and looks a bit odd on the page, if you have any ideas for how it should look - let me know!</p><h2>Achievements - Show Progress as XX/XX</h2><p>This feature calculates the progress made for each game + dlc and shows it as xx/xx instead of just the maximum values possible, this feature does not currently support games without any dlc - should it? Let me know!</p><h2>Achievements - Default Status for Game Achievements</h2><p>This feature will auto select the selected filter should it not be selected/all achievements not unlocked.</p><h2>Achievements - Include Guides From XboxAchievements.com</h2><p>This feature will include guides from <a href=\"https://www.xboxachievements.com/\">XboxAchievements.com</a> when viewing a achievement solution, it can be buggy/look broken but is helpful for achievements which may not have a guide available.</p><h2>Challenges - Override Achievement Settings</h2><p>This feature will override any feature shared between achievements and challenges, current features shared:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Show Progress as XX/XX</p></li></ul><h2>Clips - Default Status for Game Clips</h2><p>This feature will auto select the selected values should they not be selected.</p><h2>DLC - Override Achievement Settings</h2><p>This feature will override any feature shared between achievements and dlc, current features shared:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Show Progress as XX/XX</p></li><li><span class=\"ta-x-markdown-marker\">➤</span><p>Default Status for Game Achievements</p></li></ul><h2>Forums - Override Forum Settings</h2><p>This feature will override any feature shared between forums, current features shared:</p><ul><li><span class=\"ta-x-markdown-marker\">➤</span><p>Enable Thread Filter</p></li></ul><h2>Forums - Default Thread Type for Game Forums</h2><p>This feature will auto select the selected thread type should it not be selected/all.</p><h1>News Improvements</h1><p>This enables extended features to be enabled.</p><h2>Sales - Sort Sales By</h2><p>This feature will auto set the sales page to be ordered the way specified if not already ordered.</p><h1>Staff Walkthrough Improvements</h1><p>This enables tweaks to some styles on the staff walkthrough pages to make it feel more responsive, some tweaks to the tinymce editor to add some new features and styles, but also allow extended features to be enabled.</p><h2>Edit Walkthrough - Improved Image Selector</h2><p>This feature gives the image selector a bit of a visual overhaul, fixing the add image link to the top, making images more presentable and overall giving it a much cleaner feel.</p><h2>Edit Walkthrough - Auto Save Notifications</h2><p>This feature will display a notification when autosave is executed.</p><h2>Manage Walkthrough - Clickable Table Links</h2><p>This feature will make achievements, games, gamers clickable for quick and easy access to its page.</p><h2>Manage Walkthrough - Add Missing Buttons</h2><p>This feature will prevent buttons like add page, edit page etc from going missing when adding/editing pages.</p><h2>Manage Walkthrough - Auto Select First Walkthrough</h2><p>This feature will auto select the first walkthrough in the list if no walkthrough is selected.</p><h2>Manage Walkthrough - Default Status for Manage Walkthrough</h2><p>This feature will auto switch to the selected status for walkthroughs should it not be selected or no walkthrough currently open.</p><h2>Walkthrough Page - Stick Page History To Left</h2><p>This feature will stick the left sidebar to the page, providing quick access to buttons and links for editing the page.</p><h2>Walkthrough Page - Move Buttons To The Left</h2><p>This feature will move the buttons on the right side of the page, to be contained within the left sidebar, handy if \"Stick Page History To Left\" is enabled as provides quick access to them.</p><h2>Walkthrough Page - Add Walkthrough Team Button</h2><p>This feature will add a button to the left sidebar providing quick access to the manage walkthrough page (This is currently missing for editors, but visible for authors).</p><h2>Walkthrough Page - Highlight Page Locked</h2><p>This feature will highlight the page locked message making it more visible.</p><h2>Walkthrough Preview - Populate Side Column Content</h2><p>This feature will generate sidebar content to give a more accurate representation of how the walkthrough will look when previewed.</p></div></div></div><div class=\"t-settings open ta-x-settings-menu-bottom\"><ul class=\"list-links buttons\"><li><a href=\"https://github.com/andrewcartwright1/trueachievements-extra/issues/new\"> Raise a Bug </a></li><li><a href=\"https://github.com/andrewcartwright1/trueachievements-extra/issues/new\"> Request a Feature </a></li></ul><div class=\"title\"><span> TrueAchievements Extra </span><div class=\"ta-x-flex-break\"></div><a class=\"js-ta-x-settings-menu-version\" href=\"#\"> Version {GM_info.script.version} </a><span> | </span><a class=\"js-ta-x-settings-menu-documentation\" href=\"#\"> Feature Documentation </a></div></div></div></div></div><div class=\"js-ta-x-settings-menu-close close\"></div></div>";
 // Exports
 /* harmony default export */ const body = (body_code);
 ;// CONCATENATED MODULE: ./src/features/settings-menu/index.ts
@@ -6461,192 +6284,200 @@ var body_code = "<div class=\"js-ta-x-settings-menu-wrench gamer-page\" aria-has
 
 let extensionBody;
 const applyBody = async () => {
-    const parsedDocument = new DOMParser().parseFromString(body, 'text/html');
-    const navigationBar = await (0,utilities/* waitForElement */.br)('header nav');
-    const navGamerToggle = await (0,utilities/* waitForElement */.br)('[data-tgl="nav-gamer"]', navigationBar);
-    navigationBar.insertBefore(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.wrenchJs}`), navGamerToggle.nextSibling);
-    const navGamer = await (0,utilities/* waitForElement */.br)('.nav-gamer');
-    const templatedFeature = (0,helpers/* template */.XK)(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.featureJs}`));
-    navGamer.parentNode.insertBefore(templatedFeature, navGamer.nextSibling);
-    addSettings();
+  const parsedDocument = new DOMParser().parseFromString(body, "text/html");
+  const navigationBar = await (0,utilities/* waitForElement */.br)("header nav");
+  const navGamerToggle = await (0,utilities/* waitForElement */.br)('[data-tgl="nav-gamer"]', navigationBar);
+  navigationBar.insertBefore(
+    parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.wrenchJs}`),
+    navGamerToggle.nextSibling
+  );
+  const navGamer = await (0,utilities/* waitForElement */.br)(".nav-gamer");
+  const templatedFeature = (0,helpers/* template */.XK)(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.featureJs}`));
+  navGamer.parentNode.insertBefore(templatedFeature, navGamer.nextSibling);
+  addSettings();
 };
 const addSettings = () => {
-    extensionBody = document.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.featureJs}`);
-    [...extensionBody.querySelectorAll('input, select')].forEach((setting) => {
-        const configPath = setting.getAttribute('data-config-path');
-        if (!configPath) {
-            return;
-        }
-        if ((0,utilities/* isCheckboxElement */.PT)(setting)) {
-            setting.checked = (0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, false);
-        }
-        else if ((0,utilities/* isSelectElement */.Wi)(setting)) {
-            if ((0,utilities/* toBool */.AM)(setting.getAttribute('data-is-array'))) {
-                setting.value = (0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, []).join(setting.getAttribute('data-array-split'));
-            }
-            else {
-                setting.value = (0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, '');
-            }
-        }
-        else if ((0,utilities/* isTAXChildListElement */.aF)(setting)) {
-            const listElement = new ListSetting(setting);
-            let values;
-            if ((0,utilities/* toBool */.AM)(setting.getAttribute('data-is-array'))) {
-                values = (0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, []);
-            }
-            else {
-                values = [(0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, '')];
-            }
-            values.forEach((value) => {
-                listElement.list.appendChild(createListElement(listElement, value));
-            });
-        }
-    });
-    checkRenderConditions();
+  extensionBody = document.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.featureJs}`);
+  [...extensionBody.querySelectorAll("input, select")].forEach((setting) => {
+    const configPath = setting.getAttribute("data-config-path");
+    if (!configPath) {
+      return;
+    }
+    if ((0,utilities/* isCheckboxElement */.PT)(setting)) {
+      setting.checked = (0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, false);
+    } else if ((0,utilities/* isSelectElement */.Wi)(setting)) {
+      if ((0,utilities/* toBool */.AM)(setting.getAttribute("data-is-array"))) {
+        setting.value = (0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, []).join(
+          setting.getAttribute("data-array-split")
+        );
+      } else {
+        setting.value = (0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, "");
+      }
+    } else if ((0,utilities/* isTAXChildListElement */.aF)(setting)) {
+      const listElement = new ListSetting(setting);
+      let values;
+      if ((0,utilities/* toBool */.AM)(setting.getAttribute("data-is-array"))) {
+        values = (0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, []);
+      } else {
+        values = [(0,utilities/* getValue */.NA)(globals/* config */.vc, configPath, "")];
+      }
+      values.forEach((value) => {
+        listElement.list.appendChild(createListElement(listElement, value));
+      });
+    }
+  });
+  checkRenderConditions();
 };
 const checkRenderConditions = (el) => {
-    const querySelector = el ? `[data-render-condition*="#${el.id}"]` : '[data-render-condition]';
-    [...extensionBody.querySelectorAll(querySelector)].forEach((hiddenSetting) => {
-        const condition = ConditionalRender.fromString(hiddenSetting.getAttribute('data-render-condition'));
-        const method = condition?.test(extensionBody);
-        if (method) {
-            hiddenSetting.classList[method](globals/* Constants */.gT.Styles.Base.hide);
-        }
-    });
+  const querySelector = el ? `[data-render-condition*="#${el.id}"]` : "[data-render-condition]";
+  [...extensionBody.querySelectorAll(querySelector)].forEach((hiddenSetting) => {
+    const condition = ConditionalRender.fromString(hiddenSetting.getAttribute("data-render-condition"));
+    const method = condition?.test(extensionBody);
+    if (method) {
+      hiddenSetting.classList[method](globals/* Constants */.gT.Styles.Base.hide);
+    }
+  });
 };
 const setAccordionStates = () => {
-    [...extensionBody.querySelectorAll('[data-checkbox-accordion] input')].forEach((setting) => {
-        if ((0,utilities/* isCheckboxElement */.PT)(setting)) {
-            const checkedValue = setting.checked;
-            const accordionParent = setting.closest('.js-ta-x-accordion');
-            if (checkedValue && accordionParent) {
-                pub_sub.publish('accordion:toggleState', accordionParent);
-            }
-        }
-    });
+  [...extensionBody.querySelectorAll("[data-checkbox-accordion] input")].forEach((setting) => {
+    if ((0,utilities/* isCheckboxElement */.PT)(setting)) {
+      const checkedValue = setting.checked;
+      const accordionParent = setting.closest(".js-ta-x-accordion");
+      if (checkedValue && accordionParent) {
+        pub_sub.publish("accordion:toggleState", accordionParent);
+      }
+    }
+  });
 };
 const createListElement = (listSetting, value) => {
-    const templateListItem = listSetting.parent.querySelector(listSetting.parent.getAttribute('data-template-id'));
-    const templatedListItem = (0,helpers/* template */.XK)(templateListItem.content.firstElementChild.cloneNode(true), {
-        listSetting: {
-            id: listSetting.listId,
-            value: value
-        }
-    });
-    return templatedListItem;
+  const templateListItem = listSetting.parent.querySelector(
+    listSetting.parent.getAttribute("data-template-id")
+  );
+  const templatedListItem = (0,helpers/* template */.XK)(templateListItem.content.firstElementChild.cloneNode(true), {
+    listSetting: {
+      id: listSetting.listId,
+      value
+    }
+  });
+  return templatedListItem;
 };
 const settings_menu_listen = () => {
-    const extensionTrigger = document.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.wrenchJs}`);
-    extensionTrigger.addEventListener('click', () => {
-        extensionTrigger.classList.add('active');
-        extensionBody.classList.add('nav-gamer');
-        extensionBody.classList.remove(globals/* Constants */.gT.Styles.Base.hide);
-        extensionBody.classList.add('open');
-        if (extensionBody.hasAttribute('data-previously-opened')) {
-            return;
-        }
-        extensionBody.setAttribute('data-previously-opened', '');
-        setAccordionStates();
-    });
-    extensionBody.addEventListener('click', ({ target }) => {
-        if (!(target instanceof HTMLElement)) {
-            return;
-        }
-        if (!(0,utilities/* isTAXChildListElement */.aF)(target)) {
-            return;
-        }
-        const listElement = new ListSetting(target);
-        const configPath = listElement.parent.querySelector('[data-config-path]').getAttribute('data-config-path');
-        if (target.hasAttribute('data-add')) {
-            if (listElement.input.value === '') {
-                return;
-            }
-            listElement.list.appendChild(createListElement(listElement, listElement.input.value));
-            listElement.input.value = '';
-        }
-        else if (target.hasAttribute('data-remove')) {
-            listElement.list.removeChild(target.closest('li'));
-        }
-        (0,utilities/* setValue */.sO)(globals/* config */.vc, configPath, [...listElement.list.querySelectorAll('[data-value]')].map((val) => val.getAttribute('data-value')));
-        let parentAccordionBody = target.closest('.ta-x-settings-menu-settings-accordion-body');
-        if (parentAccordionBody) {
-            pub_sub.publish('accordion:setMaxHeight', parentAccordionBody);
-        }
-        setTimeout(() => {
-            parentAccordionBody = target.closest('[data-parent-accordion-body]');
-            if (parentAccordionBody) {
-                pub_sub.publish('accordion:setMaxHeight', parentAccordionBody);
-            }
-        }, 500);
-    });
-    extensionBody.addEventListener('click', ({ target }) => {
-        if (!(target instanceof HTMLElement)) {
-            return;
-        }
-        if (!target.classList.contains(globals/* Constants */.gT.Styles.SettingsMenu.closeJs)) {
-            return;
-        }
-        extensionBody.classList.remove('open');
-        extensionBody.classList.add(globals/* Constants */.gT.Styles.Base.hide);
-        extensionBody.classList.remove('nav-gamer');
-        extensionTrigger.classList.remove('active');
-    });
-    extensionBody.addEventListener('click', ({ target }) => {
-        if (!(target instanceof HTMLElement)) {
-            return;
-        }
-        if (!target.classList.contains(globals/* Constants */.gT.Styles.SettingsMenu.versionLink) &&
-            !target.classList.contains(globals/* Constants */.gT.Styles.SettingsMenu.documentationLink)) {
-            return;
-        }
-        const changelogView = extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.changelogView}`);
-        const documentationView = extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.featureDocumentationView}`);
-        const settingsView = extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.settingsView}`);
-        const currentView = extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow}`);
-        const nextView = target.classList.contains(globals/* Constants */.gT.Styles.SettingsMenu.versionLink)
-            ? changelogView
-            : documentationView;
-        if (currentView === nextView) {
-            nextView.classList.toggle(globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow);
-            settingsView.classList.toggle(globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow);
-        }
-        else {
-            currentView.classList.toggle(globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow);
-            nextView.classList.toggle(globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow);
-        }
-    });
-    extensionBody.addEventListener('change', ({ target }) => {
-        if (!(target instanceof HTMLElement)) {
-            return;
-        }
-        const configPath = target.getAttribute('data-config-path');
-        if ((0,utilities/* isSelectElement */.Wi)(target)) {
-            if ((0,utilities/* toBool */.AM)(target.getAttribute('data-is-array'))) {
-                (0,utilities/* setValue */.sO)(globals/* config */.vc, configPath, target.value.split(target.getAttribute('data-array-split')));
-            }
-            else {
-                (0,utilities/* setValue */.sO)(globals/* config */.vc, configPath, target.value);
-            }
-        }
-        else if ((0,utilities/* isCheckboxElement */.PT)(target)) {
-            (0,utilities/* setValue */.sO)(globals/* config */.vc, configPath, target.checked);
-        }
-        checkRenderConditions(target);
-        let parentAccordionBody = target.closest('.ta-x-settings-menu-settings-accordion-body');
-        if (parentAccordionBody) {
-            pub_sub.publish('accordion:setMaxHeight', parentAccordionBody);
-        }
-        setTimeout(() => {
-            parentAccordionBody = target.closest('[data-parent-accordion-body]');
-            if (parentAccordionBody) {
-                pub_sub.publish('accordion:setMaxHeight', parentAccordionBody);
-            }
-        }, 500);
-    });
+  const extensionTrigger = document.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.wrenchJs}`);
+  extensionTrigger.addEventListener("click", () => {
+    extensionTrigger.classList.add("active");
+    extensionBody.classList.add("nav-gamer");
+    extensionBody.classList.remove(globals/* Constants */.gT.Styles.Base.hide);
+    extensionBody.classList.add("open");
+    if (extensionBody.hasAttribute("data-previously-opened")) {
+      return;
+    }
+    extensionBody.setAttribute("data-previously-opened", "");
+    setAccordionStates();
+  });
+  extensionBody.addEventListener("click", ({ target }) => {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!(0,utilities/* isTAXChildListElement */.aF)(target)) {
+      return;
+    }
+    const listElement = new ListSetting(target);
+    const configPath = listElement.parent.querySelector("[data-config-path]").getAttribute(
+      "data-config-path"
+    );
+    if (target.hasAttribute("data-add")) {
+      if (listElement.input.value === "") {
+        return;
+      }
+      listElement.list.appendChild(createListElement(listElement, listElement.input.value));
+      listElement.input.value = "";
+    } else if (target.hasAttribute("data-remove")) {
+      listElement.list.removeChild(target.closest("li"));
+    }
+    (0,utilities/* setValue */.sO)(
+      globals/* config */.vc,
+      configPath,
+      [...listElement.list.querySelectorAll("[data-value]")].map(
+        (val) => val.getAttribute("data-value")
+      )
+    );
+    let parentAccordionBody = target.closest(".ta-x-settings-menu-settings-accordion-body");
+    if (parentAccordionBody) {
+      pub_sub.publish("accordion:setMaxHeight", parentAccordionBody);
+    }
+    setTimeout(() => {
+      parentAccordionBody = target.closest("[data-parent-accordion-body]");
+      if (parentAccordionBody) {
+        pub_sub.publish("accordion:setMaxHeight", parentAccordionBody);
+      }
+    }, 500);
+  });
+  extensionBody.addEventListener("click", ({ target }) => {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(globals/* Constants */.gT.Styles.SettingsMenu.closeJs)) {
+      return;
+    }
+    extensionBody.classList.remove("open");
+    extensionBody.classList.add(globals/* Constants */.gT.Styles.Base.hide);
+    extensionBody.classList.remove("nav-gamer");
+    extensionTrigger.classList.remove("active");
+  });
+  extensionBody.addEventListener("click", ({ target }) => {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!target.classList.contains(globals/* Constants */.gT.Styles.SettingsMenu.versionLink) && !target.classList.contains(globals/* Constants */.gT.Styles.SettingsMenu.documentationLink)) {
+      return;
+    }
+    const changelogView = extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.changelogView}`);
+    const documentationView = extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.featureDocumentationView}`);
+    const settingsView = extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.settingsView}`);
+    const currentView = extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow}`);
+    const nextView = target.classList.contains(globals/* Constants */.gT.Styles.SettingsMenu.versionLink) ? changelogView : documentationView;
+    if (currentView === nextView) {
+      nextView.classList.toggle(globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow);
+      settingsView.classList.toggle(globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow);
+    } else {
+      currentView.classList.toggle(globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow);
+      nextView.classList.toggle(globals/* Constants */.gT.Styles.SettingsMenu.settingsContentShow);
+    }
+  });
+  extensionBody.addEventListener("change", ({ target }) => {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    const configPath = target.getAttribute("data-config-path");
+    if ((0,utilities/* isSelectElement */.Wi)(target)) {
+      if ((0,utilities/* toBool */.AM)(target.getAttribute("data-is-array"))) {
+        (0,utilities/* setValue */.sO)(
+          globals/* config */.vc,
+          configPath,
+          target.value.split(target.getAttribute("data-array-split"))
+        );
+      } else {
+        (0,utilities/* setValue */.sO)(globals/* config */.vc, configPath, target.value);
+      }
+    } else if ((0,utilities/* isCheckboxElement */.PT)(target)) {
+      (0,utilities/* setValue */.sO)(globals/* config */.vc, configPath, target.checked);
+    }
+    checkRenderConditions(target);
+    let parentAccordionBody = target.closest(".ta-x-settings-menu-settings-accordion-body");
+    if (parentAccordionBody) {
+      pub_sub.publish("accordion:setMaxHeight", parentAccordionBody);
+    }
+    setTimeout(() => {
+      parentAccordionBody = target.closest("[data-parent-accordion-body]");
+      if (parentAccordionBody) {
+        pub_sub.publish("accordion:setMaxHeight", parentAccordionBody);
+      }
+    }, 500);
+  });
 };
 /* harmony default export */ const settings_menu = (async () => {
-    await applyBody();
-    settings_menu_listen();
+  await applyBody();
+  settings_menu_listen();
 });
 
 ;// CONCATENATED MODULE: ./src/features/sticky-header/index.ts
@@ -6658,77 +6489,81 @@ let previousScrollTop;
 let previousMenuOpen;
 const atTopOfPage = () => window.pageYOffset <= sticky_header_extensionBody.offsetTop;
 const sticky_header_applyBody = async () => {
-    sticky_header_extensionBody = await (0,utilities/* waitForElement */.br)('header');
-    fakeElement = document.createElement('div');
-    fakeElement.style.height = `${sticky_header_extensionBody.offsetHeight}px`;
-    sticky_header_extensionBody.parentNode.insertBefore(fakeElement, sticky_header_extensionBody);
-    sticky_header_extensionBody.classList.add(globals/* Constants */.gT.Styles.StickyHeader.featureJs, globals/* Constants */.gT.Styles.StickyHeader.featureStyle);
-    document.documentElement.style.setProperty(globals/* Constants */.gT.Styles.Variables.StickyHeader.height, `${sticky_header_extensionBody.offsetHeight}px`);
-    if (!globals/* stickyHeader */._A.remainStuck && !atTopOfPage()) {
-        sticky_header_extensionBody.classList.add(globals/* Constants */.gT.Styles.Animations.yHideNoTransition);
-    }
+  sticky_header_extensionBody = await (0,utilities/* waitForElement */.br)("header");
+  fakeElement = document.createElement("div");
+  fakeElement.style.height = `${sticky_header_extensionBody.offsetHeight}px`;
+  sticky_header_extensionBody.parentNode.insertBefore(fakeElement, sticky_header_extensionBody);
+  sticky_header_extensionBody.classList.add(globals/* Constants */.gT.Styles.StickyHeader.featureJs, globals/* Constants */.gT.Styles.StickyHeader.featureStyle);
+  document.documentElement.style.setProperty(
+    globals/* Constants */.gT.Styles.Variables.StickyHeader.height,
+    `${sticky_header_extensionBody.offsetHeight}px`
+  );
+  if (!globals/* stickyHeader */._A.remainStuck && !atTopOfPage()) {
+    sticky_header_extensionBody.classList.add(globals/* Constants */.gT.Styles.Animations.yHideNoTransition);
+  }
 };
 const sticky_header_listen = async () => {
-    if (globals/* stickyHeader */._A.remainStuck) {
-        return;
+  if (globals/* stickyHeader */._A.remainStuck) {
+    return;
+  }
+  const navGamer = await (0,utilities/* waitForElement */.br)(`.nav-gamer:not(.${globals/* Constants */.gT.Styles.SettingsMenu.featureJs})`);
+  const taxSettingsMenu = await (0,utilities/* waitForElement */.br)(`.${globals/* Constants */.gT.Styles.SettingsMenu.featureJs}`);
+  previousMenuOpen = navGamer.classList.contains("open") || taxSettingsMenu.classList.contains("open");
+  window.addEventListener("scroll", () => {
+    const currentScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    if (atTopOfPage()) {
+      sticky_header_extensionBody.classList.remove(globals/* Constants */.gT.Styles.Animations.yHide, globals/* Constants */.gT.Styles.Animations.yHideNoTransition);
+    } else {
+      const searchElement = sticky_header_extensionBody.querySelector("#divtxtSearchContainer");
+      if (searchElement.style.display !== "inline" && !(0,utilities/* toBool */.AM)(sticky_header_extensionBody.dataset.menuOpen)) {
+        if (previousScrollTop > currentScrollTop) {
+          sticky_header_extensionBody.classList.remove(
+            globals/* Constants */.gT.Styles.Animations.yHide,
+            globals/* Constants */.gT.Styles.Animations.yHideNoTransition
+          );
+          sticky_header_extensionBody.classList.add(globals/* Constants */.gT.Styles.Animations.yShow);
+        } else if (previousScrollTop < currentScrollTop) {
+          sticky_header_extensionBody.classList.remove(globals/* Constants */.gT.Styles.Animations.yShow);
+          sticky_header_extensionBody.classList.add(globals/* Constants */.gT.Styles.Animations.yHide);
+        }
+      }
     }
-    const navGamer = await (0,utilities/* waitForElement */.br)(`.nav-gamer:not(.${globals/* Constants */.gT.Styles.SettingsMenu.featureJs})`);
-    const taxSettingsMenu = await (0,utilities/* waitForElement */.br)(`.${globals/* Constants */.gT.Styles.SettingsMenu.featureJs}`);
-    previousMenuOpen = navGamer.classList.contains('open') || taxSettingsMenu.classList.contains('open');
-    window.addEventListener('scroll', () => {
-        const currentScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-        if (atTopOfPage()) {
-            sticky_header_extensionBody.classList.remove(globals/* Constants */.gT.Styles.Animations.yHide, globals/* Constants */.gT.Styles.Animations.yHideNoTransition);
+    previousScrollTop = currentScrollTop;
+  });
+  window.addEventListener("resize", () => {
+    if (fakeElement.style.height !== `${sticky_header_extensionBody.offsetHeight}px`) {
+      fakeElement.style.height = `${sticky_header_extensionBody.offsetHeight}px`;
+    }
+  });
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach(({ target, attributeName }) => {
+      if (!(target instanceof HTMLElement)) {
+        return;
+      }
+      if (attributeName === "class") {
+        const currentMenuOpen = target.classList.contains("open");
+        if (previousMenuOpen !== currentMenuOpen) {
+          previousMenuOpen = currentMenuOpen;
+          sticky_header_extensionBody.setAttribute("data-menu-open", currentMenuOpen.toString());
         }
-        else {
-            const searchElement = sticky_header_extensionBody.querySelector('#divtxtSearchContainer');
-            if (searchElement.style.display !== 'inline' && !(0,utilities/* toBool */.AM)(sticky_header_extensionBody.dataset.menuOpen)) {
-                if (previousScrollTop > currentScrollTop) {
-                    sticky_header_extensionBody.classList.remove(globals/* Constants */.gT.Styles.Animations.yHide, globals/* Constants */.gT.Styles.Animations.yHideNoTransition);
-                    sticky_header_extensionBody.classList.add(globals/* Constants */.gT.Styles.Animations.yShow);
-                }
-                else if (previousScrollTop < currentScrollTop) {
-                    sticky_header_extensionBody.classList.remove(globals/* Constants */.gT.Styles.Animations.yShow);
-                    sticky_header_extensionBody.classList.add(globals/* Constants */.gT.Styles.Animations.yHide);
-                }
-            }
-        }
-        previousScrollTop = currentScrollTop;
+      }
     });
-    window.addEventListener('resize', () => {
-        if (fakeElement.style.height !== `${sticky_header_extensionBody.offsetHeight}px`) {
-            fakeElement.style.height = `${sticky_header_extensionBody.offsetHeight}px`;
-        }
-    });
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach(({ target, attributeName }) => {
-            if (!(target instanceof HTMLElement)) {
-                return;
-            }
-            if (attributeName === 'class') {
-                const currentMenuOpen = target.classList.contains('open');
-                if (previousMenuOpen !== currentMenuOpen) {
-                    previousMenuOpen = currentMenuOpen;
-                    sticky_header_extensionBody.setAttribute('data-menu-open', currentMenuOpen.toString());
-                }
-            }
-        });
-    });
-    observer.observe(navGamer, {
-        attributes: true,
-        attributeFilter: ['style', 'class']
-    });
-    observer.observe(taxSettingsMenu, {
-        attributes: true,
-        attributeFilter: ['style', 'class']
-    });
+  });
+  observer.observe(navGamer, {
+    attributes: true,
+    attributeFilter: ["style", "class"]
+  });
+  observer.observe(taxSettingsMenu, {
+    attributes: true,
+    attributeFilter: ["style", "class"]
+  });
 };
 /* harmony default export */ const sticky_header = (async () => {
-    if (!globals/* stickyHeader */._A.enabled) {
-        return;
-    }
-    await sticky_header_applyBody();
-    await sticky_header_listen();
+  if (!globals/* stickyHeader */._A.enabled) {
+    return;
+  }
+  await sticky_header_applyBody();
+  await sticky_header_listen();
 });
 
 ;// CONCATENATED MODULE: ./node_modules/.pnpm/emoji.json@15.0.0/node_modules/emoji.json/emoji.json
@@ -6755,81 +6590,90 @@ var emojis_code = "<div class=\"js-ta-x-tabs ta-x-tabs js-ta-x-emojis ta-x-emoji
 
 
 const apply = async (containers, emojiContent) => {
-    for (let i = 0; i < containers.length; i++) {
-        const container = containers[i];
-        const trueAchievementsContent = emojiContent.querySelector('#ta-x-tabs-trueachievements');
-        let insertAtCursorElement = null;
-        await (0,utilities/* waitForImages */.C7)(container);
-        [...container.querySelectorAll('.smileydropdown span')].forEach((smiley) => {
-            if (!insertAtCursorElement) {
-                insertAtCursorElement = (0,utilities/* extractBetween */._o)("'", smiley.onclick.toString());
-            }
-            trueAchievementsContent.appendChild(smiley);
-        });
-        [...container.querySelectorAll('.smileydropdown')].forEach((smiley) => smiley.parentElement.remove());
-        const quickReplyEmojiToolbar = await (0,utilities/* waitForElement */.br)('.toolbar .formatbuttons:last-child', container);
-        emojiContent = (0,helpers/* template */.XK)(emojiContent, { emojis: { id: insertAtCursorElement } });
-        quickReplyEmojiToolbar.appendChild(emojiContent);
-        const firstTab = await (0,utilities/* waitForElement */.br)(`.${globals/* Constants */.gT.Styles.Components.Tab.tabLink}:first-child`, container);
-        pub_sub.publish('tabs:set', firstTab);
-    }
+  for (let i = 0; i < containers.length; i++) {
+    const container = containers[i];
+    const trueAchievementsContent = emojiContent.querySelector("#ta-x-tabs-trueachievements");
+    let insertAtCursorElement = null;
+    await (0,utilities/* waitForImages */.C7)(container);
+    [...container.querySelectorAll(".smileydropdown span")].forEach((smiley) => {
+      if (!insertAtCursorElement) {
+        insertAtCursorElement = (0,utilities/* extractBetween */._o)("'", smiley.onclick.toString());
+      }
+      trueAchievementsContent.appendChild(smiley);
+    });
+    [...container.querySelectorAll(".smileydropdown")].forEach(
+      (smiley) => smiley.parentElement.remove()
+    );
+    const quickReplyEmojiToolbar = await (0,utilities/* waitForElement */.br)(".toolbar .formatbuttons:last-child", container);
+    emojiContent = (0,helpers/* template */.XK)(emojiContent, { emojis: { id: insertAtCursorElement } });
+    quickReplyEmojiToolbar.appendChild(emojiContent);
+    const firstTab = await (0,utilities/* waitForElement */.br)(`.${globals/* Constants */.gT.Styles.Components.Tab.tabLink}:first-child`, container);
+    pub_sub.publish("tabs:set", firstTab);
+  }
 };
 const buildEmojis = () => {
-    const groupedEmojis = (0,dist/* decompress */.Lj)(emoji_namespaceObject).reduce((accumulator, emoji) => {
-        const category = accumulator.get(emoji.group) || [];
-        category.push(emoji);
-        accumulator.set(emoji.group, category);
-        return accumulator;
-    }, new Map([['TrueAchievements', []]]));
-    const parsedDocument = new DOMParser().parseFromString(emojis, 'text/html');
-    const parsedTemplateDocument = new DOMParser().parseFromString(tab_link, 'text/html');
-    const emojiButton = parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.Emojis.featureJs}`);
-    const emojiTabs = emojiButton.querySelector(`.${globals/* Constants */.gT.Styles.Components.Tab.tabLinkContainer}`);
-    Array.from(groupedEmojis.entries()).forEach((emojiGroup) => {
-        const tabLink = parsedTemplateDocument.querySelector(`#${globals/* Constants */.gT.Templates.Components.Tab.tabLink}`).content.firstElementChild.cloneNode(true);
-        const tabId = emojiGroup[0].replace(/[^A-Z0-9]/gi, '').toLowerCase();
-        const templatedTabLink = (0,helpers/* template */.XK)(tabLink, {
-            tab: { link: emojiGroup[0], id: tabId }
-        });
-        emojiTabs.appendChild(templatedTabLink);
-        const tabContent = parsedTemplateDocument.querySelector(`#${globals/* Constants */.gT.Templates.Components.Tab.tabContent}`).content.firstElementChild.cloneNode(true);
-        let emojiHtml = '';
-        emojiGroup[1].forEach((emoji) => {
-            emojiHtml += `<span onclick="InsertAtCursor('{emojis.id}','${emoji.char}', 'ta-x-emoji-dropdown'); return false;" title='${emoji.name}'>${emoji.char}</span>`;
-        });
-        const templatedTabContent = (0,helpers/* template */.XK)(tabContent, {
-            tab: { content: emojiHtml, link: emojiGroup[0], id: tabId }
-        });
-        emojiTabs.parentNode.append(templatedTabContent);
+  const groupedEmojis = (0,dist/* decompress */.Lj)(emoji_namespaceObject).reduce(
+    (accumulator, emoji) => {
+      const category = accumulator.get(emoji.group) || [];
+      category.push(emoji);
+      accumulator.set(emoji.group, category);
+      return accumulator;
+    },
+    /* @__PURE__ */ new Map([["TrueAchievements", []]])
+  );
+  const parsedDocument = new DOMParser().parseFromString(emojis, "text/html");
+  const parsedTemplateDocument = new DOMParser().parseFromString(tab_link, "text/html");
+  const emojiButton = parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.Emojis.featureJs}`);
+  const emojiTabs = emojiButton.querySelector(`.${globals/* Constants */.gT.Styles.Components.Tab.tabLinkContainer}`);
+  Array.from(groupedEmojis.entries()).forEach((emojiGroup) => {
+    const tabLink = parsedTemplateDocument.querySelector(`#${globals/* Constants */.gT.Templates.Components.Tab.tabLink}`).content.firstElementChild.cloneNode(true);
+    const tabId = emojiGroup[0].replace(/[^A-Z0-9]/gi, "").toLowerCase();
+    const templatedTabLink = (0,helpers/* template */.XK)(tabLink, {
+      tab: { link: emojiGroup[0], id: tabId }
     });
-    return emojiButton;
+    emojiTabs.appendChild(templatedTabLink);
+    const tabContent = parsedTemplateDocument.querySelector(`#${globals/* Constants */.gT.Templates.Components.Tab.tabContent}`).content.firstElementChild.cloneNode(true);
+    let emojiHtml = "";
+    emojiGroup[1].forEach((emoji) => {
+      emojiHtml += `<span onclick="InsertAtCursor('{emojis.id}','${emoji.char}', 'ta-x-emoji-dropdown'); return false;" title='${emoji.name}'>${emoji.char}</span>`;
+    });
+    const templatedTabContent = (0,helpers/* template */.XK)(tabContent, {
+      tab: { content: emojiHtml, link: emojiGroup[0], id: tabId }
+    });
+    emojiTabs.parentNode.append(templatedTabContent);
+  });
+  return emojiButton;
 };
 /* harmony default export */ const features_emojis = (async () => {
-    if (!globals/* emojis */.SP.enabled) {
-        return;
-    }
-    const elementSelectors = [
-        '#aeb_txtQuickReply',
-        '#aeb_aebMessageBody',
-        '#aeb_aebMessage',
-        '#aeb_txtAddSubComment',
-        '#aeb_aebComment'
-    ];
-    const replyContainer = await (0,utilities/* waitForElement */.br)(elementSelectors.join(', '));
-    if (!replyContainer) {
-        return;
-    }
-    const emojiContent = buildEmojis();
-    (0,utilities/* allConcurrently */.Eh)('Emojis - Apply', elementSelectors.map((selector) => ({
-        name: `emojis-${selector}`,
-        task: async () => {
-            const containers = await (0,utilities/* waitForElements */.Sn)(selector);
-            if (!containers || containers.length === 0) {
-                return;
-            }
-            await apply(containers, emojiContent);
+  if (!globals/* emojis */.SP.enabled) {
+    return;
+  }
+  const elementSelectors = [
+    "#aeb_txtQuickReply",
+    "#aeb_aebMessageBody",
+    "#aeb_aebMessage",
+    "#aeb_txtAddSubComment",
+    "#aeb_aebComment"
+  ];
+  const replyContainer = await (0,utilities/* waitForElement */.br)(elementSelectors.join(", "));
+  if (!replyContainer) {
+    return;
+  }
+  const emojiContent = buildEmojis();
+  (0,utilities/* allConcurrently */.Eh)(
+    "Emojis - Apply",
+    elementSelectors.map((selector) => ({
+      name: `emojis-${selector}`,
+      task: async () => {
+        const containers = await (0,utilities/* waitForElements */.Sn)(selector);
+        if (!containers || containers.length === 0) {
+          return;
         }
-    })), elementSelectors.length);
+        await apply(containers, emojiContent);
+      }
+    })),
+    elementSelectors.length
+  );
 });
 
 ;// CONCATENATED MODULE: ./src/features/staff-walkthrough-improvements/manage-walkthrough/manage-walkthrough.html
@@ -6844,18 +6688,17 @@ var regex = __webpack_require__("./src/globals/regex.ts");
 
 
 const changeToDefaultStatus = async () => {
-    if (!globals/* manageWalkthrough */.Ax.manageWalkthroughDefaultStatus) {
-        return;
-    }
-    if (regex/* StaffRegex */.nW.Walkthroughs.Test.manageWalkthroughUrlWithWalkthroughId()) {
-        return;
-    }
-    const status = (await (0,utilities/* waitForElement */.br)('#ddlStatusFilter'));
-    if (status.querySelector('[selected]') === null &&
-        status.value !== globals/* manageWalkthrough */.Ax.manageWalkthroughDefaultStatusValue) {
-        status.value = globals/* manageWalkthrough */.Ax.manageWalkthroughDefaultStatusValue;
-        status.onchange(null);
-    }
+  if (!globals/* manageWalkthrough */.Ax.manageWalkthroughDefaultStatus) {
+    return;
+  }
+  if (regex/* StaffRegex */.nW.Walkthroughs.Test.manageWalkthroughUrlWithWalkthroughId()) {
+    return;
+  }
+  const status = await (0,utilities/* waitForElement */.br)("#ddlStatusFilter");
+  if (status.querySelector("[selected]") === null && status.value !== globals/* manageWalkthrough */.Ax.manageWalkthroughDefaultStatusValue) {
+    status.value = globals/* manageWalkthrough */.Ax.manageWalkthroughDefaultStatusValue;
+    status.onchange(null);
+  }
 };
 /* harmony default export */ const default_status = ({ changeToDefaultStatus });
 
@@ -6870,115 +6713,135 @@ var manage_walkthrough_achievement_row_code = "<template id=\"ta-x-template-mana
 
 
 const clickableAchievements = async (walkthroughContainer, walthroughPreviewDocument) => {
-    if (await (0,utilities/* waitForElement */.br)('#chWalkthroughAchievements', walkthroughContainer)) {
-        const parsedDocument = new DOMParser().parseFromString(manage_walkthrough_achievement_row, 'text/html');
-        const walkthroughAchievements = [
-            ...walkthroughContainer.querySelectorAll('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID .c1')
-        ];
-        let walkthroughAchievementContainer = walkthroughContainer.querySelector('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID tbody');
-        if (!walkthroughAchievementContainer) {
-            const walkthroughAchievementTable = walkthroughContainer.querySelector('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID table');
-            walkthroughAchievementContainer = walkthroughAchievementTable.appendChild(document.createElement('tbody'));
-        }
-        const games = [
-            ...walthroughPreviewDocument.querySelectorAll('.walkthroughsummary .games a.gamelink')
-        ];
-        await (0,utilities/* allConcurrently */.Eh)('ClickableAchievements - Games', games.map((game) => ({
-            name: `manage-walkthrough-clickable-table-links-clickable-achievements-${game.innerText}`,
-            task: async () => {
-                const gameResponse = await (0,helpers/* memoizeFetch */.FS)(game.href);
-                const gameDocument = new DOMParser().parseFromString(gameResponse, 'text/html');
-                const gameAchievements = [...gameDocument.querySelectorAll('main ul.ach-panels li a.title')];
-                await (0,utilities/* allConcurrently */.Eh)('ClickableAchievements - Achievements', gameAchievements.map((gameAchievement) => ({
-                    name: `manage-walkthrough-clickable-table-links-clickable-achievements-${game.innerText}-${gameAchievement.innerText.trim()}`,
-                    task: async () => {
-                        const achievementName = gameAchievement.innerText.trim();
-                        const walkthroughAchievement = walkthroughAchievements.find((walkthroughAchievement) => walkthroughAchievement.innerText.toLowerCase() === achievementName.toLowerCase());
-                        if (walkthroughAchievement) {
-                            walkthroughAchievement.innerText = '';
-                            walkthroughAchievement.innerHTML = gameAchievement.outerHTML;
-                            const link = walkthroughAchievement.querySelector('a');
-                            link.href = globals/* AchievementsRegex */.KH.Test.achievementUrlWithGamerId(link.href)
-                                ? new URL(link.href).pathname
-                                : link.href;
-                        }
-                        else {
-                            const clonedAchievementRow = parsedDocument.querySelector(`#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.ManageWalkthroughPage.achievementRow}`).content.firstElementChild.cloneNode(true);
-                            const achievementRow = (0,helpers/* template */.XK)(clonedAchievementRow, {
-                                element: gameAchievement
-                            });
-                            const link = achievementRow.querySelector('a');
-                            achievementRow.querySelector('a').href = globals/* AchievementsRegex */.KH.Test.achievementUrlWithGamerId(link.href)
-                                ? new URL(link.href).pathname
-                                : link.href;
-                            walkthroughAchievementContainer.appendChild(achievementRow);
-                        }
-                    }
-                })), 5);
-            }
-        })));
-        const achievementsTotal = walkthroughContainer.querySelector('#chWalkthroughAchievements #lstWalkthroughAchievementID .total');
-        achievementsTotal.innerText = `${achievementsTotal.innerText}/${[
-            ...walkthroughAchievementContainer.querySelectorAll('#chWalkthroughAchievements #scrolllstWalkthroughAchievementID .c1')
-        ].length}`;
+  if (await (0,utilities/* waitForElement */.br)("#chWalkthroughAchievements", walkthroughContainer)) {
+    const parsedDocument = new DOMParser().parseFromString(manage_walkthrough_achievement_row, "text/html");
+    const walkthroughAchievements = [
+      ...walkthroughContainer.querySelectorAll("#chWalkthroughAchievements #scrolllstWalkthroughAchievementID .c1")
+    ];
+    let walkthroughAchievementContainer = walkthroughContainer.querySelector(
+      "#chWalkthroughAchievements #scrolllstWalkthroughAchievementID tbody"
+    );
+    if (!walkthroughAchievementContainer) {
+      const walkthroughAchievementTable = walkthroughContainer.querySelector(
+        "#chWalkthroughAchievements #scrolllstWalkthroughAchievementID table"
+      );
+      walkthroughAchievementContainer = walkthroughAchievementTable.appendChild(document.createElement("tbody"));
     }
+    const games = [
+      ...walthroughPreviewDocument.querySelectorAll(".walkthroughsummary .games a.gamelink")
+    ];
+    await (0,utilities/* allConcurrently */.Eh)(
+      "ClickableAchievements - Games",
+      games.map((game) => ({
+        name: `manage-walkthrough-clickable-table-links-clickable-achievements-${game.innerText}`,
+        task: async () => {
+          const gameResponse = await (0,helpers/* memoizeFetch */.FS)(game.href);
+          const gameDocument = new DOMParser().parseFromString(gameResponse, "text/html");
+          const gameAchievements = [...gameDocument.querySelectorAll("main ul.ach-panels li a.title")];
+          await (0,utilities/* allConcurrently */.Eh)(
+            "ClickableAchievements - Achievements",
+            gameAchievements.map((gameAchievement) => ({
+              name: `manage-walkthrough-clickable-table-links-clickable-achievements-${game.innerText}-${gameAchievement.innerText.trim()}`,
+              task: () => {
+                const achievementName = gameAchievement.innerText.trim();
+                const walkthroughAchievement = walkthroughAchievements.find(
+                  (walkthroughAchievement2) => walkthroughAchievement2.innerText.toLowerCase() === achievementName.toLowerCase()
+                );
+                if (walkthroughAchievement) {
+                  walkthroughAchievement.innerText = "";
+                  walkthroughAchievement.innerHTML = gameAchievement.outerHTML;
+                  const link = walkthroughAchievement.querySelector("a");
+                  link.href = globals/* AchievementsRegex */.KH.Test.achievementUrlWithGamerId(link.href) ? new URL(link.href).pathname : link.href;
+                } else {
+                  const clonedAchievementRow = parsedDocument.querySelector(
+                    `#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.ManageWalkthroughPage.achievementRow}`
+                  ).content.firstElementChild.cloneNode(true);
+                  const achievementRow2 = (0,helpers/* template */.XK)(clonedAchievementRow, {
+                    element: gameAchievement
+                  });
+                  const link = achievementRow2.querySelector("a");
+                  achievementRow2.querySelector("a").href = globals/* AchievementsRegex */.KH.Test.achievementUrlWithGamerId(link.href) ? new URL(link.href).pathname : link.href;
+                  walkthroughAchievementContainer.appendChild(achievementRow2);
+                }
+              }
+            })),
+            5
+          );
+        }
+      }))
+    );
+    const achievementsTotal = walkthroughContainer.querySelector(
+      "#chWalkthroughAchievements #lstWalkthroughAchievementID .total"
+    );
+    achievementsTotal.innerText = `${achievementsTotal.innerText}/${[
+      ...walkthroughAchievementContainer.querySelectorAll(
+        "#chWalkthroughAchievements #scrolllstWalkthroughAchievementID .c1"
+      )
+    ].length}`;
+  }
 };
 const clickableGames = async (walkthroughContainer, walthroughPreviewDocument) => {
-    if (await (0,utilities/* waitForElement */.br)('#chWalkthroughGamers', walkthroughContainer)) {
-        const games = [
-            ...walthroughPreviewDocument.querySelectorAll('.walkthroughsummary .games a.gamelink')
-        ];
-        [...walkthroughContainer.querySelectorAll('#scrolllstWalkthroughGames .c1')].forEach((el) => {
-            const gameName = el.innerText.trim();
-            const walkthroughPreviewGame = games.find((game) => game.innerText.toLowerCase() === gameName.toLowerCase());
-            if (walkthroughPreviewGame) {
-                el.innerText = '';
-                el.innerHTML = walkthroughPreviewGame.outerHTML;
-            }
-        });
-    }
+  if (await (0,utilities/* waitForElement */.br)("#chWalkthroughGamers", walkthroughContainer)) {
+    const games = [
+      ...walthroughPreviewDocument.querySelectorAll(".walkthroughsummary .games a.gamelink")
+    ];
+    [...walkthroughContainer.querySelectorAll("#scrolllstWalkthroughGames .c1")].forEach((el) => {
+      const gameName = el.innerText.trim();
+      const walkthroughPreviewGame = games.find((game) => game.innerText.toLowerCase() === gameName.toLowerCase());
+      if (walkthroughPreviewGame) {
+        el.innerText = "";
+        el.innerHTML = walkthroughPreviewGame.outerHTML;
+      }
+    });
+  }
 };
 const clickableGamers = async (walkthroughContainer, walthroughPreviewDocument) => {
-    if (await (0,utilities/* waitForElement */.br)('#chWalkthroughGamers', walkthroughContainer)) {
-        const editors = [
-            ...walthroughPreviewDocument.querySelectorAll('.walkthroughsummary .editors dd a')
-        ];
-        [...walkthroughContainer.querySelectorAll('#scrolllstWalkthroughGamers .c1')].forEach((el) => {
-            const gamerName = el.innerText.trim();
-            const walkthroughPreviewGamer = editors.find((editor) => editor.innerText.toLowerCase() === gamerName.toLowerCase());
-            if (walkthroughPreviewGamer) {
-                el.innerText = '';
-                el.innerHTML = walkthroughPreviewGamer.outerHTML;
-            }
-        });
-    }
+  if (await (0,utilities/* waitForElement */.br)("#chWalkthroughGamers", walkthroughContainer)) {
+    const editors = [
+      ...walthroughPreviewDocument.querySelectorAll(".walkthroughsummary .editors dd a")
+    ];
+    [...walkthroughContainer.querySelectorAll("#scrolllstWalkthroughGamers .c1")].forEach((el) => {
+      const gamerName = el.innerText.trim();
+      const walkthroughPreviewGamer = editors.find(
+        (editor) => editor.innerText.toLowerCase() === gamerName.toLowerCase()
+      );
+      if (walkthroughPreviewGamer) {
+        el.innerText = "";
+        el.innerHTML = walkthroughPreviewGamer.outerHTML;
+      }
+    });
+  }
 };
 const makeTableLinksClickable = async () => {
-    if (!globals/* manageWalkthrough */.Ax.clickableTableLinks) {
-        return;
+  if (!globals/* manageWalkthrough */.Ax.clickableTableLinks) {
+    return;
+  }
+  const selectedWalkthrough = await (0,utilities/* waitForElement */.br)("#lstWalkthroughIDselectedrow a");
+  if (!selectedWalkthrough) {
+    return;
+  }
+  const walkthroughContainer = document.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`
+  );
+  const walkthroughId = selectedWalkthrough.getAttribute("data-walkthrough-id");
+  const walthroughPreviewResponse = await (0,helpers/* memoizeFetch */.FS)(
+    `https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`
+  );
+  const walthroughPreviewDocument = new DOMParser().parseFromString(walthroughPreviewResponse, "text/html");
+  await (0,utilities/* allConcurrently */.Eh)("Manage Walkthrough Page Clickable Table Links", [
+    {
+      name: "manage-walkthrough-clickable-table-links-clickable-achievements",
+      task: async () => await clickableAchievements(walkthroughContainer, walthroughPreviewDocument)
+    },
+    {
+      name: "manage-walkthrough-clickable-table-links-clickable-games",
+      task: async () => await clickableGames(walkthroughContainer, walthroughPreviewDocument)
+    },
+    {
+      name: "manage-walkthrough-clickable-table-links-clickable-gamers",
+      task: async () => await clickableGamers(walkthroughContainer, walthroughPreviewDocument)
     }
-    const selectedWalkthrough = (await (0,utilities/* waitForElement */.br)('#lstWalkthroughIDselectedrow a'));
-    if (!selectedWalkthrough) {
-        return;
-    }
-    const walkthroughContainer = document.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`);
-    const walkthroughId = selectedWalkthrough.getAttribute('data-walkthrough-id');
-    const walthroughPreviewResponse = await (0,helpers/* memoizeFetch */.FS)(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
-    const walthroughPreviewDocument = new DOMParser().parseFromString(walthroughPreviewResponse, 'text/html');
-    await (0,utilities/* allConcurrently */.Eh)('Manage Walkthrough Page Clickable Table Links', [
-        {
-            name: 'manage-walkthrough-clickable-table-links-clickable-achievements',
-            task: async () => clickableAchievements(walkthroughContainer, walthroughPreviewDocument)
-        },
-        {
-            name: 'manage-walkthrough-clickable-table-links-clickable-games',
-            task: async () => clickableGames(walkthroughContainer, walthroughPreviewDocument)
-        },
-        {
-            name: 'manage-walkthrough-clickable-table-links-clickable-gamers',
-            task: async () => clickableGamers(walkthroughContainer, walthroughPreviewDocument)
-        }
-    ]);
+  ]);
 };
 /* harmony default export */ const clickable_table_links = ({ makeTableLinksClickable });
 
@@ -6987,17 +6850,16 @@ const makeTableLinksClickable = async () => {
 
 
 const autoSelectFirst = async () => {
-    if (!globals/* manageWalkthrough */.Ax.autoSelectFirst) {
-        return;
-    }
-    if (regex/* StaffRegex */.nW.Walkthroughs.Test.manageWalkthroughUrlWithWalkthroughId()) {
-        return;
-    }
-    const walkthroughList = (await (0,utilities/* waitForElement */.br)('#scrolllstWalkthroughID'));
-    if ((await (0,utilities/* waitForElement */.br)('#lstWalkthroughIDselectedrow', undefined, 1000)) === null &&
-        walkthroughList.querySelector('table tr') !== null) {
-        walkthroughList.querySelector('table tr a').click();
-    }
+  if (!globals/* manageWalkthrough */.Ax.autoSelectFirst) {
+    return;
+  }
+  if (regex/* StaffRegex */.nW.Walkthroughs.Test.manageWalkthroughUrlWithWalkthroughId()) {
+    return;
+  }
+  const walkthroughList = await (0,utilities/* waitForElement */.br)("#scrolllstWalkthroughID");
+  if (await (0,utilities/* waitForElement */.br)("#lstWalkthroughIDselectedrow", void 0, 1e3) === null && walkthroughList.querySelector("table tr") !== null) {
+    walkthroughList.querySelector("table tr a").click();
+  }
 };
 /* harmony default export */ const auto_select_first = ({ autoSelectFirst });
 
@@ -7006,23 +6868,41 @@ const autoSelectFirst = async () => {
 
 
 const addMissingButtons = async () => {
-    if (!globals/* manageWalkthrough */.Ax.addMissingButtons) {
-        return;
-    }
-    if ((await (0,utilities/* waitForElement */.br)('#lstWalkthroughIDselectedrow', undefined, 1000)) === null) {
-        return;
-    }
-    if ((await (0,utilities/* waitForElement */.br)('#txtPageName', undefined, 1000)) === null) {
-        return;
-    }
-    const parsedDocument = new DOMParser().parseFromString(manage_walkthrough, 'text/html');
-    let buttonContainer = document.querySelector('#chEditWalkthrough .buttons');
-    buttonContainer.insertBefore(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.readyForReviewButtonJs}`), buttonContainer.children[0]);
-    buttonContainer.parentNode.insertBefore(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.missingButtonsContainerJs}`), buttonContainer);
-    buttonContainer = document.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.missingButtonsContainerJs}`);
-    buttonContainer.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.addPageButtonJs}`).href = 'javascript:Postback("btnAddPage")';
-    buttonContainer.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.previewButtonJs}`).href = 'javascript:Postback("btnPreview")';
-    buttonContainer.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.viewContentButtonJs}`).href = 'javascript:Postback("btnViewContent")';
+  if (!globals/* manageWalkthrough */.Ax.addMissingButtons) {
+    return;
+  }
+  if (await (0,utilities/* waitForElement */.br)("#lstWalkthroughIDselectedrow", void 0, 1e3) === null) {
+    return;
+  }
+  if (await (0,utilities/* waitForElement */.br)("#txtPageName", void 0, 1e3) === null) {
+    return;
+  }
+  const parsedDocument = new DOMParser().parseFromString(manage_walkthrough, "text/html");
+  let buttonContainer = document.querySelector("#chEditWalkthrough .buttons");
+  buttonContainer.insertBefore(
+    parsedDocument.querySelector(
+      `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.readyForReviewButtonJs}`
+    ),
+    buttonContainer.children[0]
+  );
+  buttonContainer.parentNode.insertBefore(
+    parsedDocument.querySelector(
+      `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.missingButtonsContainerJs}`
+    ),
+    buttonContainer
+  );
+  buttonContainer = document.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.missingButtonsContainerJs}`
+  );
+  buttonContainer.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.addPageButtonJs}`
+  ).href = 'javascript:Postback("btnAddPage")';
+  buttonContainer.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.previewButtonJs}`
+  ).href = 'javascript:Postback("btnPreview")';
+  buttonContainer.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.viewContentButtonJs}`
+  ).href = 'javascript:Postback("btnViewContent")';
 };
 /* harmony default export */ const add_missing_buttons = ({ addMissingButtons });
 
@@ -7037,91 +6917,108 @@ const addMissingButtons = async () => {
 
 let walkthroughContainer;
 const manage_walkthrough_applyBody = async () => {
-    walkthroughContainer = await (0,utilities/* waitForElement */.br)('#divWalkthroughHolder');
-    if (!walkthroughContainer) {
-        return;
-    }
-    const editWalkthrough = await (0,utilities/* waitForElement */.br)('#chEditWalkthrough', walkthroughContainer);
-    if (editWalkthrough && (await (0,helpers/* until */.C4)(() => walkthroughContainer.childElementCount > 2, 1000))) {
-        const parsedDocument = new DOMParser().parseFromString(manage_walkthrough, 'text/html');
-        editWalkthrough.after(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`));
-        (0,utilities/* allConcurrently */.Eh)('Manage Walkthrough', [
-            { name: 'manage-walkthrough-adjust-left-sidebar', task: adjustLeftSidebar },
-            { name: 'manage-walkthrough-adjust-right-sidebar', task: adjustRightSidebar },
-            { name: 'manage-walkthrough-adjust-buttons', task: adjustButtons }
-        ]);
-    }
+  walkthroughContainer = await (0,utilities/* waitForElement */.br)("#divWalkthroughHolder");
+  if (!walkthroughContainer) {
+    return;
+  }
+  const editWalkthrough = await (0,utilities/* waitForElement */.br)("#chEditWalkthrough", walkthroughContainer);
+  if (editWalkthrough && await (0,helpers/* until */.C4)(() => walkthroughContainer.childElementCount > 2, 1e3)) {
+    const parsedDocument = new DOMParser().parseFromString(manage_walkthrough, "text/html");
+    editWalkthrough.after(
+      parsedDocument.querySelector(
+        `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`
+      )
+    );
+    (0,utilities/* allConcurrently */.Eh)("Manage Walkthrough", [
+      { name: "manage-walkthrough-adjust-left-sidebar", task: adjustLeftSidebar },
+      { name: "manage-walkthrough-adjust-right-sidebar", task: adjustRightSidebar },
+      { name: "manage-walkthrough-adjust-buttons", task: adjustButtons }
+    ]);
+  }
 };
 const adjustButtons = async () => {
-    const buttonContainer = await (0,utilities/* waitForElement */.br)('#btnWalkthrough_Options', walkthroughContainer);
-    if (buttonContainer === null) {
-        return;
-    }
-    let buttonsContainer = null;
-    [...buttonContainer.querySelectorAll('li a')].forEach((button) => {
-        buttonsContainer = buttonsContainer ? buttonsContainer : button.closest('.buttons');
-        if (buttonsContainer) {
-            button.classList.add('button');
-            buttonsContainer.appendChild(button);
-        }
-    });
+  const buttonContainer = await (0,utilities/* waitForElement */.br)("#btnWalkthrough_Options", walkthroughContainer);
+  if (buttonContainer === null) {
+    return;
+  }
+  let buttonsContainer = null;
+  [...buttonContainer.querySelectorAll("li a")].forEach((button) => {
+    buttonsContainer = buttonsContainer ? buttonsContainer : button.closest(".buttons");
     if (buttonsContainer) {
-        buttonsContainer.parentNode.insertBefore(buttonsContainer, buttonsContainer.nextSibling);
+      button.classList.add("button");
+      buttonsContainer.appendChild(button);
     }
+  });
+  if (buttonsContainer) {
+    buttonsContainer.parentNode.insertBefore(buttonsContainer, buttonsContainer.nextSibling);
+  }
 };
 const adjustRightSidebar = async () => {
-    const sideBarContainer = await (0,utilities/* waitForElement */.br)(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`, walkthroughContainer);
-    if (sideBarContainer) {
-        const walkthroughAchievementsContainer = await (0,utilities/* waitForElement */.br)('#chWalkthroughAchievements', walkthroughContainer);
-        if (walkthroughAchievementsContainer) {
-            deDupeAchievements(walkthroughAchievementsContainer);
-            sideBarContainer.appendChild(walkthroughAchievementsContainer);
-        }
-        sideBarContainer.appendChild(await (0,utilities/* waitForElement */.br)('#chWalkthroughGames', walkthroughContainer));
-        sideBarContainer.appendChild(await (0,utilities/* waitForElement */.br)('#chWalkthroughGamers', walkthroughContainer));
-        sideBarContainer.appendChild(await (0,utilities/* waitForElement */.br)('#chWalkthroughOtherSiteLink', walkthroughContainer));
+  const sideBarContainer = await (0,utilities/* waitForElement */.br)(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`,
+    walkthroughContainer
+  );
+  if (sideBarContainer) {
+    const walkthroughAchievementsContainer = await (0,utilities/* waitForElement */.br)("#chWalkthroughAchievements", walkthroughContainer);
+    if (walkthroughAchievementsContainer) {
+      deDupeAchievements(walkthroughAchievementsContainer);
+      sideBarContainer.appendChild(walkthroughAchievementsContainer);
     }
+    sideBarContainer.appendChild(await (0,utilities/* waitForElement */.br)("#chWalkthroughGames", walkthroughContainer));
+    sideBarContainer.appendChild(await (0,utilities/* waitForElement */.br)("#chWalkthroughGamers", walkthroughContainer));
+    sideBarContainer.appendChild(await (0,utilities/* waitForElement */.br)("#chWalkthroughOtherSiteLink", walkthroughContainer));
+  }
 };
 const adjustLeftSidebar = async () => {
-    const walkthroughList = await (0,utilities/* waitForElement */.br)('#scrolllstWalkthroughID', walkthroughContainer);
-    [...walkthroughList.querySelectorAll('td a')].forEach((anchor) => {
-        const walkthroughId = (0,utilities/* toInt */.Hq)((0,utilities/* extractAllBetween */.QF)("'", anchor.href)[1]);
-        anchor.setAttribute('data-walkthrough-id', walkthroughId.toString());
-    });
+  const walkthroughList = await (0,utilities/* waitForElement */.br)("#scrolllstWalkthroughID", walkthroughContainer);
+  [...walkthroughList.querySelectorAll("td a")].forEach((anchor) => {
+    const walkthroughId = (0,utilities/* toInt */.Hq)((0,utilities/* extractAllBetween */.QF)("'", anchor.href)[1]);
+    anchor.setAttribute("data-walkthrough-id", walkthroughId.toString());
+  });
 };
 const deDupeAchievements = (walkthroughAchievementsContainer) => {
-    const walkthroughAchievements = [
-        ...walkthroughAchievementsContainer.querySelectorAll('#scrolllstWalkthroughAchievementID .c1')
-    ];
-    const duplicateAchievements = (0,utilities/* getDuplicates */.VB)(walkthroughAchievements.map((el) => el.innerText), true);
-    if (duplicateAchievements.length > 0) {
-        const currentCount = walkthroughAchievements.length;
-        let removedRows = 0;
-        for (let i = 0; i < duplicateAchievements.length; i++) {
-            const dupeAchievementRows = walkthroughAchievements.filter((walkthroughAchievement) => walkthroughAchievement.innerText.toLowerCase() === duplicateAchievements[i].toLowerCase());
-            const firstInstancePageColumn = dupeAchievementRows[0].nextElementSibling;
-            for (let j = 1; j < dupeAchievementRows.length; j++) {
-                const pageNumber = dupeAchievementRows[j].nextElementSibling.innerText.trim();
-                firstInstancePageColumn.innerText += `, ${pageNumber}`;
-                dupeAchievementRows[j].closest('tr').remove();
-                removedRows++;
-            }
-        }
-        const achievementsTotal = walkthroughAchievementsContainer.querySelector('#lstWalkthroughAchievementID .total');
-        achievementsTotal.innerText = achievementsTotal.innerText.replace(currentCount.toString(), (currentCount - removedRows).toString());
+  const walkthroughAchievements = [
+    ...walkthroughAchievementsContainer.querySelectorAll("#scrolllstWalkthroughAchievementID .c1")
+  ];
+  const duplicateAchievements = (0,utilities/* getDuplicates */.VB)(
+    walkthroughAchievements.map((el) => el.innerText),
+    true
+  );
+  if (duplicateAchievements.length > 0) {
+    const currentCount = walkthroughAchievements.length;
+    let removedRows = 0;
+    for (let i = 0; i < duplicateAchievements.length; i++) {
+      const dupeAchievementRows = walkthroughAchievements.filter(
+        (walkthroughAchievement) => walkthroughAchievement.innerText.toLowerCase() === duplicateAchievements[i].toLowerCase()
+      );
+      const firstInstancePageColumn = dupeAchievementRows[0].nextElementSibling;
+      for (let j = 1; j < dupeAchievementRows.length; j++) {
+        const pageNumber = dupeAchievementRows[j].nextElementSibling.innerText.trim();
+        firstInstancePageColumn.innerText += `, ${pageNumber}`;
+        dupeAchievementRows[j].closest("tr").remove();
+        removedRows++;
+      }
     }
+    const achievementsTotal = walkthroughAchievementsContainer.querySelector(
+      "#lstWalkthroughAchievementID .total"
+    );
+    achievementsTotal.innerText = achievementsTotal.innerText.replace(
+      currentCount.toString(),
+      (currentCount - removedRows).toString()
+    );
+  }
 };
 /* harmony default export */ const staff_walkthrough_improvements_manage_walkthrough = (async () => {
-    if (!globals/* StaffRegex */.nW.Walkthroughs.Test.manageWalkthroughUrl()) {
-        return;
-    }
-    await changeToDefaultStatus();
-    await autoSelectFirst();
-    await manage_walkthrough_applyBody();
-    (0,utilities/* allConcurrently */.Eh)('Manage Walkthrough', [
-        { name: 'manage-walkthrough-make-table-links-clickable', task: makeTableLinksClickable },
-        { name: 'manage-walkthrough-add-missing-buttons', task: addMissingButtons }
-    ]);
+  if (!globals/* StaffRegex */.nW.Walkthroughs.Test.manageWalkthroughUrl()) {
+    return;
+  }
+  await changeToDefaultStatus();
+  await autoSelectFirst();
+  await manage_walkthrough_applyBody();
+  (0,utilities/* allConcurrently */.Eh)("Manage Walkthrough", [
+    { name: "manage-walkthrough-make-table-links-clickable", task: makeTableLinksClickable },
+    { name: "manage-walkthrough-add-missing-buttons", task: addMissingButtons }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/staff-walkthrough-improvements/walkthrough-page/walkthrough-page.html
@@ -7134,20 +7031,24 @@ var walkthrough_page_code = "<div class=\"js-ta-x-staff-walkthrough-improvements
 
 
 const addWalkthroughTeamButton = async (walkthroughContainer, walkthoughPageVersions) => {
-    if (!globals/* walkthroughPage */.Vx.walkthroughTeamButton) {
-        return;
+  if (!globals/* walkthroughPage */.Vx.walkthroughTeamButton) {
+    return;
+  }
+  if (!walkthroughContainer || !walkthoughPageVersions) {
+    return;
+  }
+  const walkthroughPageButtons = await (0,utilities/* waitForElement */.br)(".content .buttons", walkthoughPageVersions);
+  if (walkthroughPageButtons) {
+    if (document.querySelector("#btnBackToWalkthrough")) {
+      return;
     }
-    if (!walkthroughContainer || !walkthoughPageVersions) {
-        return;
-    }
-    const walkthroughPageButtons = await (0,utilities/* waitForElement */.br)('.content .buttons', walkthoughPageVersions);
-    if (walkthroughPageButtons) {
-        if (document.querySelector('#btnBackToWalkthrough')) {
-            return;
-        }
-        const parsedDocument = new DOMParser().parseFromString(walkthrough_page, 'text/html');
-        walkthroughPageButtons.appendChild(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonJs}`));
-    }
+    const parsedDocument = new DOMParser().parseFromString(walkthrough_page, "text/html");
+    walkthroughPageButtons.appendChild(
+      parsedDocument.querySelector(
+        `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.walkthroughTeamButtonJs}`
+      )
+    );
+  }
 };
 /* harmony default export */ const add_walkthrough_team_button = ({ addWalkthroughTeamButton });
 
@@ -7155,18 +7056,23 @@ const addWalkthroughTeamButton = async (walkthroughContainer, walkthoughPageVers
 
 
 const moveButtonsToLeft = async (walkthroughContainer, walkthoughPageVersions) => {
-    if (!globals/* walkthroughPage */.Vx.moveButtonsToLeft) {
-        return;
-    }
-    if (!walkthroughContainer || !walkthoughPageVersions) {
-        return;
-    }
-    const walkthroughContainerButtons = await (0,utilities/* waitForElement */.br)('#btnEditPage, #btnEditPage2, #btnUnlockWalkthroughPage, #btnUnlockWalkthroughPage2', walkthroughContainer);
-    const walkthroughPageVersionButtons = await (0,utilities/* waitForElement */.br)('.content .buttons', walkthoughPageVersions);
-    if (walkthroughContainerButtons && walkthroughPageVersionButtons) {
-        walkthroughPageVersionButtons.append(...walkthroughContainerButtons.parentElement.childNodes);
-        walkthroughContainer.classList.add(globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.moveButtonsToLeftStyle);
-    }
+  if (!globals/* walkthroughPage */.Vx.moveButtonsToLeft) {
+    return;
+  }
+  if (!walkthroughContainer || !walkthoughPageVersions) {
+    return;
+  }
+  const walkthroughContainerButtons = await (0,utilities/* waitForElement */.br)(
+    "#btnEditPage, #btnEditPage2, #btnUnlockWalkthroughPage, #btnUnlockWalkthroughPage2",
+    walkthroughContainer
+  );
+  const walkthroughPageVersionButtons = await (0,utilities/* waitForElement */.br)(".content .buttons", walkthoughPageVersions);
+  if (walkthroughContainerButtons && walkthroughPageVersionButtons) {
+    walkthroughPageVersionButtons.append(...walkthroughContainerButtons.parentElement.childNodes);
+    walkthroughContainer.classList.add(
+      globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.moveButtonsToLeftStyle
+    );
+  }
 };
 /* harmony default export */ const move_buttons_to_left = ({ moveButtonsToLeft });
 
@@ -7178,30 +7084,36 @@ let sticky_page_history_walkthroughContainer;
 let walkthoughPageVersions;
 const variableProperty = globals/* Constants */.gT.Styles.Variables.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryTop;
 const sticky_page_history_listen = async () => {
-    window.addEventListener('scroll', async () => await (0,helpers/* applyStickyElementStyle */.vN)(variableProperty, walkthoughPageVersions, sticky_page_history_walkthroughContainer, {
-        noTransitionStyle: !(0,utilities/* classListContains */.gz)(walkthoughPageVersions, [
-            globals/* Constants */.gT.Styles.Animations.yHideNoTransition,
-            globals/* Constants */.gT.Styles.Animations.yHide,
-            globals/* Constants */.gT.Styles.Animations.yShow
-        ]),
-        paddingFromTop: 5
-    }));
+  window.addEventListener(
+    "scroll",
+    async () => await (0,helpers/* applyStickyElementStyle */.vN)(variableProperty, walkthoughPageVersions, sticky_page_history_walkthroughContainer, {
+      noTransitionStyle: !(0,utilities/* classListContains */.gz)(walkthoughPageVersions, [
+        globals/* Constants */.gT.Styles.Animations.yHideNoTransition,
+        globals/* Constants */.gT.Styles.Animations.yHide,
+        globals/* Constants */.gT.Styles.Animations.yShow
+      ]),
+      paddingFromTop: 5
+    })
+  );
 };
 const setPageHistorySticky = async (container, pageVersions) => {
-    if (!globals/* walkthroughPage */.Vx.stickyPageHistory) {
-        return;
-    }
-    if (!container || !pageVersions) {
-        return;
-    }
-    sticky_page_history_walkthroughContainer = container;
-    walkthoughPageVersions = pageVersions;
-    pageVersions.classList.add(globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryJs, globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryStyle);
-    await (0,helpers/* applyStickyElementStyle */.vN)(variableProperty, pageVersions, container, {
-        noTransitionStyle: true,
-        paddingFromTop: 5
-    });
-    await sticky_page_history_listen();
+  if (!globals/* walkthroughPage */.Vx.stickyPageHistory) {
+    return;
+  }
+  if (!container || !pageVersions) {
+    return;
+  }
+  sticky_page_history_walkthroughContainer = container;
+  walkthoughPageVersions = pageVersions;
+  pageVersions.classList.add(
+    globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryJs,
+    globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryStyle
+  );
+  await (0,helpers/* applyStickyElementStyle */.vN)(variableProperty, pageVersions, container, {
+    noTransitionStyle: true,
+    paddingFromTop: 5
+  });
+  await sticky_page_history_listen();
 };
 /* harmony default export */ const sticky_page_history = ({ setPageHistorySticky });
 
@@ -7209,16 +7121,16 @@ const setPageHistorySticky = async (container, pageVersions) => {
 
 
 const highlightPageLocked = async (walkthroughContainer) => {
-    if (!globals/* walkthroughPage */.Vx.highlightPageLocked) {
-        return;
-    }
-    if (!walkthroughContainer) {
-        return;
-    }
-    const walkthroughLocked = await (0,utilities/* waitForElement */.br)('.walkthroughlocked', walkthroughContainer);
-    if (walkthroughLocked) {
-        walkthroughLocked.classList.add('informationpanel');
-    }
+  if (!globals/* walkthroughPage */.Vx.highlightPageLocked) {
+    return;
+  }
+  if (!walkthroughContainer) {
+    return;
+  }
+  const walkthroughLocked = await (0,utilities/* waitForElement */.br)(".walkthroughlocked", walkthroughContainer);
+  if (walkthroughLocked) {
+    walkthroughLocked.classList.add("informationpanel");
+  }
 };
 /* harmony default export */ const highlight_page_locked = ({ highlightPageLocked });
 
@@ -7234,60 +7146,65 @@ const highlightPageLocked = async (walkthroughContainer) => {
 let walkthrough_page_walkthroughContainer;
 let walkthrough_page_walkthoughPageVersions;
 const walkthrough_page_applyBody = async () => {
-    const parsedDocument = new DOMParser().parseFromString(walkthrough_page, 'text/html');
-    walkthrough_page_walkthoughPageVersions = await (0,utilities/* waitForElement */.br)('#chWalkthroughPageVersions');
-    walkthrough_page_walkthoughPageVersions.parentElement.insertBefore(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.containerJs}`), walkthrough_page_walkthoughPageVersions);
-    walkthrough_page_walkthroughContainer = document.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.containerJs}`);
-    walkthrough_page_walkthroughContainer.appendChild(walkthrough_page_walkthoughPageVersions);
-    moveWalkthroughPagePreview();
+  const parsedDocument = new DOMParser().parseFromString(walkthrough_page, "text/html");
+  walkthrough_page_walkthoughPageVersions = await (0,utilities/* waitForElement */.br)("#chWalkthroughPageVersions");
+  walkthrough_page_walkthoughPageVersions.parentElement.insertBefore(
+    parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.containerJs}`),
+    walkthrough_page_walkthoughPageVersions
+  );
+  walkthrough_page_walkthroughContainer = document.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPage.containerJs}`
+  );
+  walkthrough_page_walkthroughContainer.appendChild(walkthrough_page_walkthoughPageVersions);
+  moveWalkthroughPagePreview();
 };
 const moveWalkthroughPagePreview = async () => {
-    const walkthoughPagePreview = await (0,utilities/* waitForElement */.br)('#chWalkthroughPagePreview');
-    if (walkthoughPagePreview) {
-        walkthrough_page_walkthroughContainer.appendChild(walkthoughPagePreview);
-    }
+  const walkthoughPagePreview = await (0,utilities/* waitForElement */.br)("#chWalkthroughPagePreview");
+  if (walkthoughPagePreview) {
+    walkthrough_page_walkthroughContainer.appendChild(walkthoughPagePreview);
+  }
 };
 /* harmony default export */ const staff_walkthrough_improvements_walkthrough_page = (async () => {
-    if (!regex/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPageUrl()) {
-        return;
+  if (!regex/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPageUrl()) {
+    return;
+  }
+  await walkthrough_page_applyBody();
+  (0,utilities/* allConcurrently */.Eh)("Walkthrough Page", [
+    {
+      name: "walkthrough-page-set-page-history-sticky",
+      task: async () => await setPageHistorySticky(walkthrough_page_walkthroughContainer, walkthrough_page_walkthoughPageVersions)
+    },
+    {
+      name: "walkthrough-page-add-walkthrough-team-button",
+      task: async () => await addWalkthroughTeamButton(walkthrough_page_walkthroughContainer, walkthrough_page_walkthoughPageVersions)
+    },
+    {
+      name: "walkthrough-page-move-buttons-to-left",
+      task: async () => await moveButtonsToLeft(walkthrough_page_walkthroughContainer, walkthrough_page_walkthoughPageVersions)
+    },
+    {
+      name: "walkthrough-page-highlight-page-locked",
+      task: async () => await highlightPageLocked(walkthrough_page_walkthroughContainer)
     }
-    await walkthrough_page_applyBody();
-    (0,utilities/* allConcurrently */.Eh)('Walkthrough Page', [
-        {
-            name: 'walkthrough-page-set-page-history-sticky',
-            task: async () => setPageHistorySticky(walkthrough_page_walkthroughContainer, walkthrough_page_walkthoughPageVersions)
-        },
-        {
-            name: 'walkthrough-page-add-walkthrough-team-button',
-            task: async () => addWalkthroughTeamButton(walkthrough_page_walkthroughContainer, walkthrough_page_walkthoughPageVersions)
-        },
-        {
-            name: 'walkthrough-page-move-buttons-to-left',
-            task: async () => moveButtonsToLeft(walkthrough_page_walkthroughContainer, walkthrough_page_walkthoughPageVersions)
-        },
-        {
-            name: 'walkthrough-page-highlight-page-locked',
-            task: async () => highlightPageLocked(walkthrough_page_walkthroughContainer)
-        }
-    ]);
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/staff-walkthrough-improvements/edit-walkthrough/auto-save-notification.ts
 
 
 const autoSaveNotification = async () => {
-    if (!globals/* editWalkthrough */.kB.autoSaveNotification) {
-        return;
+  if (!globals/* editWalkthrough */.kB.autoSaveNotification) {
+    return;
+  }
+  pub_sub.subscribe("ajaxIntercept:response", (response) => {
+    if (!globals/* AjaxRegex */.rt.Test.autosave(response.responseURL)) {
+      return;
     }
-    pub_sub.subscribe('ajaxIntercept:response', (response) => {
-        if (!globals/* AjaxRegex */.rt.Test.autosave(response.responseURL)) {
-            return;
-        }
-        pub_sub.publish('snackbar:show', {
-            text: response.status === 200 ? 'Autosave successful.' : 'Autosave failed.',
-            type: response.status === 200 ? 'success' : 'danger'
-        });
+    pub_sub.publish("snackbar:show", {
+      text: response.status === 200 ? "Autosave successful." : "Autosave failed.",
+      type: response.status === 200 ? "success" : "danger"
     });
+  });
 };
 /* harmony default export */ const auto_save_notification = ({ autoSaveNotification });
 
@@ -7302,55 +7219,66 @@ var edit_walkthrough_code = "<div class=\"js-ta-x-staff-walkthrough-improvements
 
 
 const improved_image_selector_listen = () => {
-    document.addEventListener('click', ({ target }) => {
-        if (!(target instanceof HTMLElement)) {
-            return;
-        }
-        if (target.closest(`[aria-label='Add Image'], .${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`) !== null) {
-            return;
-        }
-        const imageSelector = document.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`);
-        if (imageSelector.style.display === 'block') {
-            imageSelector.style.display = 'none';
-        }
-    });
-    window.addEventListener('blur', () => {
-        if (document.activeElement === document.querySelector('#txtWalkthrough_ifr')) {
-            const imageSelector = document.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`);
-            if (imageSelector.style.display !== 'block') {
-                return;
-            }
-            imageSelector.style.display = 'none';
-        }
-    });
+  document.addEventListener("click", ({ target }) => {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (target.closest(
+      `[aria-label='Add Image'], .${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
+    ) !== null) {
+      return;
+    }
+    const imageSelector = document.querySelector(
+      `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
+    );
+    if (imageSelector.style.display === "block") {
+      imageSelector.style.display = "none";
+    }
+  });
+  window.addEventListener("blur", () => {
+    if (document.activeElement === document.querySelector("#txtWalkthrough_ifr")) {
+      const imageSelector = document.querySelector(
+        `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs}`
+      );
+      if (imageSelector.style.display !== "block") {
+        return;
+      }
+      imageSelector.style.display = "none";
+    }
+  });
 };
 const improveImageSelector = async () => {
-    if (!globals/* editWalkthrough */.kB.improvedImageSelector) {
-        return;
-    }
-    const imageContainer = await (0,utilities/* waitForElement */.br)('#oWalkthroughImageViewer');
-    if (!imageContainer) {
-        return;
-    }
-    imageContainer.classList.add(globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle, globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs);
-    const parsedDocument = new DOMParser().parseFromString(edit_walkthrough, 'text/html');
-    const stickyImageHeader = parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorContainerJs}`);
-    const imageViewer = await (0,utilities/* waitForElement */.br)('.imageviewer', imageContainer);
-    const imageLink = await (0,utilities/* waitForElement */.br)('.addimages a', imageContainer);
-    imageContainer.insertBefore(stickyImageHeader, imageViewer);
-    stickyImageHeader.appendChild(imageViewer.querySelector('.itemname, .noimages'));
-    stickyImageHeader.appendChild(imageLink);
-    [...imageViewer.querySelectorAll('.ivimage a')].forEach((imageAnchor) => {
-        const clonedImageTitle = parsedDocument
-            .querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`)
-            .cloneNode(true);
-        const imageTitle = (0,helpers/* template */.XK)(clonedImageTitle, {
-            element: imageAnchor.querySelector('img')
-        });
-        imageTitle.innerText = (0,utilities/* extractBetween */._o)("'", imageTitle.innerText);
-        imageAnchor.appendChild(imageTitle);
+  if (!globals/* editWalkthrough */.kB.improvedImageSelector) {
+    return;
+  }
+  const imageContainer = await (0,utilities/* waitForElement */.br)("#oWalkthroughImageViewer");
+  if (!imageContainer) {
+    return;
+  }
+  imageContainer.classList.add(
+    globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorStyle,
+    globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorJs
+  );
+  const parsedDocument = new DOMParser().parseFromString(edit_walkthrough, "text/html");
+  const stickyImageHeader = parsedDocument.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorContainerJs}`
+  );
+  const imageViewer = await (0,utilities/* waitForElement */.br)(".imageviewer", imageContainer);
+  const imageLink = await (0,utilities/* waitForElement */.br)(".addimages a", imageContainer);
+  imageContainer.insertBefore(stickyImageHeader, imageViewer);
+  stickyImageHeader.appendChild(imageViewer.querySelector(".itemname, .noimages"));
+  stickyImageHeader.appendChild(imageLink);
+  [...imageViewer.querySelectorAll(".ivimage a")].forEach((imageAnchor) => {
+    const clonedImageTitle = parsedDocument.querySelector(
+      `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.improvedImageSelectorImageTitleJs}`
+    ).cloneNode(true);
+    const imageTitle = (0,helpers/* template */.XK)(clonedImageTitle, {
+      element: imageAnchor.querySelector("img")
     });
-    improved_image_selector_listen();
+    imageTitle.innerText = (0,utilities/* extractBetween */._o)("'", imageTitle.innerText);
+    imageAnchor.appendChild(imageTitle);
+  });
+  improved_image_selector_listen();
 };
 /* harmony default export */ const improved_image_selector = ({ improveImageSelector });
 
@@ -7372,89 +7300,88 @@ const improveImageSelector = async () => {
 let themeToggle;
 let globalTheme;
 const getTinymceTheme = async () => {
-    globalTheme = globalTheme ? globalTheme : (await (0,utilities/* waitForElement */.br)('.page, [data-theme]'));
-    if (globals/* editWalkthrough */.kB.tinymceTheme !== null) {
-        return globals/* editWalkthrough */.kB.tinymceTheme;
-    }
-    else {
-        return globalTheme ? globalTheme.getAttribute('data-theme') : '';
-    }
+  globalTheme = globalTheme ? globalTheme : await (0,utilities/* waitForElement */.br)(".page, [data-theme]");
+  if (globals/* editWalkthrough */.kB.tinymceTheme !== null) {
+    return globals/* editWalkthrough */.kB.tinymceTheme;
+  } else {
+    return globalTheme ? globalTheme.getAttribute("data-theme") : "";
+  }
 };
 const toggle_theme_button_listen = async () => {
-    themeToggle.addEventListener('click', ({ target }) => {
-        if (!(target instanceof HTMLElement)) {
-            return;
-        }
-        const currentTheme = target.getAttribute('data-ta-x-tinymce-theme');
-        const newTheme = currentTheme === 'dark' ? '' : 'dark';
-        globals/* editWalkthrough */.kB.tinymceTheme = newTheme;
-        target.setAttribute('data-ta-x-tinymce-theme', newTheme);
-    });
-    const iframe = (await (0,utilities/* waitForElement */.br)('#txtWalkthrough_ifr'));
-    iframe.addEventListener('load', async () => {
-        const iframeDocument = iframe && iframe.contentDocument;
-        const bodyEl = (await (0,utilities/* waitForElement */.br)('#tinymce', iframeDocument));
-        bodyEl.classList.add(globals/* Constants */.gT.Styles.root, globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.featureStyle);
-        bodyEl.setAttribute('data-ta-x-tinymce-theme', await getTinymceTheme());
-        const style = iframeDocument.createElement('style');
-        style.id = 'ta-x-staff-walkthrough-improvements-dark-tinymce-style';
-        style.innerHTML = content;
-        iframeDocument.head.appendChild(style);
-        const script = iframeDocument.createElement('script');
-        script.id = 'ta-x-staff-walkthrough-improvements-dark-tinymce-script';
-        script.innerHTML = `window.addEventListener('message', function(event) {
+  themeToggle.addEventListener("click", ({ target }) => {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    const currentTheme = target.getAttribute("data-ta-x-tinymce-theme");
+    const newTheme = currentTheme === "dark" ? "" : "dark";
+    globals/* editWalkthrough */.kB.tinymceTheme = newTheme;
+    target.setAttribute("data-ta-x-tinymce-theme", newTheme);
+  });
+  const iframe = await (0,utilities/* waitForElement */.br)("#txtWalkthrough_ifr");
+  iframe.addEventListener("load", async () => {
+    const iframeDocument = iframe && iframe.contentDocument;
+    const bodyEl = await (0,utilities/* waitForElement */.br)("#tinymce", iframeDocument);
+    bodyEl.classList.add(globals/* Constants */.gT.Styles.root, globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.featureStyle);
+    bodyEl.setAttribute("data-ta-x-tinymce-theme", await getTinymceTheme());
+    const style = iframeDocument.createElement("style");
+    style.id = "ta-x-staff-walkthrough-improvements-dark-tinymce-style";
+    style.innerHTML = content;
+    iframeDocument.head.appendChild(style);
+    const script = iframeDocument.createElement("script");
+    script.id = "ta-x-staff-walkthrough-improvements-dark-tinymce-script";
+    script.innerHTML = `window.addEventListener('message', function(event) {
       console.log(event);
       if (!event || !event.data || event.data.theme === null || event.data.theme === undefined) return;
       document.body.setAttribute('data-ta-x-tinymce-theme', event.data.theme);
     });`;
-        iframeDocument.head.appendChild(script);
-        iframe.removeEventListener('load', undefined);
+    iframeDocument.head.appendChild(script);
+    iframe.removeEventListener("load", void 0);
+  });
+  let preventMutation = false;
+  const observer = new MutationObserver((mutations) => {
+    if (preventMutation) {
+      preventMutation = false;
+      return;
+    }
+    mutations.forEach((mutation) => {
+      if (mutation.type !== "attributes") {
+        return;
+      }
+      if (!(mutation.target instanceof HTMLElement)) {
+        return;
+      }
+      let theme;
+      if (mutation.attributeName === "data-theme") {
+        theme = mutation.target.getAttribute("data-theme");
+        preventMutation = true;
+        themeToggle.setAttribute("data-ta-x-tinymce-theme", theme === "dark" ? theme : "");
+        document.body.setAttribute("data-ta-x-theme", theme === "dark" ? theme : "");
+      } else if (mutation.attributeName === "data-ta-x-tinymce-theme") {
+        theme = mutation.target.getAttribute("data-ta-x-tinymce-theme");
+      } else {
+        return;
+      }
+      if (theme !== null && theme !== void 0) {
+        iframe.contentWindow.postMessage({ theme }, "*");
+      }
     });
-    let preventMutation = false;
-    const observer = new MutationObserver((mutations) => {
-        if (preventMutation) {
-            preventMutation = false;
-            return;
-        }
-        mutations.forEach((mutation) => {
-            if (mutation.type !== 'attributes') {
-                return;
-            }
-            if (!(mutation.target instanceof HTMLElement)) {
-                return;
-            }
-            let theme;
-            if (mutation.attributeName === 'data-theme') {
-                theme = mutation.target.getAttribute('data-theme');
-                preventMutation = true;
-                themeToggle.setAttribute('data-ta-x-tinymce-theme', theme === 'dark' ? theme : '');
-                document.body.setAttribute('data-ta-x-theme', theme === 'dark' ? theme : '');
-            }
-            else if (mutation.attributeName === 'data-ta-x-tinymce-theme') {
-                theme = mutation.target.getAttribute('data-ta-x-tinymce-theme');
-            }
-            else {
-                return;
-            }
-            if (theme !== null && theme !== undefined) {
-                iframe.contentWindow.postMessage({ theme: theme }, '*');
-            }
-        });
-    });
-    observer.observe(themeToggle, {
-        attributes: true
-    });
-    observer.observe(globalTheme, {
-        attributes: true
-    });
+  });
+  observer.observe(themeToggle, {
+    attributes: true
+  });
+  observer.observe(globalTheme, {
+    attributes: true
+  });
 };
 const addToggleThemeButton = async (toolbar) => {
-    GM_addStyle(skin);
-    themeToggle = toolbar.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs} [data-ta-x-tinymce-theme]`);
-    const theme = await getTinymceTheme();
-    themeToggle.setAttribute('data-ta-x-tinymce-theme', theme);
-    document.body.setAttribute('data-ta-x-theme', theme);
-    await toggle_theme_button_listen();
+  GM_addStyle(skin);
+  themeToggle = toolbar.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs} [data-ta-x-tinymce-theme]`
+  );
+  const theme = await getTinymceTheme();
+  themeToggle.setAttribute("data-ta-x-tinymce-theme", theme);
+  document.body.setAttribute("data-ta-x-theme", theme);
+  await toggle_theme_button_listen();
 };
 /* harmony default export */ const toggle_theme_button = ({ addToggleThemeButton });
 
@@ -7467,31 +7394,36 @@ let tinymceContainer;
 let tinymceToolbar;
 const set_fullwidth_toolbar_variableProperty = globals/* Constants */.gT.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarTop;
 const set_fullwidth_toolbar_listen = async () => {
-    window.addEventListener('scroll', async () => {
-        await (0,helpers/* applyStickyElementStyle */.vN)(set_fullwidth_toolbar_variableProperty, tinymceToolbar, tinymceContainer, {
-            noTransitionStyle: !(0,utilities/* classListContains */.gz)(tinymceToolbar, [
-                globals/* Constants */.gT.Styles.Animations.yHideNoTransition,
-                globals/* Constants */.gT.Styles.Animations.yHide,
-                globals/* Constants */.gT.Styles.Animations.yShow
-            ]),
-            isRelativeToParent: true
-        });
-        setTimeout(() => pub_sub.publish('tinymce:repositionFloatingMenus'), 250);
+  window.addEventListener("scroll", async () => {
+    await (0,helpers/* applyStickyElementStyle */.vN)(set_fullwidth_toolbar_variableProperty, tinymceToolbar, tinymceContainer, {
+      noTransitionStyle: !(0,utilities/* classListContains */.gz)(tinymceToolbar, [
+        globals/* Constants */.gT.Styles.Animations.yHideNoTransition,
+        globals/* Constants */.gT.Styles.Animations.yHide,
+        globals/* Constants */.gT.Styles.Animations.yShow
+      ]),
+      isRelativeToParent: true
     });
+    setTimeout(() => pub_sub.publish("tinymce:repositionFloatingMenus"), 250);
+  });
 };
 const setFullWidthToolbar = async (container) => {
-    tinymceContainer = container;
-    tinymceToolbar = await (0,utilities/* waitForElement */.br)('.mce-container-body .mce-toolbar-grp', container);
-    if (!tinymceToolbar) {
-        return;
-    }
-    tinymceToolbar.classList.add(globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarStyles);
-    document.documentElement.style.setProperty(globals/* Constants */.gT.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarWidth, `${tinymceToolbar.parentElement.scrollWidth}px`);
-    await (0,helpers/* applyStickyElementStyle */.vN)(set_fullwidth_toolbar_variableProperty, tinymceToolbar, tinymceContainer, {
-        noTransitionStyle: true,
-        isRelativeToParent: true
-    });
-    await set_fullwidth_toolbar_listen();
+  tinymceContainer = container;
+  tinymceToolbar = await (0,utilities/* waitForElement */.br)(".mce-container-body .mce-toolbar-grp", container);
+  if (!tinymceToolbar) {
+    return;
+  }
+  tinymceToolbar.classList.add(
+    globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarStyles
+  );
+  document.documentElement.style.setProperty(
+    globals/* Constants */.gT.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarWidth,
+    `${tinymceToolbar.parentElement.scrollWidth}px`
+  );
+  await (0,helpers/* applyStickyElementStyle */.vN)(set_fullwidth_toolbar_variableProperty, tinymceToolbar, tinymceContainer, {
+    noTransitionStyle: true,
+    isRelativeToParent: true
+  });
+  await set_fullwidth_toolbar_listen();
 };
 /* harmony default export */ const set_fullwidth_toolbar = ({ setFullWidthToolbar });
 
@@ -7502,38 +7434,41 @@ const setFullWidthToolbar = async (container) => {
 let fix_floating_menus_tinymceToolbar;
 const fix_floating_menus_variableProperty = globals/* Constants */.gT.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarFloatingMenu;
 const setTopPosition = () => {
-    const actualTopPosition = (0,utilities/* getElementCoordinates */.HM)(fix_floating_menus_tinymceToolbar);
-    document.documentElement.style.setProperty(fix_floating_menus_variableProperty, `${fix_floating_menus_tinymceToolbar.offsetHeight + actualTopPosition.top}px`);
+  const actualTopPosition = (0,utilities/* getElementCoordinates */.HM)(fix_floating_menus_tinymceToolbar);
+  document.documentElement.style.setProperty(
+    fix_floating_menus_variableProperty,
+    `${fix_floating_menus_tinymceToolbar.offsetHeight + actualTopPosition.top}px`
+  );
 };
 const fix_floating_menus_listen = async () => {
-    const iframe = (await (0,utilities/* waitForElement */.br)('#txtWalkthrough_ifr'));
-    iframe.addEventListener('load', () => {
-        setTopPosition();
-        window.addEventListener('scroll', setTopPosition);
-        pub_sub.subscribe('tinymce:repositionFloatingMenus', setTopPosition);
-        iframe.removeEventListener('load', undefined);
-    });
+  const iframe = await (0,utilities/* waitForElement */.br)("#txtWalkthrough_ifr");
+  iframe.addEventListener("load", () => {
+    setTopPosition();
+    window.addEventListener("scroll", setTopPosition);
+    pub_sub.subscribe("tinymce:repositionFloatingMenus", setTopPosition);
+    iframe.removeEventListener("load", void 0);
+  });
 };
 const fixFloatingMenus = async (container) => {
-    fix_floating_menus_tinymceToolbar = await (0,utilities/* waitForElement */.br)('.mce-container-body .mce-toolbar-grp', container);
-    if (!fix_floating_menus_tinymceToolbar) {
-        return;
-    }
-    await fix_floating_menus_listen();
+  fix_floating_menus_tinymceToolbar = await (0,utilities/* waitForElement */.br)(".mce-container-body .mce-toolbar-grp", container);
+  if (!fix_floating_menus_tinymceToolbar) {
+    return;
+  }
+  await fix_floating_menus_listen();
 };
 /* harmony default export */ const fix_floating_menus = ({ fixFloatingMenus });
 
 ;// CONCATENATED MODULE: ./src/features/staff-walkthrough-improvements/edit-walkthrough/tinymce/source-code-button.ts
 
 const createScript = (id, innerHtml) => {
-    const script = document.createElement('script');
-    script.id = id;
-    script.innerHTML = innerHtml;
-    return script;
+  const script = document.createElement("script");
+  script.id = id;
+  script.innerHTML = innerHtml;
+  return script;
 };
 const buildSourceCodeCommandScript = () => {
-    const id = 'ta-x-staff-walkthrough-improvements-add-code-editor-command';
-    const script = `tinymce.PluginManager.add("code", function(e) {
+  const id = "ta-x-staff-walkthrough-improvements-add-code-editor-command";
+  const script = `tinymce.PluginManager.add("code", function(e) {
         function o() {
             var o = tinymce.editors.txtWalkthrough.windowManager.open({
                 title: "Source code",
@@ -7561,24 +7496,24 @@ const buildSourceCodeCommandScript = () => {
         }
         tinymce.editors.txtWalkthrough.addCommand("mceCodeEditor", o)
     })();`;
-    return createScript(id, script);
+  return createScript(id, script);
 };
 const buildShowSourceCodeButtonScript = () => {
-    const id = 'ta-x-staff-walkthrough-improvements-show-code-editor';
-    const script = `document.querySelector(".js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code").addEventListener("click", function(e) {
+  const id = "ta-x-staff-walkthrough-improvements-show-code-editor";
+  const script = `document.querySelector(".js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code").addEventListener("click", function(e) {
         tinymce.activeEditor.execCommand("mceCodeEditor");
     });`;
-    return createScript(id, script);
+  return createScript(id, script);
 };
 const addSourceCodeButton = async () => {
-    const iframe = (await (0,utilities/* waitForElement */.br)('#txtWalkthrough_ifr'));
-    iframe.addEventListener('load', async () => {
-        const sourceCodeCommand = buildSourceCodeCommandScript();
-        const sourceCodeButton = buildShowSourceCodeButtonScript();
-        document.body.appendChild(sourceCodeCommand);
-        document.body.appendChild(sourceCodeButton);
-        iframe.removeEventListener('load', undefined);
-    });
+  const iframe = await (0,utilities/* waitForElement */.br)("#txtWalkthrough_ifr");
+  iframe.addEventListener("load", async () => {
+    const sourceCodeCommand = buildSourceCodeCommandScript();
+    const sourceCodeButton = buildShowSourceCodeButtonScript();
+    document.body.appendChild(sourceCodeCommand);
+    document.body.appendChild(sourceCodeButton);
+    iframe.removeEventListener("load", void 0);
+  });
 };
 /* harmony default export */ const source_code_button = ({ addSourceCodeButton });
 
@@ -7589,52 +7524,57 @@ var jscolor_default = /*#__PURE__*/__webpack_require__.n(jscolor);
 
 
 const append_color_picker_listen = () => {
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.type !== 'childList') {
-                return;
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type !== "childList") {
+        return;
+      }
+      if (!(mutation.target instanceof HTMLElement)) {
+        return;
+      }
+      if (!mutation.addedNodes || mutation.addedNodes.length === 0) {
+        return;
+      }
+      const tablePropertyModal = [...mutation.addedNodes].find(
+        (node) => node.ariaLabel === "Table properties"
+      );
+      if (!tablePropertyModal || !(tablePropertyModal instanceof HTMLElement)) {
+        return;
+      }
+      [...tablePropertyModal.querySelectorAll(".mce-colorbox input")].forEach(
+        (el) => {
+          el.parentElement.style.left = "201px";
+          const container = el.closest(".mce-container-body");
+          const colorPickerOpts = {
+            zIndex: 65536
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          };
+          if (container) {
+            const label = container.querySelector("label");
+            if (label) {
+              if (label.innerText === "Border color") {
+                colorPickerOpts.format = "hexa";
+              }
             }
-            if (!(mutation.target instanceof HTMLElement)) {
-                return;
-            }
-            if (!mutation.addedNodes || mutation.addedNodes.length === 0) {
-                return;
-            }
-            const tablePropertyModal = [...mutation.addedNodes].find((node) => node.ariaLabel === 'Table properties');
-            if (!tablePropertyModal || !(tablePropertyModal instanceof HTMLElement)) {
-                return;
-            }
-            [...tablePropertyModal.querySelectorAll('.mce-colorbox input')].forEach((el) => {
-                el.parentElement.style.left = '201px';
-                const container = el.closest('.mce-container-body');
-                const colorPickerOpts = {
-                    zIndex: 65536
-                };
-                if (container) {
-                    const label = container.querySelector('label');
-                    if (label) {
-                        if (label.innerText === 'Border color') {
-                            colorPickerOpts.format = 'hexa';
-                        }
-                    }
-                }
-                new (jscolor_default())(el, colorPickerOpts);
-            });
-            observer.disconnect();
-        });
+          }
+          new (jscolor_default())(el, colorPickerOpts);
+        }
+      );
+      observer.disconnect();
     });
-    observer.observe(document.body, {
-        attributes: false,
-        childList: true,
-        subtree: true
-    });
+  });
+  observer.observe(document.body, {
+    attributes: false,
+    childList: true,
+    subtree: true
+  });
 };
 const appendColorPicker = async () => {
-    const iframe = (await (0,utilities/* waitForElement */.br)('#txtWalkthrough_ifr'));
-    iframe.addEventListener('load', async () => {
-        append_color_picker_listen();
-        iframe.removeEventListener('load', undefined);
-    });
+  const iframe = await (0,utilities/* waitForElement */.br)("#txtWalkthrough_ifr");
+  iframe.addEventListener("load", async () => {
+    append_color_picker_listen();
+    iframe.removeEventListener("load", void 0);
+  });
 };
 /* harmony default export */ const append_color_picker = ({ appendColorPicker });
 
@@ -7653,24 +7593,26 @@ var tinymce_code = "<div class=\"mce-container mce-last mce-flow-layout-item mce
 
 
 const tinymce_tinymce = async () => {
-    if (!(await (0,utilities/* waitForElement */.br)('[href*="skin.min.css"]', document.head))) {
-        return;
-    }
-    const container = await (0,utilities/* waitForElement */.br)('.mce-tinymce');
-    const toolbar = await (0,utilities/* waitForElement */.br)('.mce-toolbar.mce-last .mce-container-body', container);
-    if (!container || !toolbar) {
-        return;
-    }
-    const parsedDocument = new DOMParser().parseFromString(tinymce, 'text/html');
-    const addedGroup = parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`);
-    toolbar.appendChild(addedGroup);
-    (0,utilities/* allConcurrently */.Eh)('Edit Walkthrough', [
-        { name: 'tinymce-set-full-width-toolbar', task: async () => setFullWidthToolbar(container) },
-        { name: 'tinymce-add-fix-floating-menus', task: async () => fixFloatingMenus(container) },
-        { name: 'tinymce-add-source-code-button', task: async () => addSourceCodeButton() },
-        { name: 'tinymce-add-toggle-theme-button', task: async () => addToggleThemeButton(toolbar) },
-        { name: 'tinymce-append-color-picker', task: async () => appendColorPicker() }
-    ]);
+  if (!await (0,utilities/* waitForElement */.br)('[href*="skin.min.css"]', document.head)) {
+    return;
+  }
+  const container = await (0,utilities/* waitForElement */.br)(".mce-tinymce");
+  const toolbar = await (0,utilities/* waitForElement */.br)(".mce-toolbar.mce-last .mce-container-body", container);
+  if (!container || !toolbar) {
+    return;
+  }
+  const parsedDocument = new DOMParser().parseFromString(tinymce, "text/html");
+  const addedGroup = parsedDocument.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.themeToggleJs}`
+  );
+  toolbar.appendChild(addedGroup);
+  (0,utilities/* allConcurrently */.Eh)("Edit Walkthrough", [
+    { name: "tinymce-set-full-width-toolbar", task: async () => await setFullWidthToolbar(container) },
+    { name: "tinymce-add-fix-floating-menus", task: async () => await fixFloatingMenus(container) },
+    { name: "tinymce-add-source-code-button", task: addSourceCodeButton },
+    { name: "tinymce-add-toggle-theme-button", task: async () => await addToggleThemeButton(toolbar) },
+    { name: "tinymce-append-color-picker", task: appendColorPicker }
+  ]);
 };
 /* harmony default export */ const edit_walkthrough_tinymce = ({ tinymce: tinymce_tinymce });
 
@@ -7681,14 +7623,18 @@ const tinymce_tinymce = async () => {
 
 
 /* harmony default export */ const staff_walkthrough_improvements_edit_walkthrough = (async () => {
-    if (!globals/* StaffRegex */.nW.Walkthroughs.Test.editWalkthroughUrl()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('Edit Walkthrough', [
-        { name: 'edit-walkthrough-improve-image-selector', task: improveImageSelector },
-        { name: 'edit-walkthrough-auto-save-notification', task: autoSaveNotification },
-        { name: 'edit-walkthrough-tinymce', task: tinymce_tinymce }
-    ], 3);
+  if (!globals/* StaffRegex */.nW.Walkthroughs.Test.editWalkthroughUrl()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)(
+    "Edit Walkthrough",
+    [
+      { name: "edit-walkthrough-improve-image-selector", task: improveImageSelector },
+      { name: "edit-walkthrough-auto-save-notification", task: autoSaveNotification },
+      { name: "edit-walkthrough-tinymce", task: tinymce_tinymce }
+    ],
+    3
+  );
 });
 
 ;// CONCATENATED MODULE: ./src/features/staff-walkthrough-improvements/walkthrough-preview/remove-aside.ts
@@ -7696,21 +7642,21 @@ const tinymce_tinymce = async () => {
 
 
 const remove_aside_applyBody = async () => {
-    const main = await (0,utilities/* waitForElement */.br)('.page main');
-    main.parentElement.classList.add('no-aside');
-    main.classList.add('no-aside');
-    const aside = await (0,utilities/* waitForElement */.br)('.page aside');
-    aside.remove();
+  const main = await (0,utilities/* waitForElement */.br)(".page main");
+  main.parentElement.classList.add("no-aside");
+  main.classList.add("no-aside");
+  const aside = await (0,utilities/* waitForElement */.br)(".page aside");
+  aside.remove();
 };
 const remove_aside_listen = () => {
-    pub_sub.subscribe('walkthroughPreview:removeAside', remove_aside_applyBody);
+  pub_sub.subscribe("walkthroughPreview:removeAside", remove_aside_applyBody);
 };
 const removeAside = async () => {
-    remove_aside_listen();
-    if (globals/* walkthroughPreview */.uP.populateAsideContent) {
-        return;
-    }
-    await remove_aside_applyBody();
+  remove_aside_listen();
+  if (globals/* walkthroughPreview */.uP.populateAsideContent) {
+    return;
+  }
+  await remove_aside_applyBody();
 };
 /* harmony default export */ const remove_aside = ({ removeAside });
 
@@ -7734,187 +7680,230 @@ var walkthrough_preview_code = "<section class=\"purple js-ta-x-ask-loader-conta
 let populate_aside_content_extensionBody;
 let askForWalkthroughBody;
 const populate_aside_content_applyBody = async () => {
-    const parsedDocument = new DOMParser().parseFromString(walkthrough_preview, 'text/html');
-    const asideColumn = await (0,utilities/* waitForElement */.br)('.main aside');
-    asideColumn.appendChild(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentJs}`));
-    populate_aside_content_extensionBody = asideColumn.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentJs}`);
-    askForWalkthroughBody = populate_aside_content_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.askJs}`);
-    getAchievementWalkthroughId();
+  const parsedDocument = new DOMParser().parseFromString(walkthrough_preview, "text/html");
+  const asideColumn = await (0,utilities/* waitForElement */.br)(".main aside");
+  asideColumn.appendChild(
+    parsedDocument.querySelector(
+      `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentJs}`
+    )
+  );
+  populate_aside_content_extensionBody = asideColumn.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentJs}`
+  );
+  askForWalkthroughBody = populate_aside_content_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.askJs}`);
+  getAchievementWalkthroughId();
 };
 const populate_aside_content_listen = () => {
-    const button = populate_aside_content_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.buttonJs}`);
-    const input = populate_aside_content_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.inputJs}`);
-    button.addEventListener('click', async (e) => {
-        if (!(e.target instanceof HTMLElement)) {
-            return;
-        }
-        e.preventDefault();
-        e.stopPropagation();
-        try {
-            if (input.value === '') {
-                return;
-            }
-            toggleAskForWalkthrough();
-            await getAsideContent(input.value);
-        }
-        catch {
-            return;
-        }
-    });
+  const button = populate_aside_content_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.buttonJs}`);
+  const input = populate_aside_content_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.inputJs}`);
+  button.addEventListener("click", async (e) => {
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      if (input.value === "") {
+        return;
+      }
+      toggleAskForWalkthrough();
+      await getAsideContent(input.value);
+    } catch {
+      return;
+    }
+  });
 };
 const getAchievementWalkthroughId = async () => {
-    const cachedWalkthroughIds = globals/* Cache */.Ct.walkthroughPreviewWalkthroughId;
-    let walkthroughId = null;
-    if (globals/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPreviewUrlWithWalkthroughId()) {
-        walkthroughId = new URLSearchParams(window.location.search).get('walkthroughid');
+  const cachedWalkthroughIds = globals/* Cache */.Ct.walkthroughPreviewWalkthroughId;
+  let walkthroughId = null;
+  if (globals/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPreviewUrlWithWalkthroughId()) {
+    walkthroughId = new URLSearchParams(window.location.search).get("walkthroughid");
+  } else if (globals/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPagePreviewUrlWithPageId()) {
+    const pageId = new URLSearchParams(window.location.search).get("pageid");
+    const foundWalkthroughId = [...cachedWalkthroughIds.entries()].find(
+      (walkthroughs) => walkthroughs[1].includes(pageId)
+    );
+    if (foundWalkthroughId) {
+      walkthroughId = foundWalkthroughId[0];
     }
-    else if (globals/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPagePreviewUrlWithPageId()) {
-        const pageId = new URLSearchParams(window.location.search).get('pageid');
-        const foundWalkthroughId = [...cachedWalkthroughIds.entries()].find((walkthroughs) => walkthroughs[1].includes(pageId));
-        if (foundWalkthroughId) {
-            walkthroughId = foundWalkthroughId[0];
-        }
-    }
-    if (!walkthroughId) {
-        toggleAskForWalkthrough();
-        return;
-    }
-    getAsideContent(walkthroughId);
+  }
+  if (!walkthroughId) {
+    toggleAskForWalkthrough();
+    return;
+  }
+  getAsideContent(walkthroughId);
 };
 const getAsideContent = async (walkthroughId) => {
-    const asideColumn = await (0,utilities/* waitForElement */.br)('.main aside');
-    const parsedDocument = new DOMParser().parseFromString(walkthrough_preview, 'text/html');
-    const parsedTemplateDocument = new DOMParser().parseFromString(walkthrough_preview_walkthrough_pages, 'text/html');
-    const manageWalkthroughResponse = await (0,helpers/* memoizeFetch */.FS)(`https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=${walkthroughId}`, {}, { deleteAfter: { value: 4, period: 'hours' } });
-    const manageWalkthroughDocument = new DOMParser().parseFromString(manageWalkthroughResponse, 'text/html');
-    const supportedStatuses = ['In progress', 'Ready for review', 'Ready for publish'];
-    if (!supportedStatuses.includes(manageWalkthroughDocument.querySelector('#txtStatusReadOnly').value)) {
-        populate_aside_content_extensionBody.remove();
-        pub_sub.publish('walkthroughPreview:removeAside');
-        return;
-    }
-    const gameUrl = await getGameUrl(walkthroughId);
-    const gameResponse = await (0,helpers/* memoizeFetch */.FS)(gameUrl);
-    const gameDocument = new DOMParser().parseFromString(gameResponse, 'text/html');
-    const thanks = await getWalkthroughThanks(walkthroughId, parsedDocument);
-    const achievements = getAchievementsInWalkthrough(manageWalkthroughDocument, gameDocument, parsedDocument, parsedTemplateDocument);
-    let asideContent = [thanks, achievements];
-    if (globals/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPagePreviewUrlWithPageId()) {
-        const pages = getPagesInWalkthrough(walkthroughId, manageWalkthroughDocument, parsedDocument, parsedTemplateDocument);
-        asideContent = [pages].concat(asideContent);
-    }
+  const asideColumn = await (0,utilities/* waitForElement */.br)(".main aside");
+  const parsedDocument = new DOMParser().parseFromString(walkthrough_preview, "text/html");
+  const parsedTemplateDocument = new DOMParser().parseFromString(walkthrough_preview_walkthrough_pages, "text/html");
+  const manageWalkthroughResponse = await (0,helpers/* memoizeFetch */.FS)(
+    `https://www.trueachievements.com/staff/walkthrough/managewalkthrough.aspx?walkthroughid=${walkthroughId}`,
+    {},
+    { deleteAfter: { value: 4, period: "hours" } }
+  );
+  const manageWalkthroughDocument = new DOMParser().parseFromString(manageWalkthroughResponse, "text/html");
+  const supportedStatuses = ["In progress", "Ready for review", "Ready for publish"];
+  if (!supportedStatuses.includes(
+    manageWalkthroughDocument.querySelector("#txtStatusReadOnly, #txtStatus").value
+  )) {
     populate_aside_content_extensionBody.remove();
-    asideColumn.append(...asideContent);
-    const cachedWalkthroughPreviewWalkthroughId = globals/* Cache */.Ct.walkthroughPreviewWalkthroughId;
-    cachedWalkthroughPreviewWalkthroughId.set(walkthroughId, getPages(manageWalkthroughDocument).map((page) => page.id));
-    globals/* Cache */.Ct.walkthroughPreviewWalkthroughId = cachedWalkthroughPreviewWalkthroughId;
+    pub_sub.publish("walkthroughPreview:removeAside");
+    return;
+  }
+  const gameUrl = await getGameUrl(walkthroughId);
+  const gameResponse = await (0,helpers/* memoizeFetch */.FS)(gameUrl);
+  const gameDocument = new DOMParser().parseFromString(gameResponse, "text/html");
+  const thanks = await getWalkthroughThanks(walkthroughId, parsedDocument);
+  const achievements = getAchievementsInWalkthrough(
+    manageWalkthroughDocument,
+    gameDocument,
+    parsedDocument,
+    parsedTemplateDocument
+  );
+  let asideContent = [thanks, achievements];
+  if (globals/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPagePreviewUrlWithPageId()) {
+    const pages = getPagesInWalkthrough(
+      walkthroughId,
+      manageWalkthroughDocument,
+      parsedDocument,
+      parsedTemplateDocument
+    );
+    asideContent = [pages].concat(asideContent);
+  }
+  populate_aside_content_extensionBody.remove();
+  asideColumn.append(...asideContent);
+  const cachedWalkthroughPreviewWalkthroughId = globals/* Cache */.Ct.walkthroughPreviewWalkthroughId;
+  cachedWalkthroughPreviewWalkthroughId.set(
+    walkthroughId,
+    getPages(manageWalkthroughDocument).map((page) => page.id)
+  );
+  globals/* Cache */.Ct.walkthroughPreviewWalkthroughId = cachedWalkthroughPreviewWalkthroughId;
 };
 const getGameUrl = async (walkthroughId) => {
-    const game = document.querySelector('.walkthroughsummary .games a.gamelink');
-    if (game) {
-        return game.href;
-    }
-    const walkthroughPreviewResponse = await (0,helpers/* memoizeFetch */.FS)(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
-    const walkthroughPreviewDocument = new DOMParser().parseFromString(walkthroughPreviewResponse, 'text/html');
-    return walkthroughPreviewDocument.querySelector('.walkthroughsummary .games a.gamelink').href;
+  const game = document.querySelector(".walkthroughsummary .games a.gamelink");
+  if (game) {
+    return game.href;
+  }
+  const walkthroughPreviewResponse = await (0,helpers/* memoizeFetch */.FS)(
+    `https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`
+  );
+  const walkthroughPreviewDocument = new DOMParser().parseFromString(walkthroughPreviewResponse, "text/html");
+  return walkthroughPreviewDocument.querySelector(".walkthroughsummary .games a.gamelink").href;
 };
 const getPages = (manageWalkthroughDocument) => {
-    return [...manageWalkthroughDocument.querySelectorAll('#scrolllstWalkthroughPages tbody .c2 a')].map((page, index) => ({
-        index: (index + 1).toString(),
-        title: page.innerText,
-        id: (0,utilities/* toInt */.Hq)((0,utilities/* extractAllBetween */.QF)("'", page.href)[1]).toString()
-    }));
+  return [...manageWalkthroughDocument.querySelectorAll("#scrolllstWalkthroughPages tbody .c2 a")].map((page, index) => ({
+    index: (index + 1).toString(),
+    title: page.innerText,
+    id: (0,utilities/* toInt */.Hq)((0,utilities/* extractAllBetween */.QF)("'", page.href)[1]).toString()
+  }));
 };
 const getPagesInWalkthrough = (walkthroughId, manageWalkthroughDocument, featureDocument, templateDocument) => {
-    if (!globals/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPagePreviewUrlWithPageId()) {
-        return null;
+  if (!globals/* StaffRegex */.nW.Walkthroughs.Test.walkthroughPagePreviewUrlWithPageId()) {
+    return null;
+  }
+  const pagesInWalkthroughSection = featureDocument.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughPagesJs}`
+  );
+  const pagesinWalkthroughTable = pagesInWalkthroughSection.querySelector("tbody");
+  const clonedSummaryRow = templateDocument.querySelector(
+    `#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.WalkthroughPreview.walkthroughPagesSummary}`
+  ).content.firstElementChild.cloneNode(true);
+  const summaryRow = (0,helpers/* template */.XK)(clonedSummaryRow, {
+    urls: {
+      walkthroughPreviewWithWalkthroughId: `/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`
     }
-    const pagesInWalkthroughSection = featureDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughPagesJs}`);
-    const pagesinWalkthroughTable = pagesInWalkthroughSection.querySelector('tbody');
-    const clonedSummaryRow = templateDocument.querySelector(`#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.WalkthroughPreview.walkthroughPagesSummary}`).content.firstElementChild.cloneNode(true);
-    const summaryRow = (0,helpers/* template */.XK)(clonedSummaryRow, {
-        urls: {
-            walkthroughPreviewWithWalkthroughId: `/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`
-        }
+  });
+  pagesinWalkthroughTable.appendChild(summaryRow);
+  getPages(manageWalkthroughDocument).forEach((populateAsideContentPreviewPage) => {
+    const pageId = new URLSearchParams(window.location.search).get("pageid");
+    const pageRow = (pageId === populateAsideContentPreviewPage.id ? templateDocument.querySelector(
+      `#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.WalkthroughPreview.walkthroughPagesNumberedSelected}`
+    ) : templateDocument.querySelector(
+      `#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.WalkthroughPreview.walkthroughPagesNumbered}`
+    )).content.firstElementChild.cloneNode(true);
+    const templatedRow = (0,helpers/* template */.XK)(pageRow, {
+      populateAsideContentPreviewPage,
+      urls: {
+        walkthroughPreviewWithPageId: `/staff/walkthrough/walkthroughpagepreview.aspx?pageid=${populateAsideContentPreviewPage.id}`
+      }
     });
-    pagesinWalkthroughTable.appendChild(summaryRow);
-    getPages(manageWalkthroughDocument).forEach((populateAsideContentPreviewPage) => {
-        const pageId = new URLSearchParams(window.location.search).get('pageid');
-        const pageRow = (pageId === populateAsideContentPreviewPage.id
-            ? templateDocument.querySelector(`#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.WalkthroughPreview.walkthroughPagesNumberedSelected}`)
-            : templateDocument.querySelector(`#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.WalkthroughPreview.walkthroughPagesNumbered}`)).content.firstElementChild.cloneNode(true);
-        const templatedRow = (0,helpers/* template */.XK)(pageRow, {
-            populateAsideContentPreviewPage,
-            urls: {
-                walkthroughPreviewWithPageId: `/staff/walkthrough/walkthroughpagepreview.aspx?pageid=${populateAsideContentPreviewPage.id}`
-            }
-        });
-        pagesinWalkthroughTable.appendChild(templatedRow);
-    });
-    return pagesInWalkthroughSection;
+    pagesinWalkthroughTable.appendChild(templatedRow);
+  });
+  return pagesInWalkthroughSection;
 };
 const getAchievementsInWalkthrough = (manageWalkthroughDocument, gameDocument, featureDocument, templateDocument) => {
-    const achievementsInWalkthroughSection = featureDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughAchievementsJs}`);
-    const achievementsInWalkthroughTable = achievementsInWalkthroughSection.querySelector('ul');
-    const walkthroughAchievements = [
-        ...manageWalkthroughDocument.querySelectorAll('#scrolllstWalkthroughAchievementID tbody tr')
-    ];
-    const gameAchievements = [...gameDocument.querySelectorAll('main ul.ach-panels li')];
-    const achievementsMerged = [];
-    const pages = getPages(manageWalkthroughDocument);
-    gameAchievements.forEach((gameAchievement) => {
-        const achievementName = gameAchievement.querySelector('a.title').innerText.trim();
-        const walkthroughAchievement = walkthroughAchievements.find((walkthroughAchievement) => walkthroughAchievement.querySelector('.c1').innerText.toLowerCase().trim() ===
-            achievementName.toLowerCase());
-        if (!walkthroughAchievement) {
-            return;
-        }
-        const achievementInfo = {
-            title: achievementName,
-            description: gameAchievement.querySelector('p').innerText,
-            page: pages.find((page) => walkthroughAchievement.querySelector('.c2').innerText.trim() === page.index.toString()),
-            id: new URL(gameAchievement.querySelector('a.title').href).pathname.split('/')[1].slice(1),
-            src: 'https://www.trueachievements.com/imagestore/m/0004101700/4101796.jpg'
-        };
-        achievementsMerged.push(achievementInfo);
+  const achievementsInWalkthroughSection = featureDocument.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughAchievementsJs}`
+  );
+  const achievementsInWalkthroughTable = achievementsInWalkthroughSection.querySelector("ul");
+  const walkthroughAchievements = [
+    ...manageWalkthroughDocument.querySelectorAll("#scrolllstWalkthroughAchievementID tbody tr")
+  ];
+  const gameAchievements = [...gameDocument.querySelectorAll("main ul.ach-panels li")];
+  const achievementsMerged = [];
+  const pages = getPages(manageWalkthroughDocument);
+  gameAchievements.forEach((gameAchievement) => {
+    const achievementName = gameAchievement.querySelector("a.title").innerText.trim();
+    const walkthroughAchievement = walkthroughAchievements.find(
+      (walkthroughAchievement2) => walkthroughAchievement2.querySelector(".c1").innerText.toLowerCase().trim() === achievementName.toLowerCase()
+    );
+    if (!walkthroughAchievement) {
+      return;
+    }
+    const achievementInfo = {
+      title: achievementName,
+      description: gameAchievement.querySelector("p").innerText,
+      page: pages.find(
+        (page) => walkthroughAchievement.querySelector(".c2").innerText.trim() === page.index.toString()
+      ),
+      id: new URL(gameAchievement.querySelector("a.title").href).pathname.split("/")[1].slice(1),
+      src: "https://www.trueachievements.com/imagestore/m/0004101700/4101796.jpg"
+    };
+    achievementsMerged.push(achievementInfo);
+  });
+  achievementsMerged.sort((a, b) => (0,utilities/* toInt */.Hq)(a.page.index) - (0,utilities/* toInt */.Hq)(b.page.index));
+  achievementsMerged.forEach((populateAsideContentPreviewAchievement) => {
+    const achievementRow = templateDocument.querySelector(
+      `#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.WalkthroughPreview.walkthroughAchievements}`
+    ).content.firstElementChild.cloneNode(true);
+    const templatedRow = (0,helpers/* template */.XK)(achievementRow, {
+      populateAsideContentPreviewAchievement,
+      urls: {
+        walkthroughPreviewWithPageIdAndAchievementId: `/staff/walkthrough/walkthroughpagepreview.aspx?pageid=${populateAsideContentPreviewAchievement.page.id}#ap${populateAsideContentPreviewAchievement.id}`
+      }
     });
-    achievementsMerged.sort((a, b) => (0,utilities/* toInt */.Hq)(a.page.index) - (0,utilities/* toInt */.Hq)(b.page.index));
-    achievementsMerged.forEach((populateAsideContentPreviewAchievement) => {
-        const achievementRow = templateDocument.querySelector(`#${globals/* Constants */.gT.Templates.StaffWalkthroughImprovements.WalkthroughPreview.walkthroughAchievements}`).content.firstElementChild.cloneNode(true);
-        const templatedRow = (0,helpers/* template */.XK)(achievementRow, {
-            populateAsideContentPreviewAchievement,
-            urls: {
-                walkthroughPreviewWithPageIdAndAchievementId: `/staff/walkthrough/walkthroughpagepreview.aspx?pageid=${populateAsideContentPreviewAchievement.page.id}#ap${populateAsideContentPreviewAchievement.id}`
-            }
-        });
-        achievementsInWalkthroughTable.appendChild(templatedRow);
-    });
-    return achievementsInWalkthroughSection;
+    achievementsInWalkthroughTable.appendChild(templatedRow);
+  });
+  return achievementsInWalkthroughSection;
 };
 const getWalkthroughThanks = async (walkthroughId, featureDocument) => {
-    const thanks = featureDocument.querySelector(`.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughThanksJs}`);
-    const walkthroughPreviewResponse = await (0,helpers/* memoizeFetch */.FS)(`https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`);
-    const walkthroughPreviewDocument = new DOMParser().parseFromString(walkthroughPreviewResponse, 'text/html');
-    const threadUrl = walkthroughPreviewDocument.querySelector('.summary dd a').href;
-    return (0,helpers/* template */.XK)(thanks, {
-        populateAsideContentPreviewThanks: { thread: threadUrl, total: '0' }
-    });
+  const thanks = featureDocument.querySelector(
+    `.${globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughThanksJs}`
+  );
+  const walkthroughPreviewResponse = await (0,helpers/* memoizeFetch */.FS)(
+    `https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`
+  );
+  const walkthroughPreviewDocument = new DOMParser().parseFromString(walkthroughPreviewResponse, "text/html");
+  const threadUrl = walkthroughPreviewDocument.querySelector(".summary dd a").href;
+  return (0,helpers/* template */.XK)(thanks, {
+    populateAsideContentPreviewThanks: { thread: threadUrl, total: "0" }
+  });
 };
 const toggleAskForWalkthrough = () => {
-    askForWalkthroughBody.classList.toggle('ta-x-hide');
-    if (!askForWalkthroughBody.classList.contains('ta-x-hide')) {
-        populate_aside_content_extensionBody.setAttribute('data-ta-x-loaded', 'true');
-    }
-    else {
-        populate_aside_content_extensionBody.removeAttribute('data-ta-x-loaded');
-    }
+  askForWalkthroughBody.classList.toggle("ta-x-hide");
+  if (!askForWalkthroughBody.classList.contains("ta-x-hide")) {
+    populate_aside_content_extensionBody.setAttribute("data-ta-x-loaded", "true");
+  } else {
+    populate_aside_content_extensionBody.removeAttribute("data-ta-x-loaded");
+  }
 };
 const populateAsideContent = async () => {
-    if (!globals/* walkthroughPreview */.uP.populateAsideContent) {
-        return;
-    }
-    await populate_aside_content_applyBody();
-    populate_aside_content_listen();
+  if (!globals/* walkthroughPreview */.uP.populateAsideContent) {
+    return;
+  }
+  await populate_aside_content_applyBody();
+  populate_aside_content_listen();
 };
 /* harmony default export */ const populate_aside_content = ({ populateAsideContent });
 
@@ -7924,13 +7913,13 @@ const populateAsideContent = async () => {
 
 
 /* harmony default export */ const staff_walkthrough_improvements_walkthrough_preview = (async () => {
-    if (!globals/* StaffRegex */.nW.Walkthroughs.Test.preview()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('Walkthrough Preview', [
-        { name: 'walkthrough-preview-remove-aside', task: removeAside },
-        { name: 'walkthrough-preview-populate-aside-content', task: populateAsideContent }
-    ]);
+  if (!globals/* StaffRegex */.nW.Walkthroughs.Test.preview()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("Walkthrough Preview", [
+    { name: "walkthrough-preview-remove-aside", task: removeAside },
+    { name: "walkthrough-preview-populate-aside-content", task: populateAsideContent }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/staff-walkthrough-improvements/index.ts
@@ -7941,22 +7930,29 @@ const populateAsideContent = async () => {
 
 
 /* harmony default export */ const staff_walkthrough_improvements = (async () => {
-    if (!globals/* staffWalkthroughImprovements */.mg.enabled) {
-        return;
-    }
-    if (!globals/* StaffRegex */.nW.Walkthroughs.Test.all()) {
-        return;
-    }
-    if (!(await (0,utilities/* waitForElement */.br)('body'))) {
-        return;
-    }
-    document.body.classList.add(globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.featureJs, globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.featureStyle);
-    (0,utilities/* allConcurrently */.Eh)('Staff Walkthrough Improvements', [
-        { name: 'staff-walkthrough-improvements-manage-walkthrough', task: staff_walkthrough_improvements_manage_walkthrough },
-        { name: 'staff-walkthrough-improvements-walkthrough-preview', task: staff_walkthrough_improvements_walkthrough_preview },
-        { name: 'staff-walkthrough-improvements-walkthrough-page', task: staff_walkthrough_improvements_walkthrough_page },
-        { name: 'staff-walkthrough-improvements-edit-walkthrough', task: staff_walkthrough_improvements_edit_walkthrough }
-    ], 4);
+  if (!globals/* staffWalkthroughImprovements */.mg.enabled) {
+    return;
+  }
+  if (!globals/* StaffRegex */.nW.Walkthroughs.Test.all()) {
+    return;
+  }
+  if (!await (0,utilities/* waitForElement */.br)("body")) {
+    return;
+  }
+  document.body.classList.add(
+    globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.featureJs,
+    globals/* Constants */.gT.Styles.StaffWalkthroughImprovements.featureStyle
+  );
+  (0,utilities/* allConcurrently */.Eh)(
+    "Staff Walkthrough Improvements",
+    [
+      { name: "staff-walkthrough-improvements-manage-walkthrough", task: staff_walkthrough_improvements_manage_walkthrough },
+      { name: "staff-walkthrough-improvements-walkthrough-preview", task: staff_walkthrough_improvements_walkthrough_preview },
+      { name: "staff-walkthrough-improvements-walkthrough-page", task: staff_walkthrough_improvements_walkthrough_page },
+      { name: "staff-walkthrough-improvements-edit-walkthrough", task: staff_walkthrough_improvements_edit_walkthrough }
+    ],
+    4
+  );
 });
 
 ;// CONCATENATED MODULE: ./src/features/forum-improvements/shared/filter-threads.ts
@@ -7964,53 +7960,56 @@ const populateAsideContent = async () => {
 
 let listenApplied = false;
 const filter_threads_listen = () => {
-    document.addEventListener('click', (e) => {
-        if (!(e.target instanceof HTMLElement)) {
-            return;
-        }
-        if (!e.target.classList.contains(globals/* Constants */.gT.Styles.ForumImprovements.filterThreadsUnhideJs)) {
-            return;
-        }
-        e.preventDefault();
-        e.stopPropagation();
-        e.target.closest('li').setAttribute('data-thread-hidden', 'false');
-    });
-    listenApplied = true;
+  document.addEventListener("click", (e) => {
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+    if (!e.target.classList.contains(globals/* Constants */.gT.Styles.ForumImprovements.filterThreadsUnhideJs)) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    e.target.closest("li").setAttribute("data-thread-hidden", "false");
+  });
+  listenApplied = true;
 };
 const applyThreadFilters = async (filters) => {
-    if (!filters.length) {
+  if (!filters.length) {
+    return;
+  }
+  const board = await (0,utilities/* waitForElement */.br)("main .view-board, main .messageboard-index");
+  [...board.querySelectorAll("li:not(.header)")].forEach((thread) => {
+    const threadTitleAnchor = thread.querySelector(".topic a, .read a");
+    let activeFilter = null;
+    filters.forEach((filter) => {
+      if (activeFilter != null) {
         return;
-    }
-    const board = await (0,utilities/* waitForElement */.br)('main .view-board, main .messageboard-index');
-    [...board.querySelectorAll('li:not(.header)')].forEach((thread) => {
-        const threadTitleAnchor = thread.querySelector('.topic a, .read a');
-        let activeFilter = null;
-        filters.forEach((filter) => {
-            if (activeFilter != null) {
-                return;
-            }
-            if (!threadTitleAnchor.innerText.trim().toLowerCase().includes(filter.toLowerCase())) {
-                return;
-            }
-            activeFilter = filter;
-        });
-        if (!activeFilter) {
-            return;
-        }
-        const threadLi = threadTitleAnchor.closest('li');
-        const threadTitleParagraph = document.createElement('p');
-        threadTitleParagraph.innerText = `Hidden by filter "${activeFilter}"`;
-        threadTitleParagraph.classList.add(globals/* Constants */.gT.Styles.ForumImprovements.filterThreadsTitleStyle);
-        threadTitleAnchor.closest('div').appendChild(threadTitleParagraph);
-        const threadTitleUnhide = document.createElement('a');
-        threadTitleUnhide.innerText = 'Unhide';
-        threadTitleUnhide.classList.add(globals/* Constants */.gT.Styles.ForumImprovements.filterThreadsUnhideStyle, globals/* Constants */.gT.Styles.ForumImprovements.filterThreadsUnhideJs);
-        threadLi.setAttribute('data-thread-hidden', 'true');
-        threadLi.appendChild(threadTitleUnhide);
-        if (!listenApplied) {
-            filter_threads_listen();
-        }
+      }
+      if (!threadTitleAnchor.innerText.trim().toLowerCase().includes(filter.toLowerCase())) {
+        return;
+      }
+      activeFilter = filter;
     });
+    if (!activeFilter) {
+      return;
+    }
+    const threadLi = threadTitleAnchor.closest("li");
+    const threadTitleParagraph = document.createElement("p");
+    threadTitleParagraph.innerText = `Hidden by filter "${activeFilter}"`;
+    threadTitleParagraph.classList.add(globals/* Constants */.gT.Styles.ForumImprovements.filterThreadsTitleStyle);
+    threadTitleAnchor.closest("div").appendChild(threadTitleParagraph);
+    const threadTitleUnhide = document.createElement("a");
+    threadTitleUnhide.innerText = "Unhide";
+    threadTitleUnhide.classList.add(
+      globals/* Constants */.gT.Styles.ForumImprovements.filterThreadsUnhideStyle,
+      globals/* Constants */.gT.Styles.ForumImprovements.filterThreadsUnhideJs
+    );
+    threadLi.setAttribute("data-thread-hidden", "true");
+    threadLi.appendChild(threadTitleUnhide);
+    if (!listenApplied) {
+      filter_threads_listen();
+    }
+  });
 };
 /* harmony default export */ const filter_threads = ({ applyThreadFilters });
 
@@ -8021,10 +8020,10 @@ const applyThreadFilters = async (filters) => {
 
 
 const filterThreads = () => {
-    if (!globals/* myThreads */.jf.myThreadsThreadFilter) {
-        return;
-    }
-    applyThreadFilters(globals/* myThreads */.jf.threadFilterKeywords);
+  if (!globals/* myThreads */.jf.myThreadsThreadFilter) {
+    return;
+  }
+  applyThreadFilters(globals/* myThreads */.jf.threadFilterKeywords);
 };
 /* harmony default export */ const my_threads_filter_threads = ({ filterThreads });
 
@@ -8033,20 +8032,20 @@ const filterThreads = () => {
 
 
 /* harmony default export */ const my_threads = (async () => {
-    if (!globals/* ForumRegex */.wC.Test.myTheadsUrl()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('My Theads', [{ name: 'my-threads-filter-threads', task: filterThreads }]);
+  if (!globals/* ForumRegex */.wC.Test.myTheadsUrl()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("My Theads", [{ name: "my-threads-filter-threads", task: filterThreads }]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/forum-improvements/view-board/filter-threads.ts
 
 
 const filter_threads_filterThreads = () => {
-    if (!globals/* forumImprovements */.i_.forumImprovementsThreadFilter) {
-        return;
-    }
-    applyThreadFilters(globals/* forumImprovements */.i_.threadFilterKeywords);
+  if (!globals/* forumImprovements */.i_.forumImprovementsThreadFilter) {
+    return;
+  }
+  applyThreadFilters(globals/* forumImprovements */.i_.threadFilterKeywords);
 };
 /* harmony default export */ const view_board_filter_threads = ({ filterThreads: filter_threads_filterThreads });
 
@@ -8055,10 +8054,10 @@ const filter_threads_filterThreads = () => {
 
 
 /* harmony default export */ const view_board = (async () => {
-    if (!globals/* ForumRegex */.wC.Test.viewBoardUrlWithBoardId()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('View Boards', [{ name: 'my-threads-filter-threads', task: filter_threads_filterThreads }]);
+  if (!globals/* ForumRegex */.wC.Test.viewBoardUrlWithBoardId()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("View Boards", [{ name: "my-threads-filter-threads", task: filter_threads_filterThreads }]);
 });
 
 // EXTERNAL MODULE: ./src/features/forum-improvements/walkthroughs/show-owner-progress.ts
@@ -8067,22 +8066,22 @@ var show_owner_progress = __webpack_require__("./src/features/forum-improvements
 
 
 
-const messageBoardId = '1431';
+const messageBoardId = "1431";
 /* harmony default export */ const walkthroughs = (async () => {
-    const params = new URLSearchParams(window.location.search);
-    if (!globals/* ForumRegex */.wC.Test.viewBoardUrlWithBoardId() && !globals/* ForumRegex */.wC.Test.viewThreadUrlWithThreadId()) {
-        return;
+  const params = new URLSearchParams(window.location.search);
+  if (!globals/* ForumRegex */.wC.Test.viewBoardUrlWithBoardId() && !globals/* ForumRegex */.wC.Test.viewThreadUrlWithThreadId()) {
+    return;
+  }
+  if (globals/* ForumRegex */.wC.Test.viewBoardUrlWithBoardId() && params.get("messageboardid") !== messageBoardId) {
+    return;
+  }
+  if (globals/* ForumRegex */.wC.Test.viewThreadUrlWithThreadId()) {
+    const pageTitle = await (0,utilities/* waitForElement */.br)("#oMessageThread .pagetitle");
+    if (!pageTitle || pageTitle.innerText.toLowerCase() !== "walkthroughs") {
+      return;
     }
-    if (globals/* ForumRegex */.wC.Test.viewBoardUrlWithBoardId() && params.get('messageboardid') !== messageBoardId) {
-        return;
-    }
-    if (globals/* ForumRegex */.wC.Test.viewThreadUrlWithThreadId()) {
-        const pageTitle = (await (0,utilities/* waitForElement */.br)('#oMessageThread .pagetitle'));
-        if (!pageTitle || pageTitle.innerText.toLowerCase() !== 'walkthroughs') {
-            return;
-        }
-    }
-    (0,utilities/* allConcurrently */.Eh)('Walkthrough Page', [{ name: 'walkthroughs-show-owner-progress', task: show_owner_progress/* default */.Z }]);
+  }
+  (0,utilities/* allConcurrently */.Eh)("Walkthrough Page", [{ name: "walkthroughs-show-owner-progress", task: show_owner_progress/* default */.Z }]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/forum-improvements/index.ts
@@ -8092,21 +8091,24 @@ const messageBoardId = '1431';
 
 
 /* harmony default export */ const forum_improvements = (async () => {
-    if (!globals/* forumImprovements */.i_.enabled) {
-        return;
-    }
-    if (!globals/* ForumRegex */.wC.Test.all()) {
-        return;
-    }
-    if (!(await (0,utilities/* waitForElement */.br)('body'))) {
-        return;
-    }
-    document.body.classList.add(globals/* Constants */.gT.Styles.ForumImprovements.featureJs, globals/* Constants */.gT.Styles.ForumImprovements.featureStyle);
-    (0,utilities/* allConcurrently */.Eh)('Forum Improvements', [
-        { name: 'forum-improvements-myThreads', task: my_threads },
-        { name: 'forum-improvements-viewBoard', task: view_board },
-        { name: 'forum-improvements-walkthroughs', task: walkthroughs }
-    ]);
+  if (!globals/* forumImprovements */.i_.enabled) {
+    return;
+  }
+  if (!globals/* ForumRegex */.wC.Test.all()) {
+    return;
+  }
+  if (!await (0,utilities/* waitForElement */.br)("body")) {
+    return;
+  }
+  document.body.classList.add(
+    globals/* Constants */.gT.Styles.ForumImprovements.featureJs,
+    globals/* Constants */.gT.Styles.ForumImprovements.featureStyle
+  );
+  (0,utilities/* allConcurrently */.Eh)("Forum Improvements", [
+    { name: "forum-improvements-myThreads", task: my_threads },
+    { name: "forum-improvements-viewBoard", task: view_board },
+    { name: "forum-improvements-walkthroughs", task: walkthroughs }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/news-improvements/sales/auto-sort-by.ts
@@ -8114,41 +8116,46 @@ const messageBoardId = '1431';
 
 
 const auto_sort_by_applyBody = async () => {
-    const saleTables = [...document.querySelectorAll('table.sale')];
-    await (0,utilities/* allConcurrently */.Eh)('AutoSortBy - Tables', saleTables.map((saleTable) => ({
-        name: 'auto-sort-by-table',
-        task: async () => {
-            const tableHeader = [...saleTable.querySelectorAll('.headers [data-sort]')].find((th) => globals/* newsImprovements */.Bb.sales.autoSortByValue.includes(th.innerText.replace(' ', '-').toLowerCase().trim()));
-            if (!tableHeader) {
-                return;
-            }
-            do {
-                tableHeader.click();
-                await (0,helpers/* wait */.Dc)();
-            } while (!tableHeader.classList.contains(`sorting-${globals/* newsImprovements */.Bb.sales.autoSortByOrder}`));
+  const saleTables = [...document.querySelectorAll("table.sale")];
+  await (0,utilities/* allConcurrently */.Eh)(
+    "AutoSortBy - Tables",
+    saleTables.map((saleTable) => ({
+      name: "auto-sort-by-table",
+      task: async () => {
+        const tableHeader = [...saleTable.querySelectorAll(".headers [data-sort]")].find(
+          (th) => globals/* newsImprovements */.Bb.sales.autoSortByValue.includes(th.innerText.replace(" ", "-").toLowerCase().trim())
+        );
+        if (!tableHeader) {
+          return;
         }
-    })));
+        do {
+          tableHeader.click();
+          await (0,helpers/* wait */.Dc)();
+        } while (!tableHeader.classList.contains(`sorting-${globals/* newsImprovements */.Bb.sales.autoSortByOrder}`));
+      }
+    }))
+  );
 };
 /* harmony default export */ const auto_sort_by = (async () => {
-    if (!globals/* newsImprovements */.Bb.sales.autoSortBy) {
-        return;
-    }
-    if (globals/* newsImprovements */.Bb.sales.autoSortByValue.includes('product') && globals/* newsImprovements */.Bb.sales.autoSortByOrder === 'asc') {
-        return;
-    }
-    const salesTable = await (0,utilities/* waitForElement */.br)('.newsitem .sale [data-sort]');
-    if (!salesTable) {
-        return;
-    }
-    await (0,utilities/* waitForElement */.br)('.author');
-    await auto_sort_by_applyBody();
+  if (!globals/* newsImprovements */.Bb.sales.autoSortBy) {
+    return;
+  }
+  if (globals/* newsImprovements */.Bb.sales.autoSortByValue.includes("product") && globals/* newsImprovements */.Bb.sales.autoSortByOrder === "asc") {
+    return;
+  }
+  const salesTable = await (0,utilities/* waitForElement */.br)(".newsitem .sale [data-sort]");
+  if (!salesTable) {
+    return;
+  }
+  await (0,utilities/* waitForElement */.br)(".author");
+  await auto_sort_by_applyBody();
 });
 
 ;// CONCATENATED MODULE: ./src/features/news-improvements/sales/index.ts
 
 
 /* harmony default export */ const sales = (async () => {
-    (0,utilities/* allConcurrently */.Eh)('Sales News', [{ name: 'sales-auto-sort-by', task: auto_sort_by }]);
+  (0,utilities/* allConcurrently */.Eh)("Sales News", [{ name: "sales-auto-sort-by", task: auto_sort_by }]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/news-improvements/index.ts
@@ -8156,17 +8163,20 @@ const auto_sort_by_applyBody = async () => {
 
 
 /* harmony default export */ const news_improvements = (async () => {
-    if (!globals/* newsImprovements */.Bb.enabled) {
-        return;
-    }
-    if (!globals/* NewsRegex */.du.Test.newsUrl()) {
-        return;
-    }
-    if (!(await (0,utilities/* waitForElement */.br)('body'))) {
-        return;
-    }
-    document.body.classList.add(globals/* Constants */.gT.Styles.NewsImprovements.featureJs, globals/* Constants */.gT.Styles.NewsImprovements.featureStyle);
-    (0,utilities/* allConcurrently */.Eh)('News Improvements', [{ name: 'news-improvements-sales', task: sales }]);
+  if (!globals/* newsImprovements */.Bb.enabled) {
+    return;
+  }
+  if (!globals/* NewsRegex */.du.Test.newsUrl()) {
+    return;
+  }
+  if (!await (0,utilities/* waitForElement */.br)("body")) {
+    return;
+  }
+  document.body.classList.add(
+    globals/* Constants */.gT.Styles.NewsImprovements.featureJs,
+    globals/* Constants */.gT.Styles.NewsImprovements.featureStyle
+  );
+  (0,utilities/* allConcurrently */.Eh)("News Improvements", [{ name: "news-improvements-sales", task: sales }]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/games-improvements.html
@@ -8179,29 +8189,35 @@ var games_improvements_code = "<a class=\"button js-ta-x-games-improvements-high
 
 
 const add_highlight_games_not_in_collection_button_listen = (button) => {
-    button.addEventListener('click', async () => {
-        [...document.querySelectorAll('#oGameList img[alt*="Add game to My Game Collection"]')].forEach((el) => {
-            const tr = el.closest('tr');
-            tr.classList.remove('odd', 'even');
-            tr.classList.add('green');
-        });
-    });
+  button.addEventListener("click", async () => {
+    [...document.querySelectorAll('#oGameList img[alt*="Add game to My Game Collection"]')].forEach(
+      (el) => {
+        const tr = el.closest("tr");
+        tr.classList.remove("odd", "even");
+        tr.classList.add("green");
+      }
+    );
+  });
 };
 const addHighlightGamesNotInCollectionButton = async () => {
-    if (!globals/* games */.Tt.addHighlightGamesNotInCollectionButton) {
-        return;
-    }
-    if (!globals/* GamesRegex */.Rv.Test.gamesUrl()) {
-        return;
-    }
-    const searchAndFilterContainer = await (0,utilities/* waitForElement */.br)('.search-and-filter');
-    if (!searchAndFilterContainer) {
-        return;
-    }
-    const parsedDocument = new DOMParser().parseFromString(games_improvements, 'text/html');
-    searchAndFilterContainer.appendChild(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.GamesImprovements.highlightGamesButtonJs}`));
-    const button = searchAndFilterContainer.querySelector(`.${globals/* Constants */.gT.Styles.GamesImprovements.highlightGamesButtonJs}`);
-    add_highlight_games_not_in_collection_button_listen(button);
+  if (!globals/* games */.Tt.addHighlightGamesNotInCollectionButton) {
+    return;
+  }
+  if (!globals/* GamesRegex */.Rv.Test.gamesUrl()) {
+    return;
+  }
+  const searchAndFilterContainer = await (0,utilities/* waitForElement */.br)(".search-and-filter");
+  if (!searchAndFilterContainer) {
+    return;
+  }
+  const parsedDocument = new DOMParser().parseFromString(games_improvements, "text/html");
+  searchAndFilterContainer.appendChild(
+    parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.GamesImprovements.highlightGamesButtonJs}`)
+  );
+  const button = searchAndFilterContainer.querySelector(
+    `.${globals/* Constants */.gT.Styles.GamesImprovements.highlightGamesButtonJs}`
+  );
+  add_highlight_games_not_in_collection_button_listen(button);
 };
 /* harmony default export */ const add_highlight_games_not_in_collection_button = ({ addHighlightGamesNotInCollectionButton });
 
@@ -8210,142 +8226,151 @@ const addHighlightGamesNotInCollectionButton = async () => {
 
 
 const createAchievementGroup = (header) => ({
-    title: header.querySelector('h2 a').innerText,
-    maxTAScore: header.querySelector('[title="Maximum TrueAchievement"]').innerText,
-    maxGamerScore: header.querySelector('[title="Maximum Gamerscore"]').innerText,
-    maxAchievements: header.querySelector('[title="Maximum achievements"], [title="Maximum Achievements"]').innerText,
-    achievements: []
+  title: header.querySelector("h2 a").innerText,
+  maxTAScore: header.querySelector('[title="Maximum TrueAchievement"]').innerText,
+  maxGamerScore: header.querySelector('[title="Maximum Gamerscore"]').innerText,
+  maxAchievements: header.querySelector('[title="Maximum achievements"], [title="Maximum Achievements"]').innerText,
+  achievements: []
 });
 const getBaseAchievementGroup = (el) => {
-    const baseAchievementHeader = el.querySelector('.pnl-hd.no-pills.no-pr.game:not(.gamer)');
-    if (!baseAchievementHeader) {
-        return [];
+  const baseAchievementHeader = el.querySelector(".pnl-hd.no-pills.no-pr.game:not(.gamer)");
+  if (!baseAchievementHeader) {
+    return [];
+  }
+  const baseAchievementGroup = createAchievementGroup(baseAchievementHeader);
+  if (baseAchievementGroup.title === "Overall DLC Stats") {
+    return [];
+  }
+  for (let child = el.querySelector(".ach-panels"); child; child = child.nextSibling) {
+    if (child.tagName !== "UL") {
+      if (child.classList?.contains("pnl-hd")) {
+        break;
+      }
+      continue;
     }
-    const baseAchievementGroup = createAchievementGroup(baseAchievementHeader);
-    if (baseAchievementGroup.title === 'Overall DLC Stats') {
-        return [];
-    }
-    for (let child = el.querySelector('.ach-panels'); child; child = child.nextSibling) {
-        if (child.tagName !== 'UL') {
-            if (child.classList?.contains('pnl-hd')) {
-                break;
-            }
-            continue;
-        }
-        baseAchievementGroup.achievements = baseAchievementGroup.achievements.concat([
-            ...child.querySelectorAll('li')
-        ]);
-    }
-    return [baseAchievementGroup];
+    baseAchievementGroup.achievements = baseAchievementGroup.achievements.concat([
+      ...child.querySelectorAll("li")
+    ]);
+  }
+  return [baseAchievementGroup];
 };
 const getDLCAchievementGroups = async (el) => {
-    const achievementGroups = [];
-    const dlcAchievementHeaders = [...el.querySelectorAll('.pnl-hd.dlc')];
-    await (0,utilities/* allConcurrently */.Eh)('individualProgress - Groups', dlcAchievementHeaders.map((dlcHeader) => ({
-        name: 'individual-progress-group-dlc-grouping',
-        task: async () => {
-            const group = createAchievementGroup(dlcHeader);
-            for (let child = dlcHeader.nextSibling; child; child = child.nextSibling) {
-                if (child.tagName !== 'UL') {
-                    if (child.classList?.contains('pnl-hd') && child.classList?.contains('dlc')) {
-                        break;
-                    }
-                    continue;
-                }
-                group.achievements = group.achievements.concat([...child.querySelectorAll('li')]);
+  const achievementGroups = [];
+  const dlcAchievementHeaders = [...el.querySelectorAll(".pnl-hd.dlc")];
+  await (0,utilities/* allConcurrently */.Eh)(
+    "individualProgress - Groups",
+    dlcAchievementHeaders.map((dlcHeader) => ({
+      name: "individual-progress-group-dlc-grouping",
+      task: () => {
+        const group = createAchievementGroup(dlcHeader);
+        for (let child = dlcHeader.nextSibling; child; child = child.nextSibling) {
+          if (child.tagName !== "UL") {
+            if (child.classList?.contains("pnl-hd") && child.classList?.contains("dlc")) {
+              break;
             }
-            achievementGroups.push(group);
+            continue;
+          }
+          group.achievements = group.achievements.concat([...child.querySelectorAll("li")]);
         }
-    })), 5);
-    return achievementGroups;
+        achievementGroups.push(group);
+      }
+    })),
+    5
+  );
+  return achievementGroups;
 };
 const getAchievementGroups = async (el) => {
-    const achievementGroups = await (0,utilities/* allConcurrently */.Eh)('Game Improvements Individual Progress', [
-        {
-            name: 'game-improvements-individual-progress-base',
-            task: async () => getBaseAchievementGroup(el)
-        },
-        {
-            name: 'game-improvements-individual-progress-dlc',
-            task: async () => getDLCAchievementGroups(el)
-        }
-    ]);
-    return achievementGroups.flat();
+  const achievementGroups = await (0,utilities/* allConcurrently */.Eh)("Game Improvements Individual Progress", [
+    {
+      name: "game-improvements-individual-progress-base",
+      task: () => getBaseAchievementGroup(el)
+    },
+    {
+      name: "game-improvements-individual-progress-dlc",
+      task: async () => await getDLCAchievementGroups(el)
+    }
+  ]);
+  return achievementGroups.flat();
 };
 const setGroupProgress = async (groups) => {
-    const achievementGroups = [
-        ...document.querySelectorAll('.pnl-hd.game:not(.gamer):not([data-gid]), .pnl-hd.dlc')
-    ];
-    await (0,utilities/* allConcurrently */.Eh)('individualProgress - Groups', achievementGroups.map((achievementGroup) => ({
-        name: 'individual-progress-group',
-        task: async () => {
-            const groupName = achievementGroup.querySelector('h2 a').innerText;
-            const grouping = groups.find((groups) => groups.title.toLowerCase() === groupName.toLowerCase());
-            if (!grouping) {
-                return;
-            }
-            const maxTAScore = achievementGroup.querySelector('[title="Maximum TrueAchievement"]');
-            const maxGamerscore = achievementGroup.querySelector('[title="Maximum Gamerscore"]');
-            const maxAchievements = achievementGroup.querySelector('[title="Maximum achievements"], [title="Maximum Achievements"]');
-            const wonAchievements = grouping.achievements.filter((achievement) => achievement.classList.contains('w'));
-            const wonTrueAchievementScore = wonAchievements.length !== (0,utilities/* toInt */.Hq)(grouping.maxAchievements)
-                ? wonAchievements
-                    .reduce((totalTAScore, achievement) => {
-                    const TAScore = (0,utilities/* toInt */.Hq)(achievement.querySelector('[data-af]')?.getAttribute('data-af'));
-                    return totalTAScore + TAScore;
-                }, 0)
-                    .toString()
-                : grouping.maxTAScore;
-            const wonGamerscore = wonAchievements.length !== (0,utilities/* toInt */.Hq)(grouping.maxAchievements)
-                ? wonAchievements
-                    .reduce((totalGamerscore, achievement) => {
-                    const gamerscore = (0,utilities/* toInt */.Hq)(achievement.querySelector('[data-bf]')?.getAttribute('data-bf'));
-                    return totalGamerscore + gamerscore;
-                }, 0)
-                    .toString()
-                : grouping.maxGamerScore;
-            maxTAScore.innerHTML = maxTAScore.innerHTML.replace(grouping.maxTAScore, `${(0,utilities/* insertSeperator */.g$)(wonTrueAchievementScore)}/${grouping.maxTAScore}`);
-            maxGamerscore.innerHTML = maxGamerscore.innerHTML.replace(grouping.maxGamerScore, `${(0,utilities/* insertSeperator */.g$)(wonGamerscore)}/${grouping.maxGamerScore}`);
-            maxAchievements.innerHTML = maxAchievements.innerHTML.replace(grouping.maxAchievements, `${(0,utilities/* insertSeperator */.g$)(wonAchievements.length)}/${grouping.maxAchievements}`);
+  const achievementGroups = [
+    ...document.querySelectorAll(".pnl-hd.game:not(.gamer):not([data-gid]), .pnl-hd.dlc")
+  ];
+  await (0,utilities/* allConcurrently */.Eh)(
+    "individualProgress - Groups",
+    achievementGroups.map((achievementGroup) => ({
+      name: "individual-progress-group",
+      task: () => {
+        const groupName = achievementGroup.querySelector("h2 a").innerText;
+        const grouping = groups.find((groups2) => groups2.title.toLowerCase() === groupName.toLowerCase());
+        if (!grouping) {
+          return;
         }
-    })), 5);
+        const maxTAScore = achievementGroup.querySelector('[title="Maximum TrueAchievement"]');
+        const maxGamerscore = achievementGroup.querySelector('[title="Maximum Gamerscore"]');
+        const maxAchievements = achievementGroup.querySelector(
+          '[title="Maximum achievements"], [title="Maximum Achievements"]'
+        );
+        const wonAchievements = grouping.achievements.filter((achievement) => achievement.classList.contains("w"));
+        const wonTrueAchievementScore = wonAchievements.length !== (0,utilities/* toInt */.Hq)(grouping.maxAchievements) ? wonAchievements.reduce((totalTAScore, achievement) => {
+          const TAScore = (0,utilities/* toInt */.Hq)(achievement.querySelector("[data-af]")?.getAttribute("data-af"));
+          return totalTAScore + TAScore;
+        }, 0).toString() : grouping.maxTAScore;
+        const wonGamerscore = wonAchievements.length !== (0,utilities/* toInt */.Hq)(grouping.maxAchievements) ? wonAchievements.reduce((totalGamerscore, achievement) => {
+          const gamerscore = (0,utilities/* toInt */.Hq)(achievement.querySelector("[data-bf]")?.getAttribute("data-bf"));
+          return totalGamerscore + gamerscore;
+        }, 0).toString() : grouping.maxGamerScore;
+        maxTAScore.innerHTML = maxTAScore.innerHTML.replace(
+          grouping.maxTAScore,
+          `${(0,utilities/* insertSeperator */.g$)(wonTrueAchievementScore)}/${grouping.maxTAScore}`
+        );
+        maxGamerscore.innerHTML = maxGamerscore.innerHTML.replace(
+          grouping.maxGamerScore,
+          `${(0,utilities/* insertSeperator */.g$)(wonGamerscore)}/${grouping.maxGamerScore}`
+        );
+        maxAchievements.innerHTML = maxAchievements.innerHTML.replace(
+          grouping.maxAchievements,
+          `${(0,utilities/* insertSeperator */.g$)(wonAchievements.length)}/${grouping.maxAchievements}`
+        );
+      }
+    })),
+    5
+  );
 };
 const applyIndividualProgress = async () => {
-    const status = document.querySelector('#rdoAllAchievements');
-    let mainElement;
-    if (!status?.hasAttribute('checked')) {
-        const gameResponse = globals/* GamesRegex */.Rv.Test.challengesUrl()
-            ? await (0,helpers/* memoizeFetch */.FS)(window.location.href.replace('/challenges', '/achievements'))
-            : await (0,helpers/* memoizeFetch */.FS)(window.location.href);
-        const gameDocument = new DOMParser().parseFromString(gameResponse, 'text/html');
-        mainElement = gameDocument.querySelector('main');
-    }
-    else {
-        (0,helpers/* updateMemoizedFetch */.TE)(window.location.href, document.documentElement.outerHTML);
-        mainElement = document.querySelector('main');
-    }
-    const achievementGroups = await getAchievementGroups(mainElement);
-    await setGroupProgress(achievementGroups);
+  const status = document.querySelector("#rdoAllAchievements");
+  let mainElement;
+  if (!status?.hasAttribute("checked")) {
+    const gameResponse = globals/* GamesRegex */.Rv.Test.challengesUrl() ? await (0,helpers/* memoizeFetch */.FS)(window.location.href.replace("/challenges", "/achievements")) : await (0,helpers/* memoizeFetch */.FS)(window.location.href);
+    const gameDocument = new DOMParser().parseFromString(gameResponse, "text/html");
+    mainElement = gameDocument.querySelector("main");
+  } else {
+    (0,helpers/* updateMemoizedFetch */.TE)(window.location.href, document.documentElement.outerHTML);
+    mainElement = document.querySelector("main");
+  }
+  const achievementGroups = await getAchievementGroups(mainElement);
+  await setGroupProgress(achievementGroups);
 };
 /* harmony default export */ const individual_progress = ({ applyIndividualProgress });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/shared/default-status.ts
 
+
 const setDefaultStatus = (status, cacheProperty, gamerIdRegex) => {
-    const url = (0,globals/* getUrlProperties */.TS)(window.location.href, ['pathname', 'search']);
-    if (status && url !== globals/* Cache */.Ct[cacheProperty]) {
-        globals/* Cache */.Ct[cacheProperty] = (0,globals/* getUrlProperties */.TS)(window.location.href, ['pathname', 'search']);
-        if (gamerIdRegex() && new URLSearchParams(window.location.search).get('gamerid') !== globals/* Constants */.gT.gamerId) {
-            return;
-        }
-        if (!status.hasAttribute('checked')) {
-            const totalAchievements = [...document.querySelectorAll('.ach-panels li')].length;
-            const wonAchievements = [...document.querySelectorAll('.ach-panels li.w')].length;
-            if (wonAchievements !== totalAchievements) {
-                status.click();
-            }
-        }
+  const url = (0,globals/* getUrlProperties */.TS)(window.location.href, ["pathname", "search"]);
+  if (status && url !== globals/* Cache */.Ct[cacheProperty]) {
+    globals/* Cache */.Ct[cacheProperty] = (0,globals/* getUrlProperties */.TS)(window.location.href, ["pathname", "search"]);
+    if (gamerIdRegex() && new URLSearchParams(window.location.search).get("gamerid") !== (0,utilities/* getCookie */.ej)("GamerID")) {
+      return;
     }
+    if (!status.hasAttribute("checked")) {
+      const totalAchievements = [...document.querySelectorAll(".ach-panels li")].length;
+      const wonAchievements = [...document.querySelectorAll(".ach-panels li.w")].length;
+      if (wonAchievements !== totalAchievements) {
+        status.click();
+      }
+    }
+  }
 };
 /* harmony default export */ const shared_default_status = ({ setDefaultStatus });
 
@@ -8374,137 +8399,169 @@ var xbox_achievements_code = "<section class=\"purple js-ta-x-ask-loader-contain
 let add_xbox_achievement_guides_extensionBody;
 let askForLinkBody;
 const add_xbox_achievement_guides_applyBody = async () => {
-    const parsedDocument = new DOMParser().parseFromString(xbox_achievements, 'text/html');
-    const asideColumn = await (0,utilities/* waitForElement */.br)('.main aside');
-    const firstSection = await (0,utilities/* waitForElement */.br)('section:not(.smallpanel)', asideColumn);
-    asideColumn.insertBefore(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`), firstSection);
-    add_xbox_achievement_guides_extensionBody = asideColumn.querySelector(`.${globals/* Constants */.gT.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`);
-    askForLinkBody = add_xbox_achievement_guides_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.askJs}`);
-    getAchievementWalkthroughUrl();
+  const parsedDocument = new DOMParser().parseFromString(xbox_achievements, "text/html");
+  const asideColumn = await (0,utilities/* waitForElement */.br)(".main aside");
+  const firstSection = await (0,utilities/* waitForElement */.br)("section:not(.smallpanel)", asideColumn);
+  asideColumn.insertBefore(
+    parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`),
+    firstSection
+  );
+  add_xbox_achievement_guides_extensionBody = asideColumn.querySelector(
+    `.${globals/* Constants */.gT.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+  );
+  askForLinkBody = add_xbox_achievement_guides_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.askJs}`);
+  getAchievementWalkthroughUrl();
 };
 const add_xbox_achievement_guides_listen = () => {
-    const button = add_xbox_achievement_guides_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.buttonJs}`);
-    const input = add_xbox_achievement_guides_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.inputJs}`);
-    button.addEventListener('click', async (e) => {
-        if (!(e.target instanceof HTMLElement)) {
-            return;
-        }
-        e.preventDefault();
-        e.stopPropagation();
-        try {
-            if (input.value === '') {
-                return;
-            }
-            if (!globals/* ExternalRegex */.Ye.Test.xboxAchievementsGuide(input.value)) {
-                return;
-            }
-            toggleAskForLink();
-            if (globals/* AchievementsRegex */.KH.Test.achievementUrl) {
-                await getAchievementGuide(input.value);
-            }
-        }
-        catch {
-            return;
-        }
-    });
-};
-const getGameName = () => new URL(document.querySelector('.game h2 a').href).pathname.slice(1).split('/')[1];
-const getAchievementWalkthroughUrl = async () => {
-    const cachedXboxAchievementGuideUrls = globals/* Cache */.Ct.gameAchievementsXboxAchievementsGuideUrl;
-    const gameName = getGameName();
-    const url = gameName ? cachedXboxAchievementGuideUrls.get(gameName) : null;
-    if (!url) {
-        toggleAskForLink();
+  const button = add_xbox_achievement_guides_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.buttonJs}`);
+  const input = add_xbox_achievement_guides_extensionBody.querySelector(`.${globals/* Constants */.gT.Styles.Components.AskLoader.inputJs}`);
+  button.addEventListener("click", async (e) => {
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      if (input.value === "") {
         return;
+      }
+      if (!globals/* ExternalRegex */.Ye.Test.xboxAchievementsGuide(input.value)) {
+        return;
+      }
+      toggleAskForLink();
+      if (globals/* AchievementsRegex */.KH.Test.achievementUrl) {
+        await getAchievementGuide(input.value);
+      }
+    } catch {
+      return;
     }
-    if (globals/* AchievementsRegex */.KH.Test.achievementUrl()) {
-        getAchievementGuide(url);
-    }
-    else {
-        hideBody();
-    }
+  });
+};
+const getGameName = () => new URL(document.querySelector(".game h2 a").href).pathname.slice(1).split("/")[1];
+const getAchievementWalkthroughUrl = async () => {
+  const cachedXboxAchievementGuideUrls = globals/* Cache */.Ct.gameAchievementsXboxAchievementsGuideUrl;
+  const gameName = getGameName();
+  const url = gameName ? cachedXboxAchievementGuideUrls.get(gameName) : null;
+  if (!url) {
+    toggleAskForLink();
+    return;
+  }
+  if (globals/* AchievementsRegex */.KH.Test.achievementUrl()) {
+    getAchievementGuide(url);
+  } else {
+    hideBody();
+  }
 };
 const getAchievementGuide = async (url) => {
-    const achievementTitle = (await (0,utilities/* waitForElement */.br)('.ach-panel:not([data-secret]) .title'))?.innerText?.trim();
-    const guideResponse = await (0,helpers/* memoizedCorsFetch */.Ve)(url);
-    const guideDocument = new DOMParser().parseFromString(guideResponse, 'text/html');
-    const achievementGuides = [...guideDocument.querySelectorAll('.achilist .achilist__guide')].map((el) => ({
-        title: el.querySelector('.achilist__title')?.innerText?.trim(),
-        href: el.querySelector('.achilist__header a')?.href?.trim(),
-        description: el.querySelector('.achilist__data > p')?.innerText?.trim(),
-        guide: [...el.querySelectorAll('.text_res')].map((el) => {
-            const guide = el.innerHTML.trim();
-            return guide;
-        })
-    }));
-    const achievementGuide = achievementGuides.find((guide) => guide.title === achievementTitle);
-    const cachedXboxAchievementGuideUrls = globals/* Cache */.Ct.gameAchievementsXboxAchievementsGuideUrl;
-    const gameName = getGameName();
-    if (gameName && !cachedXboxAchievementGuideUrls.has(gameName)) {
-        cachedXboxAchievementGuideUrls.set(gameName, url);
-        globals/* Cache */.Ct.gameAchievementsXboxAchievementsGuideUrl = cachedXboxAchievementGuideUrls;
+  const achievementTitle = (await (0,utilities/* waitForElement */.br)(".ach-panel:not([data-secret]) .title"))?.innerText?.trim();
+  const guideResponse = await (0,helpers/* memoizeCorsFetch */.o1)(url, {});
+  const guideDocument = new DOMParser().parseFromString(guideResponse, "text/html");
+  const achievementGuides = [...guideDocument.querySelectorAll(".achilist .achilist__guide")].map(
+    (el) => ({
+      title: el.querySelector(".achilist__title")?.innerText?.trim(),
+      href: el.querySelector(".achilist__header a")?.href?.trim(),
+      description: el.querySelector(".achilist__data > p")?.innerText?.trim(),
+      guide: [...el.querySelectorAll(".text_res")].map((el2) => {
+        const guide = el2.innerHTML.trim();
+        return guide;
+      })
+    })
+  );
+  const achievementGuide = achievementGuides.find((guide) => guide.title === achievementTitle);
+  const cachedXboxAchievementGuideUrls = globals/* Cache */.Ct.gameAchievementsXboxAchievementsGuideUrl;
+  const gameName = getGameName();
+  if (gameName && !cachedXboxAchievementGuideUrls.has(gameName)) {
+    cachedXboxAchievementGuideUrls.set(gameName, url);
+    globals/* Cache */.Ct.gameAchievementsXboxAchievementsGuideUrl = cachedXboxAchievementGuideUrls;
+  }
+  if (achievementGuide) {
+    const parsedTemplateDocument = new DOMParser().parseFromString(achievement_guide_solution, "text/html");
+    const parsedSvgDocument = new DOMParser().parseFromString(xboxachievements_icon, "text/html").body.firstElementChild.cloneNode(true);
+    const clonedAchievementGuideSolution = parsedTemplateDocument.querySelector(
+      `#${globals/* Constants */.gT.Templates.GamesImprovements.Achievements.achievementGuideSolution}`
+    ).content.firstElementChild.cloneNode(true);
+    const achievementGuideSolution = (0,helpers/* template */.XK)(clonedAchievementGuideSolution, {
+      achievementGuideSolution: {
+        name: "360Achievements",
+        href: `${new URL(url).origin}${new URL(achievementGuide.href).pathname}`,
+        guide: achievementGuide.guide.join("<br>"),
+        info: "This guide was imported from 360Achievements.com"
+      }
+    });
+    parsedSvgDocument.classList.add("ta-x-xboxachievements-icon");
+    const gamerSideBar = achievementGuideSolution.querySelector(".gamer");
+    gamerSideBar.removeChild(gamerSideBar.firstChild);
+    gamerSideBar.prepend(parsedSvgDocument);
+    let existingGuides = document.querySelector("ul.posts");
+    if (!existingGuides) {
+      const heading = document.createElement("h2");
+      heading.innerText = `How to unlock the ${achievementGuide.title} achievement`;
+      heading.classList.add("block", "topmargin");
+      heading.id = "oSolutions";
+      const achievementGuides2 = document.createElement("ul");
+      achievementGuides2.classList.add("posts");
+      const elBeforeUl = document.querySelector("main .nn_player_w");
+      elBeforeUl.parentElement.insertBefore(heading, elBeforeUl.nextElementSibling);
+      elBeforeUl.parentElement.insertBefore(achievementGuides2, heading.nextElementSibling);
+      existingGuides = document.querySelector("ul.posts");
     }
-    if (achievementGuide) {
-        const parsedTemplateDocument = new DOMParser().parseFromString(achievement_guide_solution, 'text/html');
-        const parsedSvgDocument = new DOMParser()
-            .parseFromString(xboxachievements_icon, 'text/html')
-            .body.firstElementChild.cloneNode(true);
-        const clonedAchievementGuideSolution = parsedTemplateDocument.querySelector(`#${globals/* Constants */.gT.Templates.GamesImprovements.Achievements.achievementGuideSolution}`).content.firstElementChild.cloneNode(true);
-        const achievementGuideSolution = (0,helpers/* template */.XK)(clonedAchievementGuideSolution, {
-            achievementGuideSolution: {
-                name: '360Achievements',
-                href: `${new URL(url).origin}${new URL(achievementGuide.href).pathname}`,
-                guide: achievementGuide.guide.join('<br>'),
-                info: 'This guide was imported from 360Achievements.com'
-            }
-        });
-        parsedSvgDocument.classList.add('ta-x-xboxachievements-icon');
-        const gamerSideBar = achievementGuideSolution.querySelector('.gamer');
-        gamerSideBar.removeChild(gamerSideBar.firstChild);
-        gamerSideBar.prepend(parsedSvgDocument);
-        let existingGuides = document.querySelector('ul.posts');
-        if (!existingGuides) {
-            const heading = document.createElement('h2');
-            heading.innerText = `How to unlock the ${achievementGuide.title} achievement`;
-            heading.classList.add('block', 'topmargin');
-            heading.id = 'oSolutions';
-            const achievementGuides = document.createElement('ul');
-            achievementGuides.classList.add('posts');
-            const elBeforeUl = document.querySelector('main .nn_player_w');
-            elBeforeUl.parentElement.insertBefore(heading, elBeforeUl.nextElementSibling);
-            elBeforeUl.parentElement.insertBefore(achievementGuides, heading.nextElementSibling);
-            existingGuides = document.querySelector('ul.posts');
-        }
-        existingGuides.prepend(achievementGuideSolution);
-    }
-    else {
-        (0,helpers/* deleteMemoizedCorsFetch */.Kp)(url);
-    }
-    hideBody();
+    existingGuides.prepend(achievementGuideSolution);
+  } else {
+    (0,helpers/* deleteMemoizedCorsFetch */.Kp)(url);
+  }
+  hideBody();
 };
 const toggleAskForLink = () => {
-    askForLinkBody.classList.toggle('ta-x-hide');
-    if (!askForLinkBody.classList.contains('ta-x-hide')) {
-        add_xbox_achievement_guides_extensionBody.setAttribute('data-ta-x-loaded', 'true');
-    }
-    else {
-        add_xbox_achievement_guides_extensionBody.removeAttribute('data-ta-x-loaded');
-    }
+  askForLinkBody.classList.toggle("ta-x-hide");
+  if (!askForLinkBody.classList.contains("ta-x-hide")) {
+    add_xbox_achievement_guides_extensionBody.setAttribute("data-ta-x-loaded", "true");
+  } else {
+    add_xbox_achievement_guides_extensionBody.removeAttribute("data-ta-x-loaded");
+  }
 };
 const hideBody = () => {
-    add_xbox_achievement_guides_extensionBody.setAttribute('data-ta-x-loaded', 'true');
-    add_xbox_achievement_guides_extensionBody.classList.add('ta-x-hide');
+  add_xbox_achievement_guides_extensionBody.setAttribute("data-ta-x-loaded", "true");
+  add_xbox_achievement_guides_extensionBody.classList.add("ta-x-hide");
 };
 const addXboxAchievementGuides = async () => {
-    if (!(await (0,utilities/* waitForElement */.br)('.game h2 a'))) {
-        return;
-    }
-    await add_xbox_achievement_guides_applyBody();
-    add_xbox_achievement_guides_listen();
+  if (!await (0,utilities/* waitForElement */.br)(".game h2 a")) {
+    return;
+  }
+  await add_xbox_achievement_guides_applyBody();
+  add_xbox_achievement_guides_listen();
 };
 /* harmony default export */ const add_xbox_achievement_guides = ({ addXboxAchievementGuides });
 
+;// CONCATENATED MODULE: ./src/features/games-improvements/shared/add-achievement-leaderboard-link.ts
+
+
+const addAchievementLeaderboardLink = async () => {
+  const dlcAchievementHeaders = [...document.querySelectorAll("main ul.ach-panels li:not(.heading)")];
+  await (0,utilities/* allConcurrently */.Eh)(
+    "addAchievementLeaderboard - Achievements",
+    dlcAchievementHeaders.map((achievement) => ({
+      name: "add-achievement-leaderboard-achievement",
+      task: () => {
+        const title = achievement.querySelector(".title");
+        const progress = achievement.querySelector(".progress-bar");
+        const progressAnchor = document.createElement("a");
+        progress.classList.add(globals/* Constants */.gT.Styles.GamesImprovements.Achievements.showAchievementLeaderboardLinksStyle);
+        for (const attr of progress.attributes) {
+          progressAnchor.setAttributeNS(null, attr.name, attr.value);
+        }
+        [...progress.children].forEach((child) => progressAnchor.appendChild(child.cloneNode(true)));
+        progressAnchor.innerHTML = progress.innerHTML;
+        progressAnchor.href = `${new URL(title.href).pathname}/gamers`;
+        achievement.insertBefore(progressAnchor, progress.nextElementSibling);
+      }
+    })),
+    5
+  );
+};
+/* harmony default export */ const add_achievement_leaderboard_link = ({ addAchievementLeaderboardLink });
+
 ;// CONCATENATED MODULE: ./src/features/games-improvements/shared/index.ts
+
 
 
 
@@ -8513,10 +8570,10 @@ const addXboxAchievementGuides = async () => {
 
 
 /* harmony default export */ const achievement_add_xbox_achievement_guides = (async () => {
-    if (!globals/* gamesImprovements */.bc.achievements.gameAchievementsShowXboxAchievementGuides) {
-        return;
-    }
-    addXboxAchievementGuides();
+  if (!globals/* gamesImprovements */.bc.achievements.gameAchievementsShowXboxAchievementGuides) {
+    return;
+  }
+  addXboxAchievementGuides();
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/achievement/index.ts
@@ -8524,23 +8581,23 @@ const addXboxAchievementGuides = async () => {
 
 
 /* harmony default export */ const achievement = (async () => {
-    if (!globals/* AchievementsRegex */.KH.Test.achievementUrl()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('Games Achievement', [
-        { name: 'games-achievement-xbox-achievement-guides', task: achievement_add_xbox_achievement_guides }
-    ]);
+  if (!globals/* AchievementsRegex */.KH.Test.achievementUrl()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("Games Achievement", [
+    { name: "games-achievement-xbox-achievement-guides", task: achievement_add_xbox_achievement_guides }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/achievements/default-status.ts
 
 
 const default_status_changeToDefaultStatus = () => {
-    if (!globals/* gameAchievements */.TM.gameAchievementsDefaultStatus) {
-        return;
-    }
-    const status = document.querySelector(`#${globals/* gameAchievements */.TM.gameAchievementsDefaultStatusValue}`);
-    setDefaultStatus(status, 'gameAchievementsDefaultStatusPathName', globals/* GamesRegex */.Rv.Test.achievementsUrlWithGamerId);
+  if (!globals/* gameAchievements */.TM.gameAchievementsDefaultStatus) {
+    return;
+  }
+  const status = document.querySelector(`#${globals/* gameAchievements */.TM.gameAchievementsDefaultStatusValue}`);
+  setDefaultStatus(status, "gameAchievementsDefaultStatusPathName", globals/* GamesRegex */.Rv.Test.achievementsUrlWithGamerId);
 };
 /* harmony default export */ const achievements_default_status = ({ changeToDefaultStatus: default_status_changeToDefaultStatus });
 
@@ -8548,14 +8605,14 @@ const default_status_changeToDefaultStatus = () => {
 
 
 const individualProgress = () => {
-    if (!globals/* gameAchievements */.TM.gameAchievementsIndividualProgress) {
-        return;
-    }
-    const hasDlc = document.querySelector('.pnl-hd.dlc') != null;
-    if (!hasDlc) {
-        return;
-    }
-    applyIndividualProgress();
+  if (!globals/* gameAchievements */.TM.gameAchievementsIndividualProgress) {
+    return;
+  }
+  const hasDlc = document.querySelector(".pnl-hd.dlc") != null;
+  if (!hasDlc) {
+    return;
+  }
+  applyIndividualProgress();
 };
 /* harmony default export */ const achievements_individual_progress = ({ individualProgress });
 
@@ -8563,10 +8620,10 @@ const individualProgress = () => {
 
 
 /* harmony default export */ const achievements_add_xbox_achievement_guides = (async () => {
-    if (!globals/* gamesImprovements */.bc.achievements.gameAchievementsShowXboxAchievementGuides) {
-        return;
-    }
-    addXboxAchievementGuides();
+  if (!globals/* gamesImprovements */.bc.achievements.gameAchievementsShowXboxAchievementGuides) {
+    return;
+  }
+  addXboxAchievementGuides();
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/achievements/index.ts
@@ -8575,59 +8632,65 @@ const individualProgress = () => {
 
 
 
+
 /* harmony default export */ const achievements = (async () => {
-    if (!globals/* GamesRegex */.Rv.Test.achievementsUrl()) {
-        return;
-    }
-    default_status_changeToDefaultStatus();
-    (0,utilities/* allConcurrently */.Eh)('Games Achievements', [
-        { name: 'games-achievements-individual-progress', task: individualProgress },
-        { name: 'games-achievements-xbox-achievement-guides', task: achievements_add_xbox_achievement_guides }
-    ]);
+  if (!globals/* GamesRegex */.Rv.Test.achievementsUrl()) {
+    return;
+  }
+  default_status_changeToDefaultStatus();
+  (0,utilities/* allConcurrently */.Eh)("Games Achievements", [
+    { name: "games-achievements-individual-progress", task: individualProgress },
+    { name: "games-achievements-xbox-achievement-guides", task: achievements_add_xbox_achievement_guides },
+    { name: "games-achievements-achievement-leaderboard-link", task: addAchievementLeaderboardLink }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/clips/default-status.ts
 
 
 const clips_default_status_changeToDefaultStatus = async () => {
-    if (!globals/* gameClips */.MF.gameClipsDefaultStatus) {
-        return;
-    }
-    await (0,utilities/* allConcurrently */.Eh)('game-clips-change-to-default-status', [
-        {
-            name: 'game-clips-change-to-default-status-recorded-by',
-            task: async () => changeSelectOption('#ddlRecordedBy', globals/* gameClips */.MF.gameClipsDefaultRecordedByValue, '')
-        },
-        {
-            name: 'game-clips-change-to-default-status-saved-by',
-            task: async () => changeSelectOption('#ddlSavedBy', globals/* gameClips */.MF.gameClipsDefaultSavedByValue, 'Gamer')
-        },
-        {
-            name: 'game-clips-change-to-default-status-recorded',
-            task: async () => changeSelectOption('#ddlUploaded', globals/* gameClips */.MF.gameClipsDefaultRecordedValue, '7')
-        },
-        {
-            name: 'game-clips-change-to-default-status-sort-by',
-            task: async () => changeSelectOption('#ddlOrder', globals/* gameClips */.MF.gameClipsDefaultSortByValue, 'Most viewed')
-        }
-    ], 1);
+  if (!globals/* gameClips */.MF.gameClipsDefaultStatus) {
+    return;
+  }
+  await (0,utilities/* allConcurrently */.Eh)(
+    "game-clips-change-to-default-status",
+    [
+      {
+        name: "game-clips-change-to-default-status-recorded-by",
+        task: async () => await changeSelectOption("#ddlRecordedBy", globals/* gameClips */.MF.gameClipsDefaultRecordedByValue, "")
+      },
+      {
+        name: "game-clips-change-to-default-status-saved-by",
+        task: async () => await changeSelectOption("#ddlSavedBy", globals/* gameClips */.MF.gameClipsDefaultSavedByValue, "Gamer")
+      },
+      {
+        name: "game-clips-change-to-default-status-recorded",
+        task: async () => await changeSelectOption("#ddlUploaded", globals/* gameClips */.MF.gameClipsDefaultRecordedValue, "7")
+      },
+      {
+        name: "game-clips-change-to-default-status-sort-by",
+        task: async () => await changeSelectOption("#ddlOrder", globals/* gameClips */.MF.gameClipsDefaultSortByValue, "Most viewed")
+      }
+    ],
+    1
+  );
 };
 const changeSelectOption = async (selector, newValue, defaultValue) => {
-    const selectorArray = globals/* Cache */.Ct.gameClipsDefaultStatusSelectors;
-    if (newValue === defaultValue) {
-        return;
-    }
-    if (selectorArray.includes(selector)) {
-        return;
-    }
-    selectorArray.push(selector);
-    globals/* Cache */.Ct.gameClipsDefaultStatusSelectors = selectorArray;
-    const selectOption = (await (0,utilities/* waitForElement */.br)(selector));
-    if (selectOption.value === newValue) {
-        return;
-    }
-    selectOption.value = newValue;
-    selectOption.onchange(null);
+  const selectorArray = globals/* Cache */.Ct.gameClipsDefaultStatusSelectors;
+  if (newValue === defaultValue) {
+    return;
+  }
+  if (selectorArray.includes(selector)) {
+    return;
+  }
+  selectorArray.push(selector);
+  globals/* Cache */.Ct.gameClipsDefaultStatusSelectors = selectorArray;
+  const selectOption = await (0,utilities/* waitForElement */.br)(selector);
+  if (selectOption.value === newValue) {
+    return;
+  }
+  selectOption.value = newValue;
+  selectOption.onchange(null);
 };
 /* harmony default export */ const clips_default_status = ({ changeToDefaultStatus: clips_default_status_changeToDefaultStatus });
 
@@ -8636,21 +8699,21 @@ const changeSelectOption = async (selector, newValue, defaultValue) => {
 
 
 /* harmony default export */ const clips = (async () => {
-    if (!globals/* GamesRegex */.Rv.Test.clipsUrl()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('Games Clips', [{ name: 'games-clips-change-to-default-status', task: clips_default_status_changeToDefaultStatus }]);
+  if (!globals/* GamesRegex */.Rv.Test.clipsUrl()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("Games Clips", [{ name: "games-clips-change-to-default-status", task: clips_default_status_changeToDefaultStatus }]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/challenges/default-status.ts
 
 
 const challenges_default_status_changeToDefaultStatus = () => {
-    if (!globals/* gameChallenges */.NF.gameChallengesDefaultStatus) {
-        return;
-    }
-    const status = document.querySelector(`#${globals/* gameChallenges */.NF.gameChallengesDefaultStatusValue}`);
-    setDefaultStatus(status, 'gameChallengesDefaultStatusPathName', globals/* GamesRegex */.Rv.Test.challengesUrlWithGamerId);
+  if (!globals/* gameChallenges */.NF.gameChallengesDefaultStatus) {
+    return;
+  }
+  const status = document.querySelector(`#${globals/* gameChallenges */.NF.gameChallengesDefaultStatusValue}`);
+  setDefaultStatus(status, "gameChallengesDefaultStatusPathName", globals/* GamesRegex */.Rv.Test.challengesUrlWithGamerId);
 };
 /* harmony default export */ const challenges_default_status = ({ changeToDefaultStatus: challenges_default_status_changeToDefaultStatus });
 
@@ -8658,10 +8721,10 @@ const challenges_default_status_changeToDefaultStatus = () => {
 
 
 const individual_progress_individualProgress = () => {
-    if (!globals/* gameChallenges */.NF.gameChallengesIndividualProgress) {
-        return;
-    }
-    applyIndividualProgress();
+  if (!globals/* gameChallenges */.NF.gameChallengesIndividualProgress) {
+    return;
+  }
+  applyIndividualProgress();
 };
 /* harmony default export */ const challenges_individual_progress = ({ individualProgress: individual_progress_individualProgress });
 
@@ -8670,23 +8733,31 @@ const individual_progress_individualProgress = () => {
 
 
 
+
 /* harmony default export */ const challenges = (async () => {
-    if (!globals/* GamesRegex */.Rv.Test.challengesUrl()) {
-        return;
-    }
-    challenges_default_status_changeToDefaultStatus();
-    (0,utilities/* allConcurrently */.Eh)('Games Challenges', [{ name: 'games-challenges-individual-progress', task: individual_progress_individualProgress }]);
+  if (!globals/* GamesRegex */.Rv.Test.challengesUrl()) {
+    return;
+  }
+  challenges_default_status_changeToDefaultStatus();
+  (0,utilities/* allConcurrently */.Eh)("Games Challenges", [
+    { name: "games-challenges-individual-progress", task: individual_progress_individualProgress },
+    { name: "games-challenges-achievement-leaderboard-link", task: addAchievementLeaderboardLink }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/dlc/default-status.ts
 
 
 const dlc_default_status_changeToDefaultStatus = () => {
-    if (!globals/* gameDLC */.hi.gameDLCDefaultStatus) {
-        return;
-    }
-    const status = document.querySelector(`#${globals/* gameDLC */.hi.gameDLCDefaultStatusValue}`);
-    setDefaultStatus(status, 'gameDLCDefaultStatusPathName', globals/* GamesRegex */.Rv.Test.dlcUrl() ? globals/* GamesRegex */.Rv.Test.dlcWithGamerId : globals/* GamesRegex */.Rv.Test.individualDlcUrlWithGamerId);
+  if (!globals/* gameDLC */.hi.gameDLCDefaultStatus) {
+    return;
+  }
+  const status = document.querySelector(`#${globals/* gameDLC */.hi.gameDLCDefaultStatusValue}`);
+  setDefaultStatus(
+    status,
+    "gameDLCDefaultStatusPathName",
+    globals/* GamesRegex */.Rv.Test.dlcUrl() ? globals/* GamesRegex */.Rv.Test.dlcWithGamerId : globals/* GamesRegex */.Rv.Test.individualDlcUrlWithGamerId
+  );
 };
 /* harmony default export */ const dlc_default_status = ({ changeToDefaultStatus: dlc_default_status_changeToDefaultStatus });
 
@@ -8694,13 +8765,13 @@ const dlc_default_status_changeToDefaultStatus = () => {
 
 
 const dlc_individual_progress_individualProgress = () => {
-    if (!globals/* gameDLC */.hi.gameDLCIndividualProgress) {
-        return;
-    }
-    if (globals/* GamesRegex */.Rv.Test.individualDlcUrl()) {
-        return;
-    }
-    applyIndividualProgress();
+  if (!globals/* gameDLC */.hi.gameDLCIndividualProgress) {
+    return;
+  }
+  if (globals/* GamesRegex */.Rv.Test.individualDlcUrl()) {
+    return;
+  }
+  applyIndividualProgress();
 };
 /* harmony default export */ const dlc_individual_progress = ({ individualProgress: dlc_individual_progress_individualProgress });
 
@@ -8709,42 +8780,48 @@ const dlc_individual_progress_individualProgress = () => {
 
 
 
+
 /* harmony default export */ const dlc = (async () => {
-    if (!globals/* GamesRegex */.Rv.Test.dlc()) {
-        return;
-    }
-    dlc_default_status_changeToDefaultStatus();
-    (0,utilities/* allConcurrently */.Eh)('Games DLC', [{ name: 'games-dlc-individual-progress', task: dlc_individual_progress_individualProgress }]);
+  if (!globals/* GamesRegex */.Rv.Test.dlc()) {
+    return;
+  }
+  dlc_default_status_changeToDefaultStatus();
+  (0,utilities/* allConcurrently */.Eh)("Games DLC", [
+    { name: "games-dlc-individual-progress", task: dlc_individual_progress_individualProgress },
+    { name: "games-dlc-achievement-leaderboard-link", task: addAchievementLeaderboardLink }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/forums/filter-threads.ts
 
 
 const forums_filter_threads_filterThreads = () => {
-    if (!globals/* gameForums */.E1.gameForumsThreadFilter) {
-        return;
-    }
-    applyThreadFilters(globals/* gameForums */.E1.threadFilterKeywords);
+  if (!globals/* gameForums */.E1.gameForumsThreadFilter) {
+    return;
+  }
+  applyThreadFilters(globals/* gameForums */.E1.threadFilterKeywords);
 };
 /* harmony default export */ const forums_filter_threads = ({ filterThreads: forums_filter_threads_filterThreads });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/forums/default-thread.ts
 
 const changeToDefaultThread = () => {
-    if (!globals/* gameForums */.E1.gameForumsDefaultThread) {
-        return;
+  if (!globals/* gameForums */.E1.gameForumsDefaultThread) {
+    return;
+  }
+  const anchor = document.querySelector(
+    `.link-tabs a[href$=${globals/* gameForums */.E1.gameForumsDefaultThreadValue}]`
+  );
+  const url = (0,globals/* getUrlProperties */.TS)(window.location.href, ["pathname"]);
+  if (anchor && url !== globals/* Cache */.Ct.gameForumsDefaultThreadPathName) {
+    globals/* Cache */.Ct.gameForumsDefaultThreadPathName = (0,globals/* getUrlProperties */.TS)(window.location.href, ["pathname"]);
+    if (new URLSearchParams(window.location.search).get("type") === globals/* gameForums */.E1.gameForumsDefaultThreadValue) {
+      return;
     }
-    const anchor = document.querySelector(`.link-tabs a[href$=${globals/* gameForums */.E1.gameForumsDefaultThreadValue}]`);
-    const url = (0,globals/* getUrlProperties */.TS)(window.location.href, ['pathname']);
-    if (anchor && url !== globals/* Cache */.Ct.gameForumsDefaultThreadPathName) {
-        globals/* Cache */.Ct.gameForumsDefaultThreadPathName = (0,globals/* getUrlProperties */.TS)(window.location.href, ['pathname']);
-        if (new URLSearchParams(window.location.search).get('type') === globals/* gameForums */.E1.gameForumsDefaultThreadValue) {
-            return;
-        }
-        if (!anchor.classList.contains('selected')) {
-            anchor.click();
-        }
+    if (!anchor.classList.contains("selected")) {
+      anchor.click();
     }
+  }
 };
 /* harmony default export */ const default_thread = ({ changeToDefaultThread });
 
@@ -8754,35 +8831,38 @@ const changeToDefaultThread = () => {
 
 
 /* harmony default export */ const forums = (async () => {
-    if (!globals/* GamesRegex */.Rv.Test.forum()) {
-        return;
-    }
-    if (!(await (0,utilities/* waitForElement */.br)('body'))) {
-        return;
-    }
-    changeToDefaultThread();
-    document.body.classList.add(globals/* Constants */.gT.Styles.ForumImprovements.featureJs, globals/* Constants */.gT.Styles.ForumImprovements.featureStyle);
-    (0,utilities/* allConcurrently */.Eh)('Games Forum', [{ name: 'games-forum-filter-threads', task: forums_filter_threads_filterThreads }]);
+  if (!globals/* GamesRegex */.Rv.Test.forum()) {
+    return;
+  }
+  if (!await (0,utilities/* waitForElement */.br)("body")) {
+    return;
+  }
+  changeToDefaultThread();
+  document.body.classList.add(
+    globals/* Constants */.gT.Styles.ForumImprovements.featureJs,
+    globals/* Constants */.gT.Styles.ForumImprovements.featureStyle
+  );
+  (0,utilities/* allConcurrently */.Eh)("Games Forum", [{ name: "games-forum-filter-threads", task: forums_filter_threads_filterThreads }]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/news/index.ts
 
 
 /* harmony default export */ const news = (async () => {
-    if (!globals/* GamesRegex */.Rv.Test.gameUrl()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('Games News', []);
+  if (!globals/* GamesRegex */.Rv.Test.gameUrl()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("Games News", []);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/reviews/index.ts
 
 
 /* harmony default export */ const reviews = (async () => {
-    if (!globals/* GamesRegex */.Rv.Test.reviewsUrl()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('Games Reviews', []);
+  if (!globals/* GamesRegex */.Rv.Test.reviewsUrl()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("Games Reviews", []);
 });
 
 ;// CONCATENATED MODULE: ./src/features/games-improvements/index.ts
@@ -8798,23 +8878,23 @@ const changeToDefaultThread = () => {
 
 
 /* harmony default export */ const features_games_improvements = (async () => {
-    if (!globals/* gamesImprovements */.bc.enabled) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('Games Improvements', [
-        {
-            name: 'games-improvements-add-highlight-games-button',
-            task: addHighlightGamesNotInCollectionButton
-        },
-        { name: 'games-improvements-achievement', task: achievement },
-        { name: 'games-improvements-achievements', task: achievements },
-        { name: 'games-improvements-news', task: news },
-        { name: 'games-improvements-challenges', task: challenges },
-        { name: 'games-improvements-forums', task: forums },
-        { name: 'games-improvements-clips', task: clips },
-        { name: 'games-improvements-reviews', task: reviews },
-        { name: 'games-improvements-dlc', task: dlc }
-    ]);
+  if (!globals/* gamesImprovements */.bc.enabled) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("Games Improvements", [
+    {
+      name: "games-improvements-add-highlight-games-button",
+      task: addHighlightGamesNotInCollectionButton
+    },
+    { name: "games-improvements-achievement", task: achievement },
+    { name: "games-improvements-achievements", task: achievements },
+    { name: "games-improvements-news", task: news },
+    { name: "games-improvements-challenges", task: challenges },
+    { name: "games-improvements-forums", task: forums },
+    { name: "games-improvements-clips", task: clips },
+    { name: "games-improvements-reviews", task: reviews },
+    { name: "games-improvements-dlc", task: dlc }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/features/gamer-improvements/gamer-improvements.html
@@ -8827,44 +8907,42 @@ var gamer_improvements_code = "<a class=\"button js-ta-x-gamer-improvements-grou
 
 
 const add_group_by_game_button_listen = (button) => {
-    button.addEventListener('click', async () => {
-        const containerTable = document.querySelector('table#oAchievementList tbody');
-        [...containerTable.querySelectorAll('tr.even, tr.odd')]
-            .sort((el1, el2) => {
-            const el1Alt = el1.querySelector('.gamethumb img').getAttribute('alt');
-            const el2Alt = el2.querySelector('.gamethumb img').getAttribute('alt');
-            if (el1Alt > el2Alt) {
-                return 1;
-            }
-            else if (el1Alt < el2Alt) {
-                return -1;
-            }
-            else {
-                return 0;
-            }
-        })
-            .forEach((element, index) => {
-            element.classList.remove('odd', 'even');
-            element.classList.add((index + 1) & 1 ? 'even' : 'odd');
-            containerTable.appendChild(element);
-        });
+  button.addEventListener("click", async () => {
+    const containerTable = document.querySelector("table#oAchievementList tbody");
+    [...containerTable.querySelectorAll("tr.even, tr.odd")].sort((el1, el2) => {
+      const el1Alt = el1.querySelector(".gamethumb img").getAttribute("alt");
+      const el2Alt = el2.querySelector(".gamethumb img").getAttribute("alt");
+      if (el1Alt > el2Alt) {
+        return 1;
+      } else if (el1Alt < el2Alt) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }).forEach((element, index) => {
+      element.classList.remove("odd", "even");
+      element.classList.add(index + 1 & 1 ? "even" : "odd");
+      containerTable.appendChild(element);
     });
+  });
 };
 const addGroupByGameButton = async () => {
-    if (!globals/* achievements */.EF.addGroupByGameButton) {
-        return;
-    }
-    if (!globals/* GamerRegex */.LG.Test.gamerAchievementsUrl()) {
-        return;
-    }
-    const searchAndFilterContainer = await (0,utilities/* waitForElement */.br)('.search-and-filter');
-    if (!searchAndFilterContainer) {
-        return;
-    }
-    const parsedDocument = new DOMParser().parseFromString(gamer_improvements, 'text/html');
-    searchAndFilterContainer.appendChild(parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.GamerImprovements.groupByGameButtonJs}`));
-    const button = searchAndFilterContainer.querySelector(`.${globals/* Constants */.gT.Styles.GamerImprovements.groupByGameButtonJs}`);
-    add_group_by_game_button_listen(button);
+  if (!globals/* achievements */.EF.addGroupByGameButton) {
+    return;
+  }
+  if (!globals/* GamerRegex */.LG.Test.gamerAchievementsUrl()) {
+    return;
+  }
+  const searchAndFilterContainer = await (0,utilities/* waitForElement */.br)(".search-and-filter");
+  if (!searchAndFilterContainer) {
+    return;
+  }
+  const parsedDocument = new DOMParser().parseFromString(gamer_improvements, "text/html");
+  searchAndFilterContainer.appendChild(
+    parsedDocument.querySelector(`.${globals/* Constants */.gT.Styles.GamerImprovements.groupByGameButtonJs}`)
+  );
+  const button = searchAndFilterContainer.querySelector(`.${globals/* Constants */.gT.Styles.GamerImprovements.groupByGameButtonJs}`);
+  add_group_by_game_button_listen(button);
 };
 /* harmony default export */ const add_group_by_game_button = ({ addGroupByGameButton });
 
@@ -8873,20 +8951,20 @@ const addGroupByGameButton = async () => {
 
 
 /* harmony default export */ const features_gamer_improvements = (async () => {
-    if (!globals/* gamerImprovements */.rI.enabled) {
-        return;
-    }
-    if (!globals/* GamerRegex */.LG.Test.all()) {
-        return;
-    }
-    (0,utilities/* allConcurrently */.Eh)('Gamer Improvements', [
-        { name: 'gamer-improvments-add-group-by-game-button', task: addGroupByGameButton }
-    ]);
+  if (!globals/* gamerImprovements */.rI.enabled) {
+    return;
+  }
+  if (!globals/* GamerRegex */.LG.Test.all()) {
+    return;
+  }
+  (0,utilities/* allConcurrently */.Eh)("Gamer Improvements", [
+    { name: "gamer-improvments-add-group-by-game-button", task: addGroupByGameButton }
+  ]);
 });
 
 ;// CONCATENATED MODULE: ./src/scss/index.scss
 
-        const scss_styles = `:root{--ta-x-sticky-header-height: $ta-x-sticky-header-height}body.trueachievement-extras .ta-x-hide{display:none !important}@media(max-width: 1349px){body.trueachievement-extras .middle{width:100%;max-width:1200px}}@media(max-width: 1199px){body.trueachievement-extras .middle{width:auto;max-width:1200px}}@media(min-width: 576px){body.trueachievement-extras .middle .news-section.list>section.highlight{margin:5px 0}body.trueachievement-extras .middle .news-section.list>section.highlight+section.highlight{margin-top:1rem}}body.trueachievement-extras .ta-x-flex-break{flex-basis:100%;height:0;border:0;padding:0;margin:0}body.trueachievement-extras .ta-x-article-loader{text-align:center}body.trueachievement-extras .ta-x-article-loader img{width:25px;height:25px;margin:0 auto;margin-bottom:.8rem}body.trueachievement-extras [data-ta-x-loaded] .ta-x-article-loader{display:none}body.trueachievement-extras .ta-x-snackbar{visibility:hidden;min-width:250px;margin-left:-125px;background-color:#333;text-align:center;border-radius:1.5rem;padding:16px;position:fixed;z-index:1;left:50%;bottom:30px}body.trueachievement-extras .ta-x-snackbar-show{visibility:visible;animation:fadein .5s,fadeout .5s 2.5s}body.trueachievement-extras .ta-x-snackbar h2{color:#bbb;border-left:3px solid #3f67a4}body.trueachievement-extras .ta-x-snackbar h2.warning{border-color:#f57921}body.trueachievement-extras .ta-x-snackbar h2.danger{border-color:#f52721}body.trueachievement-extras .ta-x-snackbar h2.success{border-color:#58bb12}@keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:1}}@keyframes fadeout{from{bottom:30px;opacity:1}to{bottom:0;opacity:0}}body.trueachievement-extras .ta-x-tabs-link-container{display:flex;overflow-x:auto;margin:-1rem;margin-bottom:.5rem;-ms-overflow-style:none;scrollbar-width:none}body.trueachievement-extras .ta-x-tabs-link-container li{flex-shrink:0}body.trueachievement-extras .ta-x-tabs-link-container::-webkit-scrollbar{display:none}body.trueachievement-extras .ta-x-tabs-link-container.ta-x-tabs-scroll{cursor:grabbing;transform:scale(1)}body.trueachievement-extras .ta-x-tabs-link-container.ta-x-tabs-scroll .ta-x-tabs-link{cursor:grabbing}body.trueachievement-extras .ta-x-tabs-link{padding:.6rem .75rem;user-select:none}body.trueachievement-extras .ta-x-tabs-link.ta-x-tabs-selected{border-bottom:2px solid;pointer-events:none;background:#e8e8e8}body.trueachievement-extras .ta-x-tabs-link:hover{border-bottom:2px solid;cursor:pointer}body.trueachievement-extras .ta-x-tabs-link:nth-child(1),body.trueachievement-extras .ta-x-tabs-link:nth-child(11){border-color:#58bb12}body.trueachievement-extras .ta-x-tabs-link:nth-child(2),body.trueachievement-extras .ta-x-tabs-link:nth-child(12){border-color:#2871a4}body.trueachievement-extras .ta-x-tabs-link:nth-child(3),body.trueachievement-extras .ta-x-tabs-link:nth-child(13){border-color:#cf1812}body.trueachievement-extras .ta-x-tabs-link:nth-child(4),body.trueachievement-extras .ta-x-tabs-link:nth-child(14){border-color:#c42d78}body.trueachievement-extras .ta-x-tabs-link:nth-child(5),body.trueachievement-extras .ta-x-tabs-link:nth-child(15){border-color:#9b30ff}body.trueachievement-extras .ta-x-tabs-link:nth-child(6),body.trueachievement-extras .ta-x-tabs-link:nth-child(16){border-color:#f57921}body.trueachievement-extras .ta-x-tabs-link:nth-child(7),body.trueachievement-extras .ta-x-tabs-link:nth-child(17){border-color:#294a7d}body.trueachievement-extras .ta-x-tabs-link:nth-child(8),body.trueachievement-extras .ta-x-tabs-link:nth-child(18){border-color:#000}body.trueachievement-extras .ta-x-tabs-link:nth-child(9),body.trueachievement-extras .ta-x-tabs-link:nth-child(19){border-color:#fff}body.trueachievement-extras .ta-x-tabs-link:nth-child(10),body.trueachievement-extras .ta-x-tabs-link:nth-child(20){border-color:#e9b949}body.trueachievement-extras .ta-x-tabs-content{display:none;height:10rem;overflow-y:auto;margin-right:-1rem}body.trueachievement-extras .ta-x-tabs-content[data-tab-visible]{display:flex;flex-wrap:wrap}body.trueachievement-extras [data-theme=dark] .ta-x-tabs-selected{background:#282828}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}body.trueachievement-extras .ta-x-ask-loader-container:not([data-ta-x-loaded]) article{display:block}body.trueachievement-extras .ta-x-ask-loader-container article{display:flex;justify-content:space-between}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-article-loader svg{animation-name:spin;animation-duration:2000ms;animation-iteration-count:infinite;animation-timing-function:linear;display:block;margin:auto;margin-bottom:.8rem;width:5rem}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-ask-loader-ask>div{display:flex;flex-direction:column}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-ask-loader-ask>div label{margin-bottom:.9rem}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-ask-loader-ask>div+input{width:100%;margin:0;margin-top:.9rem}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-ask-loader-ask>div+input:hover{margin-bottom:2px}body.trueachievement-extras .ta-x-y-show{transform:translateY(0);transition:transform .5s ease}body.trueachievement-extras .ta-x-y-hide{transform:translateY(-100%);transition:transform .5s ease}body.trueachievement-extras .ta-x-y-hide-no-transition{transform:translateY(-100%)}body.trueachievement-extras .ta-x-settings-menu-settings{max-height:547px;overflow-y:scroll !important;padding:0 1rem !important;padding-bottom:1rem !important;height:100%;position:relative}body.trueachievement-extras .ta-x-settings-menu-settings>div{display:block;padding:0}body.trueachievement-extras .ta-x-settings-menu-settings .frm-grp{user-select:none;margin-right:0}body.trueachievement-extras .ta-x-settings-menu-settings .frm-sel::after{top:10px}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings>div{flex-wrap:wrap}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings>div>label{max-width:80%}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-checkbox-help-text{font-size:1.2rem;padding-top:.5rem}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox{padding-top:1rem;border-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox>label{padding-bottom:.5rem;display:block}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst{width:100%;flex-wrap:wrap;justify-content:space-between}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst input.textbox{flex:1}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst input[type=submit]{margin-left:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst ul{width:100%}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst ul li>div{display:flex;justify-content:space-between;align-items:center;width:100%}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst ul li>div p{word-break:break-all}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst ul li>div a{margin-left:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item{position:absolute;display:none;width:313px;padding-bottom:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item-show{display:block}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper{display:flex;flex-wrap:wrap}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper a,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper a,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper a{width:100%}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h2,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h2,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h2{width:100%;line-height:unset}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h1{margin-bottom:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h2,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h2,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h2{border-top:2px solid #0e5814;border-bottom:2px solid #0e5814;padding:.5rem;font-size:1.6rem;margin:1rem 0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper p,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper p,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper p{font-size:1.4rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper{padding-bottom:0;border:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h1:not(:first-of-type){padding:.5rem 0;margin-top:1rem;border-bottom:2px solid #0552b5;border-top:2px solid #0552b5}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h2:first-of-type{margin-top:0;margin-bottom:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper{padding-top:0;padding-bottom:0;border:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h1{border-top:2px solid #e9b949;border-bottom:2px solid #e9b949;padding:.5rem 0;margin-top:.5rem;margin-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper{border-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h2:first-of-type{margin:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper ul{margin-bottom:.5rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-markdown-marker{flex-basis:unset;align-self:center;padding-right:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion{flex-wrap:wrap;border:0;padding-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion:last-of-type{padding-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body{width:100%}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header{padding:1rem;flex-shrink:unset;color:#3e4c59;cursor:pointer;user-select:none;background:#ccc}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header>label{color:#333 !important;padding:0;text-align:left;pointer-events:none;font-weight:bold}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header .frm-tgl{pointer-events:none}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header .frm-tgl>label{padding:0;pointer-events:none}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header span{width:100%;pointer-events:none}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header svg{height:20px;pointer-events:none}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header.collapsed svg{transition:all .5s linear}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header.expanded svg{transform:rotate(-180deg)}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body{max-height:0;transition:max-height .5s ease-out;overflow:hidden}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body[data-parent-accordion-body]{border:1px solid #ccc;border-top:0;border-bottom-left-radius:1rem;border-bottom-right-radius:1rem;padding:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body[data-parent-accordion-body] .ta-x-settings-menu-settings-accordion{margin:0;padding:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body[data-parent-accordion-body] .ta-x-settings-menu-settings-accordion-header{border-radius:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion .t-settings>div{padding:1rem 0;margin:0 1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion .t-settings>div:last-of-type{border:0}body.trueachievement-extras .ta-x-settings-menu-columned-setting{flex-direction:column;align-items:flex-start}body.trueachievement-extras .ta-x-settings-menu-columned-setting>div:first-of-type{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;width:100%}body.trueachievement-extras .ta-x-settings-menu-columned-setting>div:first-of-type>label{max-width:80%}body.trueachievement-extras .ta-x-settings-menu-columned-setting .frm-sel{padding-top:1rem}body.trueachievement-extras .ta-x-settings-menu-bottom{background:#4a5568;position:absolute;bottom:0;display:block;width:100%;padding:0 1rem !important}body.trueachievement-extras .ta-x-settings-menu-bottom .title{margin-bottom:0;color:#ddd;border:0}body.trueachievement-extras .ta-x-settings-menu-bottom .title a{background:unset}body.trueachievement-extras .ta-x-settings-menu-bottom .title a:hover{text-decoration:underline}body.trueachievement-extras .ta-x-settings-menu .close i{pointer-events:none}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu-bottom .buttons{border-color:#000 !important}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu-bottom .buttons a{background:#4299e1 !important}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu .ta-x-settings-menu-settings-accordion-header{color:#ddd;background:#222}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu .ta-x-settings-menu-settings-accordion-header>label{color:#ddd !important}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu .ta-x-settings-menu-settings-accordion-body[data-parent-accordion-body]{border-color:#222}body.trueachievement-extras .ta-x-sticky-header{position:fixed;top:0;width:100%}body.trueachievement-extras .ta-x-emojis .ta-x-tabs-content[data-tab-visible]{height:10rem;display:grid;grid-template-columns:repeat(5, 1fr);text-align:center}body.trueachievement-extras .ta-x-emojis .ta-x-tabs-content span{font-size:2.2rem;user-select:none}body.trueachievement-extras .ta-x-emojis .ta-x-tabs-content span:hover{cursor:pointer}body.trueachievement-extras.ta-x-staff-walkthrough-improvements{min-width:unset !important;overflow:auto}body.trueachievement-extras.ta-x-staff-walkthrough-improvements main{min-height:unset !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page{position:unset;display:flex;flex-direction:column}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector#oWalkthroughImageViewer{width:321px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .noimages,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .itemname{padding:5px;text-align:center;font-size:unset !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header{position:sticky;border-bottom:1px solid #000;display:flex;flex-direction:column;background-color:#fff}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header .noimages{margin-top:0}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector a[title="Add images"]{text-align:center;padding:5px;cursor:pointer !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector a[title="Add images"]:hover{text-decoration:underline}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .imageviewer{display:flex;flex-wrap:wrap}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .imageviewer .ivimage{position:unset;margin:5px;max-width:46%}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title{text-align:center;padding-top:3px;white-space:break-spaces}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code-button svg{width:32px;margin-left:-10px;margin-right:-4px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg{height:20px;pointer-events:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg path{fill:#555;filter:drop-shadow(21px 21px #fff);pointer-events:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg:hover path{fill:#333}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark{display:block}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle [data-ta-x-tinymce-theme=dark] svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light{display:block}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle [data-ta-x-tinymce-theme=dark] svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar{border-bottom:1px solid #ddd;width:var(--ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width, 0);top:var(--ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top, 0) !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title{color:#b5b9bf}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header{background-color:#2f3740}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header .itemname{color:#b5b9bf}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg path{fill:#b5b9bf;filter:drop-shadow(21px 21px #000)}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar{border-color:#232b33}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar.ta-x-y-hide{transform:translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)));transition:transform .5s ease}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar.ta-x-y-hide-no-transition{transform:translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)))}body.trueachievement-extras.ta-x-staff-walkthrough-improvements>.mce-menu.mce-floatpanel{top:var(--ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu, 0) !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements[data-ta-x-theme=dark] .jscolor-wrap .jscolor-border{border:1px solid #232b33 !important;background:#404952 !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divWalkthroughHolder{position:unset;margin-top:unset;height:unset;display:flex;justify-content:space-between}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .buttons{display:flex}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button{display:block;flex-grow:1}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button#btnSearchWalkthrough{margin:0;margin-bottom:3px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button#btnSearchWalkthrough:hover{margin-bottom:5px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .clearboth{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughs,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chEditWalkthrough,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughAchievements,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughGames,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughGamers,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughOtherSiteLink{position:unset;top:unset;left:unset;display:block;margin:0}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chEditWalkthrough{flex:1;margin:0 1.5rem;height:fit-content}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #btnWalkthrough{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container{display:flex;flex-direction:column;justify-content:space-around}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container{display:flex}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPagePreview{margin-left:0;position:unset;width:unset}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPagePreview{flex:1}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions{height:100%}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history{position:relative;top:var(--ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top, 0)}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-y-hide{transform:translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)));transition:transform .5s ease}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-y-hide-no-transition{transform:translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)))}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions .content .buttons{display:flex;justify-content:center;flex-direction:column}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions .content .buttons .button{flex:1}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions .content .buttons .button:not(:first-of-type){margin-top:5px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions .content .buttons .clearboth{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-move-buttons-to-left #chWalkthroughPagePreview .content .buttons{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-move-buttons-to-left #chWalkthroughPagePreview .content .buttons .clearboth{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements main{max-width:unset}body.trueachievement-extras.ta-x-staff-walkthrough-improvements main .admin-page .walkthroughsummary+.walkthroughpagelinks{flex-direction:column}body.trueachievement-extras.ta-x-staff-walkthrough-improvements main .admin-page .walkthroughsummary+.walkthroughpagelinks a.next{margin-left:0}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress:not([data-ta-x-loaded]) article{display:block}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article{display:flex;justify-content:space-between}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .walthroughprogress{display:flex;justify-content:center;align-items:center;width:100%}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .walthroughprogress .walkthroughauthor{margin-right:1rem}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .walthroughprogress .clearboth{display:none}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor-wrapper{display:flex;flex-direction:column;justify-content:center;flex-basis:100%}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor-row{display:flex;align-items:center;margin-bottom:1rem}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor-row:last-of-type{margin-bottom:0}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor{margin-left:1rem}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .thanks{display:flex;flex-direction:column;align-items:center;padding-left:1rem;justify-content:center}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .last,body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .stats,body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .author-pages,body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .read,body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .stack{display:none}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] p.ta-x-forum-improvements-filter-threads-title{font-weight:700;font-size:1.6rem}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] p:not(.ta-x-forum-improvements-filter-threads-title){display:none}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] a.ta-x-forum-improvements-filter-threads-unhide{font-size:1.4rem}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=false] p.ta-x-forum-improvements-filter-threads-title{display:none}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=false] a.ta-x-forum-improvements-filter-threads-unhide{display:none}body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer .ta-x-xboxachievements-icon{width:36px;height:36px}@media(min-width: 768px){body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer .ta-x-xboxachievements-icon{width:70px;height:70px}}body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer a{flex:none}@media(min-width: 769px){body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer svg{margin-bottom:1rem}}@media(max-width: 768px){body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer svg{margin-right:1rem}}@media(max-width: 768px){body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer>.info{display:block;margin-left:1rem}}`;
+        const scss_styles = `:root{--ta-x-sticky-header-height: $ta-x-sticky-header-height}body.trueachievement-extras .ta-x-hide{display:none !important}@media(max-width: 1349px){body.trueachievement-extras .middle{width:100%;max-width:1200px}}@media(max-width: 1199px){body.trueachievement-extras .middle{width:auto;max-width:1200px}}@media(min-width: 576px){body.trueachievement-extras .middle .news-section.list>section.highlight{margin:5px 0}body.trueachievement-extras .middle .news-section.list>section.highlight+section.highlight{margin-top:1rem}}body.trueachievement-extras .ta-x-flex-break{flex-basis:100%;height:0;border:0;padding:0;margin:0}body.trueachievement-extras .ta-x-article-loader{text-align:center}body.trueachievement-extras .ta-x-article-loader img{width:25px;height:25px;margin:0 auto;margin-bottom:.8rem}body.trueachievement-extras [data-ta-x-loaded] .ta-x-article-loader{display:none}body.trueachievement-extras .ta-x-snackbar{visibility:hidden;min-width:250px;margin-left:-125px;background-color:#333;text-align:center;border-radius:1.5rem;padding:16px;position:fixed;z-index:1;left:50%;bottom:30px}body.trueachievement-extras .ta-x-snackbar-show{visibility:visible;animation:fadein .5s,fadeout .5s 2.5s}body.trueachievement-extras .ta-x-snackbar h2{color:#bbb;border-left:3px solid #3f67a4}body.trueachievement-extras .ta-x-snackbar h2.warning{border-color:#f57921}body.trueachievement-extras .ta-x-snackbar h2.danger{border-color:#f52721}body.trueachievement-extras .ta-x-snackbar h2.success{border-color:#58bb12}@keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:1}}@keyframes fadeout{from{bottom:30px;opacity:1}to{bottom:0;opacity:0}}body.trueachievement-extras .ta-x-tabs-link-container{display:flex;overflow-x:auto;margin:-1rem;margin-bottom:.5rem;-ms-overflow-style:none;scrollbar-width:none}body.trueachievement-extras .ta-x-tabs-link-container li{flex-shrink:0}body.trueachievement-extras .ta-x-tabs-link-container::-webkit-scrollbar{display:none}body.trueachievement-extras .ta-x-tabs-link-container.ta-x-tabs-scroll{cursor:grabbing;transform:scale(1)}body.trueachievement-extras .ta-x-tabs-link-container.ta-x-tabs-scroll .ta-x-tabs-link{cursor:grabbing}body.trueachievement-extras .ta-x-tabs-link{padding:.6rem .75rem;user-select:none}body.trueachievement-extras .ta-x-tabs-link.ta-x-tabs-selected{border-bottom:2px solid;pointer-events:none;background:#e8e8e8}body.trueachievement-extras .ta-x-tabs-link:hover{border-bottom:2px solid;cursor:pointer}body.trueachievement-extras .ta-x-tabs-link:nth-child(1),body.trueachievement-extras .ta-x-tabs-link:nth-child(11){border-color:#58bb12}body.trueachievement-extras .ta-x-tabs-link:nth-child(2),body.trueachievement-extras .ta-x-tabs-link:nth-child(12){border-color:#2871a4}body.trueachievement-extras .ta-x-tabs-link:nth-child(3),body.trueachievement-extras .ta-x-tabs-link:nth-child(13){border-color:#cf1812}body.trueachievement-extras .ta-x-tabs-link:nth-child(4),body.trueachievement-extras .ta-x-tabs-link:nth-child(14){border-color:#c42d78}body.trueachievement-extras .ta-x-tabs-link:nth-child(5),body.trueachievement-extras .ta-x-tabs-link:nth-child(15){border-color:#9b30ff}body.trueachievement-extras .ta-x-tabs-link:nth-child(6),body.trueachievement-extras .ta-x-tabs-link:nth-child(16){border-color:#f57921}body.trueachievement-extras .ta-x-tabs-link:nth-child(7),body.trueachievement-extras .ta-x-tabs-link:nth-child(17){border-color:#294a7d}body.trueachievement-extras .ta-x-tabs-link:nth-child(8),body.trueachievement-extras .ta-x-tabs-link:nth-child(18){border-color:#000}body.trueachievement-extras .ta-x-tabs-link:nth-child(9),body.trueachievement-extras .ta-x-tabs-link:nth-child(19){border-color:#fff}body.trueachievement-extras .ta-x-tabs-link:nth-child(10),body.trueachievement-extras .ta-x-tabs-link:nth-child(20){border-color:#e9b949}body.trueachievement-extras .ta-x-tabs-content{display:none;height:10rem;overflow-y:auto;margin-right:-1rem}body.trueachievement-extras .ta-x-tabs-content[data-tab-visible]{display:flex;flex-wrap:wrap}body.trueachievement-extras [data-theme=dark] .ta-x-tabs-selected{background:#282828}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}body.trueachievement-extras .ta-x-ask-loader-container:not([data-ta-x-loaded]) article{display:block}body.trueachievement-extras .ta-x-ask-loader-container article{display:flex;justify-content:space-between}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-article-loader svg{animation-name:spin;animation-duration:2000ms;animation-iteration-count:infinite;animation-timing-function:linear;display:block;margin:auto;margin-bottom:.8rem;width:5rem}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-ask-loader-ask>div{display:flex;flex-direction:column}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-ask-loader-ask>div label{margin-bottom:.9rem}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-ask-loader-ask>div+input{width:100%;margin:0;margin-top:.9rem}body.trueachievement-extras .ta-x-ask-loader-container article .ta-x-ask-loader-ask>div+input:hover{margin-bottom:2px}body.trueachievement-extras .ta-x-y-show{transform:translateY(0);transition:transform .5s ease}body.trueachievement-extras .ta-x-y-hide{transform:translateY(-100%);transition:transform .5s ease}body.trueachievement-extras .ta-x-y-hide-no-transition{transform:translateY(-100%)}body.trueachievement-extras .ta-x-settings-menu-settings{max-height:547px;overflow-y:scroll !important;padding:0 1rem !important;padding-bottom:1rem !important;height:100%;position:relative}body.trueachievement-extras .ta-x-settings-menu-settings>div{display:block;padding:0}body.trueachievement-extras .ta-x-settings-menu-settings .frm-grp{user-select:none;margin-right:0}body.trueachievement-extras .ta-x-settings-menu-settings .frm-sel::after{top:10px}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings>div{flex-wrap:wrap}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings>div>label{max-width:80%}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-checkbox-help-text{font-size:1.2rem;padding-top:.5rem}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox{padding-top:1rem;border-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox>label{padding-bottom:.5rem;display:block}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst{width:100%;flex-wrap:wrap;justify-content:space-between}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst input.textbox{flex:1}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst input[type=submit]{margin-left:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst ul{width:100%}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst ul li>div{display:flex;justify-content:space-between;align-items:center;width:100%}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst ul li>div p{word-break:break-all}body.trueachievement-extras .ta-x-settings-menu-settings .t-settings .ta-x-listbox .frm-lst ul li>div a{margin-left:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item{position:absolute;display:none;width:313px;padding-bottom:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item-show{display:block}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper{display:flex;flex-wrap:wrap}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper a,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper a,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper a{width:100%}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h2,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h2,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h2{width:100%;line-height:unset}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h1,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h1{margin-bottom:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h2,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h2,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h2{border-top:2px solid #0e5814;border-bottom:2px solid #0e5814;padding:.5rem;font-size:1.6rem;margin:1rem 0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper p,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper p,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper p{font-size:1.4rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper{padding-bottom:0;border:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h1:not(:first-of-type){padding:.5rem 0;margin-top:1rem;border-bottom:2px solid #0552b5;border-top:2px solid #0552b5}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-documentation-wrapper h2:first-of-type{margin-top:0;margin-bottom:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper{padding-top:0;padding-bottom:0;border:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-credits-wrapper h1{border-top:2px solid #e9b949;border-bottom:2px solid #e9b949;padding:.5rem 0;margin-top:.5rem;margin-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper{border-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper h2:first-of-type{margin:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-settings-menu-changelog-wrapper ul{margin-bottom:.5rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-item .ta-x-markdown-marker{flex-basis:unset;align-self:center;padding-right:1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion{flex-wrap:wrap;border:0;padding-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion:last-of-type{padding-bottom:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header,body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body{width:100%}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header{padding:1rem;flex-shrink:unset;color:#3e4c59;cursor:pointer;user-select:none;background:#ccc}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header>label{color:#333 !important;padding:0;text-align:left;pointer-events:none;font-weight:bold}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header .frm-tgl{pointer-events:none}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header .frm-tgl>label{padding:0;pointer-events:none}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header span{width:100%;pointer-events:none}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header svg{height:20px;pointer-events:none}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header.collapsed svg{transition:all .5s linear}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-header.expanded svg{transform:rotate(-180deg)}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body{max-height:0;transition:max-height .5s ease-out;overflow:hidden}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body[data-parent-accordion-body]{border:1px solid #ccc;border-top:0;border-bottom-left-radius:1rem;border-bottom-right-radius:1rem;padding:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body[data-parent-accordion-body] .ta-x-settings-menu-settings-accordion{margin:0;padding:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion-body[data-parent-accordion-body] .ta-x-settings-menu-settings-accordion-header{border-radius:0}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion .t-settings>div{padding:1rem 0;margin:0 1rem}body.trueachievement-extras .ta-x-settings-menu-settings .ta-x-settings-menu-settings-accordion .t-settings>div:last-of-type{border:0}body.trueachievement-extras .ta-x-settings-menu-columned-setting{flex-direction:column;align-items:flex-start}body.trueachievement-extras .ta-x-settings-menu-columned-setting>div:first-of-type{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;width:100%}body.trueachievement-extras .ta-x-settings-menu-columned-setting>div:first-of-type>label{max-width:80%}body.trueachievement-extras .ta-x-settings-menu-columned-setting .frm-sel{padding-top:1rem}body.trueachievement-extras .ta-x-settings-menu-bottom{background:#4a5568;position:absolute;bottom:0;display:block;width:100%;padding:0 1rem !important}body.trueachievement-extras .ta-x-settings-menu-bottom .title{margin-bottom:0;color:#ddd;border:0}body.trueachievement-extras .ta-x-settings-menu-bottom .title a{background:unset}body.trueachievement-extras .ta-x-settings-menu-bottom .title a:hover{text-decoration:underline}body.trueachievement-extras .ta-x-settings-menu .close i{pointer-events:none}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu-bottom .buttons{border-color:#000 !important}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu-bottom .buttons a{background:#4299e1 !important}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu .ta-x-settings-menu-settings-accordion-header{color:#ddd;background:#222}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu .ta-x-settings-menu-settings-accordion-header>label{color:#ddd !important}body.trueachievement-extras [data-theme=dark] .ta-x-settings-menu .ta-x-settings-menu-settings-accordion-body[data-parent-accordion-body]{border-color:#222}body.trueachievement-extras .ta-x-sticky-header{position:fixed;top:0;width:100%}body.trueachievement-extras .ta-x-emojis .ta-x-tabs-content[data-tab-visible]{height:10rem;display:grid;grid-template-columns:repeat(5, 1fr);text-align:center}body.trueachievement-extras .ta-x-emojis .ta-x-tabs-content span{font-size:2.2rem;user-select:none}body.trueachievement-extras .ta-x-emojis .ta-x-tabs-content span:hover{cursor:pointer}body.trueachievement-extras.ta-x-staff-walkthrough-improvements{min-width:unset !important;overflow:auto}body.trueachievement-extras.ta-x-staff-walkthrough-improvements main{min-height:unset !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page{position:unset;display:flex;flex-direction:column}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector#oWalkthroughImageViewer{width:321px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .noimages,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .itemname{padding:5px;text-align:center;font-size:unset !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header{position:sticky;border-bottom:1px solid #000;display:flex;flex-direction:column;background-color:#fff}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header .noimages{margin-top:0}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector a[title="Add images"]{text-align:center;padding:5px;cursor:pointer !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector a[title="Add images"]:hover{text-decoration:underline}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .imageviewer{display:flex;flex-wrap:wrap}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .imageviewer .ivimage{position:unset;margin:5px;max-width:46%}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title{text-align:center;padding-top:3px;white-space:break-spaces}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code-button svg{width:32px;margin-left:-10px;margin-right:-4px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg{height:20px;pointer-events:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg path{fill:#555;filter:drop-shadow(21px 21px #fff);pointer-events:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg:hover path{fill:#333}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark{display:block}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle [data-ta-x-tinymce-theme=dark] svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light{display:block}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle [data-ta-x-tinymce-theme=dark] svg.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar{border-bottom:1px solid #ddd;width:var(--ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width, 0);top:var(--ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top, 0) !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector-image-title{color:#b5b9bf}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header{background-color:#2f3740}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-improved-image-selector .ta-x-sticky-header .itemname{color:#b5b9bf}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle svg path{fill:#b5b9bf;filter:drop-shadow(21px 21px #000)}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar{border-color:#232b33}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar.ta-x-y-hide{transform:translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)));transition:transform .5s ease}body.trueachievement-extras.ta-x-staff-walkthrough-improvements [data-theme=dark] .admin-page .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar.ta-x-y-hide-no-transition{transform:translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)))}body.trueachievement-extras.ta-x-staff-walkthrough-improvements>.mce-menu.mce-floatpanel{top:var(--ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu, 0) !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements[data-ta-x-theme=dark] .jscolor-wrap .jscolor-border{border:1px solid #232b33 !important;background:#404952 !important}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divWalkthroughHolder{position:unset;margin-top:unset;height:unset;display:flex;justify-content:space-between}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .buttons{display:flex}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button{display:block;flex-grow:1}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button#btnSearchWalkthrough{margin:0;margin-bottom:3px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .button#btnSearchWalkthrough:hover{margin-bottom:5px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #divSearchWalkthrough .clearboth{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughs,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chEditWalkthrough,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughAchievements,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughGames,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughGamers,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chWalkthroughOtherSiteLink{position:unset;top:unset;left:unset;display:block;margin:0}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #chEditWalkthrough{flex:1;margin:0 1.5rem;height:fit-content}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page #btnWalkthrough{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-manage-walkthrough-page-container{display:flex;flex-direction:column;justify-content:space-around}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container{display:flex}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions,body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPagePreview{margin-left:0;position:unset;width:unset}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPagePreview{flex:1}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions{height:100%}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history{position:relative;top:var(--ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top, 0)}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-y-hide{transform:translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)));transition:transform .5s ease}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions.ta-x-y-hide-no-transition{transform:translateY(calc(-1 * var(--ta-x-sticky-header-height, 0)))}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions .content .buttons{display:flex;justify-content:center;flex-direction:column}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions .content .buttons .button{flex:1}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions .content .buttons .button:not(:first-of-type){margin-top:5px}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container #chWalkthroughPageVersions .content .buttons .clearboth{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-move-buttons-to-left #chWalkthroughPagePreview .content .buttons{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements .admin-page .ta-x-staff-walkthrough-improvements-walkthrough-page-container.ta-x-staff-walkthrough-improvements-walkthrough-page-move-buttons-to-left #chWalkthroughPagePreview .content .buttons .clearboth{display:none}body.trueachievement-extras.ta-x-staff-walkthrough-improvements main{max-width:unset}body.trueachievement-extras.ta-x-staff-walkthrough-improvements main .admin-page .walkthroughsummary+.walkthroughpagelinks{flex-direction:column}body.trueachievement-extras.ta-x-staff-walkthrough-improvements main .admin-page .walkthroughsummary+.walkthroughpagelinks a.next{margin-left:0}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress:not([data-ta-x-loaded]) article{display:block}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article{display:flex;justify-content:space-between}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .walthroughprogress{display:flex;justify-content:center;align-items:center;width:100%}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .walthroughprogress .walkthroughauthor{margin-right:1rem}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .walthroughprogress .clearboth{display:none}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor-wrapper{display:flex;flex-direction:column;justify-content:center;flex-basis:100%}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor-row{display:flex;align-items:center;margin-bottom:1rem}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor-row:last-of-type{margin-bottom:0}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .ta-x-forum-improvements-walkthroughs-show-owner-progress-editor{margin-left:1rem}body.trueachievement-extras.ta-x-forum-improvements .ta-x-forum-improvements-walkthroughs-show-owner-progress article .thanks{display:flex;flex-direction:column;align-items:center;padding-left:1rem;justify-content:center}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .last,body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .stats,body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .author-pages,body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .read,body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] .stack{display:none}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] p.ta-x-forum-improvements-filter-threads-title{font-weight:700;font-size:1.6rem}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] p:not(.ta-x-forum-improvements-filter-threads-title){display:none}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=true] a.ta-x-forum-improvements-filter-threads-unhide{font-size:1.4rem}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=false] p.ta-x-forum-improvements-filter-threads-title{display:none}body.trueachievement-extras.ta-x-forum-improvements [data-thread-hidden=false] a.ta-x-forum-improvements-filter-threads-unhide{display:none}body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer .ta-x-xboxachievements-icon{width:36px;height:36px}@media(min-width: 768px){body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer .ta-x-xboxachievements-icon{width:70px;height:70px}}body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer a{flex:none}@media(min-width: 768px){body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer svg{margin-bottom:1rem}}@media(max-width: 767px){body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer svg{margin-right:1rem}}@media(max-width: 767px){body.trueachievement-extras .ta-x-games-improvements-achievements-achievement-guide.gamer>.info{display:block;margin-left:1rem}}@media(max-width: 575px){body.trueachievement-extras a.ta-x-game-achievements-achievement-leaderboard-links{display:none}}@media(min-width: 576px){body.trueachievement-extras div.ta-x-game-achievements-achievement-leaderboard-links{display:none}}`;
         /* harmony default export */ const scss = (scss_styles);
     
 ;// CONCATENATED MODULE: ./src/features/styles.ts
@@ -8894,11 +8972,11 @@ const addGroupByGameButton = async () => {
 
 
 /* harmony default export */ const features_styles = (async () => {
-    if (!(await (0,utilities/* waitForElement */.br)('body'))) {
-        return;
-    }
-    document.body.classList.add(globals/* Constants */.gT.Styles.root);
-    GM_addStyle(scss);
+  if (!await (0,utilities/* waitForElement */.br)("body")) {
+    return;
+  }
+  document.body.classList.add(globals/* Constants */.gT.Styles.root);
+  GM_addStyle(scss);
 });
 
 ;// CONCATENATED MODULE: ./src/features/index.ts
@@ -8918,30 +8996,34 @@ const addGroupByGameButton = async () => {
 
 
 
-ajax_interceptor.addRequestCallback((xhr) => pub_sub.publish('ajaxIntercept:request', xhr));
-ajax_interceptor.addResponseCallback((xhr) => pub_sub.publish('ajaxIntercept:response', xhr));
+ajax_interceptor.addRequestCallback((xhr) => pub_sub.publish("ajaxIntercept:request", xhr));
+ajax_interceptor.addResponseCallback((xhr) => pub_sub.publish("ajaxIntercept:response", xhr));
 ajax_interceptor.wire();
 (async () => {
-    (0,utilities/* allConcurrently */.Eh)('Components', [
-        { name: 'component:snackbar', task: snackbar },
-        { name: 'component:accordion', task: accordion },
-        { name: 'component:tabs', task: tabs }
-    ]);
-    (0,utilities/* allConcurrently */.Eh)('Features', [
-        { name: 'feature:styles', task: features_styles },
-        { name: 'feature:settings-menu', task: settings_menu },
-        { name: 'feature:sticky-header', task: sticky_header },
-        { name: 'feature:staff-walkthrough-improvements', task: staff_walkthrough_improvements },
-        { name: 'feature:forum-improvements', task: forum_improvements },
-        { name: 'feature:news-improvements', task: news_improvements },
-        { name: 'feature:games-improvements', task: features_games_improvements },
-        { name: 'feature:gamer-improvements', task: features_gamer_improvements },
-        { name: 'feature:emojis', task: features_emojis }
-    ], 4);
-    (0,utilities/* allConcurrently */.Eh)('Cache', [
-        { name: 'cache:expired', task: globals/* Cache */.Ct.clearExpired.bind(globals/* Cache */.Ct) },
-        { name: 'cache:legacy', task: globals/* Cache */.Ct.clearLegacy.bind(globals/* Cache */.Ct) }
-    ]);
+  (0,utilities/* allConcurrently */.Eh)("Components", [
+    { name: "component:snackbar", task: snackbar_snackbar },
+    { name: "component:accordion", task: accordion },
+    { name: "component:tabs", task: tabs }
+  ]);
+  (0,utilities/* allConcurrently */.Eh)(
+    "Features",
+    [
+      { name: "feature:styles", task: features_styles },
+      { name: "feature:settings-menu", task: settings_menu },
+      { name: "feature:sticky-header", task: sticky_header },
+      { name: "feature:staff-walkthrough-improvements", task: staff_walkthrough_improvements },
+      { name: "feature:forum-improvements", task: forum_improvements },
+      { name: "feature:news-improvements", task: news_improvements },
+      { name: "feature:games-improvements", task: features_games_improvements },
+      { name: "feature:gamer-improvements", task: features_gamer_improvements },
+      { name: "feature:emojis", task: features_emojis }
+    ],
+    4
+  );
+  (0,utilities/* allConcurrently */.Eh)("Cache", [
+    { name: "cache:expired", task: globals/* Cache */.Ct.clearExpired.bind(globals/* Cache */.Ct) },
+    { name: "cache:legacy", task: globals/* Cache */.Ct.clearLegacy.bind(globals/* Cache */.Ct) }
+  ]);
 })();
 
 })();

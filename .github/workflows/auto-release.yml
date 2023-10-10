@@ -88,20 +88,8 @@ jobs:
         git config --local user.name "GitHub Action"
         git add dist/*.js
         git commit -m "${{ env.PACKAGE_VERSION }}"
+        git tag ${{ env.PACKAGE_VERSION }}
         git push
       if: env.SKIP_STEPS != 'true'
       env:
         HUSKY_SKIP_HOOKS: true
-        
-    - name: Create tag
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          await github.git.createRef({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            ref: `refs/tags/${{ env.PACKAGE_VERSION }}`,
-            sha: context.sha
-          })
-      if: env.SKIP_STEPS != 'true'
