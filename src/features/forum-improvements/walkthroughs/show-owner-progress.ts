@@ -20,7 +20,7 @@ const applyBody = async (): Promise<void> => {
   extensionBody = asideColumn.querySelector(`.${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`);
   askForWalkthroughBody = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`);
 
-  getAchievementWalkthroughUrl();
+  await getAchievementWalkthroughUrl();
 };
 
 const listen = (): void => {
@@ -28,9 +28,10 @@ const listen = (): void => {
   const input = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
 
   button.addEventListener('click', async (e: Event) => {
-    if (!(e.target instanceof HTMLElement)) {
+    if (!(e.target as Element)?.nodeName) {
       return;
     }
+
     e.preventDefault();
     e.stopPropagation();
 
@@ -38,6 +39,7 @@ const listen = (): void => {
       if (input.value === '') {
         return;
       }
+
       if (!GamesRegex.Test.walkthroughUrl(input.value)) {
         return;
       }
@@ -62,9 +64,10 @@ const getAchievementWalkthroughUrl = async (): Promise<void> => {
       if (url) {
         return;
       }
+
       if (
-        SentencesRegex.discussWalkthrough.test(el.textContent) ||
-        SentencesRegex.walkthroughPublished.test(el.textContent)
+        SentencesRegex.discussWalkthrough.test(el.innerText) ||
+        SentencesRegex.walkthroughPublished.test(el.innerText)
       ) {
         const anchor = el.querySelector('a') as HTMLAnchorElement;
 
@@ -86,7 +89,7 @@ const getAchievementWalkthroughUrl = async (): Promise<void> => {
     }
   }
 
-  getOwnerProgress(url);
+  await getOwnerProgress(url);
 };
 
 const getOwnerProgress = async (url: string): Promise<void> => {

@@ -1,6 +1,5 @@
 @import '../../variables';
 
-/* stylelint-disable selector-id-pattern */
 body {
   &.trueachievement-extras {
     &.ta-x-staff-walkthrough-improvements {
@@ -65,7 +64,7 @@ body {
           }
         }
 
-        .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle {
+        .mce-ta-x-tinymce-group {
           svg {
             height: 20px;
             pointer-events: none;
@@ -133,7 +132,7 @@ body {
             }
           }
 
-          .ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle {
+          .mce-ta-x-tinymce-group {
             svg {
               path {
                 fill: #b5b9bf;
@@ -185,4 +184,3 @@ body {
     }
   }
 }
-/* stylelint-enable selector-id-pattern */

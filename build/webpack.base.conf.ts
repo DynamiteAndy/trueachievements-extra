@@ -3,10 +3,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import StatoscopeWebpackPlugin from '@statoscope/webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { minify } from '@minify-html/node';
-import Handlebars from 'handlebars';
-import register from './handlebars/register';
-
-register();
+import Handlebars from './handlebars';
 
 const minifyHtmlConfig = {
   do_not_minify_doctype: false,
@@ -61,10 +58,16 @@ export const baseConfig = {
         loader: 'html-loader',
         options: {
           sources: false,
-          preprocessor: (content: string) => {
-            const result = minify(Buffer.from(content), minifyHtmlConfig).toString();
+          preprocessor: (content: string, loaderContext) => {
+            try {
+              const result = minify(Buffer.from(content), minifyHtmlConfig).toString();
 
-            return result;
+              return result;
+            } catch (error) {
+              loaderContext.emitError(error);
+
+              return content;
+            }
           }
         }
       },
@@ -81,7 +84,12 @@ export const baseConfig = {
       },
       {
         test: /\.s?[ac]ss$/i,
-        use: ['sass-to-string', 'sass-loader']
+        use: [
+          {
+            loader: resolve(__dirname, './loaders/sass-to-string-loader.ts')
+          },
+          'sass-loader'
+        ]
       },
       {
         test: require.resolve('emoji.json'),

@@ -186,7 +186,7 @@ App_Data
 # Userscript Files
 !build/
 dist/*
-coverage
+jest-reports
 .nyc_output
 config.json
 

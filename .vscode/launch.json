@@ -13,6 +13,20 @@
       "preLaunchTask": "npm: start",
       "port": 9222,
       "postDebugTask": "Terminate All Tasks"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Current Test",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "${workspaceRoot}/node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--no-cache",
+        "--runTestsByPath",
+        "${relativeFile}"
+      ],
+      "console": "integratedTerminal"
     }
   ]
 }

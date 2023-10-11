@@ -24,7 +24,7 @@ const applyBody = async (): Promise<void> => {
   );
   askForLinkBody = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`);
 
-  getAchievementWalkthroughUrl();
+  await getAchievementWalkthroughUrl();
 };
 
 const listen = (): void => {
@@ -32,14 +32,15 @@ const listen = (): void => {
   const input = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
 
   button.addEventListener('click', async (e: Event) => {
-    if (!(e.target instanceof HTMLElement)) {
+    if (!(e.target as Element)?.nodeName) {
       return;
     }
+
     e.preventDefault();
     e.stopPropagation();
 
     try {
-      if (input.value === '') {
+      if (!input.value) {
         return;
       }
 
@@ -49,8 +50,10 @@ const listen = (): void => {
 
       toggleAskForLink();
 
-      if (AchievementsRegex.Test.achievementUrl) {
+      if (AchievementsRegex.Test.achievementUrl()) {
         await getAchievementGuide(input.value);
+      } else {
+        hideBody();
       }
     } catch {
       return;
@@ -64,7 +67,7 @@ const getGameName = () =>
 const getAchievementWalkthroughUrl = async (): Promise<void> => {
   const cachedXboxAchievementGuideUrls = Cache.gameAchievementsXboxAchievementsGuideUrl;
   const gameName = getGameName();
-  const url = gameName ? cachedXboxAchievementGuideUrls.get(gameName) : null;
+  const url = cachedXboxAchievementGuideUrls.get(gameName);
 
   if (!url) {
     toggleAskForLink();
@@ -72,7 +75,7 @@ const getAchievementWalkthroughUrl = async (): Promise<void> => {
   }
 
   if (AchievementsRegex.Test.achievementUrl()) {
-    getAchievementGuide(url);
+    await getAchievementGuide(url);
   } else {
     hideBody();
   }
@@ -100,7 +103,7 @@ const getAchievementGuide = async (url: string): Promise<void> => {
   const cachedXboxAchievementGuideUrls = Cache.gameAchievementsXboxAchievementsGuideUrl;
   const gameName = getGameName();
 
-  if (gameName && !cachedXboxAchievementGuideUrls.has(gameName)) {
+  if (!cachedXboxAchievementGuideUrls.has(gameName)) {
     cachedXboxAchievementGuideUrls.set(gameName, url);
     Cache.gameAchievementsXboxAchievementsGuideUrl = cachedXboxAchievementGuideUrls;
   }

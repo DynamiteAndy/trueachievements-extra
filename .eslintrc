@@ -8,12 +8,8 @@
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "parserOptions": { "project": ["./tsconfig.json"] },
-  "plugins": [
-    "@typescript-eslint",
-    "import",
-    "prettier"
-  ],
+  "parserOptions": { "project": ["./tsconfig.json"], "sourceType": "module" },
+  "plugins": ["@typescript-eslint", "import", "prettier"],
   "rules": {
     "semi": ["error", "always"],
     "no-console": 0,
@@ -49,11 +45,37 @@
       "typescript": {},
       "node": {
         "paths": ["./src"],
-        "extensions": [".js", ".ts" ]
+        "extensions": [".js", ".ts"]
       },
       "webpack": {
         "config": "./build/webpack.base.conf.ts"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["./test/transformers/**/*.ts"],
+      "parserOptions": {
+        "sourceType": "script"
+      },
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": ["./src/**/*.spec.ts"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+        "plugin:jest/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "plugins": ["@typescript-eslint", "import", "jest", "prettier"],
+      "rules": {
+        "jest/no-standalone-expect": "off"
+      }
+    }
+  ]
 }

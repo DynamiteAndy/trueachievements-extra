@@ -17,7 +17,7 @@ export const accordion = (): void => {
     if (target.hasAttribute('data-checkbox-accordion')) {
       const toggle = target.querySelector('input') as HTMLInputElement;
       toggle.checked = target.classList.contains('expanded');
-      dispatchEvent('change', toggle);
+      dispatchEvent(toggle, 'change');
     }
 
     const content = target.nextElementSibling as HTMLElement;
