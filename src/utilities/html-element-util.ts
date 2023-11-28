@@ -4,14 +4,7 @@ export const isCheckboxElement = (el: HTMLElement): boolean =>
 
 export const classListContains = (element: HTMLElement, classes: string | string[]): boolean => {
   const classArray = Array.isArray(classes) ? classes : [classes];
-
-  for (let i = 0; i < classArray.length; i++) {
-    if (element.classList.contains(classArray[i])) {
-      return true;
-    }
-  }
-
-  return false;
+  return classArray.some((className: string) => element.classList.contains(className));
 };
 
 export const waitForElement = (
@@ -20,20 +13,17 @@ export const waitForElement = (
   timeoutMS = 10000
 ): Promise<HTMLElement> =>
   new Promise((resolve) => {
-    if (element === null) {
-      return null;
-    }
-    if (element === document.documentElement) {
-      element = document.documentElement;
+    if (!element) {
+      return resolve(null);
     }
 
-    if (element.querySelector(selector)) {
-      return resolve(element.querySelector(selector) as HTMLElement);
+    const foundElement = element.querySelector(selector);
+    if (foundElement) {
+      return resolve(foundElement as HTMLElement);
     }
 
-    /* eslint-disable prefer-const */
+    // eslint-disable-next-line prefer-const
     let observer: MutationObserver;
-    /* eslint-enable prefer-const */
 
     const timeout = setTimeout(() => {
       observer.disconnect();
@@ -41,10 +31,11 @@ export const waitForElement = (
     }, timeoutMS);
 
     observer = new MutationObserver(() => {
-      if (element.querySelector(selector)) {
+      const foundElement = element.querySelector(selector);
+      if (foundElement) {
         observer.disconnect();
         clearTimeout(timeout);
-        resolve(element.querySelector(selector) as HTMLElement);
+        resolve(foundElement as HTMLElement);
       }
     });
 
@@ -60,20 +51,17 @@ export const waitForElements = (
   timeoutMS = 10000
 ): Promise<HTMLElement[]> =>
   new Promise((resolve) => {
-    if (element === null) {
-      return null;
-    }
-    if (element === document.documentElement) {
-      element = document.documentElement;
+    if (!element) {
+      return resolve(null);
     }
 
-    if (element.querySelector(selector)) {
-      return resolve([...element.querySelectorAll(selector)] as HTMLElement[]);
+    const elements = element.querySelectorAll(selector);
+    if (elements.length > 0) {
+      return resolve(Array.from(elements) as HTMLElement[]);
     }
 
-    /* eslint-disable prefer-const */
+    // eslint-disable-next-line prefer-const
     let observer: MutationObserver;
-    /* eslint-enable prefer-const */
 
     const timeout = setTimeout(() => {
       observer.disconnect();
@@ -81,10 +69,11 @@ export const waitForElements = (
     }, timeoutMS);
 
     observer = new MutationObserver(() => {
-      if (element.querySelector(selector)) {
+      const elements = element.querySelectorAll(selector);
+      if (elements.length > 0) {
         observer.disconnect();
         clearTimeout(timeout);
-        resolve([...element.querySelectorAll(selector)] as HTMLElement[]);
+        resolve(Array.from(elements) as HTMLElement[]);
       }
     });
 
@@ -114,29 +103,8 @@ export const removeAllChildren = (element: HTMLElement): void => {
   }
 };
 
-// TA-X Elements
-
-export const isTAXListElement = (el: HTMLElement): boolean => {
-  if (el.nodeName !== 'DIV' || !el.classList.contains('.frm-lst')) {
-    return false;
-  }
-  return el.querySelector(`#${el.getAttribute('data-list-id')}`) !== null;
-};
-
-export const isTAXChildListElement = (el: HTMLElement): boolean => {
-  if (!el.getAttribute('data-for-list')) {
-    return false;
-  }
-  const parent = el.closest('.frm-lst');
-
-  if (parent === null) {
-    return false;
-  }
-  return parent.querySelector(`#${parent.getAttribute('data-list-id')}`) !== null;
-};
-
-export const waitForImages = (el: HTMLElement): Promise<void> => {
-  return new Promise((resolve) => {
+export const waitForImages = (el: HTMLElement): Promise<void> =>
+  new Promise((resolve) => {
     const allImgs: { src: string; element: HTMLImageElement }[] = [];
     const filtered = ([...el.querySelectorAll('img')] as HTMLImageElement[]).filter((imgEl: HTMLImageElement) => {
       if (imgEl.src === '') {
@@ -178,4 +146,26 @@ export const waitForImages = (el: HTMLElement): Promise<void> => {
       image.src = img.src;
     });
   });
+
+// TA-X Elements
+
+export const isTAXListElement = (el: HTMLElement): boolean => {
+  if (el.nodeName !== 'DIV' || !el.classList.contains('.frm-lst')) {
+    return false;
+  }
+
+  return el.querySelector(`#${el.getAttribute('data-list-id')}`) !== null;
+};
+
+export const isTAXChildListElement = (el: HTMLElement): boolean => {
+  if (!el.getAttribute('data-for-list')) {
+    return false;
+  }
+
+  const parent = el.closest('.frm-lst');
+  if (parent === null) {
+    return false;
+  }
+
+  return parent.querySelector(`#${parent.getAttribute('data-list-id')}`) !== null;
 };

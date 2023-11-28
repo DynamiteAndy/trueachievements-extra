@@ -17,6 +17,7 @@
       "@ta-x-partials/*": ["./views/partials/*"],
       "@ta-x-globals": ["./globals/index"],
       "@ta-x-utilities": ["./utilities/index"],
+      "@ta-x-utilities/*": ["./utilities/*"],
       "@ta-x-models": ["./models/index"],
       "@ta-x-components": ["./components/index"],
       "@ta-x-helpers": ["./helpers/index"],
@@ -28,7 +29,9 @@
       "@ta-x-views/*": ["./views/*"],
       "@ta-x-svgs/*": ["./resources/svgs/*"],
       "@ta-x-project-root/*": ["../*"],
-      "@ta-x-jasmine": ["../test/jasmine/index"]
+      "@ta-x-jest": ["../test/jest/index"],
+      "@ta-x-jest/*": ["../test/jest/*"],
+      "@ta-x-jest-views/*": ["../test/html/*"]
     }
   }
 }

@@ -1,0 +1,1347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Achievements Won With Dlc</title>
+  </head>
+  <body>
+    <main>
+      <div class="pnl-hd no-pills no-pr game">
+        <div class="info">
+          <div class="img">
+            <i class="fa fa-download"></i>
+            <span>Add-on</span>
+          </div>
+          <h2>
+            <a href="/game/Gears-of-War-Judgment/achievements">
+              Overall DLC Stats
+            </a>
+          </h2>
+          <div class="l l1">
+            <div title="Maximum TrueAchievement">
+              <i class="tgn-icon ta-emb md"></i>
+              <span>1,514</span>
+            </div>
+            <div title="Maximum Gamerscore">
+              <i class="tgn-icon ta-gs invt md"></i>
+              <span>500</span>
+            </div>
+            <div title="Maximum achievements">
+              <i class="fa fa-trophy"></i>
+              <span>20</span>
+            </div>
+          </div>
+          <div class="l l2">
+            <div>
+              <span title="3.2 out of 5 from 217 votes">
+                <i class="fa fa-star"></i>
+                3.2
+              </span>
+            </div>
+            <div>
+              <span title="22,218 gamers have played at least one DLC">
+                <i class="fa fa-user"></i>
+                22,218
+              </span>
+            </div>
+            <div>
+              <span title="All DLCs completed by 3,660 TrueAchievements gamers">
+                <i class="fa fa-check"></i>
+                3,660 (16%)
+              </span>
+            </div>
+            <div>
+              <span title="Estimated time to unlock all DLC achievements">
+                <i class="fa fa-clock-o"></i>
+                8-10h
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="options"></div>
+        <div class="bg">
+          <img
+            src="/gameimage/Gears-of-War-Judgment_4.jpg"
+            alt="Overall DLC Stats"
+            title="Overall DLC Stats"
+            fetchpriority="high"
+            width="450"
+            height="175"
+            srcset="/gameimagem/Gears-of-War-Judgment_4.jpg 2x" />
+        </div>
+      </div>
+      <h1 class="gh pagetitle">Gears of War: Judgment DLC Achievements</h1>
+      <div class="gh-btn gh">
+        <div>
+          <p>
+            Full list of all 70 Gears of War: Judgment achievements worth 1,500
+            gamerscore. It takes around 50-60 hours to unlock all of the
+            achievements in the base game.
+          </p>
+          <p>
+            The base game contains 50 achievements worth 1,000 Gamerscore, and
+            there are 2 DLC packs containing 20 achievements worth 500
+            Gamerscore.
+          </p>
+        </div>
+        <a
+          class="button menubutton"
+          href="#"
+          id="btnFlagFilter"
+          onclick="MenuButton_Toggle('btnFlagFilter'); return false;"
+          title="Filter">
+          <span
+            class="icon-button-arrow-down droparrow"
+            id="btnFlagFilter_DropArrow"></span>
+          Filter
+        </a>
+        <ul
+          id="btnFlagFilter_Options"
+          style="display: none"
+          class="menuitems rightaligned filterbutton">
+          <li class="fp">
+            <div class="title">
+              Achievement View
+              <a
+                href="#"
+                onclick="Game.SaveListViewSettings();return false;"
+                title="Save as default options">
+                <img
+                  src="/images/icons/save.png"
+                  alt="Save as default options"
+                  width="16"
+                  height="16" />
+              </a>
+            </div>
+            <div>
+              <span>View</span>
+              <div>
+                <div class="frm-grp frm-rad">
+                  <input
+                    type="radio"
+                    name="GameView"
+                    id="optImageView"
+                    value="optImageView"
+                    class="radiobutton"
+                    checked="checked" />
+                  <label class="" for="optImageView">Image view</label>
+                </div>
+                <div class="frm-grp frm-rad">
+                  <input
+                    type="radio"
+                    name="GameView"
+                    id="optListView"
+                    value="optListView"
+                    class="secondoption" />
+                  <label class="" for="optListView">List view</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <span>Sort by</span>
+              <div class="frm-grp frm-chk">
+                <input
+                  type="checkbox"
+                  class="checkbox"
+                  name="chkSortByWonFirst"
+                  id="chkSortByWonFirst"
+                  value="True"
+                  checked="" />
+                <label class="checkboxcaption" for="chkSortByWonFirst">
+                  Won first
+                </label>
+              </div>
+            </div>
+            <div class="gamesort">
+              <span>then by</span>
+              <div class="frm-sel">
+                <select
+                  id="ddlListOrder"
+                  name="ddlListOrder"
+                  class="order dropdown cs-n">
+                  <option value="TrueAchievement desc">
+                    TrueAchievement desc
+                  </option>
+                  <option value="TrueAchievement">TrueAchievement asc</option>
+                  <option value="AchievementName">Achievement name</option>
+                  <option value="AchievementName desc">
+                    Achievement name desc
+                  </option>
+                  <option value="GamerScore desc">GamerScore desc</option>
+                  <option value="GamerScore">GamerScore asc</option>
+                  <option value="TARatio desc">TA Ratio desc</option>
+                  <option value="TARatio">TA Ratio asc</option>
+                  <option value="GamersWithAchievement desc">
+                    Gamers desc
+                  </option>
+                  <option value="GamersWithAchievement">Gamers asc</option>
+                  <option value="OfficialOrder" selected="selected">
+                    Xbox.com order
+                  </option>
+                  <option value="WonTimeStamp desc">Date won desc</option>
+                  <option value="WonTimeStamp">Date won asc</option>
+                </select>
+              </div>
+            </div>
+          </li>
+          <li class="fp">
+            <div class="title">
+              DLC
+              <a
+                href="#"
+                onclick="Game.SaveListDLCSettings();return false;"
+                title="Save as default options">
+                <img
+                  src="/images/icons/save.png"
+                  alt="Save as default options"
+                  width="16"
+                  height="16" />
+              </a>
+            </div>
+            <div>
+              <span>Packs</span>
+              <div class="frm-grp frm-chk">
+                <input
+                  type="checkbox"
+                  class="checkbox second"
+                  name="chkGroupDLC"
+                  id="chkGroupDLC"
+                  value="True"
+                  checked="" />
+                <label class="checkboxcaption" for="chkGroupDLC">
+                  Group DLC packs together in list
+                </label>
+              </div>
+            </div>
+            <div>
+              <span>DLC Filter</span>
+              <div>
+                <div class="frm-grp frm-rad">
+                  <input
+                    type="radio"
+                    name="DLCView"
+                    id="optAllDLC"
+                    value="optAllDLC"
+                    class="radiobutton"
+                    checked="checked" />
+                  <label class="" for="optAllDLC">All</label>
+                </div>
+                <div class="frm-grp frm-rad">
+                  <input
+                    type="radio"
+                    name="DLCView"
+                    id="optDLCIOwn"
+                    value="optDLCIOwn"
+                    class="radiobutton" />
+                  <label class="" for="optDLCIOwn">Owned</label>
+                </div>
+                <div class="frm-grp frm-rad">
+                  <input
+                    type="radio"
+                    name="DLCView"
+                    id="optNoDLC"
+                    value="optNoDLC"
+                    class="radiobutton"
+                    disabled="" />
+                  <label class="" for="optNoDLC">None</label>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="fp">
+            <div class="title">
+              Flag Filter
+              <span
+                onclick="Game.SelectAllFlags();return false;"
+                title="Select all flags">
+                All
+              </span>
+              <span
+                onclick="Game.ClearAllFlags();return false;"
+                title="Clear all flags">
+                None
+              </span>
+            </div>
+            <div class="flagfilter">
+              <ul>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_3"
+                      id="chkFlag_3"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_3">
+                      <i class="1" style="--y: 1"></i>
+                      <b>5</b>
+                      Online Game Mode
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_5"
+                      id="chkFlag_5"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_5">
+                      <i class="2" style="--y: 2"></i>
+                      <b>15</b>
+                      Online/Offline
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_6"
+                      id="chkFlag_6"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_6">
+                      <i class="3" style="--y: 3"></i>
+                      <b>1</b>
+                      Single Player
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_39"
+                      id="chkFlag_39"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_39">
+                      <i class="4" style="--y: 4"></i>
+                      <b>2</b>
+                      Cooperative
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_40"
+                      id="chkFlag_40"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_40">
+                      <i class="5" style="--y: 5"></i>
+                      <b>18</b>
+                      Versus
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_10"
+                      id="chkFlag_10"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_10">
+                      <i class="9" style="--y: 9"></i>
+                      <b>2</b>
+                      Difficulty Specific
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_13"
+                      id="chkFlag_13"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_13">
+                      <i class="13" style="--y: 13"></i>
+                      <b>7</b>
+                      Cumulative +
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_PR_5"
+                      id="chkFlag_PR_5"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_PR_5">
+                      <i class="34" style="--y: 34"></i>
+                      <b>4</b>
+                      x5 Players Required
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_42"
+                      id="chkFlag_42"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_42">
+                      <i class="21" style="--y: 21"></i>
+                      <b>1</b>
+                      External Content
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="frm-grp frm-chk">
+                    <input
+                      type="checkbox"
+                      class="checkbox"
+                      name="chkFlag_22"
+                      id="chkFlag_22"
+                      value="True"
+                      checked="" />
+                    <label class="checkboxcaption" for="chkFlag_22">
+                      <i class="24" style="--y: 24"></i>
+                      <b>1</b>
+                      Buggy -
+                    </label>
+                  </div>
+                </li>
+              </ul>
+              <div class="clearboth"></div>
+            </div>
+            <div>
+              <span class="lnk-flags">Link flags</span>
+              <div>
+                <div class="frm-grp frm-rad">
+                  <input
+                    type="radio"
+                    name="FlagJoin"
+                    id="optFlagOr"
+                    value="optFlagOr"
+                    class="radiobutton"
+                    checked="checked" />
+                  <label class="" for="optFlagOr">OR join</label>
+                </div>
+                <div class="frm-grp frm-rad">
+                  <input
+                    type="radio"
+                    name="FlagJoin"
+                    id="optFlagAnd"
+                    value="optFlagAnd"
+                    class="radiobutton" />
+                  <label class="" for="optFlagAnd">AND join</label>
+                </div>
+              </div>
+            </div>
+            <div class="wide-chk">
+              <div class="frm-grp frm-chk alg-r">
+                <input
+                  type="checkbox"
+                  class="checkbox"
+                  name="chkFlagNot"
+                  id="chkFlagNot"
+                  value="True" />
+                <label class="checkboxcaption" for="chkFlagNot">
+                  Achievements
+                  <b>without these</b>
+                  flags
+                </label>
+              </div>
+            </div>
+          </li>
+          <li class="buttons w-info">
+            <div>
+              <a href="/help/achievementflags">
+                What are achievement flags? Click to find out
+              </a>
+            </div>
+            <a
+              class="button"
+              href="#"
+              id="btnApply"
+              onclick="Postback('btnApply_click', null, null, 'https://www.trueachievements.com/game/Gears-of-War-Judgment/dlc?filter=1');return false;"
+              title="Apply">
+              <span class="icon-tick" title="Apply"></span>
+              Apply
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="frm-row frm-chk-grp">
+        <div class="frm-grp">
+          <input
+            type="radio"
+            name="AchievementsFilter"
+            id="rdoAllAchievements"
+            value="rdoAllAchievements"
+            class="radiobutton"
+            checked="checked"
+            onclick="javascript:Postback('AchievementsFilter','rdoAllAchievements')" />
+          <label class="nolabel" for="rdoAllAchievements">All</label>
+        </div>
+        <div class="frm-grp">
+          <input
+            type="radio"
+            name="AchievementsFilter"
+            id="rdoWonAchievements"
+            value="rdoWonAchievements"
+            class="radiobutton"
+            onclick="javascript:Postback('AchievementsFilter','rdoWonAchievements')" />
+          <label class="nolabel" for="rdoWonAchievements">Won</label>
+        </div>
+        <div class="frm-grp">
+          <input
+            type="radio"
+            name="AchievementsFilter"
+            id="rdoNotWonAchievements"
+            value="rdoNotWonAchievements"
+            class="radiobutton"
+            onclick="javascript:Postback('AchievementsFilter','rdoNotWonAchievements')" />
+          <label class="nolabel" for="rdoNotWonAchievements">Not won</label>
+        </div>
+      </div>
+      <ul class="ach-panels"></ul>
+      <div class="pnl-hd no-pills no-pr game dlc">
+        <div class="info">
+          <div class="img">
+            <i class="fa fa-download"></i>
+            <span>Add-on</span>
+          </div>
+          <h2>
+            <a
+              href="/game/Gears-of-War-Judgment/dlc/Call-to-Arms?gamerid=96119">
+              Call to Arms
+            </a>
+          </h2>
+          <div class="l l1">
+            <div title="Maximum TrueAchievement">
+              <i class="tgn-icon ta-emb md"></i>
+              <span>775</span>
+            </div>
+            <div title="Maximum Gamerscore">
+              <i class="tgn-icon ta-gs md invt"></i>
+              <span>250</span>
+            </div>
+            <div title="Maximum Achievements">
+              <i class="fa fa-trophy"></i>
+              <span>10</span>
+            </div>
+          </div>
+          <div class="l l2">
+            <div>
+              <span title="3.23 out of 5 from 110 votes">
+                <i class="fa fa-star"></i>
+                <a
+                  id="aRateDLC_4522"
+                  data-dlc-id="4522"
+                  onclick="showGameRatingDropDown(this)">
+                  rate...
+                </a>
+                <div class="frm-sel">
+                  <select
+                    id="ddlGamerDLCRating_4522"
+                    name="ddlGamerDLCRating_4522"
+                    class="dropdown cs-n">
+                    <option>-</option>
+                    <option value="5.0">5.0</option>
+                    <option value="4.5">4.5</option>
+                    <option value="4.0">4.0</option>
+                    <option value="3.5">3.5</option>
+                    <option value="3.0">3.0</option>
+                    <option value="2.5">2.5</option>
+                    <option value="2.0">2.0</option>
+                    <option value="1.5">1.5</option>
+                    <option value="1.0">1.0</option>
+                    <option value="0.5">0.5</option>
+                  </select>
+                </div>
+              </span>
+            </div>
+            <div>
+              <span title="Played by 18,672 gamers">
+                <i class="fa fa-user"></i>
+                18,672
+              </span>
+            </div>
+            <div>
+              <span title="Completed by 3,718 TrueAchievements gamers">
+                <i class="fa fa-check"></i>
+                3,718 (20%)
+              </span>
+            </div>
+            <div>
+              <span title="Estimated time to unlock all achievements">
+                <i class="fa fa-clock-o"></i>
+                4-5h
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="options">
+          <span
+            onclick="ImagerShare.share('https://img.trueachievements.com/dlc/4522/96119?v=10', '', 'Call to Arms')"
+            class="button menubutton dd-share">
+            <i class="fa fa-share-alt"></i>
+          </span>
+          <a
+            class="button menubutton dd-ellipses"
+            href="#"
+            id="btnDLC_4522"
+            onclick="MenuButton_Toggle('btnDLC_4522'); return false;"
+            title="DLC">
+            <span
+              class="icon-button-arrow-down droparrow"
+              id="btnDLC_4522_DropArrow"></span>
+            <span>DLC</span>
+          </a>
+          <ul id="btnDLC_4522_Options" style="display: none" class="menuitems">
+            <li>
+              <a href="javascript:Postback('btnAddDLCToToDoList','4522')">
+                <img
+                  src="/images/icons/addtotodolist.png"
+                  width="16"
+                  height="16"
+                  alt="Add remaining 1 Achievement to my To-Do list"
+                  title="Add remaining 1 Achievement to my To-Do list" />
+                <span>Add remaining 1 Achievement to my To-Do list</span>
+              </a>
+            </li>
+            <li>
+              <a href="/submitdlcinformation.aspx?dlcid=4522">
+                <img
+                  src="/images/icons/information.png"
+                  width="16"
+                  height="16"
+                  alt="Submit DLC info"
+                  title="Submit DLC info" />
+                <span>Submit DLC info</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="bg">
+          <img
+            src="/gameimage/Gears-of-War-Judgment_4.jpg"
+            alt="Call to Arms"
+            title="Call to Arms"
+            fetchpriority="high"
+            width="450"
+            height="175"
+            srcset="/gameimagem/Gears-of-War-Judgment_4.jpg 2x" />
+        </div>
+      </div>
+      <ul class="ach-panels">
+        <li style="--t: 9; --y: 59; --w: 0" id="9_59_0" class="w">
+          <a
+            class="title"
+            data-af="56"
+            href="/a176127/you-looking-at-me-achievement#96119">
+            You Looking At Me?
+          </a>
+          <p data-bf="20 - ">
+            Won a Team Death Match game with the entire team wearing the Car 13
+            Armor skin
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="8,779 tracked gamers (47% - TA Ratio = 2.84)">
+            <span style="width: 47%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 18 at 19:04 -
+              <a
+                href="/a176127/you-looking-at-me-achievement?showguides=1"
+                title="How to unlock the You Looking At Me? achievement">
+                2 guides
+              </a>
+            </span>
+            <i class="flg-80000088"></i>
+          </div>
+        </li>
+        <li style="--t: 6; --y: 56; --w: 0" id="6_56_0" class="w">
+          <a
+            class="title"
+            data-af="25"
+            href="/a176124/long-bomb-achievement#96119">
+            Long Bomb
+          </a>
+          <p data-bf="10 - ">Earned the You’re It ribbon on Boneyard</p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="11,223 tracked gamers (60% - TA Ratio = 2.51)">
+            <span style="width: 60%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              08 Jan 18 at 18:18 -
+              <a
+                href="/a176124/long-bomb-achievement?showguides=1"
+                title="How to unlock the Long Bomb achievement">
+                3 guides
+              </a>
+            </span>
+            <i class="flg-20000080"></i>
+          </div>
+        </li>
+        <li style="--t: 0; --y: 50; --w: 0" id="0_50_0" class="w">
+          <a
+            class="title"
+            data-af="175"
+            href="/a176118/booshka-achievement#96119">
+            BOOSHKA!
+          </a>
+          <p data-bf="50 - ">
+            Earned 50 Double ribbons with the Booshka on Terminal
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="5,759 tracked gamers (31% - TA Ratio = 3.51)">
+            <span style="width: 31%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              08 Jan 18 at 18:08 -
+              <a
+                href="/a176118/booshka-achievement?showguides=1"
+                title="How to unlock the BOOSHKA! achievement">
+                3 guides
+              </a>
+            </span>
+            <i class="flg-80800080"></i>
+          </div>
+        </li>
+        <li style="--t: 1; --y: 51; --w: 0" id="1_51_0" class="w">
+          <a
+            class="title"
+            data-af="80"
+            href="/a176119/dont-you-die-on-me-achievement#96119">
+            Don’t you die on me!
+          </a>
+          <p data-bf="25 - ">
+            Revived 100 total teammates on Terminal as a Medic
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="6,841 tracked gamers (37% - TA Ratio = 3.22)">
+            <span style="width: 37%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              27 Dec 17 at 16:07 -
+              <a
+                href="/a176119/dont-you-die-on-me-achievement?showguides=1"
+                title="How to unlock the Don’t you die on me! achievement">
+                5 guides
+              </a>
+            </span>
+            <i class="flg-20800080"></i>
+          </div>
+        </li>
+        <li style="--t: 8; --y: 58; --w: 0" id="8_58_0" class="w">
+          <a
+            class="title"
+            data-af="37"
+            href="/a176126/like-a-boss-achievement#96119">
+            Like A Boss
+          </a>
+          <p data-bf="15 - ">
+            Placed first in Free For All in Boneyard 5 times
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="11,526 tracked gamers (62% - TA Ratio = 2.48)">
+            <span style="width: 62%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              21 Dec 17 at 16:17 -
+              <a
+                href="/a176126/like-a-boss-achievement?showguides=1"
+                title="How to unlock the Like A Boss achievement">
+                2 guides
+              </a>
+            </span>
+            <i class="flg-20800080"></i>
+          </div>
+        </li>
+        <li style="--t: 5; --y: 55; --w: 0" id="5_55_0" class="w">
+          <a
+            class="title"
+            data-af="23"
+            href="/a176123/captain-sera-achievement#96119">
+            Captain Sera
+          </a>
+          <p data-bf="10 - ">
+            Earned a killing spree with the Boomshield on Boneyard
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="13,096 tracked gamers (70% - TA Ratio = 2.33)">
+            <span style="width: 70%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              21 Dec 17 at 13:23 -
+              <a
+                href="/a176123/captain-sera-achievement?showguides=1"
+                title="How to unlock the Captain Sera achievement">
+                3 guides
+              </a>
+            </span>
+            <i class="flg-30000080"></i>
+          </div>
+        </li>
+        <li style="--t: 7; --y: 57; --w: 0" id="7_57_0" class="w">
+          <a
+            class="title"
+            data-af="21"
+            href="/a176125/old-school-marathon-achievement#96119">
+            Old School Marathon
+          </a>
+          <p data-bf="10 - ">Played 10 matches total on BloodDrive</p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="15,194 tracked gamers (81% - TA Ratio = 2.16)">
+            <span style="width: 81%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              21 Dec 17 at 13:18 -
+              <a
+                href="/a176125/old-school-marathon-achievement#oSolutions"
+                title="How to unlock the Old School Marathon achievement">
+                1 guide
+              </a>
+            </span>
+            <i class="flg-20800080"></i>
+          </div>
+        </li>
+        <li style="--t: 2; --y: 52; --w: 0" id="2_52_0" class="w">
+          <a
+            class="title"
+            data-af="31"
+            href="/a176120/surprise-achievement#96119">
+            Surprise!
+          </a>
+          <p data-bf="10 - ">Got a Double while emerging as a Corpser</p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="7,095 tracked gamers (38% - TA Ratio = 3.16)">
+            <span style="width: 38%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 17 at 19:12 -
+              <a
+                href="/a176120/surprise-achievement?showguides=1"
+                title="How to unlock the Surprise! achievement">
+                5 guides
+              </a>
+            </span>
+            <i class="flg-80040080"></i>
+          </div>
+        </li>
+        <li style="--t: 4; --y: 54; --w: 0" id="4_54_0" class="w">
+          <a
+            class="title"
+            data-af="89"
+            href="/a176122/all-aboard-achievement#96119">
+            All Aboard!
+          </a>
+          <p data-bf="25 - ">
+            Won Hardcore Survival on Terminal with 5 Soldiers
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="5,513 tracked gamers (30% - TA Ratio = 3.59)">
+            <span style="width: 30%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              26 Jan 17 at 19:43 -
+              <a
+                href="/a176122/all-aboard-achievement?showguides=1"
+                title="How to unlock the All Aboard! achievement">
+                2 guides
+              </a>
+            </span>
+            <i class="flg-84000108"></i>
+          </div>
+        </li>
+        <li style="--t: 3; --y: 53; --w: 0" id="3_53_0" class="nw">
+          <a
+            class="title"
+            data-af="233"
+            href="/a176121/professional-locust-achievement#96119">
+            Professional Locust
+          </a>
+          <p data-bf="75 - ">Kill 100 enemies with each Locust</p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="7,342 tracked gamers (39% - TA Ratio = 3.11)">
+            <span style="width: 39%"></span>
+          </div>
+          <div class="info">
+            <span class="lock">
+              <i class="fa fa-lock fa-fw"></i>
+              Locked -
+              <a
+                href="/a176121/professional-locust-achievement?showguides=1"
+                title="How to unlock the Professional Locust achievement">
+                3 guides
+              </a>
+            </span>
+            <i class="flg-20800080"></i>
+          </div>
+        </li>
+      </ul>
+      <div class="pnl-hd no-pills no-pr game dlc">
+        <div class="info">
+          <div class="img">
+            <i class="fa fa-download"></i>
+            <span>Add-on</span>
+          </div>
+          <h2>
+            <a href="/game/Gears-of-War-Judgment/dlc/Lost-Relics?gamerid=96119">
+              Lost Relics
+            </a>
+          </h2>
+          <div class="l l1">
+            <div title="Maximum TrueAchievement">
+              <i class="tgn-icon ta-emb md"></i>
+              <span>739</span>
+            </div>
+            <div title="Maximum Gamerscore">
+              <i class="tgn-icon ta-gs md invt"></i>
+              <span>250</span>
+            </div>
+            <div title="Maximum Achievements">
+              <i class="fa fa-trophy"></i>
+              <span>10</span>
+            </div>
+          </div>
+          <div class="l l2">
+            <div>
+              <span title="3.17 out of 5 from 107 votes">
+                <i class="fa fa-star"></i>
+                <a
+                  id="aRateDLC_4531"
+                  data-dlc-id="4531"
+                  onclick="showGameRatingDropDown(this)">
+                  rate...
+                </a>
+                <div class="frm-sel">
+                  <select
+                    id="ddlGamerDLCRating_4531"
+                    name="ddlGamerDLCRating_4531"
+                    class="dropdown cs-n">
+                    <option>-</option>
+                    <option value="5.0">5.0</option>
+                    <option value="4.5">4.5</option>
+                    <option value="4.0">4.0</option>
+                    <option value="3.5">3.5</option>
+                    <option value="3.0">3.0</option>
+                    <option value="2.5">2.5</option>
+                    <option value="2.0">2.0</option>
+                    <option value="1.5">1.5</option>
+                    <option value="1.0">1.0</option>
+                    <option value="0.5">0.5</option>
+                  </select>
+                </div>
+              </span>
+            </div>
+            <div>
+              <span title="Played by 16,469 gamers">
+                <i class="fa fa-user"></i>
+                16,469
+              </span>
+            </div>
+            <div>
+              <span title="Completed by 3,383 TrueAchievements gamers">
+                <i class="fa fa-check"></i>
+                3,383 (21%)
+              </span>
+            </div>
+            <div>
+              <span title="Estimated time to unlock all achievements">
+                <i class="fa fa-clock-o"></i>
+                4-5h
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="options">
+          <span
+            onclick="ImagerShare.share('https://img.trueachievements.com/dlc/4531/96119?v=10', '', 'Lost Relics')"
+            class="button menubutton dd-share">
+            <i class="fa fa-share-alt"></i>
+          </span>
+          <a
+            class="button menubutton dd-ellipses"
+            href="#"
+            id="btnDLC_4531"
+            onclick="MenuButton_Toggle('btnDLC_4531'); return false;"
+            title="DLC">
+            <span
+              class="icon-button-arrow-down droparrow"
+              id="btnDLC_4531_DropArrow"></span>
+            <span>DLC</span>
+          </a>
+          <ul id="btnDLC_4531_Options" style="display: none" class="menuitems">
+            <li>
+              <a href="/submitdlcinformation.aspx?dlcid=4531">
+                <img
+                  src="/images/icons/information.png"
+                  width="16"
+                  height="16"
+                  alt="Submit DLC info"
+                  title="Submit DLC info" />
+                <span>Submit DLC info</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="bg">
+          <img
+            src="/gameimage/Gears-of-War-Judgment_4.jpg"
+            alt="Lost Relics"
+            title="Lost Relics"
+            fetchpriority="high"
+            width="450"
+            height="175"
+            srcset="/gameimagem/Gears-of-War-Judgment_4.jpg 2x" />
+        </div>
+      </div>
+      <ul class="ach-panels">
+        <li style="--t: 13; --y: 63; --w: 0" id="13_63_0" class="w">
+          <a
+            class="title"
+            data-af="174"
+            href="/a177350/drop-the-mic-achievement#96119">
+            Drop the Mic
+          </a>
+          <p data-bf="50 - ">
+            Finished wave 10 of Survival at the first e-hole on Ward on at least
+            Normal difficulty
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="5,459 tracked gamers (33% - TA Ratio = 3.49)">
+            <span style="width: 33%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              11 Mar 18 at 21:52 -
+              <a
+                href="/a177350/drop-the-mic-achievement#oSolutions"
+                title="How to unlock the Drop the Mic achievement">
+                1 guide
+              </a>
+            </span>
+            <i class="flg-24000100"></i>
+          </div>
+        </li>
+        <li style="--t: 17; --y: 67; --w: 0" id="17_67_0" class="w">
+          <a
+            class="title"
+            data-af="126"
+            href="/a177392/pendulum-wars-achievement#96119">
+            Pendulum Wars
+          </a>
+          <p data-bf="40 - ">
+            Won a TDM, DOM, and BT match with your entire team wearing the UIR
+            Armor skin
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="6,725 tracked gamers (41% - TA Ratio = 3.15)">
+            <span style="width: 41%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 18 at 19:16 -
+              <a
+                href="/a177392/pendulum-wars-achievement?showguides=1"
+                title="How to unlock the Pendulum Wars achievement">
+                3 guides
+              </a>
+            </span>
+            <i class="flg-20000088"></i>
+          </div>
+        </li>
+        <li style="--t: 19; --y: 69; --w: 0" id="19_69_0" class="w">
+          <a
+            class="title"
+            data-af="124"
+            href="/a177394/golden-artifacts-achievement#96119">
+            Golden Artifacts
+          </a>
+          <p data-bf="30 - ">
+            Won public/ranked game of Execution on Museum with all players using
+            Gold character and weapon skins
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="3,858 tracked gamers (23% - TA Ratio = 4.16)">
+            <span style="width: 23%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              06 Jan 18 at 16:01 -
+              <a
+                href="/a177394/golden-artifacts-achievement?showguides=1"
+                title="How to unlock the Golden Artifacts achievement">
+                8 guides
+              </a>
+            </span>
+            <i class="flg-800000A8"></i>
+          </div>
+        </li>
+        <li style="--t: 11; --y: 61; --w: 0" id="11_61_0" class="w">
+          <a
+            class="title"
+            data-af="74"
+            href="/a177348/getting-it-done-achievement#96119">
+            Getting it Done
+          </a>
+          <p data-bf="30 - ">
+            Destroyed the generator in under 8 minutes on any DLC map
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="10,780 tracked gamers (65% - TA Ratio = 2.48)">
+            <span style="width: 65%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              21 Dec 17 at 14:35 -
+              <a
+                href="/a177348/getting-it-done-achievement?showguides=1"
+                title="How to unlock the Getting it Done achievement">
+                2 guides
+              </a>
+            </span>
+            <i class="flg-20000080"></i>
+          </div>
+        </li>
+        <li style="--t: 10; --y: 60; --w: 0" id="10_60_0" class="w">
+          <a
+            class="title"
+            data-af="24"
+            href="/a177347/you-cant-hide-achievement#96119">
+            You Can’t Hide
+          </a>
+          <p data-bf="10 - ">Earned the Tree House Predator ribbon on Ward</p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="11,090 tracked gamers (67% - TA Ratio = 2.45)">
+            <span style="width: 67%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 17 at 21:44 -
+              <a
+                href="/a177347/you-cant-hide-achievement?showguides=1"
+                title="How to unlock the You Can’t Hide achievement">
+                2 guides
+              </a>
+            </span>
+            <i class="flg-20000080"></i>
+          </div>
+        </li>
+        <li style="--t: 12; --y: 62; --w: 0" id="12_62_0" class="w">
+          <a
+            class="title"
+            data-af="28"
+            href="/a177349/dread-the-rage-achievement#96119">
+            Dread the Rage
+          </a>
+          <p data-bf="10 - ">
+            Got a multi-kill while playing as an enraged Rager on Ward
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="7,991 tracked gamers (49% - TA Ratio = 2.89)">
+            <span style="width: 49%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 17 at 21:38 -
+              <a
+                href="/a177349/dread-the-rage-achievement#oSolutions"
+                title="How to unlock the Dread the Rage achievement">
+                1 guide
+              </a>
+            </span>
+            <i class="flg-20000080"></i>
+          </div>
+        </li>
+        <li style="--t: 14; --y: 64; --w: 0" id="14_64_0" class="w">
+          <a
+            class="title"
+            data-af="59"
+            href="/a177389/flag-runner-achievement#96119">
+            Flag Runner
+          </a>
+          <p data-bf="25 - ">
+            Scored a flag cap on Streets, Rig, Gondola, Library, Lost City,
+            Museum, and Checkout
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="11,751 tracked gamers (71% - TA Ratio = 2.38)">
+            <span style="width: 71%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 17 at 21:28 -
+              <a
+                href="/a177389/flag-runner-achievement?showguides=1"
+                title="How to unlock the Flag Runner achievement">
+                2 guides
+              </a>
+            </span>
+            <i class="flg-20000080"></i>
+          </div>
+        </li>
+        <li style="--t: 15; --y: 65; --w: 0" id="15_65_0" class="w">
+          <a
+            class="title"
+            data-af="36"
+            href="/a177390/look-what-i-found-achievement#96119">
+            Look What I Found
+          </a>
+          <p data-bf="15 - ">
+            Got a kill with each pickup weapon in FFA during a single game on
+            the map Lost City
+          </p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="11,315 tracked gamers (69% - TA Ratio = 2.42)">
+            <span style="width: 69%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 17 at 20:49 -
+              <a
+                href="/a177390/look-what-i-found-achievement?showguides=1"
+                title="How to unlock the Look What I Found achievement">
+                3 guides
+              </a>
+            </span>
+            <i class="flg-20000080"></i>
+          </div>
+        </li>
+        <li style="--t: 18; --y: 68; --w: 0" id="18_68_0" class="w">
+          <a
+            class="title"
+            data-af="44"
+            href="/a177393/for-gorasnaya-achievement#96119">
+            For Gorasnaya!
+          </a>
+          <p data-bf="20 - ">Scored 5 flags in BT as Paduk</p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="13,190 tracked gamers (80% - TA Ratio = 2.24)">
+            <span style="width: 80%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 17 at 20:41 -
+              <a
+                href="/a177393/for-gorasnaya-achievement#oSolutions"
+                title="How to unlock the For Gorasnaya! achievement">
+                1 guide
+              </a>
+            </span>
+            <i class="flg-20800080"></i>
+          </div>
+        </li>
+        <li style="--t: 16; --y: 66; --w: 0" id="16_66_0" class="w">
+          <a
+            class="title"
+            data-af="44"
+            href="/a177391/flag-dropped-achievement#96119">
+            Flag Dropped
+          </a>
+          <p data-bf="20 - ">Killed the flag carrier a total of 20 times</p>
+          <span class="sms2 l tile"></span>
+          <div
+            class="progress-bar r"
+            data-af="13,723 tracked gamers (83% - TA Ratio = 2.20)">
+            <span style="width: 83%"></span>
+          </div>
+          <div class="info">
+            <span class="lock u">
+              <i class="fa fa-unlock-alt fa-fw"></i>
+              31 Jan 17 at 20:33 -
+              <a
+                href="/a177391/flag-dropped-achievement?showguides=1"
+                title="How to unlock the Flag Dropped achievement">
+                2 guides
+              </a>
+            </span>
+            <i class="flg-20800080"></i>
+          </div>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

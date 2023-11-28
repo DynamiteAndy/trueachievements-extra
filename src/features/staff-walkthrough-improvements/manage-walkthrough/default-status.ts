@@ -1,6 +1,5 @@
-import { manageWalkthrough } from '@ta-x-globals';
+import { manageWalkthrough, StaffRegex } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
-import { StaffRegex } from 'globals/regex';
 
 export const changeToDefaultStatus = async (): Promise<void> => {
   if (!manageWalkthrough.manageWalkthroughDefaultStatus) {

@@ -22,31 +22,29 @@ const listen = (): void => {
         return;
       }
 
-      ([...tablePropertyModal.querySelectorAll('.mce-colorbox input')] as HTMLInputElement[]).forEach(
-        (el: HTMLInputElement) => {
-          el.parentElement.style.left = '201px';
+      (
+        [...tablePropertyModal.querySelectorAll('.mce-colorbox input:not([data-current-color])')] as HTMLInputElement[]
+      ).forEach((el: HTMLInputElement) => {
+        el.parentElement.style.left = '201px';
 
-          const container = el.closest('.mce-container-body');
-          const colorPickerOpts = {
-            zIndex: 65536
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any;
+        const container = el.closest('.mce-container-body');
+        const colorPickerOpts = {
+          zIndex: 65536,
+          format: 'auto'
+        };
 
-          if (container) {
-            const label = container.querySelector('label');
+        if (container) {
+          const label = container.querySelector('label');
 
-            if (label) {
-              if (label.innerText === 'Border color') {
-                colorPickerOpts.format = 'hexa';
-              }
+          if (label) {
+            if (label.innerText === 'Border color') {
+              colorPickerOpts.format = 'hexa';
             }
           }
-
-          new JsColor(el, colorPickerOpts);
         }
-      );
 
-      observer.disconnect();
+        new JsColor(el, colorPickerOpts);
+      });
     });
   });
 

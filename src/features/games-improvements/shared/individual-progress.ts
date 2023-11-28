@@ -14,7 +14,7 @@ const createAchievementGroup = (header: HTMLElement): AchievementGroup => ({
 });
 
 const getBaseAchievementGroup = (el: HTMLElement): AchievementGroup[] => {
-  const baseAchievementHeader = el.querySelector('.pnl-hd.no-pills.no-pr.game:not(.gamer)') as HTMLElement;
+  const baseAchievementHeader = el.querySelector('.pnl-hd.no-pills.no-pr.game:not(.gamer):not(.dlc)') as HTMLElement;
 
   if (!baseAchievementHeader) {
     return [];
@@ -136,15 +136,15 @@ const setGroupProgress = async (groups: AchievementGroup[]): Promise<void> => {
 
         maxTAScore.innerHTML = maxTAScore.innerHTML.replace(
           grouping.maxTAScore,
-          `${insertSeperator(wonTrueAchievementScore)}/${grouping.maxTAScore}`
+          `${insertSeperator(wonTrueAchievementScore, ',')}/${grouping.maxTAScore}`
         );
         maxGamerscore.innerHTML = maxGamerscore.innerHTML.replace(
           grouping.maxGamerScore,
-          `${insertSeperator(wonGamerscore)}/${grouping.maxGamerScore}`
+          `${insertSeperator(wonGamerscore, ',')}/${grouping.maxGamerScore}`
         );
         maxAchievements.innerHTML = maxAchievements.innerHTML.replace(
           grouping.maxAchievements,
-          `${insertSeperator(wonAchievements.length)}/${grouping.maxAchievements}`
+          `${insertSeperator(wonAchievements.length, ',')}/${grouping.maxAchievements}`
         );
       }
     })),

@@ -6,5 +6,5 @@ export default async (): Promise<void> => {
     return;
   }
 
-  addXboxAchievementGuides();
+  await addXboxAchievementGuides();
 };

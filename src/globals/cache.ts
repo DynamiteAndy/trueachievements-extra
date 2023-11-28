@@ -1,42 +1,52 @@
-import { isBeforeNow } from '../utilities/date-util';
+import { isAfterNow } from '../utilities/date-util';
 import { MemoizedFetch } from '../models/memoized-fetch';
 import { GamesRegex } from './regex';
 
+const getMap = <T>(name: string, defaultValue?: ''): Map<string, T> => {
+  const value = GM_getValue(name, defaultValue) as string;
+  return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+};
+
+const setMap = <T>(name: string, value: Map<string, T>): void => {
+  GM_setValue(name, JSON.stringify(Array.from(value.entries())));
+};
+
+const getArray = <T>(name: string, defaultValue?: ''): T[] => {
+  const value = GM_getValue(name, defaultValue) as string;
+  return value.length !== 0 ? JSON.parse(value) : [];
+};
+
 export class Cache {
   static get memoize(): Map<string, MemoizedFetch> {
-    const value = GM_getValue('memoized', '') as string;
-    return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+    return getMap('memoized', '');
   }
 
   static set memoize(value: Map<string, MemoizedFetch>) {
-    GM_setValue('memoized', JSON.stringify(Array.from(value.entries())));
+    setMap('memoized', value);
   }
 
   static get gameAchievementsXboxAchievementsGuideUrl(): Map<string, string> {
-    const value = GM_getValue('gameAchievementsXboxAchievementsGuideUrl', '') as string;
-    return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+    return getMap('gameAchievementsXboxAchievementsGuideUrl', '');
   }
 
   static set gameAchievementsXboxAchievementsGuideUrl(value: Map<string, string>) {
-    GM_setValue('gameAchievementsXboxAchievementsGuideUrl', JSON.stringify(Array.from(value.entries())));
+    setMap('gameAchievementsXboxAchievementsGuideUrl', value);
   }
 
   static get walkthroughForumOwnerProgressUrl(): Map<string, string> {
-    const value = GM_getValue('walkthroughOwnerProgressUrl', '') as string;
-    return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+    return getMap('walkthroughOwnerProgressUrl', '');
   }
 
   static set walkthroughForumOwnerProgressUrl(value: Map<string, string>) {
-    GM_setValue('walkthroughOwnerProgressUrl', JSON.stringify(Array.from(value.entries())));
+    setMap('walkthroughOwnerProgressUrl', value);
   }
 
   static get walkthroughPreviewWalkthroughId(): Map<string, string[]> {
-    const value = GM_getValue('previewWalkthroughId', '') as string;
-    return value.length !== 0 ? new Map(JSON.parse(value)) : new Map();
+    return getMap('previewWalkthroughId', '');
   }
 
   static set walkthroughPreviewWalkthroughId(value: Map<string, string[]>) {
-    GM_setValue('previewWalkthroughId', JSON.stringify(Array.from(value.entries())));
+    setMap('previewWalkthroughId', value);
   }
 
   static get gameAchievementsDefaultStatusPathName(): string {
@@ -64,8 +74,7 @@ export class Cache {
   }
 
   static get gameClipsDefaultStatusSelectors(): string[] {
-    const value = GM_getValue('gameClipsDefaultStatusSelectors', '') as string;
-    return value.length !== 0 ? JSON.parse(value) : [];
+    return getArray('gameClipsDefaultStatusSelectors', '');
   }
 
   static set gameClipsDefaultStatusSelectors(value: string[]) {
@@ -87,7 +96,7 @@ export class Cache {
   }
 
   static clearExpired(): void {
-    const updatedCache = Array.from(this.memoize.entries()).filter((item) => isBeforeNow(item[1].expiryTime));
+    const updatedCache = Array.from(this.memoize.entries()).filter((item) => isAfterNow(item[1].expiryTime));
     this.memoize = new Map(updatedCache);
 
     if (!GamesRegex.Test.achievementsUrl()) {

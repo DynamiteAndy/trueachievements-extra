@@ -1,4 +1,3 @@
-/* stylelint-disable selector-id-pattern */
 body {
   &.trueachievement-extras {
     &.ta-x-staff-walkthrough-improvements {
@@ -6,10 +5,35 @@ body {
         border: 0 !important;
       }
 
+      .mce-colorbutton {
+        button:not(.mce-open) {
+          padding-right: 3px !important;
+        }
+
+        .mce-open {
+          border: 0;
+          padding: 4px 7px 4px 2px !important;
+        }
+
+        .mce-preview {
+          position: unset;
+          padding: 0;
+          margin: 0;
+          margin-top: -2px;
+          width: 100%;
+        }
+      }
+
       &[data-ta-x-theme='dark'] {
         .mce-panel {
           border: 0 solid #232b33;
           background-color: #404952;
+
+          .mce-arrow {
+            &::after {
+              border-bottom-color: #404952;
+            }
+          }
 
           .mce-toolbar-grp {
             padding: 2px 0;
@@ -45,6 +69,7 @@ body {
             }
           }
 
+          .mce-colorbutton,
           .mce-menubtn,
           .mce-btn {
             border: 1px solid #364049 !important;
@@ -129,6 +154,13 @@ body {
           }
         }
 
+        .mce-grid-cell {
+          div {
+            border-color: #202a33;
+            background-color: #4c5761;
+          }
+        }
+
         .mce-grid-border {
           a {
             border-color: #202a33;
@@ -191,4 +223,3 @@ body {
     }
   }
 }
-/* stylelint-enable selector-id-pattern */

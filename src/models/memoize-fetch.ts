@@ -1,6 +1,6 @@
 import { Cache } from '@ta-x-globals';
 import { MemoizedFetchOptions } from '@ta-x-types';
-import { isBeforeNow } from '../utilities/date-util';
+import { isAfterNow } from '../utilities/date-util';
 import { MemoizedFetch } from './memoized-fetch';
 
 export class MemoizeFetch {
@@ -26,7 +26,7 @@ export class MemoizeFetch {
   ): Promise<string> => {
     const cachedRequest = this.cachedCalls.get(url);
 
-    if (cachedRequest && isBeforeNow(new Date(cachedRequest.expiryTime))) {
+    if (cachedRequest && isAfterNow(new Date(cachedRequest.expiryTime))) {
       return cachedRequest.response;
     }
 

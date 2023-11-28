@@ -1,4 +1,4 @@
-export default (eventType: string, element: HTMLElement, opts?: EventInit & { detail: string }) => {
+export default (element: HTMLElement, eventType: string, opts?: EventInit & { detail: string }) => {
   const eventOpts = Object.assign(
     {
       bubbles: true,

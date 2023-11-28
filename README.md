@@ -9,7 +9,7 @@ Requires: [Tampermonkey](http://tampermonkey.net/)
 3. Click "Raw" and Tampermonkey will prompt script installation
 
 # Developer Guide
-Requires: [Node v18 or higher](https://nodejs.org/en/), [pNpm](https://pnpm.io/), [Tampermonkey](http://tampermonkey.net/) and a code editor such as [Visual Studio Code](https://code.visualstudio.com/) or any alternative.
+Requires: [Node v20 or higher](https://nodejs.org/en/), [pNpm](https://pnpm.io/), [Tampermonkey](http://tampermonkey.net/) and a code editor such as [Visual Studio Code](https://code.visualstudio.com/) or any alternative.
 
 ## Developing
 - `pnpm i`

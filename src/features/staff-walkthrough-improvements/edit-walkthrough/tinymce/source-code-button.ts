@@ -1,68 +1,62 @@
-import { waitForElement } from '@ta-x-utilities';
+import { TinyMCEScript } from '@ta-x-models';
+import svg from '@ta-x-svgs/code.hbs';
 
-const createScript = (id: string, innerHtml: string): HTMLScriptElement => {
-  const script = document.createElement('script');
-  script.id = id;
-  script.innerHTML = innerHtml;
+class SourceCodeScript extends TinyMCEScript {
+  constructor() {
+    super('ta-x-staff-walkthrough-improvements-add-code-editor-command');
+  }
 
-  return script;
-};
+  buildScript = (): HTMLScriptElement => {
+    const script = `
+    ((editor) => {
+      console.debug('Adding Source Code Button');
 
-const buildSourceCodeCommandScript = (): HTMLScriptElement => {
-  const id = 'ta-x-staff-walkthrough-improvements-add-code-editor-command';
-  const script = `tinymce.PluginManager.add("code", function(e) {
-        function o() {
-            var o = tinymce.editors.txtWalkthrough.windowManager.open({
-                title: "Source code",
-                body: {
-                    type: "textbox",
-                    name: "code",
-                    multiline: true,
-                    minWidth: tinymce.editors.txtWalkthrough.getParam("code_dialog_width", 600),
-                    minHeight: tinymce.editors.txtWalkthrough.getParam("code_dialog_height", Math.min(tinymce.DOM.getViewPort().h - 200, 500)),
-                    spellcheck: false,
-                    style: "direction: ltr; text-align: left"
-                },
-                onSubmit: function(o) {
-                    tinymce.editors.txtWalkthrough.focus(),
-                    tinymce.editors.txtWalkthrough.undoManager.transact(function() {
-                        tinymce.editors.txtWalkthrough.setContent(o.data.code)
-                    }),
-                    tinymce.editors.txtWalkthrough.selection.setCursorLocation(),
-                    tinymce.editors.txtWalkthrough.nodeChanged()
-                }
-            });
-            o.find("#code").value(tinymce.editors.txtWalkthrough.getContent({
-                source_view: true
-            }))
+      editor.addButton('sourceCode', {
+        tooltip: 'Source Code',
+        onclick: function () {
+          var dialog = editor.windowManager.open({
+            title: 'Source code',
+            body: {
+              type: 'textbox',
+              name: 'code',
+              multiline: true,
+              minWidth: editor.getParam('code_dialog_width', 600),
+              minHeight: editor.getParam('code_dialog_height', Math.min(tinymce.DOM.getViewPort().h - 200, 500)),
+              spellcheck: false,
+              style: 'direction: ltr; text-align: left'
+            },
+            onSubmit: function (dialog) {
+              editor.focus();
+              editor.undoManager.transact(function () {
+                editor.setContent(dialog.data.code);
+              });
+              editor.selection.setCursorLocation();
+              editor.nodeChanged();
+            }
+          });
+
+          dialog.find('#code').value(editor.getContent({ source_view: true }));
         }
-        tinymce.editors.txtWalkthrough.addCommand("mceCodeEditor", o)
-    })();`;
+      });
 
-  return createScript(id, script);
-};
+      var sourceCodeButton = editor.buttons['sourceCode'];
+      var taxGroup = editor.theme.panel.find('toolbar > buttongroup').filter(function(bg) {
+        return bg.settings.name === 'ta-x-group';
+      })[0];
 
-const buildShowSourceCodeButtonScript = (): HTMLScriptElement => {
-  const id = 'ta-x-staff-walkthrough-improvements-show-code-editor';
-  const script = `document.querySelector(".js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code").addEventListener("click", function(e) {
-        tinymce.activeEditor.execCommand("mceCodeEditor");
-    });`;
+      taxGroup._lastRepaintRect = taxGroup._layoutRect;
+      taxGroup.append(sourceCodeButton);
 
-  return createScript(id, script);
-};
+      const button = document.querySelector('[aria-label="Source Code"] button');
+      button.classList.add('ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code-button');
+      button.innerHTML = '${svg}';
 
-export const addSourceCodeButton = async (): Promise<void> => {
-  const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
+      console.debug('Added Source Code Button');
+    })(tinymce.activeEditor);
+  `;
 
-  iframe.addEventListener('load', async () => {
-    const sourceCodeCommand = buildSourceCodeCommandScript();
-    const sourceCodeButton = buildShowSourceCodeButtonScript();
+    return this.createScript(script);
+  };
+}
 
-    document.body.appendChild(sourceCodeCommand);
-    document.body.appendChild(sourceCodeButton);
-
-    iframe.removeEventListener('load', this);
-  });
-};
-
-export default { addSourceCodeButton };
+export const addSourceCodeButton = new SourceCodeScript().injectScript;

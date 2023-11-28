@@ -51,21 +51,20 @@ export const toBool = (str: string | boolean | number): boolean => {
 };
 
 export const extractBetween = (between: string, str: string): string => {
-  const regex = new RegExp(`${between}(.*?)${between}`);
-  const matches = str.match(regex);
+  const matches = extractAllBetween(between, str);
 
-  return matches ? matches[1] : str;
+  return matches ? matches[0] : null;
 };
 
 export const extractAllBetween = (between: string, str: string): string[] => {
   const regex = new RegExp(`${between}(.*?)${between}`, 'g');
   const matches = str.match(regex);
 
-  return matches ? matches.map((str) => str.replace(between, '')) : [str];
+  return matches ? matches.map((str) => str.replace(new RegExp(between, 'g'), '')) : null;
 };
 
-export const insertSeperator = (value: string | number, seperator = ','): string =>
-  value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, seperator);
+export const insertSeperator = (value: string | number, seperator: string): string =>
+  value !== null && value !== undefined ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, seperator) : null;
 
 export default {
   toInt,

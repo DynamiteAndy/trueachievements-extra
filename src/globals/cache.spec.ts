@@ -1,92 +1,79 @@
-import { setLocalStorage } from '@ta-x-jasmine';
+import each from 'jest-each';
+import { setLocalStorage } from '@ta-x-jest';
 import { MemoizedFetch } from '@ta-x-models';
 import { Cache } from './cache';
 
-describe('cache', () => {
-  describe('memoize - get', () => {
-    const testCases = [
-      { case: new Map<string, MemoizedFetch>(), expected: 0 },
+describe('memoize', () => {
+  describe('get', () => {
+    each([
+      { cachedValues: new Map<string, MemoizedFetch>(), expected: undefined },
       {
-        case: new Map([['memoized', JSON.stringify([['key1', 'value']])]]),
-        expected: 1
+        cachedValues: new Map([['memoized', JSON.stringify([['key1', 'value1']])]]),
+        input: 'key1',
+        expected: 'value1'
       },
       {
-        case: new Map([
+        cachedValues: new Map([
           [
             'memoized',
             JSON.stringify([
-              ['key1', 'value'],
-              ['key2', 'value']
+              ['key1', 'value1'],
+              ['key2', 'value2']
             ])
           ]
         ]),
-        expected: 2
+        input: 'key2',
+        expected: 'value2'
       }
-    ];
-
-    testCases.forEach((test, index) => {
-      it(`should return cached items (testcase: ${index})`, () => {
-        setLocalStorage(test.case);
-        expect(Cache.memoize.size).toEqual(test.expected);
-      });
-    });
+    ]).test.concurrent(
+      'should return the cached value $expected when getting $input',
+      ({ cachedValues, input, expected }) => {
+        setLocalStorage(cachedValues);
+        expect(Cache.memoize.get(input)).toEqual(expected);
+      }
+    );
   });
 
-  describe('memoize - set', () => {
-    const testCases = [
-      { case: new Map<string, MemoizedFetch>(), expected: 0 },
+  describe('set', () => {
+    each([
+      { input: new Map<string, MemoizedFetch>(), expected: 0 },
       {
-        case: new Map([['key1', new MemoizedFetch()]]),
+        input: new Map([['key1', new MemoizedFetch()]]),
         expected: 1
       },
       {
-        case: new Map([
+        input: new Map([
           ['key1', new MemoizedFetch()],
           ['key2', new MemoizedFetch()]
         ]),
         expected: 2
       }
-    ];
-
-    testCases.forEach((test, index) => {
-      it(`should set cached items (testcase: ${index})`, () => {
-        Cache.memoize = test.case;
-        expect(Cache.memoize.size).toEqual(test.expected);
-      });
+    ]).test.concurrent('should set cached items', ({ input, expected }) => {
+      Cache.memoize = input;
+      expect(Cache.memoize.size).toEqual(expected);
     });
   });
+});
 
-  describe('forceclear', () => {
-    describe('memoize', () => {
-      const testCases = [
-        { case: new Map<string, string>(), expected: 0 },
-        {
-          case: new Map([['memoized', JSON.stringify([['key1', 'value']])]]),
-          expected: 0
-        },
-        {
-          case: new Map([
-            [
-              'memoized',
-              JSON.stringify([
-                ['key1', 'value'],
-                ['key2', 'value']
-              ])
-            ]
-          ]),
-          expected: 0
-        }
-      ];
+describe('forceclear', () => {
+  each([
+    { input: new Map<string, MemoizedFetch>(), expected: 0 },
+    {
+      input: new Map([['key1', new MemoizedFetch()]]),
+      expected: 0
+    },
+    {
+      input: new Map([
+        ['key1', new MemoizedFetch()],
+        ['key2', new MemoizedFetch()]
+      ]),
+      expected: 0
+    }
+  ]).test.concurrent('should clear cached items', ({ input, expected }) => {
+    setLocalStorage(input);
 
-      testCases.forEach((test, index) => {
-        it(`should set cached items (testcase: ${index})`, () => {
-          setLocalStorage(test.case);
+    Cache.forceClear();
 
-          Cache.forceClear();
-
-          expect(Cache.memoize.size).toEqual(test.expected);
-        });
-      });
-    });
+    expect(Cache.memoize.size).toEqual(expected);
   });
 });

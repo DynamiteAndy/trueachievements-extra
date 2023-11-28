@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.1.0
+- Behind the scenes, unit tests galore!,
+- Behind the scenes, moved from Jasmine to Jest,
+- Behind the scenes, removed dependency on sass-to-string,
+- Fixed some async stuff,
+- Fixed individual progress selector not working correctly,
+- Fixed xbox achievement guide fetching on achievements page instead of individual achievement page,
+- Fixed an issue where if an element was null and waited on, it would never resolve,
+- Fixed an issue where in some cases JSColor would not show,
+- Added text color plugin to walkthrough editor,
+- Added workarounds for missing buttons (Controller Buttons + Xbox Image) on the walkthrough editor.
+
 ## 3.0.0
 - Behind the scenes, Changed from ts-loader to esbuild-loader,
 - Behind the scenes, finally got the vscode debugger working,
