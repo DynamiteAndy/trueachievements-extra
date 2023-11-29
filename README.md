@@ -1,4 +1,9 @@
 # [Unofficial Addon] Trueachievements Extra 
+
+[![Latest Version](https://img.shields.io/github/package-json/v/DynamiteAndy/trueachievements-extra)](https://github.com/DynamiteAndy/trueachievements-extra/raw/main/dist/trueachievements-extras.min.user.js)
+[![codecov](https://codecov.io/gh/DynamiteAndy/trueachievements-extra/graph/badge.svg?token=27NBZX1HL4)](https://codecov.io/gh/DynamiteAndy/trueachievements-extra)
+[![Github Actions](https://github.com/DynamiteAndy/trueachievements-extra/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/DynamiteAndy/trueachievements-extra/actions/workflows/lint-and-test.yml)
+
 This is a unofficial addon for Trueachievements, this addon requires [Tampermonkey](https://www.tampermonkey.net/). 
 
 ## Installation
