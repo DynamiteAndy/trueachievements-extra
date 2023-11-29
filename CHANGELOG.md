@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.1
+- Update urls to point at new repo
+
 ## 3.1.0
 - Behind the scenes, unit tests galore!,
 - Behind the scenes, moved from Jasmine to Jest,

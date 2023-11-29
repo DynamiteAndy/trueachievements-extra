@@ -8,6 +8,8 @@ const polyFill = (jsdom: JSDOM) => {
   global.HTMLElement = global.window.HTMLElement;
   global.HTMLInputElement = global.window.HTMLInputElement;
   global.MutationObserver = global.window.MutationObserver;
+  global.Event = global.window.Event;
+  global.CustomEvent = global.window.CustomEvent;
 
   class Image extends window.Image {
     private srcValue: string;
@@ -40,7 +42,7 @@ const polyFill = (jsdom: JSDOM) => {
             const eventName = value === 'load-image.jpg' ? 'load' : 'error';
 
             setTimeout(() => {
-              this.dispatchEvent(new window.Event(eventName));
+              this.dispatchEvent(new Event(eventName));
             }, 250);
           } else {
             this.complete = true;

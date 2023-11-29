@@ -36,7 +36,7 @@ export const markdown = (): void => {
 
     const actualPath = getPath(filePath, options.data?.parentPartialDirectory);
     const includedFiles = fs.readFileSync(actualPath, 'utf8');
-    const htmlString = sanitizeHtml(marked.parse(includedFiles));
+    const htmlString = sanitizeHtml(marked.parse(includedFiles, { async: false }) as string);
     const dom = new JSDOM(`<div class="${wrapperClass}">${htmlString}</div`);
     const domContent = dom.window.document.body;
 
