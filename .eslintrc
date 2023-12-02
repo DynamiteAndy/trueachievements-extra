@@ -11,10 +11,7 @@
   "parserOptions": { "project": ["./tsconfig.json"], "sourceType": "module" },
   "plugins": ["@typescript-eslint", "import", "prettier"],
   "rules": {
-    "semi": ["error", "always"],
     "no-console": 0,
-    "quotes": [2, "single", { "avoidEscape": true }],
-    "keyword-spacing": [2, { "after": true }],
     "import/no-unresolved": "error",
     "import/named": "error",
     "import/order": [
@@ -31,7 +28,6 @@
         ]
       }
     ],
-    "comma-dangle": ["error", "never"],
     "curly": "error",
     "prettier/prettier": [
       "error",

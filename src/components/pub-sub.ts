@@ -9,6 +9,8 @@ type Events = {
   'tabs:set': HTMLElement;
   'tinymce:repositionFloatingMenus': null;
   'walkthroughPreview:removeAside': null;
+  'test:subscribeEvent': string;
+  'test:unsubscribeEvent': string;
 };
 
 function PubSub<E>(): PubSubType<E> {
