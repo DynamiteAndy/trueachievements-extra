@@ -85,7 +85,7 @@ const getAchievementGuide = async (url: string): Promise<void> => {
   const achievementTitle = (
     (await waitForElement('.ach-panel:not([data-secret]) .title')) as HTMLSpanElement
   )?.innerText?.trim();
-  const guideResponse = await memoizeCorsFetch(url, {});
+  const guideResponse = await memoizeCorsFetch(url);
   const guideDocument = new DOMParser().parseFromString(guideResponse, 'text/html');
   const achievementGuides = [...guideDocument.querySelectorAll('.achilist .achilist__guide')].map(
     (el: HTMLLIElement) => ({
