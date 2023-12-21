@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Article - Quick Reply</title>
+  </head>
+  <body>
+    <div class="reply add-comment">
+      <div id="hlpQuickReply" data-total-items="3" data-page-items="20">
+        <div class="adv_editbox" id="aeb_txtQuickReply">
+          <div>
+            <div class="toolbar">
+              <div class="formatbuttons">
+                <span
+                  class="format_bold"
+                  tabindex="0"
+                  title="Insert pair of bold tags (Alt + B)"
+                  onclick="AddFormatTags('txtQuickReply', { tag: 'b' }); return false;">
+                  <i class="fa fa-bold"></i>
+                </span>
+                <span
+                  class="format_underline"
+                  tabindex="0"
+                  title="Insert pair of underline tags (Alt + U)"
+                  onclick="AddFormatTags('txtQuickReply', { tag: 'u' }); return false;">
+                  <i class="fa fa-underline"></i>
+                </span>
+                <span
+                  class="format_italic"
+                  tabindex="0"
+                  title="Insert pair of italic tags (Alt + I)"
+                  onclick="AddFormatTags('txtQuickReply', { tag: 'i' }); return false;">
+                  <i class="fa fa-italic"></i>
+                </span>
+                <span
+                  class="format_strikethrough"
+                  tabindex="0"
+                  title="Insert pair of strikethrough tags (Alt + R)"
+                  onclick="AddFormatTags('txtQuickReply', { tag: 's' }); return false;">
+                  <i class="fa fa-strikethrough"></i>
+                </span>
+                <span
+                  class="format_superscript"
+                  tabindex="0"
+                  title="Insert pair of superscript tags"
+                  onclick="AddFormatTags('txtQuickReply', { tag: 'p' }); return false;">
+                  <i class="fa fa-superscript"></i>
+                </span>
+                <span
+                  class="format_quote"
+                  tabindex="0"
+                  title="Insert pair of quote tags (Alt + Q)"
+                  onclick="AddFormatTags('txtQuickReply', { tag: 'quote' }); return false;">
+                  <i class="fa fa-quote-right"></i>
+                </span>
+                <span
+                  class="format_spoiler"
+                  tabindex="0"
+                  title="Insert pair of spoiler tags (Alt + S)"
+                  onclick="AddFormatTags('txtQuickReply', { tag: 'spoiler' }); return false;">
+                  <i class="fa fa-eye-slash"></i>
+                </span>
+              </div>
+              <div class="formatbuttons">
+                <div>
+                  <span
+                    tabindex="0"
+                    title="Insert emoticons"
+                    onclick="DropdownButtonPanel_Toggle(this); return false;">
+                    <i class="fa fa-smile-o"></i>
+                  </span>
+                  <div
+                    style="display: none"
+                    class="smileydropdown dropdownbuttonpanel">
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[smile]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/smile.gif"
+                        alt="smile"
+                        width="15"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[laugh]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/laugh.gif"
+                        alt="laugh"
+                        width="15"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[wink]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/wink.gif"
+                        alt="wink"
+                        width="15"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[redface]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/redface.gif"
+                        alt="redface"
+                        width="15"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[angry]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/angry.gif"
+                        alt="angry"
+                        width="18"
+                        height="16" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[cry]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/cry.gif"
+                        alt="cry"
+                        width="15"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[roll]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/roll.gif"
+                        alt="roll"
+                        width="15"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[shock]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/shock.gif"
+                        alt="shock"
+                        width="15"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[warning]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/warning.gif"
+                        alt="warning"
+                        width="22"
+                        height="19" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[clap]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/clap.gif"
+                        alt="clap"
+                        width="30"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[dance]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/dance.gif"
+                        alt="dance"
+                        width="25"
+                        height="29" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[music]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/music.gif"
+                        alt="music"
+                        width="32"
+                        height="25" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[wave]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/wave.gif"
+                        alt="wave"
+                        width="25"
+                        height="15" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[sleep]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/sleep.gif"
+                        alt="sleep"
+                        width="45"
+                        height="18" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[headspin]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/headspin.gif"
+                        alt="headspin"
+                        width="37"
+                        height="23" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[facepalm]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/facepalm.gif"
+                        alt="facepalm"
+                        width="22"
+                        height="16" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[compute]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/compute.gif"
+                        alt="compute"
+                        width="40"
+                        height="20" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[toast]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/toast.gif"
+                        alt="toast"
+                        width="57"
+                        height="16" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[dive]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/dive.gif"
+                        alt="dive"
+                        width="34"
+                        height="33" />
+                    </span>
+                    <span
+                      onclick="InsertAtCursor('txtQuickReply','[rock]', 'smileydropdown'); return false;"
+                      tabindex="0">
+                      <img
+                        src="/images/smiley/rock.gif"
+                        alt="rock"
+                        width="29"
+                        height="25" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="aeb_wrap">
+              <textarea
+                id="txtQuickReply"
+                name="txtQuickReply"
+                rows="3"
+                class="textarea expandable"
+                placeholder="Leave a comment..."></textarea>
+            </div>
+          </div>
+        </div>
+        <a onclick="Postback('btnQuickReply_click')" class="base-button blue">
+          Post reply
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

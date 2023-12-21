@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.2
+- Speed up execution speed of Emojis, Observed the test took up to 20 seconds to execute!
+
 ## 3.1.1
 - Update urls to point at new repo
 

@@ -17,7 +17,7 @@ const apply = async (containers: HTMLElement[], emojiContent: Element): Promise<
 
     ([...container.querySelectorAll('.smileydropdown span')] as HTMLElement[]).forEach((smiley) => {
       if (!insertAtCursorElement) {
-        insertAtCursorElement = extractBetween("'", smiley.onclick.toString());
+        insertAtCursorElement = extractBetween("'", smiley.getAttribute('onclick'));
       }
 
       trueAchievementsContent.appendChild(smiley);
@@ -39,11 +39,14 @@ const apply = async (containers: HTMLElement[], emojiContent: Element): Promise<
 
 const buildEmojis = (): Element => {
   const groupedEmojis = decompress(emojiJson as unknown as Compressed).reduce(
-    (accumulator, emoji) => {
-      const category = accumulator.get(emoji.group) || [];
-      category.push(emoji);
+    (accumulator, emoji: { char: string; name: string; group: string }) => {
+      let category = accumulator.get(emoji.group);
+      if (!category) {
+        category = [];
+        accumulator.set(emoji.group, category);
+      }
 
-      accumulator.set(emoji.group, category);
+      category.push({ char: emoji.char, name: emoji.name });
 
       return accumulator;
     },
@@ -105,7 +108,7 @@ export default async (): Promise<void> => {
 
   const emojiContent = buildEmojis();
 
-  allConcurrently(
+  await allConcurrently(
     'Emojis - Apply',
     elementSelectors.map((selector: string) => ({
       name: `emojis-${selector}`,
@@ -118,7 +121,6 @@ export default async (): Promise<void> => {
 
         await apply(containers, emojiContent);
       }
-    })),
-    elementSelectors.length
+    }))
   );
 };

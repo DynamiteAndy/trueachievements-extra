@@ -1,4 +1,4 @@
-import { JSDOM } from 'jsdom';
+import { JSDOM, ConstructorOptions } from 'jsdom';
 import fs from 'fs-extra';
 import getPathByAlias from './get-path-by-alias';
 
@@ -57,7 +57,7 @@ const polyFill = (jsdom: JSDOM) => {
   global.Image = Image;
 };
 
-export const setHtml = (path: string, opts?: { url?: string }): void => {
+export const setHtml = (path: string, opts?: ConstructorOptions): void => {
   const html = fs.readFileSync(getPathByAlias(path));
   polyFill(new JSDOM(html, opts));
 };
