@@ -6,7 +6,7 @@ import { marked } from 'marked';
 import { mangle } from 'marked-mangle';
 import sanitizeHtml from 'sanitize-html';
 import { url } from '../../package.json';
-import { default as getPath } from './get-path-by-alias';
+import { default as getPath } from '../helpers/get-path-by-alias';
 
 export const includes = (): void => {
   Handlebars.registerHelper('includes', (filePath: string, options) => {

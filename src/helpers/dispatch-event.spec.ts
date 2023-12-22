@@ -1,4 +1,4 @@
-import { setHtml } from '@ta-x-project-root/test/jest';
+import { setHtml } from '@ta-x-jest';
 import dispatchEvent from './dispatch-event';
 
 describe('dispatchEvent', () => {

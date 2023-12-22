@@ -1,6 +1,7 @@
 import each from 'jest-each';
 import { readFileSync } from 'fs-extra';
-import { getPathByAlias, setHtml, createInnerTextSpies } from '@ta-x-jest';
+import { getPath } from '@ta-x-build-helpers';
+import { setHtml, createInnerTextSpies } from '@ta-x-jest';
 import { Cache, Constants, AchievementsRegex, gameAchievements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
@@ -155,7 +156,7 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
     jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
 
     const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
-    memoizeCorsFetchSpy.mockResolvedValueOnce(readFileSync(getPathByAlias(memoizedView)).toString());
+    memoizeCorsFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView)).toString());
 
     await addXboxAchievementGuides();
 
@@ -214,7 +215,7 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
     jest.spyOn(Cache, 'gameAchievementsXboxAchievementsGuideUrl', 'get').mockReturnValueOnce(cachedGuide);
 
     const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
-    memoizeCorsFetchSpy.mockResolvedValueOnce(readFileSync(getPathByAlias(memoizedView)).toString());
+    memoizeCorsFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView)).toString());
 
     await addXboxAchievementGuides();
 

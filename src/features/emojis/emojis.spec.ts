@@ -15,30 +15,11 @@ jest.mock('@ta-x-utilities', () => {
 jest.mock('emoji.json', () => {
   /* eslint-disable @typescript-eslint/no-var-requires */
   const compress = require('compress-json').compress;
-  const emojiJson = JSON.parse(fs.readFileSync(require.resolve('emoji.json'), 'utf8'));
+  const groupEmojis = require('@ta-x-build-helpers').groupEmojis;
+  const emojiJson = fs.readFileSync(require.resolve('emoji.json'), 'utf8');
   /* eslint-enable @typescript-eslint/no-var-requires */
 
-  const mappedEmojis = emojiJson.map((emoji: { char: string; name: string; group: string }) => ({
-    char: emoji.char,
-    name: emoji.name,
-    group: emoji.group
-  }));
-
-  // const mappedEmojis = emojiJson.reduce(
-  //   (accumulator, emoji: { char: string; name: string; group: string }) => {
-  //     let category = accumulator.get(emoji.group);
-  //     if (!category) {
-  //       category = [];
-  //       accumulator.set(emoji.group, category);
-  //     }
-
-  //     category.push(emoji);
-
-  //     return accumulator;
-  //   },
-  //   new Map([['TrueAchievements', []]])
-  // );
-
+  const mappedEmojis = groupEmojis(emojiJson);
   const compressedEmojis = compress(mappedEmojis);
   return compressedEmojis;
 });

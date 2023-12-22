@@ -187,8 +187,8 @@ App_Data
 !build/
 dist/*
 jest-reports
+coverage
 .nyc_output
-config.json
 
 # VS Code
 .vscode/*
