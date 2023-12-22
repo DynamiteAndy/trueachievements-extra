@@ -10,6 +10,7 @@ const polyFill = (jsdom: JSDOM) => {
   global.MutationObserver = global.window.MutationObserver;
   global.Event = global.window.Event;
   global.CustomEvent = global.window.CustomEvent;
+  global.Node = global.window.Node;
 
   class Image extends window.Image {
     constructor() {
