@@ -4,7 +4,7 @@
 - Speed up execution speed of Emojis, Observed the test took up to 20 seconds to execute!
 
 ## 3.1.1
-- Update urls to point at new repo
+- Update urls to point at new repo.
 
 ## 3.1.0
 - Behind the scenes, unit tests galore!,

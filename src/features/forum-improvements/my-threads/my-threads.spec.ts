@@ -1,7 +1,7 @@
 import { setHtml } from '@ta-x-jest';
-import { GamesRegex } from '@ta-x-globals';
+import { ForumRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
-import challenges from '.';
+import myThreads from '.';
 
 jest.mock('@ta-x-utilities', () => {
   return {
@@ -10,26 +10,26 @@ jest.mock('@ta-x-utilities', () => {
   };
 });
 
-describe('games-improvements/challenges', () => {
+describe('forum-improvements/my-threads', () => {
   beforeEach(() => {
     setHtml('@ta-x-jest-views/empty.html');
   });
 
-  it('should not run if not on challenges page', async () => {
-    jest.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(false);
+  it('should not run if not on my threads page', async () => {
+    jest.spyOn(ForumRegex.Test, 'myTheadsUrl').mockReturnValueOnce(false);
     const spy = jest.spyOn(taxUtilities, 'allConcurrently');
 
-    await challenges();
+    await myThreads();
 
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
 
-  it('should run if on challenges page', async () => {
-    jest.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(true);
+  it('should run if on my threads page', async () => {
+    jest.spyOn(ForumRegex.Test, 'myTheadsUrl').mockReturnValueOnce(true);
     const spy = jest.spyOn(taxUtilities, 'allConcurrently');
 
-    await challenges();
+    await myThreads();
 
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();

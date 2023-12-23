@@ -10,7 +10,7 @@ jest.mock('@ta-x-utilities', () => {
   };
 });
 
-describe('forums', () => {
+describe('games-improvements/forums', () => {
   beforeEach(() => {
     setHtml('@ta-x-jest-views/empty.html');
   });

@@ -10,7 +10,7 @@ jest.mock('@ta-x-utilities', () => {
   };
 });
 
-describe('clips', () => {
+describe('games-improvements/clips', () => {
   beforeEach(() => {
     setHtml('@ta-x-jest-views/empty.html');
   });

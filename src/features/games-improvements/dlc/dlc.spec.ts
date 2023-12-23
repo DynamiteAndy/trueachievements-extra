@@ -10,7 +10,7 @@ jest.mock('@ta-x-utilities', () => {
   };
 });
 
-describe('dlc', () => {
+describe('games-improvements/dlc', () => {
   beforeEach(() => {
     setHtml('@ta-x-jest-views/empty.html');
   });
