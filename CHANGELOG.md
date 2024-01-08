@@ -1,7 +1,8 @@
 # Changelog
 
 ## 3.1.2
-- Speed up execution speed of Emojis, Observed the test took up to 20 seconds to execute!
+- Speed up execution speed of Emojis, Observed the test took up to 20 seconds to execute!,
+- Changed wording on Xbox Achievement Guides to include a link to XboxAchievements.com.
 
 ## 3.1.1
 - Update urls to point at new repo.
