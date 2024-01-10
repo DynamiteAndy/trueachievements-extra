@@ -45,10 +45,14 @@ export const improveImageSelector = async (): Promise<void> => {
     return;
   }
 
-  const imageContainer = await waitForElement('#oWalkthroughImageViewer');
+  const imageContainer = await waitForElement('#oWalkthroughImageViewer, [id=" oWalkthroughImageViewer"]');
 
   if (!imageContainer) {
     return;
+  }
+
+  if (imageContainer.id === ' oWalkthroughImageViewer') {
+    imageContainer.id = 'oWalkthroughImageViewer';
   }
 
   imageContainer.classList.add(

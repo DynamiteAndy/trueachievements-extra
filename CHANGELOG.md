@@ -2,6 +2,7 @@
 
 ## 3.1.2
 - Speed up execution speed of Emojis, Observed the test took up to 20 seconds to execute!,
+- Added a fix for the id on Improved Image Selector,
 - Changed wording on Xbox Achievement Guides to include a link to XboxAchievements.com.
 
 ## 3.1.1
