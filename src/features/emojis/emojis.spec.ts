@@ -1,6 +1,10 @@
+import each from 'jest-each';
+import fs from 'fs-extra';
 import { setHtml } from '@ta-x-jest';
 import { emojis as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
+import { getPath } from '@ta-x-build-helpers';
+import { wait } from '@ta-x-helpers';
 import emojis from '.';
 
 jest.mock('@ta-x-utilities', () => {
@@ -8,6 +12,18 @@ jest.mock('@ta-x-utilities', () => {
     __esModule: true,
     ...jest.requireActual('@ta-x-utilities')
   };
+});
+
+jest.mock('emoji.json', () => {
+  /* eslint-disable @typescript-eslint/no-var-requires */
+  const compress = require('compress-json').compress;
+  const groupEmojis = require('@ta-x-build-helpers').groupEmojis;
+  const emojiJson = fs.readFileSync(require.resolve('emoji.json'), 'utf8');
+  /* eslint-enable @typescript-eslint/no-var-requires */
+
+  const mappedEmojis = groupEmojis(emojiJson);
+  const compressedEmojis = compress(mappedEmojis);
+  return compressedEmojis;
 });
 
 describe('emojis', () => {
@@ -27,7 +43,7 @@ describe('emojis', () => {
 
   it('should not run if enabled and no emoji container is found', async () => {
     jest.spyOn(config, 'enabled', 'get').mockReturnValueOnce(true);
-    jest.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(null);
+    jest.spyOn(taxUtilities, 'waitForElements').mockResolvedValueOnce(null);
     const spy = jest.spyOn(taxUtilities, 'allConcurrently');
 
     await emojis();
@@ -35,4 +51,40 @@ describe('emojis', () => {
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
+
+  each([
+    '@ta-x-jest-views/emojis/thread-quick-reply.html',
+    '@ta-x-jest-views/emojis/thread-reply.html',
+    '@ta-x-jest-views/emojis/direct-message-reply.html',
+    '@ta-x-jest-views/emojis/add-guide.html',
+    '@ta-x-jest-views/emojis/guide-add-comment.html'
+  ]).test('should run if enabled and emoji container is found', async (view: string) => {
+    setHtml(view);
+    jest.spyOn(config, 'enabled', 'get').mockReturnValueOnce(true);
+    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+
+    await emojis();
+
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  each(['@ta-x-jest-views/emojis/news-article-quick-reply.html']).test(
+    'should run if enabled and emoji container is injected',
+    async (view: string) => {
+      jest.spyOn(config, 'enabled', 'get').mockReturnValueOnce(true);
+      jest.spyOn(taxUtilities, 'waitForElements').mockResolvedValueOnce(null);
+      const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+
+      await emojis();
+
+      const parsedDocument = new DOMParser().parseFromString(fs.readFileSync(getPath(view), 'utf8'), 'text/html');
+      document.body.appendChild(parsedDocument.body.firstElementChild);
+
+      await wait(1);
+
+      expect(spy).toHaveBeenCalled();
+      spy.mockRestore();
+    }
+  );
 });

@@ -7,43 +7,58 @@ import { template } from '@ta-x-helpers';
 import templatedTabs from '@ta-x-views/templates/tab-link.html';
 import html from './emojis.html';
 
-const apply = async (containers: HTMLElement[], emojiContent: Element): Promise<void> => {
-  for (let i = 0; i < containers.length; i++) {
-    const container = containers[i];
-    const trueAchievementsContent = emojiContent.querySelector('#ta-x-tabs-trueachievements');
-    let insertAtCursorElement: string = null;
+let builtEmojis: Element = null;
+const elementSelectors = [
+  '#aeb_txtQuickReply',
+  '#aeb_aebMessageBody',
+  '#aeb_aebMessage',
+  '#aeb_txtAddSubComment',
+  '#aeb_aebComment'
+];
 
-    await waitForImages(container);
+const apply = async (containers: HTMLElement[]): Promise<void[]> =>
+  await allConcurrently(
+    'Emojis - Apply',
+    containers.map((container: HTMLElement) => ({
+      name: 'emojis-container',
+      task: async (): Promise<void> => {
+        const trueAchievementsContent = builtEmojis.querySelector('#ta-x-tabs-trueachievements');
+        let insertAtCursorElement: string = null;
 
-    ([...container.querySelectorAll('.smileydropdown span')] as HTMLElement[]).forEach((smiley) => {
-      if (!insertAtCursorElement) {
-        insertAtCursorElement = extractBetween("'", smiley.onclick.toString());
+        await waitForImages(container);
+
+        const smileys = [...container.querySelectorAll('.smileydropdown span')] as HTMLElement[];
+        smileys.forEach((smiley) => {
+          if (!insertAtCursorElement) {
+            insertAtCursorElement = extractBetween("'", smiley.getAttribute('onclick'));
+          }
+
+          trueAchievementsContent.appendChild(smiley);
+        });
+
+        const smileyDropdowns = [...container.querySelectorAll('.smileydropdown')] as HTMLElement[];
+        smileyDropdowns.forEach((smileyDropdown) => smileyDropdown.parentElement.remove());
+
+        const quickReplyEmojiToolbar = await waitForElement('.toolbar .formatbuttons:last-child', container);
+        const emojiContent = template(builtEmojis, { emojis: { id: insertAtCursorElement } });
+        quickReplyEmojiToolbar.appendChild(emojiContent);
+
+        const firstTab = await waitForElement(`.${Constants.Styles.Components.Tab.tabLink}:first-child`, container);
+        pubSub.publish('tabs:set', firstTab);
+      }
+    }))
+  );
+
+const buildEmojis = (): void => {
+  const groupedEmojis = decompress(emojiJson as unknown as Compressed).reduce(
+    (accumulator, emoji: { char: string; name: string; group: string }) => {
+      let category = accumulator.get(emoji.group);
+      if (!category) {
+        category = [];
+        accumulator.set(emoji.group, category);
       }
 
-      trueAchievementsContent.appendChild(smiley);
-    });
-
-    ([...container.querySelectorAll('.smileydropdown')] as HTMLElement[]).forEach((smiley) =>
-      smiley.parentElement.remove()
-    );
-
-    const quickReplyEmojiToolbar = await waitForElement('.toolbar .formatbuttons:last-child', container);
-    emojiContent = template(emojiContent, { emojis: { id: insertAtCursorElement } });
-    quickReplyEmojiToolbar.appendChild(emojiContent);
-
-    const firstTab = await waitForElement(`.${Constants.Styles.Components.Tab.tabLink}:first-child`, container);
-
-    pubSub.publish('tabs:set', firstTab);
-  }
-};
-
-const buildEmojis = (): Element => {
-  const groupedEmojis = decompress(emojiJson as unknown as Compressed).reduce(
-    (accumulator, emoji) => {
-      const category = accumulator.get(emoji.group) || [];
-      category.push(emoji);
-
-      accumulator.set(emoji.group, category);
+      category.push({ char: emoji.char, name: emoji.name });
 
       return accumulator;
     },
@@ -83,42 +98,62 @@ const buildEmojis = (): Element => {
     emojiTabs.parentNode.append(templatedTabContent);
   });
 
-  return emojiButton;
+  builtEmojis = emojiButton;
+};
+
+const listen = (): void => {
+  const observer = new MutationObserver(async (mutations: MutationRecord[]) => {
+    for (const mutation of mutations) {
+      if (mutation.type !== 'childList') {
+        return;
+      }
+
+      if (!(mutation.target instanceof HTMLElement)) {
+        return;
+      }
+
+      if (!mutation.addedNodes || mutation.addedNodes.length === 0) {
+        return;
+      }
+
+      const matchingNodes = [...mutation.addedNodes].filter((node: Node) => {
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+          return false;
+        }
+
+        const elementNode = node as HTMLElement;
+        return (
+          elementNode.matches(elementSelectors.join(', ')) || elementNode.querySelector(elementSelectors.join(', '))
+        );
+      }) as HTMLElement[];
+
+      if (matchingNodes.length > 0) {
+        if (!builtEmojis) {
+          buildEmojis();
+        }
+
+        await apply(matchingNodes);
+      }
+    }
+  });
+
+  observer.observe(document.body, {
+    attributes: false,
+    childList: true,
+    subtree: true
+  });
 };
 
 export default async (): Promise<void> => {
   if (!emojis.enabled) {
     return;
   }
-  const elementSelectors = [
-    '#aeb_txtQuickReply',
-    '#aeb_aebMessageBody',
-    '#aeb_aebMessage',
-    '#aeb_txtAddSubComment',
-    '#aeb_aebComment'
-  ];
-  const replyContainer = await waitForElement(elementSelectors.join(', '));
 
-  if (!replyContainer) {
-    return;
+  const replyContainers = await waitForElements(elementSelectors.join(', '));
+  if (replyContainers) {
+    buildEmojis();
+    await apply(replyContainers);
   }
 
-  const emojiContent = buildEmojis();
-
-  allConcurrently(
-    'Emojis - Apply',
-    elementSelectors.map((selector: string) => ({
-      name: `emojis-${selector}`,
-      task: async (): Promise<void> => {
-        const containers = await waitForElements(selector);
-
-        if (!containers || containers.length === 0) {
-          return;
-        }
-
-        await apply(containers, emojiContent);
-      }
-    })),
-    elementSelectors.length
-  );
+  listen();
 };

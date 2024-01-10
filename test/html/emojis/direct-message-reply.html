@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Direct Message - Reply</title>
+  </head>
+  <body>
+    <div class="adv_editbox frm-grp frm-a-top" id="aeb_aebMessage">
+      <label class="small" for="aebMessage">Reply</label>
+      <div>
+        <div class="toolbar">
+          <div class="formatbuttons">
+            <span
+              class="format_bold"
+              tabindex="0"
+              title="Insert pair of bold tags (Alt + B)"
+              onclick="AddFormatTags('aebMessage', { tag: 'b' }); return false;">
+              <i class="fa fa-bold"></i>
+            </span>
+            <span
+              class="format_underline"
+              tabindex="0"
+              title="Insert pair of underline tags (Alt + U)"
+              onclick="AddFormatTags('aebMessage', { tag: 'u' }); return false;">
+              <i class="fa fa-underline"></i>
+            </span>
+            <span
+              class="format_italic"
+              tabindex="0"
+              title="Insert pair of italic tags (Alt + I)"
+              onclick="AddFormatTags('aebMessage', { tag: 'i' }); return false;">
+              <i class="fa fa-italic"></i>
+            </span>
+            <span
+              class="format_strikethrough"
+              tabindex="0"
+              title="Insert pair of strikethrough tags (Alt + R)"
+              onclick="AddFormatTags('aebMessage', { tag: 's' }); return false;">
+              <i class="fa fa-strikethrough"></i>
+            </span>
+            <span
+              class="format_superscript"
+              tabindex="0"
+              title="Insert pair of superscript tags"
+              onclick="AddFormatTags('aebMessage', { tag: 'p' }); return false;">
+              <i class="fa fa-superscript"></i>
+            </span>
+            <span
+              class="format_quote"
+              tabindex="0"
+              title="Insert pair of quote tags (Alt + Q)"
+              onclick="AddFormatTags('aebMessage', { tag: 'quote' }); return false;">
+              <i class="fa fa-quote-right"></i>
+            </span>
+            <span
+              class="format_spoiler"
+              tabindex="0"
+              title="Insert pair of spoiler tags (Alt + S)"
+              onclick="AddFormatTags('aebMessage', { tag: 'spoiler' }); return false;">
+              <i class="fa fa-eye-slash"></i>
+            </span>
+          </div>
+          <div class="formatbuttons">
+            <div>
+              <span
+                tabindex="0"
+                title="Insert emoticons"
+                onclick="DropdownButtonPanel_Toggle(this); return false;">
+                <i class="fa fa-smile-o"></i>
+              </span>
+              <div
+                style="display: none"
+                class="smileydropdown dropdownbuttonpanel">
+                <span
+                  onclick="InsertAtCursor('aebMessage','[smile]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/smile.gif"
+                    alt="smile"
+                    width="15"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[laugh]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/laugh.gif"
+                    alt="laugh"
+                    width="15"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[wink]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/wink.gif"
+                    alt="wink"
+                    width="15"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[redface]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/redface.gif"
+                    alt="redface"
+                    width="15"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[angry]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/angry.gif"
+                    alt="angry"
+                    width="18"
+                    height="16" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cry]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/cry.gif"
+                    alt="cry"
+                    width="15"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[roll]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/roll.gif"
+                    alt="roll"
+                    width="15"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[shock]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/shock.gif"
+                    alt="shock"
+                    width="15"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[warning]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/warning.gif"
+                    alt="warning"
+                    width="22"
+                    height="19" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[clap]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/clap.gif"
+                    alt="clap"
+                    width="30"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[dance]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/dance.gif"
+                    alt="dance"
+                    width="25"
+                    height="29" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[music]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/music.gif"
+                    alt="music"
+                    width="32"
+                    height="25" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[wave]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/wave.gif"
+                    alt="wave"
+                    width="25"
+                    height="15" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[sleep]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/sleep.gif"
+                    alt="sleep"
+                    width="45"
+                    height="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[headspin]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/headspin.gif"
+                    alt="headspin"
+                    width="37"
+                    height="23" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[facepalm]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/facepalm.gif"
+                    alt="facepalm"
+                    width="22"
+                    height="16" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[compute]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/compute.gif"
+                    alt="compute"
+                    width="40"
+                    height="20" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[toast]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/toast.gif"
+                    alt="toast"
+                    width="57"
+                    height="16" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[dive]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/dive.gif"
+                    alt="dive"
+                    width="34"
+                    height="33" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[rock]', 'smileydropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/smiley/rock.gif"
+                    alt="rock"
+                    width="29"
+                    height="25" />
+                </span>
+              </div>
+            </div>
+            <div>
+              <span
+                tabindex="0"
+                title="Insert controller icons"
+                onclick="DropdownButtonPanel_Toggle(this); return false;">
+                <i class="fa fa-gamepad"></i>
+              </span>
+              <div
+                style="display: none"
+                class="controllerbuttondropdown dropdownbuttonpanel">
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_A]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_A.png"
+                    alt="cn_A"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_B]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_B.png"
+                    alt="cn_B"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_X]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_X.png"
+                    alt="cn_X"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_Y]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_Y.png"
+                    alt="cn_Y"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LB]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LB.png"
+                    alt="cn_LB"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RB]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RB.png"
+                    alt="cn_RB"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LT]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LT.png"
+                    alt="cn_LT"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RT]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RT.png"
+                    alt="cn_RT"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_up]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_up.png"
+                    alt="cn_up"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_down]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_down.png"
+                    alt="cn_down"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_left]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_left.png"
+                    alt="cn_left"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_right]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_right.png"
+                    alt="cn_right"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_upleft]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_upleft.png"
+                    alt="cn_upleft"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_upright]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_upright.png"
+                    alt="cn_upright"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_downleft]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_downleft.png"
+                    alt="cn_downleft"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_downright]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_downright.png"
+                    alt="cn_downright"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSu]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSu.png"
+                    alt="cn_LSu"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSd]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSd.png"
+                    alt="cn_LSd"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSl]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSl.png"
+                    alt="cn_LSl"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSr]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSr.png"
+                    alt="cn_LSr"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSul]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSul.png"
+                    alt="cn_LSul"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSur]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSur.png"
+                    alt="cn_LSur"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSdl]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSdl.png"
+                    alt="cn_LSdl"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSdr]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSdr.png"
+                    alt="cn_LSdr"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSu]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSu.png"
+                    alt="cn_RSu"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSd]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSd.png"
+                    alt="cn_RSd"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSl]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSl.png"
+                    alt="cn_RSl"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSr]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSr.png"
+                    alt="cn_RSr"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSul]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSul.png"
+                    alt="cn_RSul"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSur]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSur.png"
+                    alt="cn_RSur"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSdl]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSdl.png"
+                    alt="cn_RSdl"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSdr]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSdr.png"
+                    alt="cn_RSdr"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_dpad]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_dpad.png"
+                    alt="cn_dpad"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LSc]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LSc.png"
+                    alt="cn_LSc"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RSc]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RSc.png"
+                    alt="cn_RSc"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_LS]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_LS.png"
+                    alt="cn_LS"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_RS]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_RS.png"
+                    alt="cn_RS"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_back]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_back.png"
+                    alt="cn_back"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_start]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_start.png"
+                    alt="cn_start"
+                    height="18"
+                    width="18" />
+                </span>
+                <span
+                  onclick="InsertAtCursor('aebMessage','[cn_guide]', 'controllerbuttondropdown'); return false;"
+                  tabindex="0">
+                  <img
+                    src="/images/controllerbuttons/Xbox%20One/cn_guide.png"
+                    alt="cn_guide"
+                    height="18"
+                    width="18" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="aeb_wrap">
+          <textarea
+            id="aebMessage"
+            name="aebMessage"
+            rows="30"
+            class="textarea expandable"
+            style="height: 650px"></textarea>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

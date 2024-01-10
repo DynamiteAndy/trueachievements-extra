@@ -1,6 +1,7 @@
 import each from 'jest-each';
 import { readFileSync } from 'fs-extra';
-import { getPathByAlias, setHtml, createInnerTextSpies } from '@ta-x-jest';
+import { getPath } from '@ta-x-build-helpers';
+import { setHtml, createInnerTextSpies } from '@ta-x-jest';
 import { gameAchievements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
@@ -73,7 +74,7 @@ describe('games-improvements/achievements/individual-progress', () => {
 
     jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);
     const memoizeFetchSpy = jest.spyOn(taxHelpers, 'memoizeFetch');
-    memoizeFetchSpy.mockResolvedValueOnce(readFileSync(getPathByAlias(memoizedView || view)).toString());
+    memoizeFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView || view)).toString());
 
     await individualProgress();
 
@@ -115,7 +116,7 @@ describe('games-improvements/achievements/individual-progress', () => {
 
       jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);
       const memoizeFetchSpy = jest.spyOn(taxHelpers, 'memoizeFetch');
-      memoizeFetchSpy.mockResolvedValueOnce(readFileSync(getPathByAlias(memoizedView || view)).toString());
+      memoizeFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView || view)).toString());
 
       await individualProgress();
 
@@ -165,7 +166,7 @@ describe('games-improvements/achievements/individual-progress', () => {
 
       jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);
       const memoizeFetchSpy = jest.spyOn(taxHelpers, 'memoizeFetch');
-      memoizeFetchSpy.mockResolvedValueOnce(readFileSync(getPathByAlias(memoizedView || view)).toString());
+      memoizeFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView || view)).toString());
 
       await individualProgress();
 
@@ -214,7 +215,7 @@ describe('games-improvements/achievements/individual-progress', () => {
 
       jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);
       const memoizeFetchSpy = jest.spyOn(taxHelpers, 'memoizeFetch');
-      memoizeFetchSpy.mockResolvedValueOnce(readFileSync(getPathByAlias(memoizedView || view)).toString());
+      memoizeFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView || view)).toString());
 
       await individualProgress();
 

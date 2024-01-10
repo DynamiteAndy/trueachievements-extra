@@ -1,6 +1,6 @@
-import { JSDOM } from 'jsdom';
+import { JSDOM, ConstructorOptions } from 'jsdom';
 import fs from 'fs-extra';
-import getPathByAlias from './get-path-by-alias';
+import { getPath } from '@ta-x-build-helpers';
 
 const polyFill = (jsdom: JSDOM) => {
   global.window = jsdom.window as unknown as Window & typeof globalThis;
@@ -10,11 +10,9 @@ const polyFill = (jsdom: JSDOM) => {
   global.MutationObserver = global.window.MutationObserver;
   global.Event = global.window.Event;
   global.CustomEvent = global.window.CustomEvent;
+  global.Node = global.window.Node;
 
   class Image extends window.Image {
-    private srcValue: string;
-    private completeValue: boolean;
-
     constructor() {
       super();
 
@@ -57,8 +55,8 @@ const polyFill = (jsdom: JSDOM) => {
   global.Image = Image;
 };
 
-export const setHtml = (path: string, opts?: { url?: string }): void => {
-  const html = fs.readFileSync(getPathByAlias(path));
+export const setHtml = (path: string, opts?: ConstructorOptions): void => {
+  const html = fs.readFileSync(getPath(path));
   polyFill(new JSDOM(html, opts));
 };
 
