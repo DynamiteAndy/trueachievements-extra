@@ -3,7 +3,11 @@ body {
     .ta-x-emojis {
       .ta-x-tabs-content {
         &[data-tab-visible] {
+          display: flex;
+          flex-wrap: wrap;
           height: 10rem;
+          overflow-y: auto;
+          margin-right: -1rem;
           display: grid;
           grid-template-columns: repeat(5, 1fr);
           text-align: center;

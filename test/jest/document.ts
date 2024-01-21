@@ -2,7 +2,7 @@ import { JSDOM, ConstructorOptions } from 'jsdom';
 import fs from 'fs-extra';
 import { getPath } from '@ta-x-build-helpers';
 
-const polyFill = (jsdom: JSDOM) => {
+const polyFill = (jsdom: JSDOM): void => {
   global.window = jsdom.window as unknown as Window & typeof globalThis;
   global.document = global.window.document;
   global.HTMLElement = global.window.HTMLElement;

@@ -6,7 +6,8 @@ import achievement from '.';
 jest.mock('@ta-x-utilities', () => {
   return {
     __esModule: true,
-    ...jest.requireActual('@ta-x-utilities')
+    ...jest.requireActual('@ta-x-utilities'),
+    allConcurrently: jest.fn().mockImplementation(() => Promise.resolve())
   };
 });
 

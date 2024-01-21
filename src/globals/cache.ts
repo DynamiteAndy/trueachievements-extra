@@ -33,6 +33,14 @@ export class Cache {
     setMap('gameAchievementsXboxAchievementsGuideUrl', value);
   }
 
+  static get gameAchievementsPlaystationTrophiesGuideUrl(): Map<string, string> {
+    return getMap('gameAchievementsPlaystationTrophiesGuideUrl', '');
+  }
+
+  static set gameAchievementsPlaystationTrophiesGuideUrl(value: Map<string, string>) {
+    setMap('gameAchievementsPlaystationTrophiesGuideUrl', value);
+  }
+
   static get walkthroughForumOwnerProgressUrl(): Map<string, string> {
     return getMap('walkthroughOwnerProgressUrl', '');
   }

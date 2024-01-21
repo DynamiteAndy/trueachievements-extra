@@ -1,0 +1,102 @@
+@import '../../variables';
+
+body {
+  &.trueachievement-extras {
+    .ta-x-game-achievements-import-guides {
+      width: 100%;
+      padding: 0;
+      margin-top: 1.5rem;
+      padding-bottom: 1rem;
+
+      .tabs-nav {
+        display: flex;
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
+        margin-bottom: 1rem;
+        background: #e1e1e1;
+
+
+        li {
+          padding: 0.7rem;
+          margin: 0;
+          border: 0;
+          border-top: 3px solid;
+          border-color: #666;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          text-align: center;
+          background-color: #666;
+          color: #fff;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+
+          &.ta-x-tabs-selected {
+            background-color: #fff;
+            border-top: 3px solid;
+            color: #646464;
+            background: #fff;
+          }
+
+          &:hover {
+            border-top: 3px solid;
+          }
+        }
+      }
+
+      .ta-x-tabs-content {
+        padding: 0 0.8rem;
+      }
+
+      section {
+        font-size: 1.2rem;
+
+        > div {
+          display: none;
+        }
+
+        article {
+          padding-top: 0;
+          border-top: 0;
+
+          div {
+            font-size: 1.2rem;
+            font-weight: initial;
+            letter-spacing: initial;
+            line-height: initial;
+          }
+        }
+
+        p {
+          margin-top: 0;
+          margin-bottom: 0.9rem;
+        }
+      }
+    }
+
+    [data-theme='dark'] {
+      .ta-x-game-achievements-import-guides {
+        .tabs-nav {
+          background: #222;
+
+          li {
+            background-color: #161616;
+            border-color: #161616;
+
+            &.ta-x-tabs-selected {
+              background-color: #333;
+              color: #fff;
+            }
+          }
+        }
+
+        section {
+          article {
+            border-top: 0;
+          }
+        }
+      }
+    }
+  }
+}

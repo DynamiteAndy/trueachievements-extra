@@ -1,0 +1,70 @@
+<section
+  class="js-ta-x-game-achievements-import-guides js-ta-x-tabs ta-x-game-achievements-import-guides"
+>
+  <ul class="tabs-nav ta-x-tabs-link-container js-ta-x-tabs-link-container">
+    <li
+      class="js-ta-x-tabs-link ta-x-tabs-selected ta-x-tabs-link"
+      data-tab-id="#ta-x-tabs-xbox-achievements"
+      data-border-top=""
+    >
+        Xbox Achievements
+    </li>
+    <li
+      class="js-ta-x-tabs-link ta-x-tabs-link"
+      data-tab-id="#ta-x-tabs-playstation-trophies"
+      data-border-top=""
+    >
+        Playstation Trophies
+    </li>
+    <li
+      class="js-ta-x-tabs-link ta-x-tabs-link"
+      data-tab-id="#ta-x-tabs-gamertag-nation"
+      data-border-top=""
+    >
+        Gamertag Nation
+    </li>
+  </ul>
+  <div
+    id="ta-x-tabs-xbox-achievements"
+    class="js-ta-x-tabs-content ta-x-tabs-content"
+    data-tab-visible=""
+  >
+    {{includes
+      "@ta-x-partials/ask-loader-section.hbs"
+      section-classes="js-ta-x-game-achievements-xbox-achievement-guides ta-x-game-achievements-xbox-achievement-guides"
+      section-title="Xbox Achievement Guides"
+      ask-information="Please enter a direct link to this game from <a href='https://www.xboxachievements.com/' target='_blank'>XboxAchievements.com</a>, I'll remember it next time!"
+      ask-label="XboxAchievements Url"
+      label-id="txtGameAchievementsXboxAchievementGuides"
+      input-id="btnGameAchievementsXboxAchievementGuidesSave"
+    }}
+  </div>
+  <div
+    id="ta-x-tabs-playstation-trophies"
+    class="js-ta-x-tabs-content ta-x-tabs-content"
+  >
+    {{includes
+      "@ta-x-partials/ask-loader-section.hbs"
+      section-classes="js-ta-x-game-achievements-playstation-trophy-guides ta-x-game-achievements-playstation-trophy-guides"
+      section-title="Playstation Trophy Guides"
+      ask-information="Please enter a direct link to this game from <a href='https://www.playstationtrophies.org/' target='_blank'>PlaystationTrophies.org</a>, I'll remember it next time!"
+      ask-label="PlaystationTrophies Url"
+      label-id="txtGameAchievementsPlaystationTrophyGuides"
+      input-id="btnGameAchievementsPlaystationTrophyGuidesSave"
+    }}
+  </div>
+  <div
+    id="ta-x-tabs-playstation-trophies"
+    class="js-ta-x-tabs-content ta-x-tabs-content"
+  >
+    {{includes
+      "@ta-x-partials/ask-loader-section.hbs"
+      section-classes="js-ta-x-game-achievements-gamertag-nation-guides ta-x-game-achievements-gamertag-nation-guides"
+      section-title="Gamertag Nation Guides"
+      ask-information="Please enter a direct link to this game from <a href='https://www.gamertagnation.com/' target='_blank'>GamertagNation.com</a>, I'll remember it next time!"
+      ask-label="GamertagNation Url"
+      label-id="txtGameAchievementsGamertagNationGuides"
+      input-id="btnGameAchievementsGamertagNationGuidesSave"
+    }}
+  </div>
+</section>

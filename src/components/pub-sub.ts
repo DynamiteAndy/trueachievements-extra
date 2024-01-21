@@ -7,6 +7,8 @@ type Events = {
   'accordion:setMaxHeight': HTMLElement;
   'accordion:toggleState': HTMLElement;
   'tabs:set': HTMLElement;
+  'tabs:hide': HTMLElement;
+  'tabs:delete': HTMLElement;
   'tinymce:repositionFloatingMenus': null;
   'walkthroughPreview:removeAside': null;
   'test:subscribeEvent': string;

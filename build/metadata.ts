@@ -1,6 +1,10 @@
 import { Metadata } from 'userscript-metadata-webpack-plugin';
 import { author, url, description, version, bugs } from '../package.json';
 
+// If adding anything new to the Metadata object, ensure that you replace your existing
+// TrueAchievements Extra - Development user script  in tampermonnkey with trueachievements.extras.dev.user.js
+// otherwise the new metadata will not be there.
+
 export default {
   name: {
     $: 'TrueAchievements Extra'
@@ -13,7 +17,7 @@ export default {
   downloadURL: `${url}/raw/main/dist/`,
   supportURL: bugs.url,
   description: description,
-  connect: ['trueachievements.com', 'xboxachievements.com'],
+  connect: ['trueachievements.com', 'xboxachievements.com', 'playstationtrophies.org'],
   author: author,
   match: ['http*://*.trueachievements.com/*'],
   'run-at': 'document-start',

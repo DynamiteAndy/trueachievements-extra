@@ -293,6 +293,12 @@ export const gameAchievements = {
   },
   set gameAchievementsShowXboxAchievementGuides(value: boolean) {
     GM_setValue('gameAchievementsShowXboxAchievementGuides', value);
+  },
+  get gameAchievementsShowPlaystationTrophyGuides(): boolean {
+    return GM_getValue('gameAchievementsShowPlaystationTrophyGuides', false);
+  },
+  set gameAchievementsShowPlaystationTrophyGuides(value: boolean) {
+    GM_setValue('gameAchievementsShowPlaystationTrophyGuides', value);
   }
 };
 

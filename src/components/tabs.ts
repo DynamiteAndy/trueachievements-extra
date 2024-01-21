@@ -1,25 +1,124 @@
 import { Constants } from '@ta-x-globals';
 import pubSub from './pub-sub';
 
+const getCurrentlySelectedTabAndContent = (
+  tabOrContent: HTMLElement
+): { parent: HTMLElement; tab: HTMLElement; content: HTMLElement } => {
+  const parentTabContainer = tabOrContent.closest(`.${Constants.Styles.Components.Tab.featureJs}`) as HTMLElement;
+  const selectedTab = parentTabContainer.querySelector(
+    `.${Constants.Styles.Components.Tab.tabSelected}`
+  ) as HTMLElement;
+  const selectedContent = parentTabContainer.querySelector('[data-tab-visible]') as HTMLElement;
+
+  return { parent: parentTabContainer, tab: selectedTab, content: selectedContent };
+};
+
+const getTabAndContent = (
+  tabOrContent: HTMLElement
+): { parent: HTMLElement; tab: HTMLElement; content: HTMLElement; isSelected: boolean } => {
+  const parentTabContainer = tabOrContent.closest(`.${Constants.Styles.Components.Tab.featureJs}`) as HTMLElement;
+  let tab: HTMLElement;
+  let content: HTMLElement;
+
+  if (tabOrContent.classList.contains(Constants.Styles.Components.Tab.tabLink)) {
+    tab = tabOrContent;
+    content = parentTabContainer.querySelector(tab.getAttribute('data-tab-id')) as HTMLElement;
+  } else if (tabOrContent.classList.contains(Constants.Styles.Components.Tab.tabContent)) {
+    content = tabOrContent;
+    tab = parentTabContainer.querySelector(`[data-tab-id="#${content.getAttribute('id')}"]`) as HTMLElement;
+  } else {
+    tab = tabOrContent.closest(`.${Constants.Styles.Components.Tab.tabLink}`);
+    content = tabOrContent.closest(`.${Constants.Styles.Components.Tab.tabContent}`);
+
+    if (tab) {
+      content = parentTabContainer.querySelector(tab.getAttribute('data-tab-id')) as HTMLElement;
+    } else {
+      tab = parentTabContainer.querySelector(`[data-tab-id="#${content.getAttribute('id')}"]`) as HTMLElement;
+    }
+  }
+
+  return {
+    parent: parentTabContainer,
+    tab: tab,
+    content: content,
+    isSelected: tab.classList.contains(Constants.Styles.Components.Tab.tabSelected)
+  };
+};
+
+const getFallbackTab = (tab: HTMLElement) => {
+  const siblingProps = ['previousElementSibling', 'nextElementSibling'];
+
+  for (const prop of siblingProps) {
+    let checkTab = tab[prop] as HTMLElement;
+
+    if (checkTab) {
+      while (checkTab) {
+        if (!checkTab.classList.contains('ta-x-hide')) {
+          return checkTab;
+        }
+        checkTab = checkTab[prop];
+      }
+    }
+  }
+};
+
 const switchTab = (selectedTab: HTMLElement) => {
   if (selectedTab.classList.contains(Constants.Styles.Components.Tab.tabSelected)) {
     return;
   }
 
-  const parentTabContainer = selectedTab.closest(`.${Constants.Styles.Components.Tab.featureJs}`);
-  const prevSelected = parentTabContainer.querySelector(
-    `.${Constants.Styles.Components.Tab.tabSelected}`
-  ) as HTMLElement;
-  const prevContent = parentTabContainer.querySelector('[data-tab-visible]') as HTMLElement;
-  const nextSelected = parentTabContainer.querySelector(selectedTab.getAttribute('data-tab-id'));
+  const currentTabAndContent = getCurrentlySelectedTabAndContent(selectedTab);
+  const nextSelected = getTabAndContent(selectedTab);
 
-  if (prevSelected && prevContent) {
-    prevSelected.classList.toggle(Constants.Styles.Components.Tab.tabSelected);
-    prevContent.removeAttribute('data-tab-visible');
+  if (currentTabAndContent.tab && currentTabAndContent.content) {
+    currentTabAndContent.tab.classList.toggle(Constants.Styles.Components.Tab.tabSelected);
+    currentTabAndContent.content.removeAttribute('data-tab-visible');
   }
 
-  selectedTab.classList.toggle(Constants.Styles.Components.Tab.tabSelected);
-  nextSelected.setAttribute('data-tab-visible', '');
+  nextSelected.tab.classList.toggle(Constants.Styles.Components.Tab.tabSelected);
+  nextSelected.content.setAttribute('data-tab-visible', '');
+};
+
+const hideTab = (tabToHide: HTMLElement) => {
+  const tabAndContent = getTabAndContent(tabToHide);
+  const fallbackTab = getFallbackTab(tabAndContent.tab);
+
+  if (fallbackTab) {
+    if (tabAndContent.isSelected) {
+      switchTab(fallbackTab);
+    }
+
+    tabAndContent.tab.classList.add('ta-x-hide');
+    tabAndContent.content.classList.add('ta-x-hide');
+  } else {
+    tabAndContent.parent.classList.add('ta-x-hide');
+    tabAndContent.tab.classList.add('ta-x-hide');
+    tabAndContent.content.classList.add('ta-x-hide');
+
+    if (tabAndContent.isSelected) {
+      tabAndContent.tab.classList.toggle(Constants.Styles.Components.Tab.tabSelected);
+      tabAndContent.content.removeAttribute('data-tab-visible');
+    }
+  }
+};
+
+const deleteTab = (tabToDelete: HTMLElement) => {
+  const tabAndContent = getTabAndContent(tabToDelete);
+  const fallbackTab = getFallbackTab(tabAndContent.tab);
+
+  if (fallbackTab) {
+    if (tabAndContent.isSelected) {
+      switchTab(fallbackTab);
+    }
+
+    tabAndContent.content.remove();
+    tabAndContent.tab.remove();
+  } else {
+    tabAndContent.parent.classList.add('ta-x-hide');
+
+    tabAndContent.content.remove();
+    tabAndContent.tab.remove();
+  }
 };
 
 const listen = (): void => {
@@ -125,6 +224,14 @@ export const tabs = (): void => {
 
   pubSub.subscribe('tabs:set', (tab: HTMLElement) => {
     switchTab(tab);
+  });
+
+  pubSub.subscribe('tabs:hide', (tab: HTMLElement) => {
+    hideTab(tab);
+  });
+
+  pubSub.subscribe('tabs:delete', (tab: HTMLElement) => {
+    deleteTab(tab);
   });
 
   listen();

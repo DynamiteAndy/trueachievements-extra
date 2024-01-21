@@ -86,13 +86,15 @@ export class Constants {
         static readonly featureStyle = `${classStylePrefix}-game-achievements`;
         static readonly showXboxAchievementGuidesJs = `${this.featureJs}-xbox-achievement-guides`;
         static readonly showXboxAchievementGuidesStyle = `${this.featureStyle}-xbox-achievement-guides`;
-        static readonly showOwnerProgressEditorWrapperStyle = `${this.showXboxAchievementGuidesStyle}-editor-wrapper`;
-        static readonly showOwnerProgressEditorRowStyle = `${this.showXboxAchievementGuidesStyle}-editor-row`;
-        static readonly showOwnerProgressEditorStyle = `${this.showXboxAchievementGuidesStyle}-editor`;
         static readonly askForWalkthroughWalkthroughJs = `${this.showXboxAchievementGuidesJs}-ask-for-walkthrough`;
         static readonly saveWalkthroughInputJs = `${this.showXboxAchievementGuidesJs}-save-walkthrough-input`;
         static readonly saveWalkthroughButtonJs = `${this.showXboxAchievementGuidesJs}-save-walkthrough-button`;
+        static readonly showPlaystationTrophyGuidesJs = `${this.featureJs}-playstation-trophy-guides`;
+        static readonly showPlaystationTrophyGuidesStyle = `${this.featureStyle}-playstation-trophy-guides`;
         static readonly showAchievementLeaderboardLinksStyle = `${this.featureStyle}-achievement-leaderboard-links`;
+
+        static readonly importGuidesJs = `${this.featureJs}-import-guides`;
+        static readonly importGuidesStyle = `${this.featureStyle}-import-guides`;
       };
     };
 
