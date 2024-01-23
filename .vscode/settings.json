@@ -18,8 +18,7 @@
   "prettier.endOfLine": "auto",
   "prettier.printWidth": 120,
   "typescript.preferences.quoteStyle": "single",
-  "jest.autoRun": {
-    "watch": false,
-    "onSave": "test-file"
+  "jest.runMode": {
+    "type": "on-demand"
   }
 }

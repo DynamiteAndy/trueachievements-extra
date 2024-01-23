@@ -67,7 +67,7 @@ const gamerAchievementsUrl = new RegExp('^/gamer/.*/achievements$', 'i');
 
 const xboxAchievementsGuide = new RegExp('^/game/.*/guide((/$)|$)', 'i');
 const playstationTrophiesGuide = new RegExp('^/game/.*/guide((/$)|$)', 'i');
-const gamertagNationGuide = new RegExp('^/games.php?g=.*&do=guides((/$)|$)', 'i');
+const gamertagNationGuide = new RegExp('^/games.php\\?g=.*&do=guides((/$)|$)', 'i');
 
 export const AchievementsRegex = {
   achievementUrl,
@@ -252,7 +252,7 @@ export const ExternalRegex = {
     playstationTrophiesGuide: (str: string = window.location.href): boolean =>
       playstationTrophiesGuide.test(getUrlProperties(str, 'pathname')),
     gamertagNationGuide: (str: string = window.location.href): boolean =>
-      gamertagNationGuide.test(getUrlProperties(str, 'pathname'))
+      gamertagNationGuide.test(getUrlProperties(str, ['pathname', 'search']))
   }
 };
 

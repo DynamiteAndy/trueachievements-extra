@@ -5,6 +5,21 @@ const promisify =
 
 const needsPromisifying = (fn: () => unknown): boolean => fn.constructor.name === 'AsyncFunction';
 
+export const allSequentially = async <T>(
+  name: string,
+  arr: { name: string; task: () => T | Promise<T> }[]
+): Promise<T[]> => {
+  const result: T[] = [];
+
+  for (const { task } of arr) {
+    const actualTask = needsPromisifying(task) ? promisify(task) : task;
+    const taskResult = await actualTask();
+    result.push(taskResult);
+  }
+
+  return result;
+};
+
 export const allConcurrently = async <T>(
   name: string,
   arr: { name: string; task: () => T | Promise<T> }[],

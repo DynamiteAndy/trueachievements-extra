@@ -91,6 +91,8 @@ export class Constants {
         static readonly saveWalkthroughButtonJs = `${this.showXboxAchievementGuidesJs}-save-walkthrough-button`;
         static readonly showPlaystationTrophyGuidesJs = `${this.featureJs}-playstation-trophy-guides`;
         static readonly showPlaystationTrophyGuidesStyle = `${this.featureStyle}-playstation-trophy-guides`;
+        static readonly showGamertagNationGuidesJs = `${this.featureJs}-gamertag-nation-guides`;
+        static readonly showGamertagNationGuidesStyle = `${this.featureStyle}-gamertag-nation-guides`;
         static readonly showAchievementLeaderboardLinksStyle = `${this.featureStyle}-achievement-leaderboard-links`;
 
         static readonly importGuidesJs = `${this.featureJs}-import-guides`;

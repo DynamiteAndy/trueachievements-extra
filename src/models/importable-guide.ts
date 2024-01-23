@@ -25,8 +25,11 @@ export class ImportableGuide {
     this.importableGuideUrlTest = opts.importableGuideUrlTest;
     this.guideName = opts.guide.name;
     this.guideInfo = opts.guide.info;
-    this.guideIcon = opts.guide.svg.svgHTML;
-    this.guideIconClass = opts.guide.svg.svgClass;
+
+    if (opts.guide.svg) {
+      this.guideIcon = opts.guide.svg.svgHTML;
+      this.guideIconClass = opts.guide.svg.svgClass;
+    }
   }
 
   public applyBody = async (): Promise<void> => {

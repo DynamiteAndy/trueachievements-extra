@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0
+- Added support for importing playstation trophy guides,
+- Added support for importing gamertag nation guides
+
 ## 3.1.2
 - Speed up execution speed of Emojis, Observed the test took up to 20 seconds to execute!,
 - Added a fix for the id on Improved Image Selector,

@@ -24,16 +24,6 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     setHtml('@ta-x-jest-views/empty.html');
   });
 
-  // it('should not run if not enabled', async () => {
-  //   jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(false);
-  //   const addXboxAchievementGuidesSpy = jest.spyOn(sharedFeatures, 'addXboxAchievementGuides');
-
-  //   await addXboxAchievementGuides();
-
-  //   expect(addXboxAchievementGuidesSpy).not.toHaveBeenCalled();
-  //   addXboxAchievementGuidesSpy.mockRestore();
-  // });
-
   it('should not run if game heading does not load', async () => {
     jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
     jest.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(null);
@@ -47,6 +37,26 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
       document.querySelector(`.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesStyle}`)
     ).toBe(null);
   });
+
+  // each([
+  //   {
+  //     view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
+  //   },
+  //   {
+  //     view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
+  //   }
+  // ]).test('should not display if not enabled', async ({ view }) => {
+  //   setHtml(view);
+  //   jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(false);
+
+  //   await addXboxAchievementGuides();
+
+  //   const extensionBody = document.querySelector(
+  //     `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+  //   );
+
+  //   expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
+  // });
 
   each([
     {

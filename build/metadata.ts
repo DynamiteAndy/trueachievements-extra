@@ -17,7 +17,7 @@ export default {
   downloadURL: `${url}/raw/main/dist/`,
   supportURL: bugs.url,
   description: description,
-  connect: ['trueachievements.com', 'xboxachievements.com', 'playstationtrophies.org'],
+  connect: ['trueachievements.com', 'xboxachievements.com', 'playstationtrophies.org', 'gamertagnation.com'],
   author: author,
   match: ['http*://*.trueachievements.com/*'],
   'run-at': 'document-start',

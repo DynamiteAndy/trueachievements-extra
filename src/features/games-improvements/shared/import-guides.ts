@@ -1,7 +1,8 @@
-import { allConcurrently, waitForElement } from '@ta-x-utilities';
+import { allSequentially, waitForElement } from '@ta-x-utilities';
 import { Constants } from '@ta-x-globals';
 import { addPlaystationTrophyGuides } from './add-playstation-trophy-guides';
 import { addXboxAchievementGuides } from './add-xbox-achievement-guides';
+import { addGamertagNationGuides } from './add-gamertag-nation-guides';
 import html from './import-guides.hbs';
 
 const applyBody = async (): Promise<void> => {
@@ -21,9 +22,10 @@ export const importGuides = async (): Promise<void> => {
   }
 
   await applyBody();
-  await allConcurrently('Import Guides', [
+  await allSequentially('Import Guides', [
     { name: 'import-guides-xbox-achievements', task: addXboxAchievementGuides },
-    { name: 'import-guides-playstation-trophies', task: addPlaystationTrophyGuides }
+    { name: 'import-guides-playstation-trophies', task: addPlaystationTrophyGuides },
+    { name: 'import-guides-gamertag-nation', task: addGamertagNationGuides }
   ]);
 };
 

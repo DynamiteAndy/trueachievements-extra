@@ -299,6 +299,12 @@ export const gameAchievements = {
   },
   set gameAchievementsShowPlaystationTrophyGuides(value: boolean) {
     GM_setValue('gameAchievementsShowPlaystationTrophyGuides', value);
+  },
+  get gameAchievementsShowGamertagNationGuides(): boolean {
+    return GM_getValue('gameAchievementsShowGamertagNationGuides', false);
+  },
+  set gameAchievementsShowGamertagNationGuides(value: boolean) {
+    GM_setValue('gameAchievementsShowGamertagNationGuides', value);
   }
 };
 

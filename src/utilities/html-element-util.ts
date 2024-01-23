@@ -147,6 +147,12 @@ export const waitForImages = (el: HTMLElement): Promise<void> =>
     });
   });
 
+export const extractText = (element: HTMLElement): string[] =>
+  [...element.childNodes]
+    .filter((child) => (child.nodeType === 3 || child.nodeName === 'STRONG') && child.parentNode === element)
+    .filter((child) => child.textContent.trim())
+    .map((textNode) => textNode.textContent.trim());
+
 // TA-X Elements
 
 export const isTAXListElement = (el: HTMLElement): boolean => {

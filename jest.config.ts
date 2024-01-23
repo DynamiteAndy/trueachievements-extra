@@ -12,6 +12,7 @@ const config: JestConfigWithTsJest = {
   modulePathIgnorePatterns: ['<rootDir>/node_modules'],
   coveragePathIgnorePatterns: ['<rootDir>/node_modules', '<rootDir>/build', '<rootDir>/test'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/src', useESM: true }),
+  setupFilesAfterEnv: ['<rootDir>/test/jest/setup/emoji.setup.ts'],
   transform: {
     '^.+\\.html$': '<rootDir>/test/transformers/html.ts',
     '^.+\\.hbs$': '<rootDir>/test/transformers/hbs.ts',
