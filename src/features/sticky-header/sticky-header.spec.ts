@@ -3,8 +3,8 @@ import { Constants, stickyHeader as config } from '@ta-x-globals';
 import stickyHeader from '.';
 
 describe('sticky-header', () => {
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if not enabled', async () => {

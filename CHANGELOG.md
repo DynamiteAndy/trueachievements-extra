@@ -2,7 +2,8 @@
 
 ## 3.2.0
 - Added support for importing playstation trophy guides,
-- Added support for importing gamertag nation guides
+- Added support for importing gamertag nation guides,
+- Fixed a little annoyance that the gamer menu would be left aligned when screen resolution was less than or equal to 1199px
 
 ## 3.1.2
 - Speed up execution speed of Emojis, Observed the test took up to 20 seconds to execute!,

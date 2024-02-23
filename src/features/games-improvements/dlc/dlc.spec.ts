@@ -11,8 +11,8 @@ jest.mock('@ta-x-utilities', () => {
 });
 
 describe('games-improvements/dlc', () => {
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if not on dlc page', async () => {

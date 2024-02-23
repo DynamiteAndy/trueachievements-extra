@@ -50,21 +50,10 @@ const apply = async (containers: HTMLElement[]): Promise<void[]> =>
   );
 
 const buildEmojis = (): void => {
-  const groupedEmojis = decompress(emojiJson as unknown as Compressed).reduce(
-    (accumulator, emoji: { char: string; name: string; group: string }) => {
-      let category = accumulator.get(emoji.group);
-      if (!category) {
-        category = [];
-        accumulator.set(emoji.group, category);
-      }
-
-      category.push({ char: emoji.char, name: emoji.name });
-
-      return accumulator;
-    },
-    new Map([['TrueAchievements', []]])
-  );
-
+  const decompressedEmojis = decompress(emojiJson as unknown as Compressed);
+  const keys = decompressedEmojis.slice(0, decompressedEmojis.length / 2);
+  const values = decompressedEmojis.slice(decompressedEmojis.length / 2);
+  const groupedEmojis = new Map(keys.map((k, i) => [k, values[i]]));
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const parsedTemplateDocument = new DOMParser().parseFromString(templatedTabs, 'text/html');
 

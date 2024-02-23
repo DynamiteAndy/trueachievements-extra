@@ -11,8 +11,8 @@ jest.mock('@ta-x-utilities', () => {
 });
 
 describe('games-improvements/challenges', () => {
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if not on challenges page', async () => {

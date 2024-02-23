@@ -1,5 +1,4 @@
-import { JSDOM, ConstructorOptions } from 'jsdom';
-import fs from 'fs-extra';
+import { JSDOM, FileOptions } from 'jsdom';
 import { getPath } from '@ta-x-build-helpers';
 
 const polyFill = (jsdom: JSDOM): void => {
@@ -55,9 +54,9 @@ const polyFill = (jsdom: JSDOM): void => {
   global.Image = Image;
 };
 
-export const setHtml = (path: string, opts?: ConstructorOptions): void => {
-  const html = fs.readFileSync(getPath(path));
-  polyFill(new JSDOM(html, opts));
+export const setHtml = async (path: string, opts?: FileOptions): Promise<void> => {
+  const jsdom = await JSDOM.fromFile(getPath(path), opts);
+  polyFill(jsdom);
 };
 
 polyFill(new JSDOM());

@@ -27,8 +27,8 @@ describe('games-improvements/achievements/individual-progress', () => {
     dlc: document.querySelector('.pnl-hd.dlc.game:not(.gamer):not([data-gid]), .pnl-hd.dlc') as HTMLElement
   });
 
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if not enabled', async () => {
@@ -45,7 +45,7 @@ describe('games-improvements/achievements/individual-progress', () => {
     { view: '@ta-x-jest-views/games-improvements/achievements/individual-progress/no-achievements-won-no-dlc.html' },
     { view: '@ta-x-jest-views/games-improvements/achievements/individual-progress/achievements-won-no-dlc.html' }
   ]).test.concurrent('should not run if game has no dlc', async ({ view }) => {
-    setHtml(view);
+    await setHtml(view);
 
     jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);
     const allConcurrentlySpy = jest.spyOn(taxUtilities, 'allConcurrently');
@@ -69,7 +69,7 @@ describe('games-improvements/achievements/individual-progress', () => {
         '@ta-x-jest-views/games-improvements/achievements/individual-progress/achievements-won-with-dlc.html'
     }
   ]).test('should memoize fetch if all achievements status is not selected', async ({ view, memoizedView }) => {
-    setHtml(view);
+    await setHtml(view);
     createInnerTextSpies();
 
     jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);
@@ -111,7 +111,7 @@ describe('games-improvements/achievements/individual-progress', () => {
   ]).test(
     'should render trueachievement score correctly if enabled',
     async ({ view, memoizedView, baseExpected, dlcExpected }) => {
-      setHtml(view);
+      await setHtml(view);
       createInnerTextSpies();
 
       jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);
@@ -161,7 +161,7 @@ describe('games-improvements/achievements/individual-progress', () => {
   ]).test(
     'should render gamerscore correctly if enabled',
     async ({ view, memoizedView, baseExpected, dlcExpected }) => {
-      setHtml(view);
+      await setHtml(view);
       createInnerTextSpies();
 
       jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);
@@ -210,7 +210,7 @@ describe('games-improvements/achievements/individual-progress', () => {
   ]).test(
     'should render achievements correctly if enabled',
     async ({ view, memoizedView, baseExpected, dlcExpected }) => {
-      setHtml(view);
+      await setHtml(view);
       createInnerTextSpies();
 
       jest.spyOn(config, 'gameAchievementsIndividualProgress', 'get').mockReturnValueOnce(true);

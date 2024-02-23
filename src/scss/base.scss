@@ -10,6 +10,14 @@ body {
       display: none !important;
     }
 
+    @media (max-width: 1199px) {
+      .nav-gamer {
+        &.open {
+          justify-content: flex-end;
+        }
+      }
+    }
+
     .middle {
       @media (max-width: 1349px) {
         width: 100%;

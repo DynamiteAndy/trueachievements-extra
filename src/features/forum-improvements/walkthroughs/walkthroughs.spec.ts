@@ -19,8 +19,8 @@ describe('forum-improvements/walkthroughs', () => {
     return titleElement;
   };
 
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if not on viewBoard with boardId or viewThread with threadId', async () => {
@@ -35,7 +35,7 @@ describe('forum-improvements/walkthroughs', () => {
   });
 
   it('should not run if on viewBoard with boardId and boardId is not expected', async () => {
-    setHtml('@ta-x-jest-views/empty.html', {
+    await setHtml('@ta-x-jest-views/empty.html', {
       url: 'https://www.trueachievements.com/forum/viewboard.aspx?messageboardid=1433'
     });
 
@@ -50,7 +50,7 @@ describe('forum-improvements/walkthroughs', () => {
   });
 
   it('should run if on viewBoard with boardId and boardId is expected', async () => {
-    setHtml('@ta-x-jest-views/empty.html', {
+    await setHtml('@ta-x-jest-views/empty.html', {
       url: 'https://www.trueachievements.com/forum/viewboard.aspx?messageboardid=1431'
     });
 

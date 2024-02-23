@@ -4,8 +4,8 @@ import dispatchEvent from './dispatch-event';
 describe('dispatchEvent', () => {
   let element: HTMLElement;
 
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
 
     element = document.createElement('div');
     document.body.appendChild(element);

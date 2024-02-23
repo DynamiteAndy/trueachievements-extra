@@ -1,26 +1,23 @@
 export default function (source: string) {
   let emojis = JSON.parse(source);
+  
+  emojis = emojis.reduce(
+    (accumulator: Map<string, Array<unknown>>, emoji: { char: string; name: string; group: string }) => {
+      let category = accumulator.get(emoji.group);
+      if (!category) {
+        category = [];
+        accumulator.set(emoji.group, category);
+      }
 
-  emojis = emojis.map((emoji: { char: string; name: string; group: string }) => ({
-    char: emoji.char,
-    name: emoji.name,
-    group: emoji.group
-  }));
+      category.push({ char: emoji.char, name: emoji.name });
 
-  // emojis = emojis.reduce(
-  //   (accumulator, emoji: { char: string; name: string; group: string }) => {
-  //     let category = accumulator.get(emoji.group);
-  //     if (!category) {
-  //       category = [];
-  //       accumulator.set(emoji.group, category);
-  //     }
+      return accumulator;
+    },
+    new Map([['TrueAchievements', []]])
+  );
 
-  //     category.push({ char: emoji.char, name: emoji.name });
+  const keys = Array.from(emojis.keys());
+  const values = Array.from(emojis.values());
 
-  //     return accumulator;
-  //   },
-  //   new Map([['TrueAchievements', []]])
-  // );
-
-  return emojis;
+  return [...keys, ...values];
 }

@@ -15,8 +15,8 @@ jest.mock('@ta-x-utilities', () => {
 });
 
 describe('emojis', () => {
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if not enabled', async () => {
@@ -47,7 +47,7 @@ describe('emojis', () => {
     '@ta-x-jest-views/emojis/add-guide.html',
     '@ta-x-jest-views/emojis/guide-add-comment.html'
   ]).test('should run if enabled and emoji container is found', async (view: string) => {
-    setHtml(view);
+    await setHtml(view);
     jest.spyOn(config, 'enabled', 'get').mockReturnValueOnce(true);
     const spy = jest.spyOn(taxUtilities, 'allConcurrently');
 

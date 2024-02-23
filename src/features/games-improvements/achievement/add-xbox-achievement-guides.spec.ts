@@ -22,8 +22,8 @@ jest.mock('@ta-x-helpers', () => {
 });
 
 describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if game heading does not load', async () => {
@@ -40,25 +40,25 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
     ).toBe(null);
   });
 
-  // each([
-  //   {
-  //     view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
-  //   },
-  //   {
-  //     view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
-  //   }
-  // ]).test('should not display if not enabled', async ({ view }) => {
-  //   setHtml(view);
-  //   jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(false);
+  each([
+    {
+      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
+    },
+    {
+      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
+    }
+  ]).test('should not display if not enabled', async ({ view }) => {
+    await setHtml(view);
+    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(false);
 
-  //   await addXboxAchievementGuides();
+    await addXboxAchievementGuides();
 
-  //   const extensionBody = document.querySelector(
-  //     `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
-  //   );
+    const extensionBody = document.querySelector(
+      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+    );
 
-  //   expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
-  // });
+    expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
+  });
 
   each([
     {
@@ -68,7 +68,7 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
       view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
     }
   ]).test('should ask for url if no url is configured', async ({ view }) => {
-    setHtml(view);
+    await setHtml(view);
     createInnerTextSpies();
 
     jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
@@ -101,7 +101,7 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
       inputValue: 'invalid-url'
     }
   ]).test('should ignore invalid urls when url is asked for', async ({ view, inputValue }) => {
-    setHtml(view);
+    await setHtml(view);
     createInnerTextSpies();
 
     jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
@@ -151,7 +151,7 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
       memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/gforce.html'
     }
   ]).test('should fetch valid url when url is asked for', async ({ view, inputValue, memoizedView }) => {
-    setHtml(view);
+    await setHtml(view);
     createInnerTextSpies();
 
     jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
@@ -209,7 +209,7 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
       memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/gforce.html'
     }
   ]).test('should display guide for achievement', async ({ view, cachedGuide, memoizedView }) => {
-    setHtml(view);
+    await setHtml(view);
     createInnerTextSpies();
 
     jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);

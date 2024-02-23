@@ -6,8 +6,8 @@ describe('getCookie', () => {
   each([
     { input: 'testCookie', expected: '12345' },
     { input: 'nonExistentCookie', expected: null }
-  ]).test.concurrent('should return if $input is contained in document.cookie', ({ input, expected }) => {
-    setHtml('@ta-x-jest-views/empty.html');
+  ]).test.concurrent('should return if $input is contained in document.cookie', async ({ input, expected }) => {
+    await setHtml('@ta-x-jest-views/empty.html');
 
     jest.spyOn(document, 'cookie', 'get').mockReturnValueOnce('testCookie=12345');
 

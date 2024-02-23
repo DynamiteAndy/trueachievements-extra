@@ -30,8 +30,8 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     return titleElement;
   };
 
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if not enabled', async () => {
@@ -85,7 +85,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
   it('should run if page title heading is walkthroughs', async () => {
     const titleElement = createTitleElement('Walkthroughs');
 
-    setHtml(
+    await setHtml(
       '@ta-x-jest-views/forum-improvements/walkthroughs/show-owner-progress/walkthrough-not-published-no-link-first-message.html',
       { url: 'https://www.trueachievements.com/forum/viewthread.aspx?tid=1028321' }
     );
@@ -104,7 +104,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
   it('should ask for url if no url is configured', async () => {
     const titleElement = createTitleElement('Walkthroughs');
 
-    setHtml(
+    await setHtml(
       '@ta-x-jest-views/forum-improvements/walkthroughs/show-owner-progress/walkthrough-not-published-no-link-first-message.html',
       { url: 'https://www.trueachievements.com/forum/viewthread.aspx?tid=1028321' }
     );
@@ -137,7 +137,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
   ]).test('should ignore invalid urls when url is asked for', async ({ view, inputValue, url }) => {
     const titleElement = createTitleElement('Walkthroughs');
 
-    setHtml(view, { url });
+    await setHtml(view, { url });
     createInnerTextSpies();
     jest.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
     jest.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);
@@ -196,7 +196,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     async ({ view, url, inputValue, memoizedView, expectedClass }) => {
       const titleElement = createTitleElement('Walkthroughs');
 
-      setHtml(view, { url });
+      await setHtml(view, { url });
       createInnerTextSpies();
       jest.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
       jest.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);
@@ -257,7 +257,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
   ]).test('should fetch valid url when url is found for', async ({ view, url, memoizedView, expectedClass }) => {
     const titleElement = createTitleElement('Walkthroughs');
 
-    setHtml(view, { url });
+    await setHtml(view, { url });
     createInnerTextSpies();
     jest.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
     jest.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);

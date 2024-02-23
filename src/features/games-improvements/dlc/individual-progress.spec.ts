@@ -27,8 +27,8 @@ describe('games-improvements/dlc/individual-progress', () => {
     dlc: document.querySelector('.pnl-hd.dlc.game:not(.gamer):not([data-gid]), .pnl-hd.dlc') as HTMLElement
   });
 
-  beforeEach(() => {
-    setHtml('@ta-x-jest-views/empty.html');
+  beforeEach(async () => {
+    await setHtml('@ta-x-jest-views/empty.html');
   });
 
   it('should not run if not enabled', async () => {
@@ -63,7 +63,7 @@ describe('games-improvements/dlc/individual-progress', () => {
       memoizedView: '@ta-x-jest-views/games-improvements/dlc/individual-progress/achievements-won-with-dlc.html'
     }
   ]).test('should memoize fetch if all achievements status is not selected', async ({ view, memoizedView }) => {
-    setHtml(view);
+    await setHtml(view);
     createInnerTextSpies();
 
     jest.spyOn(config, 'gameDLCIndividualProgress', 'get').mockReturnValueOnce(true);
@@ -104,7 +104,7 @@ describe('games-improvements/dlc/individual-progress', () => {
   ]).test(
     'should render trueachievement score correctly if enabled',
     async ({ view, memoizedView, baseExpected, dlcExpected }) => {
-      setHtml(view);
+      await setHtml(view);
       createInnerTextSpies();
 
       jest.spyOn(config, 'gameDLCIndividualProgress', 'get').mockReturnValueOnce(true);
@@ -153,7 +153,7 @@ describe('games-improvements/dlc/individual-progress', () => {
   ]).test(
     'should render gamerscore correctly if enabled',
     async ({ view, memoizedView, baseExpected, dlcExpected }) => {
-      setHtml(view);
+      await setHtml(view);
       createInnerTextSpies();
 
       jest.spyOn(config, 'gameDLCIndividualProgress', 'get').mockReturnValueOnce(true);
@@ -201,7 +201,7 @@ describe('games-improvements/dlc/individual-progress', () => {
   ]).test(
     'should render achievements correctly if enabled',
     async ({ view, memoizedView, baseExpected, dlcExpected }) => {
-      setHtml(view);
+      await setHtml(view);
       createInnerTextSpies();
 
       jest.spyOn(config, 'gameDLCIndividualProgress', 'get').mockReturnValueOnce(true);
