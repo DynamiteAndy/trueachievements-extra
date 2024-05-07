@@ -5,7 +5,7 @@ import { setHtml, createInnerTextSpies } from '@ta-x-jest';
 import { Cache, Constants, AchievementsRegex, gameAchievements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
-import addXboxAchievementGuides from './import-guides';
+import addPlaystationTrophyGuides from './import-guides';
 
 jest.mock('@ta-x-utilities', () => {
   return {
@@ -21,7 +21,7 @@ jest.mock('@ta-x-helpers', () => {
   };
 });
 
-describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
+describe('games-improvements/achievement/add-playstation-trophy-guides', () => {
   beforeEach(async () => {
     await setHtml('@ta-x-jest-views/empty.html');
   });
@@ -29,31 +29,31 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
   it('should not run if game heading does not load', async () => {
     jest.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(null);
 
-    await addXboxAchievementGuides();
+    await addPlaystationTrophyGuides();
 
     expect(
-      document.querySelector(`.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`)
+      document.querySelector(`.${Constants.Styles.GamesImprovements.Achievements.showPlaystationTrophyGuidesJs}`)
     ).toBe(null);
     expect(
-      document.querySelector(`.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesStyle}`)
+      document.querySelector(`.${Constants.Styles.GamesImprovements.Achievements.showPlaystationTrophyGuidesStyle}`)
     ).toBe(null);
   });
 
   each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html'
     }
   ]).test('should not display if not enabled', async ({ view }) => {
     await setHtml(view);
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(false);
+    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(false);
 
-    await addXboxAchievementGuides();
+    await addPlaystationTrophyGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${Constants.Styles.GamesImprovements.Achievements.showPlaystationTrophyGuidesJs}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
@@ -61,21 +61,21 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
 
   each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html'
     }
   ]).test('should ask for url if no url is configured', async ({ view }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
+    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
 
-    await addXboxAchievementGuides();
+    await addPlaystationTrophyGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${Constants.Styles.GamesImprovements.Achievements.showPlaystationTrophyGuidesJs}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
@@ -84,34 +84,34 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
 
   each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
       inputValue: ''
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
       inputValue: ''
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
       inputValue: 'invalid-url'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
       inputValue: 'invalid-url'
     }
   ]).test('should ignore invalid urls when url is asked for', async ({ view, inputValue }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
+    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
     jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
 
     const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
 
-    await addXboxAchievementGuides();
+    await addPlaystationTrophyGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${Constants.Styles.GamesImprovements.Achievements.showPlaystationTrophyGuidesJs}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
@@ -140,29 +140,29 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
 
   each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
-      inputValue: 'https://www.xboxachievements.com/game/g-force/guide/',
-      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/gforce.html'
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
+      inputValue: 'https://www.playstationtrophies.org/game/g-force/guide/',
+      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
-      inputValue: 'https://www.xboxachievements.com/game/g-force/guide/',
-      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/gforce.html'
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
+      inputValue: 'https://www.playstationtrophies.org/game/g-force/guide/',
+      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
     }
   ]).test('should fetch valid url when url is asked for', async ({ view, inputValue, memoizedView }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
+    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
     jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
 
     const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
     memoizeCorsFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView)).toString());
 
-    await addXboxAchievementGuides();
+    await addPlaystationTrophyGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${Constants.Styles.GamesImprovements.Achievements.showPlaystationTrophyGuidesJs}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
@@ -198,30 +198,30 @@ describe('games-improvements/achievement/add-xbox-achievement-guides', () => {
 
   each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
-      cachedGuide: new Map([['GForce', 'https://www.xboxachievements.com/game/g-force/guide/']]),
-      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/gforce.html'
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
+      cachedGuide: new Map([['GForce', 'https://www.playstationtrophies.org/game/g-force/guide/']]),
+      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
-      cachedGuide: new Map([['GForce', 'https://www.xboxachievements.com/game/g-force/guide/']]),
-      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/gforce.html'
+      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
+      cachedGuide: new Map([['GForce', 'https://www.playstationtrophies.org/game/g-force/guide/']]),
+      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
     }
   ]).test('should display guide for achievement', async ({ view, cachedGuide, memoizedView }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
+    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
     jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
-    jest.spyOn(Cache, 'gameAchievementsXboxAchievementsGuideUrl', 'get').mockReturnValueOnce(cachedGuide);
+    jest.spyOn(Cache, 'gameAchievementsPlaystationTrophiesGuideUrl', 'get').mockReturnValueOnce(cachedGuide);
 
     const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
     memoizeCorsFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView)).toString());
 
-    await addXboxAchievementGuides();
+    await addPlaystationTrophyGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${Constants.Styles.GamesImprovements.Achievements.showPlaystationTrophyGuidesJs}`
     );
 
     const guide = document.querySelector('.ta-x-games-improvements-achievements-achievement-guide');

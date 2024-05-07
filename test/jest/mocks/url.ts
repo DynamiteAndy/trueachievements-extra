@@ -9,6 +9,11 @@ const originalUrlConstructor = globalThis.URL;
   // If url starts with 'http://' or 'https://', return as is
   if (url.startsWith('http://') || url.startsWith('https://') || url === 'about:blank') {
     return new originalUrlConstructor(url);
+  } else if (url.startsWith('file:///')) {
+    // If its a filepath, prepend with default domain
+    const relativePath = url.replace(/^file:\/\/\/[A-Z]:\//i, '');
+
+    return new originalUrlConstructor(relativePath, 'https://example.com');
   } else {
     // If it's a pathname, prepend with default domain
     return new originalUrlConstructor(url, 'https://example.com');

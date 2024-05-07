@@ -1,6 +1,6 @@
 export default function (source: string) {
   let emojis = JSON.parse(source);
-  
+
   emojis = emojis.reduce(
     (accumulator: Map<string, Array<unknown>>, emoji: { char: string; name: string; group: string }) => {
       let category = accumulator.get(emoji.group);

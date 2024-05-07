@@ -132,6 +132,7 @@ body {
 
           .ta-x-settings-menu-documentation-wrapper {
             padding-bottom: 0;
+            border: 0;
 
             h1 {
               &:not(:first-of-type) {
@@ -148,8 +149,6 @@ body {
                 margin-bottom: 1rem;
               }
             }
-
-            border: 0;
           }
 
           .ta-x-settings-menu-credits-wrapper {

@@ -25,7 +25,6 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
   });
 
   it('should not run if game heading does not load', async () => {
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
     jest.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(null);
 
     await addXboxAchievementGuides();
