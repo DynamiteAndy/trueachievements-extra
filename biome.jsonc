@@ -1,0 +1,48 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
+	"files": {
+		"ignore": [
+			"./dist",
+			"./coverage",
+			"./jest-reports",
+			"./node_modules"
+		],
+		"include": [
+			"./**/*.js",
+			"./**/*.ts"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"lineEnding": "lf",
+		"lineWidth": 120,
+		"attributePosition": "auto"
+	},
+	"organizeImports": { "enabled": true },
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"jsxQuoteStyle": "double",
+			"quoteProperties": "asNeeded",
+			"trailingComma": "none",
+			"semicolons": "always",
+			"arrowParentheses": "always",
+			"bracketSpacing": true,
+			"bracketSameLine": false,
+			"quoteStyle": "single",
+			"attributePosition": "auto"
+		}
+	}
+	// "overrides": [
+	// 	{ "include": ["./test/transformers/**/*.ts"], "linter": { "rules": {} } },
+	// 	{ "include": ["./src/**/*.spec.ts"], "linter": { "rules": {} } }
+	// ]
+}

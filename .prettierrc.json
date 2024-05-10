@@ -11,12 +11,6 @@
             "options": {
                 "singleQuote": false 
             }
-        },
-        {
-            "files": "*.ts",
-            "options": {
-                "printWidth": 120 
-            }
         }
     ]
 }
