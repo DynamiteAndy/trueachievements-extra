@@ -5,7 +5,7 @@ describe('fetch', () => {
     const url = 'https://example.com';
     const mockResponse = new Response(null, { status: 200 });
 
-    const fetchSpy = jest.spyOn(global, 'fetch');
+    const fetchSpy = vi.spyOn(global, 'fetch');
     fetchSpy.mockResolvedValueOnce(mockResponse);
 
     const response = await fetch(url);
@@ -18,7 +18,7 @@ describe('fetch', () => {
     const url = 'https://example.com';
     const mockResponse = new Response(null, { status: 400 });
 
-    const fetchSpy = jest.spyOn(global, 'fetch');
+    const fetchSpy = vi.spyOn(global, 'fetch');
     fetchSpy.mockResolvedValueOnce(mockResponse);
 
     await expect(fetch(url)).rejects.toEqual(mockResponse);

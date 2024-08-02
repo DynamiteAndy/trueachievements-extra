@@ -10,8 +10,7 @@ export const createSpies = () => {
     configurable: true
   });
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  spyGet = jest.spyOn(Object.prototype, 'innerText' as keyof Object, 'get');
+  spyGet = vi.spyOn(Object.prototype, 'innerText' as keyof object, 'get');
   spyGet.mockImplementation(function () {
     if (this.textContent === undefined) {
       return undefined;
@@ -29,8 +28,7 @@ export const createSpies = () => {
       .trim();
   });
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  spySet = jest.spyOn(Object.prototype, 'innerText' as keyof Object, 'set');
+  spySet = vi.spyOn(Object.prototype, 'innerText' as keyof object, 'set');
   spySet.mockImplementation(function (value: unknown) {
     this.textContent = value;
   });

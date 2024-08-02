@@ -2,14 +2,14 @@ import pubSub from './pub-sub';
 
 describe('PubSub', () => {
   test('should allow subscription to an event', () => {
-    const subscriptionCallback = jest.fn();
+    const subscriptionCallback = vi.fn();
     pubSub.subscribe('test:subscribeEvent', subscriptionCallback);
 
     expect(subscriptionCallback).not.toHaveBeenCalled();
   });
 
   test('should call subscribed callbacks when an event is published', () => {
-    const subscriptionCallback = jest.fn();
+    const subscriptionCallback = vi.fn();
     pubSub.subscribe('test:subscribeEvent', subscriptionCallback);
 
     pubSub.publish('test:subscribeEvent', 'Test Event');
@@ -18,7 +18,7 @@ describe('PubSub', () => {
   });
 
   test('should not call unsubscribed callbacks when an event is published', () => {
-    const subscriptionCallback = jest.fn();
+    const subscriptionCallback = vi.fn();
     pubSub.subscribe('test:unsubscribeEvent', subscriptionCallback);
     pubSub.unsubscribe('test:unsubscribeEvent', subscriptionCallback);
 
@@ -28,8 +28,8 @@ describe('PubSub', () => {
   });
 
   test('should handle multiple subscriptions to the same event', () => {
-    const subscriptionCallback = jest.fn();
-    const anotherSubscriptionCallback = jest.fn();
+    const subscriptionCallback = vi.fn();
+    const anotherSubscriptionCallback = vi.fn();
 
     pubSub.subscribe('test:subscribeEvent', subscriptionCallback);
     pubSub.subscribe('test:subscribeEvent', anotherSubscriptionCallback);
@@ -41,8 +41,8 @@ describe('PubSub', () => {
   });
 
   test('should not affect other events when unsubscribing from one', () => {
-    const subscriptionCallback = jest.fn();
-    const anotherSubscriptionCallback = jest.fn();
+    const subscriptionCallback = vi.fn();
+    const anotherSubscriptionCallback = vi.fn();
 
     pubSub.subscribe('test:unsubscribeEvent', subscriptionCallback);
     pubSub.subscribe('test:subscribeEvent', anotherSubscriptionCallback);
@@ -55,7 +55,7 @@ describe('PubSub', () => {
   });
 
   test('should not call callbacks for other events', () => {
-    const subscriptionCallback = jest.fn();
+    const subscriptionCallback = vi.fn();
     pubSub.subscribe('test:subscribeEvent', subscriptionCallback);
 
     pubSub.publish('test:unsubscribeEvent', 'Test Event');

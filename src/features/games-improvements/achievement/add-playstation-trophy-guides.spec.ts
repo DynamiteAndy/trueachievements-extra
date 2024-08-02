@@ -1,33 +1,21 @@
-import each from 'jest-each';
 import { readFileSync } from 'fs-extra';
 import { getPath } from '@ta-x-build-helpers';
-import { setHtml, createInnerTextSpies } from '@ta-x-jest';
+import { setHtml, createInnerTextSpies } from '@ta-x-test';
 import { Cache, Constants, AchievementsRegex, gameAchievements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
 import addPlaystationTrophyGuides from './import-guides';
 
-jest.mock('@ta-x-utilities', () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual('@ta-x-utilities')
-  };
-});
-
-jest.mock('@ta-x-helpers', () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual('@ta-x-helpers')
-  };
-});
+vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
+vi.mock('@ta-x-helpers', async () => await vi.importActual('@ta-x-helpers'));
 
 describe('games-improvements/achievement/add-playstation-trophy-guides', () => {
   beforeEach(async () => {
-    await setHtml('@ta-x-jest-views/empty.html');
+    await setHtml('@ta-x-test-views/empty.html');
   });
 
-  it('should not run if game heading does not load', async () => {
-    jest.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(null);
+  test('should not run if game heading does not load', async () => {
+    vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(null);
 
     await addPlaystationTrophyGuides();
 
@@ -39,16 +27,16 @@ describe('games-improvements/achievement/add-playstation-trophy-guides', () => {
     ).toBe(null);
   });
 
-  each([
+  test.concurrent.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html'
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html'
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html'
     }
-  ]).test('should not display if not enabled', async ({ view }) => {
+  ])('should not display if not enabled', async ({ view }) => {
     await setHtml(view);
-    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(false);
+    vi.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(false);
 
     await addPlaystationTrophyGuides();
 
@@ -59,18 +47,18 @@ describe('games-improvements/achievement/add-playstation-trophy-guides', () => {
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
   });
 
-  each([
+  test.concurrent.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html'
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html'
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html'
     }
-  ]).test('should ask for url if no url is configured', async ({ view }) => {
+  ])('should ask for url if no url is configured', async ({ view }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
+    vi.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
 
     await addPlaystationTrophyGuides();
 
@@ -82,31 +70,31 @@ describe('games-improvements/achievement/add-playstation-trophy-guides', () => {
     expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
   });
 
-  each([
+  test.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
       inputValue: ''
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
       inputValue: ''
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
       inputValue: 'invalid-url'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
       inputValue: 'invalid-url'
     }
-  ]).test('should ignore invalid urls when url is asked for', async ({ view, inputValue }) => {
+  ])('should ignore invalid urls when url is asked for', async ({ view, inputValue }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
-    jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
+    vi.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
+    vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
 
-    const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
+    const memoizeCorsFetchSpy = vi.spyOn(taxHelpers, 'memoizeCorsFetch');
 
     await addPlaystationTrophyGuides();
 
@@ -138,25 +126,25 @@ describe('games-improvements/achievement/add-playstation-trophy-guides', () => {
     memoizeCorsFetchSpy.mockRestore();
   });
 
-  each([
+  test.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
       inputValue: 'https://www.playstationtrophies.org/game/g-force/guide/',
-      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
+      memoizedView: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
       inputValue: 'https://www.playstationtrophies.org/game/g-force/guide/',
-      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
+      memoizedView: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
     }
-  ]).test('should fetch valid url when url is asked for', async ({ view, inputValue, memoizedView }) => {
+  ])('should fetch valid url when url is asked for', async ({ view, inputValue, memoizedView }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
-    jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
+    vi.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
+    vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
 
-    const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
+    const memoizeCorsFetchSpy = vi.spyOn(taxHelpers, 'memoizeCorsFetch');
     memoizeCorsFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView)).toString());
 
     await addPlaystationTrophyGuides();
@@ -196,26 +184,26 @@ describe('games-improvements/achievement/add-playstation-trophy-guides', () => {
     memoizeCorsFetchSpy.mockRestore();
   });
 
-  each([
+  test.concurrent.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-guide.html',
       cachedGuide: new Map([['GForce', 'https://www.playstationtrophies.org/game/g-force/guide/']]),
-      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
+      memoizedView: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/achievement-with-no-guide.html',
       cachedGuide: new Map([['GForce', 'https://www.playstationtrophies.org/game/g-force/guide/']]),
-      memoizedView: '@ta-x-jest-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
+      memoizedView: '@ta-x-test-views/games-improvements/achievement/add-playstation-trophy-guides/gforce.html'
     }
-  ]).test('should display guide for achievement', async ({ view, cachedGuide, memoizedView }) => {
+  ])('should display guide for achievement', async ({ view, cachedGuide, memoizedView }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
-    jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
-    jest.spyOn(Cache, 'gameAchievementsPlaystationTrophiesGuideUrl', 'get').mockReturnValueOnce(cachedGuide);
+    vi.spyOn(config, 'gameAchievementsShowPlaystationTrophyGuides', 'get').mockReturnValueOnce(true);
+    vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(true);
+    vi.spyOn(Cache, 'gameAchievementsPlaystationTrophiesGuideUrl', 'get').mockReturnValueOnce(cachedGuide);
 
-    const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
+    const memoizeCorsFetchSpy = vi.spyOn(taxHelpers, 'memoizeCorsFetch');
     memoizeCorsFetchSpy.mockResolvedValueOnce(readFileSync(getPath(memoizedView)).toString());
 
     await addPlaystationTrophyGuides();

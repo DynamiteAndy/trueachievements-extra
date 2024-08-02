@@ -1,11 +1,11 @@
 import corsFetch from './cors-fetch';
 
 describe('corsFetch', () => {
-  it('should make a successful CORS request', async () => {
+  test('should make a successful CORS request', async () => {
     const originalGM_xmlhttpRequest = global.GM_xmlhttpRequest;
-    global.GM_xmlhttpRequest = jest.fn();
+    global.GM_xmlhttpRequest = vi.fn();
 
-    (GM_xmlhttpRequest as jest.Mock).mockImplementationOnce((config) => {
+    (GM_xmlhttpRequest as vi.mock).mockImplementationOnce((config) => {
       config.onload({
         status: 200,
         responseText: '{"message": "Success"}'
@@ -19,11 +19,11 @@ describe('corsFetch', () => {
     global.GM_xmlhttpRequest = originalGM_xmlhttpRequest;
   });
 
-  it('should handle an error during the CORS request', async () => {
+  test('should handle an error during the CORS request', async () => {
     const originalGM_xmlhttpRequest = global.GM_xmlhttpRequest;
-    global.GM_xmlhttpRequest = jest.fn();
+    global.GM_xmlhttpRequest = vi.fn();
 
-    (GM_xmlhttpRequest as jest.Mock).mockImplementationOnce((config) => {
+    (GM_xmlhttpRequest as vi.mock).mockImplementationOnce((config) => {
       config.onerror(new Error('Request failed'));
     });
 

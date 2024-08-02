@@ -1,24 +1,24 @@
-import { setHtml } from '@ta-x-jest';
+import { setHtml } from '@ta-x-test';
 import { GamesRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import achievements from '.';
 
-jest.mock('@ta-x-utilities', () => {
+vi.mock('@ta-x-utilities', () => {
   return {
     __esModule: true,
-    ...jest.requireActual('@ta-x-utilities'),
-    allConcurrently: jest.fn().mockImplementation(() => Promise.resolve())
+    ...vi.importActual('@ta-x-utilities'),
+    allConcurrently: vi.fn().mockImplementation(() => Promise.resolve())
   };
 });
 
 describe('games-improvements/achievements', () => {
   beforeEach(async () => {
-    await setHtml('@ta-x-jest-views/empty.html');
+    await setHtml('@ta-x-test-views/empty.html');
   });
 
-  it('should not run if not on achievements page', async () => {
-    jest.spyOn(GamesRegex.Test, 'achievementsUrl').mockReturnValueOnce(false);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should not run if not on achievements page', async () => {
+    vi.spyOn(GamesRegex.Test, 'achievementsUrl').mockReturnValueOnce(false);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await achievements();
 
@@ -26,9 +26,9 @@ describe('games-improvements/achievements', () => {
     spy.mockRestore();
   });
 
-  it('should run if on achievements page', async () => {
-    jest.spyOn(GamesRegex.Test, 'achievementsUrl').mockReturnValueOnce(true);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should run if on achievements page', async () => {
+    vi.spyOn(GamesRegex.Test, 'achievementsUrl').mockReturnValueOnce(true);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await achievements();
 

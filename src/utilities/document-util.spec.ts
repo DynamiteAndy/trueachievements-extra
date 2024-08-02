@@ -1,15 +1,14 @@
-import each from 'jest-each';
-import { setHtml } from '@ta-x-jest';
+import { setHtml } from '@ta-x-test';
 import { getCookie } from './document-util';
 
 describe('getCookie', () => {
-  each([
+  test.concurrent.each([
     { input: 'testCookie', expected: '12345' },
     { input: 'nonExistentCookie', expected: null }
-  ]).test.concurrent('should return if $input is contained in document.cookie', async ({ input, expected }) => {
-    await setHtml('@ta-x-jest-views/empty.html');
+  ])('should return if $input is contained in document.cookie', async ({ input, expected }) => {
+    await setHtml('@ta-x-test-views/empty.html');
 
-    jest.spyOn(document, 'cookie', 'get').mockReturnValueOnce('testCookie=12345');
+    vi.spyOn(document, 'cookie', 'get').mockReturnValueOnce('testCookie=12345');
 
     const cookieValue = getCookie(input);
 

@@ -1,8 +1,7 @@
-import each from 'jest-each';
 import { allConcurrently, allSequentially } from './promise-util';
 
 describe('allConcurrently', () => {
-  each([
+  test.concurrent.each([
     {
       input: [
         { name: 'Task 1', task: () => 'Result 1' },
@@ -18,13 +17,13 @@ describe('allConcurrently', () => {
       input: [],
       expected: []
     }
-  ]).test.concurrent('should execute tasks concurrently and return results', async ({ input, expected }) => {
+  ])('should execute tasks concurrently and return results', async ({ input, expected }) => {
     expect(await allConcurrently('Test', input)).toEqual(expected);
   });
 });
 
 describe('allSequentially', () => {
-  each([
+  test.concurrent.each([
     {
       input: [
         { name: 'Task 1', task: () => 'Result 1' },
@@ -40,7 +39,7 @@ describe('allSequentially', () => {
       input: [],
       expected: []
     }
-  ]).test.concurrent('should execute tasks sequentially and return results', async ({ input, expected }) => {
+  ])('should execute tasks sequentially and return results', async ({ input, expected }) => {
     expect(await allSequentially('Test', input)).toEqual(expected);
   });
 });

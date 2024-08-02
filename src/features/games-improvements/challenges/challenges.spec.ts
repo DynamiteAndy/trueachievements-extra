@@ -1,23 +1,18 @@
-import { setHtml } from '@ta-x-jest';
+import { setHtml } from '@ta-x-test';
 import { GamesRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import challenges from '.';
 
-jest.mock('@ta-x-utilities', () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual('@ta-x-utilities')
-  };
-});
+vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
 
 describe('games-improvements/challenges', () => {
   beforeEach(async () => {
-    await setHtml('@ta-x-jest-views/empty.html');
+    await setHtml('@ta-x-test-views/empty.html');
   });
 
-  it('should not run if not on challenges page', async () => {
-    jest.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(false);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should not run if not on challenges page', async () => {
+    vi.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(false);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await challenges();
 
@@ -25,9 +20,9 @@ describe('games-improvements/challenges', () => {
     spy.mockRestore();
   });
 
-  it('should run if on challenges page', async () => {
-    jest.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(true);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should run if on challenges page', async () => {
+    vi.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(true);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await challenges();
 

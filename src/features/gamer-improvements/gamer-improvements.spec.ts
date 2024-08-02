@@ -1,23 +1,18 @@
-import { setHtml } from '@ta-x-jest';
+import { setHtml } from '@ta-x-test';
 import { GamerRegex, gamerImprovements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import gamerImprovements from '.';
 
-jest.mock('@ta-x-utilities', () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual('@ta-x-utilities')
-  };
-});
+vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
 
 describe('gamer-improvements', () => {
   beforeEach(async () => {
-    await setHtml('@ta-x-jest-views/empty.html');
+    await setHtml('@ta-x-test-views/empty.html');
   });
 
-  it('should not run if not enabled', async () => {
-    jest.spyOn(config, 'enabled', 'get').mockReturnValueOnce(false);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should not run if not enabled', async () => {
+    vi.spyOn(config, 'enabled', 'get').mockReturnValueOnce(false);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await gamerImprovements();
 
@@ -25,10 +20,10 @@ describe('gamer-improvements', () => {
     spy.mockRestore();
   });
 
-  it('should not run if enabled and not on a gamer page', async () => {
-    jest.spyOn(config, 'enabled', 'get').mockReturnValueOnce(true);
-    jest.spyOn(GamerRegex.Test, 'all').mockReturnValueOnce(false);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should not run if enabled and not on a gamer page', async () => {
+    vi.spyOn(config, 'enabled', 'get').mockReturnValueOnce(true);
+    vi.spyOn(GamerRegex.Test, 'all').mockReturnValueOnce(false);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await gamerImprovements();
 
@@ -36,10 +31,10 @@ describe('gamer-improvements', () => {
     spy.mockRestore();
   });
 
-  it('should run if enabled and on a gamer page', async () => {
-    jest.spyOn(config, 'enabled', 'get').mockReturnValueOnce(true);
-    jest.spyOn(GamerRegex.Test, 'all').mockReturnValueOnce(true);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should run if enabled and on a gamer page', async () => {
+    vi.spyOn(config, 'enabled', 'get').mockReturnValueOnce(true);
+    vi.spyOn(GamerRegex.Test, 'all').mockReturnValueOnce(true);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await gamerImprovements();
 

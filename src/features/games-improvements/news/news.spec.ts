@@ -1,23 +1,18 @@
-import { setHtml } from '@ta-x-jest';
+import { setHtml } from '@ta-x-test';
 import { GamesRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import news from '.';
 
-jest.mock('@ta-x-utilities', () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual('@ta-x-utilities')
-  };
-});
+vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
 
 describe('games-improvements/news', () => {
   beforeEach(async () => {
-    await setHtml('@ta-x-jest-views/empty.html');
+    await setHtml('@ta-x-test-views/empty.html');
   });
 
-  it('should not run if not on news page', async () => {
-    jest.spyOn(GamesRegex.Test, 'gameUrl').mockReturnValueOnce(false);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should not run if not on news page', async () => {
+    vi.spyOn(GamesRegex.Test, 'gameUrl').mockReturnValueOnce(false);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await news();
 
@@ -25,9 +20,9 @@ describe('games-improvements/news', () => {
     spy.mockRestore();
   });
 
-  it('should run if on news page', async () => {
-    jest.spyOn(GamesRegex.Test, 'gameUrl').mockReturnValueOnce(true);
-    const spy = jest.spyOn(taxUtilities, 'allConcurrently');
+  test('should run if on news page', async () => {
+    vi.spyOn(GamesRegex.Test, 'gameUrl').mockReturnValueOnce(true);
+    const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await news();
 

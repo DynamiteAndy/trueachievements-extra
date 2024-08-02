@@ -21,7 +21,7 @@
       "@ta-x-models": ["./models/index"],
       "@ta-x-components": ["./components/index"],
       "@ta-x-helpers": ["./helpers/index"],
-      "@ta-x-build-helpers": [ "../build/helpers/index"],
+      "@ta-x-build-helpers": ["../build/helpers/index"],
       "@ta-x-types": ["./types/index"],
       "@ta-x-scss/*": ["./scss/*"],
       "@ta-x-tinymce-scss/*": [
@@ -30,9 +30,9 @@
       "@ta-x-views/*": ["./views/*"],
       "@ta-x-svgs/*": ["./resources/svgs/*"],
       "@ta-x-project-root/*": ["../*"],
-      "@ta-x-jest": ["../test/jest/index"],
-      "@ta-x-jest/*": ["../test/jest/*"],
-      "@ta-x-jest-views/*": ["../test/html/*"]
-    }
+      "@ta-x-test": ["../test/index"],
+      "@ta-x-test-views/*": ["../test/html/*"]
+    },
+    "types": ["vitest/globals"]
   }
 }
