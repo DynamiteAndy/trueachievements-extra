@@ -14,7 +14,7 @@ export const getUrlProperties = (str: string, props: string | string[] = []) => 
     }
 
     return constructedString;
-  } catch (ex) {
+  } catch {
     throw `${str} is not a valid url`;
   }
 };

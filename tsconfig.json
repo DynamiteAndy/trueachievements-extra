@@ -33,6 +33,13 @@
       "@ta-x-test": ["../test/index"],
       "@ta-x-test-views/*": ["../test/html/*"]
     },
-    "types": ["vitest/globals"]
+    "types": [
+      "vitest/globals",
+      "fs-extra",
+      "jsdom",
+      "node",
+      "sanitize-html",
+      "tampermonkey"
+    ]
   }
 }

@@ -1,12 +1,10 @@
 import { merge } from 'webpack-merge';
 import { UserScriptMetaDataPlugin } from 'userscript-metadata-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
-import { baseConfig } from './webpack.base.conf';
+import { baseConfig } from './rspack.base.conf';
 import metadata from './metadata';
 
-const filename = process.env.webpack_minimize
-  ? 'trueachievements-extras.min.user.js'
-  : 'trueachievements-extras.user.js';
+const filename = process.env.minimize ? 'trueachievements-extras.min.user.js' : 'trueachievements-extras.user.js';
 
 metadata.updateURL += filename;
 metadata.downloadURL += filename;
@@ -17,7 +15,7 @@ export const prodConfig = merge(baseConfig as never, {
     filename: filename
   },
   optimization: {
-    minimize: process.env.webpack_minimize ? true : false,
+    minimize: process.env.minimize ? true : false,
     minimizer: [
       new TerserPlugin({
         terserOptions: {
@@ -31,6 +29,7 @@ export const prodConfig = merge(baseConfig as never, {
       })
     ]
   },
+  devtool: false,
   cache: false,
   plugins: [
     new UserScriptMetaDataPlugin({

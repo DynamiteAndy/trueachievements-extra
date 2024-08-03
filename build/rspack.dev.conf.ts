@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { merge } from 'webpack-merge';
 import { UserScriptMetaDataPlugin } from 'userscript-metadata-webpack-plugin';
-import { baseConfig } from './webpack.base.conf';
+import { baseConfig } from './rspack.base.conf';
 import metadata from './metadata';
 
 metadata.name['$'] += ' - Development';
@@ -21,7 +21,7 @@ export const devConfig = merge(baseConfig as never, {
     filename: 'trueachievements-extras.[name].js'
   },
   devtool: 'eval-cheap-module-source-map',
-  watch: process.env.webpack_watch ? true : false,
+  watch: process.env.watch ? true : false,
   watchOptions: {
     ignored: /node_modules/
   },

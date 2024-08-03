@@ -1,6 +1,6 @@
-import type { LoaderContext } from 'webpack';
+import { LoaderContext } from '@rspack/core';
 
-export default function (this: LoaderContext<unknown>, source: string) {
+export default function (this: LoaderContext<never>, source: string) {
   return `const styles = \`${source}\`;
     export default styles;
   `;
