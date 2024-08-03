@@ -65,13 +65,10 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:import/recommended",
         "plugin:import/typescript",
-        "plugin:jest/recommended",
+        "plugin:vitest/recommended",
         "plugin:prettier/recommended"
       ],
-      "plugins": ["@typescript-eslint", "import", "jest", "prettier"],
-      "rules": {
-        "jest/no-standalone-expect": "off"
-      }
+      "plugins": ["@typescript-eslint", "import", "vitest", "prettier"]
     }
   ]
 }

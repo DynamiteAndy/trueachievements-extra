@@ -1,31 +1,19 @@
-import each from 'jest-each';
-import { setHtml, createInnerTextSpies } from '@ta-x-jest';
+import { setHtml, createInnerTextSpies } from '@ta-x-test';
 import { Cache, Constants, AchievementsRegex, gameAchievements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
 import addXboxAchievementGuides from './import-guides';
 
-jest.mock('@ta-x-utilities', () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual('@ta-x-utilities')
-  };
-});
-
-jest.mock('@ta-x-helpers', () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual('@ta-x-helpers')
-  };
-});
+vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
+vi.mock('@ta-x-helpers', async () => await vi.importActual('@ta-x-helpers'));
 
 describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
   beforeEach(async () => {
-    await setHtml('@ta-x-jest-views/empty.html');
+    await setHtml('@ta-x-test-views/empty.html');
   });
 
-  it('should not run if game heading does not load', async () => {
-    jest.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(null);
+  test('should not run if game heading does not load', async () => {
+    vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(null);
 
     await addXboxAchievementGuides();
 
@@ -37,16 +25,16 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     ).toBe(null);
   });
 
-  each([
+  test.concurrent.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
     }
-  ]).test('should not display if not enabled', async ({ view }) => {
+  ])('should not display if not enabled', async ({ view }) => {
     await setHtml(view);
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(false);
+    vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(false);
 
     await addXboxAchievementGuides();
 
@@ -57,18 +45,18 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
   });
 
-  each([
+  test.concurrent.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html'
     }
-  ]).test('should ask for url if no url is configured', async ({ view }) => {
+  ])('should ask for url if no url is configured', async ({ view }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
+    vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
 
     await addXboxAchievementGuides();
 
@@ -80,31 +68,31 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
   });
 
-  each([
+  test.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
       inputValue: ''
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
       inputValue: ''
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
       inputValue: 'invalid-url'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
       inputValue: 'invalid-url'
     }
-  ]).test('should ignore invalid urls when url is asked for', async ({ view, inputValue }) => {
+  ])('should ignore invalid urls when url is asked for', async ({ view, inputValue }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
-    jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(false);
+    vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
+    vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(false);
 
-    const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
+    const memoizeCorsFetchSpy = vi.spyOn(taxHelpers, 'memoizeCorsFetch');
 
     await addXboxAchievementGuides();
 
@@ -136,23 +124,23 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     memoizeCorsFetchSpy.mockRestore();
   });
 
-  each([
+  test.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
       inputValue: 'https://www.xboxachievements.com/game/g-force/guide/'
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
       inputValue: 'https://www.xboxachievements.com/game/g-force/guide/'
     }
-  ]).test('should not fetch valid url when url is asked for', async ({ view, inputValue }) => {
+  ])('should fetch valid url when url is asked for', async ({ view, inputValue }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
-    jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValue(false);
+    vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
+    vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValue(false);
 
-    const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
+    const memoizeCorsFetchSpy = vi.spyOn(taxHelpers, 'memoizeCorsFetch');
 
     await addXboxAchievementGuides();
 
@@ -187,24 +175,24 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     memoizeCorsFetchSpy.mockRestore();
   });
 
-  each([
+  test.concurrent.each([
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html',
       cachedGuide: new Map([['GForce', 'https://www.xboxachievements.com/game/g-force/guide/']])
     },
     {
-      view: '@ta-x-jest-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
+      view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-no-guide.html',
       cachedGuide: new Map([['GForce', 'https://www.xboxachievements.com/game/g-force/guide/']])
     }
-  ]).test('should not display guide for achievement', async ({ view, cachedGuide }) => {
+  ])('should not display guide for achievement', async ({ view, cachedGuide }) => {
     await setHtml(view);
     createInnerTextSpies();
 
-    jest.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
-    jest.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(false);
-    jest.spyOn(Cache, 'gameAchievementsXboxAchievementsGuideUrl', 'get').mockReturnValueOnce(cachedGuide);
+    vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
+    vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(false);
+    vi.spyOn(Cache, 'gameAchievementsXboxAchievementsGuideUrl', 'get').mockReturnValueOnce(cachedGuide);
 
-    const memoizeCorsFetchSpy = jest.spyOn(taxHelpers, 'memoizeCorsFetch');
+    const memoizeCorsFetchSpy = vi.spyOn(taxHelpers, 'memoizeCorsFetch');
 
     await addXboxAchievementGuides();
 

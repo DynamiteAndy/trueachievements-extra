@@ -36,7 +36,6 @@ jobs:
 
     - name: Run lint
       run: pnpm run lint
-      if: false # Temporarily disable
 
     - name: Run tests
       run: pnpm run test:github

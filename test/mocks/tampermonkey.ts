@@ -1,9 +1,9 @@
 import { localStorage } from './local-storage';
 
-const GM_getValue = jest.fn();
-const GM_setValue = jest.fn();
-const GM_deleteValue = jest.fn();
-const GM_xmlhttpRequest = jest.fn();
+const GM_getValue = vi.fn();
+const GM_setValue = vi.fn();
+const GM_deleteValue = vi.fn();
+const GM_xmlhttpRequest = vi.fn();
 
 GM_getValue.mockImplementation((key: string, defaultValue?: '') =>
   localStorage.has(key) ? localStorage.get(key) : defaultValue

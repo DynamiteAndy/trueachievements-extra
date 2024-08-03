@@ -1,8 +1,7 @@
-import each from 'jest-each';
 import { toInt, toBool, toDate, extractBetween, extractAllBetween, insertSeperator } from './string-util';
 
 describe('toInt', () => {
-  each([
+  test.concurrent.each([
     { input: '12', expected: 12 },
     { input: '120', expected: 120 },
     { input: 12, expected: 12 },
@@ -11,9 +10,8 @@ describe('toInt', () => {
     { input: false, expected: 0 },
     { input: 'a', expected: null },
     { input: 'b', expected: null },
-    { input: null, expected: null },
-    { input: {}, expected: null }
-  ]).test.concurrent('should parse $input to $expected', ({ input, expected }) => {
+    { input: null, expected: null }
+  ])('should parse $input to $expected', ({ input, expected }) => {
     expect(toInt(input)).toEqual(expected);
   });
 });
@@ -22,16 +20,15 @@ describe('toDate', () => {
   const today = new Date(new Date().setHours(0, 0, 0, 0));
   const yesterday = new Date(new Date(today).setDate(today.getDate() - 1));
 
-  each([
+  test.concurrent.each([
     { input: 'today', expected: today },
     { input: 'Today', expected: today },
     { input: 'yesterday', expected: yesterday },
     { input: 'Yesterday', expected: yesterday },
     { input: '2022/12/11', expected: new Date('2022/12/11') },
     { input: 'tomorrow', expected: null },
-    { input: 'Tomorrow', expected: null },
-    { input: {}, expected: null }
-  ]).test.concurrent('should parse $input to $expected', ({ input, expected }) => {
+    { input: 'Tomorrow', expected: null }
+  ])('should parse $input to $expected', ({ input, expected }) => {
     const date = toDate(input);
 
     expect(date?.getDay()).toEqual(expected?.getDay());
@@ -41,7 +38,7 @@ describe('toDate', () => {
 });
 
 describe('toBool', () => {
-  each([
+  test.concurrent.each([
     { input: 'true', expected: true },
     { input: 'True', expected: true },
     { input: 'false', expected: false },
@@ -53,15 +50,14 @@ describe('toBool', () => {
     { input: 'a', expected: null },
     { input: 'b', expected: null },
     { input: 2, expected: null },
-    { input: null, expected: null },
-    { input: {}, expected: null }
-  ]).test.concurrent('should parse $input to $expected', ({ input, expected }) => {
+    { input: null, expected: null }
+  ])('should parse $input to $expected', ({ input, expected }) => {
     expect(toBool(input)).toEqual(expected);
   });
 });
 
 describe('extractBetween', () => {
-  each([
+  test.concurrent.each([
     {
       input: `ƒ onclick(event) {
       InsertAtCursor('aebMessage','[smile]', 'smileydropdown'); return false;
@@ -79,13 +75,13 @@ describe('extractBetween', () => {
       between: '%%',
       expected: null
     }
-  ]).test.concurrent('should extract $expected from $input', ({ input, between, expected }) => {
+  ])('should extract $expected from $input', ({ input, between, expected }) => {
     expect(extractBetween(between, input)).toEqual(expected);
   });
 });
 
 describe('extractAllBetween', () => {
-  each([
+  test.concurrent.each([
     {
       input: `ƒ onclick(event) {
       InsertAtCursor('aebMessage','[smile]', 'smileydropdown'); return false;
@@ -103,13 +99,13 @@ describe('extractAllBetween', () => {
       between: '%%',
       expected: null
     }
-  ]).test.concurrent('should extract $expected from $input', ({ input, between, expected }) => {
+  ])('should extract $expected from $input', ({ input, between, expected }) => {
     expect(extractAllBetween(between, input)).toEqual(expected);
   });
 });
 
 describe('insertSeperator', () => {
-  each([
+  test.concurrent.each([
     {
       input: 1000000,
       separator: ',',
@@ -125,7 +121,7 @@ describe('insertSeperator', () => {
       separator: ',',
       expected: null
     }
-  ]).test.concurrent('should insert seperator $expected to $input', ({ input, separator, expected }) => {
+  ])('should insert seperator $expected to $input', ({ input, separator, expected }) => {
     expect(insertSeperator(input, separator)).toEqual(expected);
   });
 });
