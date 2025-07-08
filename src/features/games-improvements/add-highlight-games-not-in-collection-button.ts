@@ -1,6 +1,7 @@
-import { Constants, games, GamesRegex } from '@ta-x-globals';
+import { games, GamesRegex } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
 import html from './games-improvements.html';
+import styles from './styles';
 
 const listen = (button: HTMLElement): void => {
   button.addEventListener('click', async () => {
@@ -30,11 +31,11 @@ export const addHighlightGamesNotInCollectionButton = async (): Promise<void> =>
 
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   searchAndFilterContainer.appendChild(
-    parsedDocument.querySelector(`.${Constants.Styles.GamesImprovements.highlightGamesButtonJs}`)
+    parsedDocument.querySelector(`.${styles.jsHighlightGamesButton}`)
   );
 
   const button = searchAndFilterContainer.querySelector(
-    `.${Constants.Styles.GamesImprovements.highlightGamesButtonJs}`
+    `.${styles.jsHighlightGamesButton}`
   );
 
   listen(button as HTMLElement);

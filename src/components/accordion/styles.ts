@@ -3,4 +3,4 @@ export default {
   jsAccordionContent: 'js-ta-x-accordion-content',
   accordion: 'ta-x-accordion',
   jsAccordion: 'js-ta-x-accordion'
-};
+} as const;

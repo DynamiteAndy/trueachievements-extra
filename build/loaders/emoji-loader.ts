@@ -1,18 +1,26 @@
-import { LoaderContext } from '@rspack/core';
+import type { LoaderContext } from '@rspack/core';
 import { compress } from 'compress-json';
-import groupEmojis from '../helpers/group-emojis';
+import groupEmojis from '../helpers/group-emojis.ts';
 
-interface EmojiLoaderOptions {
-  compress: boolean;
+export interface EmojiLoaderOptions {
+  compress?: boolean;
 }
 
-export default function (this: LoaderContext<EmojiLoaderOptions>, source: string) {
-  const options = this.getOptions();
-  let emojis = groupEmojis(source);
+export default function emojiLoader(
+  this: LoaderContext<EmojiLoaderOptions>,
+  source: string
+): string {
+  try {
+    const { compress: shouldCompress = false } = this.getOptions() ?? {};
 
-  if (options.compress) {
-    emojis = compress(emojis);
+    const groupedEmojis = groupEmojis(source);
+    const result = shouldCompress ? compress(groupedEmojis) : groupedEmojis;
+
+    return `export default ${JSON.stringify(result)};`;
+  } catch (error) {
+    const err = error instanceof Error ? error : new Error(String(error));
+    this.emitError(new Error(`[emoji-loader] ${err.message}`));
+
+    return `export default {};`;
   }
-
-  return JSON.stringify(emojis);
 }

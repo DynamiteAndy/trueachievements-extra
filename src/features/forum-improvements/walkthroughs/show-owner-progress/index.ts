@@ -1,7 +1,9 @@
-import { Cache, Constants, forumImprovements, ForumRegex, GamesRegex, SentencesRegex } from '@ta-x-globals';
+import { Cache, forumImprovements, ForumRegex, GamesRegex, SentencesRegex } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
 import { memoizeFetch } from '@ta-x-helpers';
-import html from './walkthroughs.hbs';
+import html from './show-owner-progress.hbs';
+import styles from './styles';
+import attributes from './attributes';
 
 // Elements -------
 let extensionBody: HTMLElement;
@@ -13,19 +15,19 @@ const applyBody = async (): Promise<void> => {
   const firstSection = await waitForElement('section:not(.smallpanel)', asideColumn);
 
   asideColumn.insertBefore(
-    parsedDocument.querySelector(`.${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`),
+    parsedDocument.querySelector(`.${styles.jsShowOwnerProgress}`),
     firstSection
   );
 
-  extensionBody = asideColumn.querySelector(`.${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`);
-  askForWalkthroughBody = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`);
+  extensionBody = asideColumn.querySelector(`.${styles.jsShowOwnerProgress}`);
+  askForWalkthroughBody = extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`);
 
   await getAchievementWalkthroughUrl();
 };
 
 const listen = (): void => {
-  const button = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.buttonJs}`);
-  const input = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
+  const button = extensionBody.querySelector(`.${styles.jsAskLoaderAskButton}`) as HTMLButtonElement;
+  const input = extensionBody.querySelector(`.${styles.jsAskLoaderInput}`) as HTMLInputElement;
 
   button.addEventListener('click', async (e: Event) => {
     if (!(e.target as Element)?.nodeName) {
@@ -101,9 +103,7 @@ const getOwnerProgress = async (url: string): Promise<void> => {
   if (walkthroughEditors) {
     const gamersInvolved = getGamersInvolved(walkthroughEditors);
     const walkthroughEditorsWrapper = document.createElement('div');
-    walkthroughEditorsWrapper.classList.add(
-      Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorWrapperStyle
-    );
+    walkthroughEditorsWrapper.classList.add(styles.showOwnerProgressEditorWrapper);
     walkthroughEditorsWrapper.append(...gamersInvolved);
 
     extensionArticle.appendChild(walkthroughEditorsWrapper);
@@ -117,8 +117,8 @@ const getOwnerProgress = async (url: string): Promise<void> => {
     let walkthroughProgress = walkthroughDocument.querySelector('aside section .walthroughprogress');
 
     if (walkthroughProgress === null) {
-      url = `${url}?sbonly=1`;
-      walkthroughResponse = await memoizeFetch(url);
+      const actualUrl = `${url}?sbonly=1`;
+      walkthroughResponse = await memoizeFetch(actualUrl);
       walkthroughDocument = new DOMParser().parseFromString(walkthroughResponse, 'text/html');
       walkthroughProgress = walkthroughDocument.querySelector('aside section .walthroughprogress');
 
@@ -145,12 +145,12 @@ const getOwnerProgress = async (url: string): Promise<void> => {
     Cache.walkthroughForumOwnerProgressUrl = cachedWalkthroughUrls;
   }
 
-  extensionBody.setAttribute('data-ta-x-loaded', 'true');
+  extensionBody.setAttribute(attributes.askContentLoaded, 'true');
 };
 
 const getGamersInvolved = (walkthroughEditors: Element): HTMLElement[] => {
   let currentRow = document.createElement('div') as HTMLElement;
-  currentRow.classList.add(Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorRowStyle);
+  currentRow.classList.add(styles.showOwnerProgressEditorRow);
 
   return ([...walkthroughEditors.childNodes] as HTMLElement[]).reduce((rows, current, index, currentArray) => {
     if (current.tagName === 'DT') {
@@ -158,12 +158,12 @@ const getGamersInvolved = (walkthroughEditors: Element): HTMLElement[] => {
         rows.push(currentRow);
 
         currentRow = document.createElement('div');
-        currentRow.classList.add(Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorRowStyle);
+        currentRow.classList.add(styles.showOwnerProgressEditorRow);
       }
 
       currentRow.innerHTML = current.innerHTML;
     } else if (current.tagName === 'DD') {
-      currentRow.innerHTML += `<div class="${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressEditorStyle}">${current.innerHTML}</div>`;
+      currentRow.innerHTML += `<div class="${styles.showOwnerProgressEditor}">${current.innerHTML}</div>`;
     }
 
     if (index === currentArray.length - 1 && currentRow.childElementCount > 0) {
@@ -178,9 +178,9 @@ const toggleAskForWalkthrough = (): void => {
   askForWalkthroughBody.classList.toggle('ta-x-hide');
 
   if (!askForWalkthroughBody.classList.contains('ta-x-hide')) {
-    extensionBody.setAttribute('data-ta-x-loaded', 'true');
+    extensionBody.setAttribute(attributes.askContentLoaded, 'true');
   } else {
-    extensionBody.removeAttribute('data-ta-x-loaded');
+    extensionBody.removeAttribute(attributes.askContentLoaded);
   }
 };
 

@@ -46,19 +46,9 @@ export class Constants {
       static readonly featureDocumentationView = 'js-ta-x-settings-menu-feature-documentation';
     };
 
-    static Emojis = class {
-      static readonly featureJs = 'js-ta-x-emojis';
-      static readonly featureStyle = 'ta-x-emojis';
-    };
-
     static StickyHeader = class {
       static readonly featureJs = 'js-ta-x-sticky-header';
       static readonly featureStyle = 'ta-x-sticky-header';
-    };
-
-    static NewsImprovements = class {
-      static readonly featureJs = 'js-ta-x-news-improvements';
-      static readonly featureStyle = 'ta-x-news-improvements';
     };
 
     static GamesImprovements = class {

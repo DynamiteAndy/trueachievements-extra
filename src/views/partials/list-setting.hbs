@@ -1,18 +1,13 @@
 <div
   data-render-condition="{{render-condition}}"
-  class="ta-x-listbox
-    {{conditional (object ta-x-hide=render-condition)}}
-    {{classes}}"
+  class="ta-x-listbox {{conditional ta-x-hide=render-condition}} {{classes}}"
   style="{{style}}"
 >
-  <label>
+  <label for="{{id}}-input">
     {{label}}
   </label>
-  <div
-    class="frm-grp frm-lst"
-    data-template-id="{{template-id}}"
-    data-list-id="{{id}}"
-  >
+
+  <div class="frm-grp frm-lst" data-template-id="{{template-id}}" data-list-id="{{id}}">
     {{#if item-list-template}}
       {{includes item-list-template}}
     {{/if}}
@@ -24,6 +19,7 @@
       value=""
       class="textbox cs-n"
     />
+
     <input
       type="submit"
       data-for-list="{{id}}"
@@ -35,15 +31,14 @@
       onclick="event.preventDefault()"
     />
 
-    <ul class="item-list" id="{{id}}">
-    </ul>
+    <ul class="item-list" id="{{id}}"></ul>
   </div>
+
   {{#if helper-text}}
     <div class="ta-x-flex-break"></div>
     <p
       data-render-condition="{{helper-render-condition}}"
-      class="ta-x-listbox-help-text
-        {{conditional (object ta-x-hide=helper-render-condition)}}"
+      class="ta-x-listbox-help-text {{conditional ta-x-hide=helper-render-condition}}"
     >
       {{helper-text}}
     </p>

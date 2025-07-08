@@ -12,7 +12,7 @@ const createButtonGroup = async () => {
   const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
   const iframeLoadHandler = () => {
     const script = document.createElement('script');
-    script.id = 'ta-x-staff-walkthrough-improvements-tinymce-button-grup';
+    script.id = 'ta-x-staff-walkthrough-improvements-tinymce-button-group';
     script.innerHTML = `
     ((editor) => {
       console.debug('Creating TA-X TinyMCE Group');

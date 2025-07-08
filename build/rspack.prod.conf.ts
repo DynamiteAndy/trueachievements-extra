@@ -1,8 +1,6 @@
-import { Configuration } from '@rspack/core';
-import { merge } from 'webpack-merge';
-import { UserScriptMetaDataPlugin } from 'userscript-metadata-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
-import { baseConfig } from './rspack.base.conf';
+import type { Configuration } from '@rspack/core';
+import { merge } from 'rspack-merge';
+import { baseConfig, createMetadataPlugin } from './rspack.base.conf';
 import metadata from './metadata';
 
 const filename = process.env.minimize ? 'trueachievements-extras.min.user.js' : 'trueachievements-extras.user.js';
@@ -10,33 +8,17 @@ const filename = process.env.minimize ? 'trueachievements-extras.min.user.js' : 
 metadata.updateURL += filename;
 metadata.downloadURL += filename;
 
-export const prodConfig: Configuration = merge(baseConfig as never, {
+export const prodConfig: Configuration = merge(baseConfig, {
   mode: 'production',
   output: {
     filename: filename
   },
   optimization: {
-    minimize: process.env.minimize ? true : false,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          format: {
-            comments: /@.* [\w|\d].*|==\/?UserScript==/i
-          },
-          compress: {
-            drop_console: true
-          }
-        }
-      })
-    ]
+    minimize: !!process.env.minimize
   },
   devtool: false,
   cache: false,
-  plugins: [
-    new UserScriptMetaDataPlugin({
-      metadata
-    })
-  ]
+  plugins: [createMetadataPlugin(metadata)]
 });
 
-module.exports = prodConfig;
+export default prodConfig;

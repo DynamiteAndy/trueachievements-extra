@@ -8,15 +8,15 @@
 
 {{includes
   "@ta-x-partials/list-setting.hbs"
-  render-condition='{ "selector": "#chkForumImprovementsForumImprovementsThreadFilter", "checked": true }'
-  item-list-template="@ta-x-views/templates/forum-improvements-thread-filter-keywords.html"
-  template-id="#ta-x-template-forum-improvements-thread-filter-keywords"
+  id="txtThreadKeywordFilter"
   config-path="forumImprovements.threadFilterKeywords"
   label="Keywords"
-  id="txtThreadKeywordFilter"
+  button-text="Add Filter"
+  render-condition='{"selector":"#chkForumImprovementsForumImprovementsThreadFilter","checked":true}'
+  item-list-template="@ta-x-views/templates/forum-improvements-thread-filter-keywords.html"
+  template-id="#ta-x-template-forum-improvements-thread-filter-keywords"
   is-array="true"
   array-split=","
-  button-text="Add Filter"
 }}
 
 {{includes "./my-threads/settings.hbs"}}

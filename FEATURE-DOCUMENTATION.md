@@ -88,6 +88,18 @@ This enables extended features to be enabled.
 
 This feature will auto set the sales page to be ordered the way specified if not already ordered.
 
+## Sales - Hide Owned Items
+
+This feature will hide any items already owned.
+
+## Sales - Hide Unobtainable Items
+
+This feature will hide any items that have unobtainable achievements.
+
+## Sales - Collapsible Groups
+
+This feature allows sales tables to be collapsed and expanded.
+
 # Staff Walkthrough Improvements
 
 This enables tweaks to some styles on the staff walkthrough pages to make it feel more responsive, some tweaks to the tinymce editor to add some new features and styles, but also allow extended features to be enabled.

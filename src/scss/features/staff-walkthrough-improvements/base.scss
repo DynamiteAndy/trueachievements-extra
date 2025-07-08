@@ -1,8 +1,11 @@
+@use '../../variables';
+
 body {
   &.trueachievement-extras {
     &.ta-x-staff-walkthrough-improvements {
       min-width: unset !important;
       overflow: auto;
+      background-color: variables.$ta-x-both-theme-footer-background;
 
       main {
         min-height: unset !important;

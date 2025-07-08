@@ -1,14 +1,15 @@
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
+import fs from 'node:fs';
 import { compress } from 'compress-json';
-import { groupEmojis } from '../../build/helpers';
+import groupEmojis from '../../build/helpers/group-emojis.ts';
 
 export default () => {
   const emojiJsonModule = 'emoji.json';
-  const resolvedVirtualEmojiJsonModule = '\0' + emojiJsonModule;
+  const resolvedVirtualEmojiJsonModule = `\0${emojiJsonModule}`;
 
   return {
     name: 'vitest-emoji-json',
+    enforce: 'pre',
 
     resolveId(id: string) {
       if (id.endsWith(emojiJsonModule)) {

@@ -1,8 +1,9 @@
-import { setHtml, createInnerTextSpies } from '@ta-x-test';
+import { setHtml } from '@ta-x-test';
 import { Cache, Constants, AchievementsRegex, gameAchievements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
 import addXboxAchievementGuides from './import-guides';
+import styles from '../shared/styles';
 
 vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
 vi.mock('@ta-x-helpers', async () => await vi.importActual('@ta-x-helpers'));
@@ -18,10 +19,10 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     await addXboxAchievementGuides();
 
     expect(
-      document.querySelector(`.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`)
+      document.querySelector(`.${styles.jsXboxAchievementGuides}`)
     ).toBe(null);
     expect(
-      document.querySelector(`.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesStyle}`)
+      document.querySelector(`.${styles.xboxAchievementGuides}`)
     ).toBe(null);
   });
 
@@ -39,13 +40,13 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     await addXboxAchievementGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${styles.jsXboxAchievementGuides}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
   });
 
-  test.concurrent.each([
+  test.each([
     {
       view: '@ta-x-test-views/games-improvements/achievement/add-xbox-achievement-guides/achievement-with-guide.html'
     },
@@ -54,18 +55,17 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     }
   ])('should ask for url if no url is configured', async ({ view }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
 
     await addXboxAchievementGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${styles.jsXboxAchievementGuides}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
-    expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
+    expect(extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`)).not.toBe(null);
   });
 
   test.each([
@@ -87,7 +87,6 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     }
   ])('should ignore invalid urls when url is asked for', async ({ view, inputValue }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
     vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(false);
@@ -97,28 +96,27 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     await addXboxAchievementGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${styles.jsXboxAchievementGuides}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
-    expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
+    expect(extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`)).not.toBe(null);
     expect(memoizeCorsFetchSpy).not.toHaveBeenCalled();
 
-    const input = document.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
+    const input = document.querySelector(`.${styles.jsAskLoaderInput}`) as HTMLInputElement;
     input.value = inputValue;
-    input.dispatchEvent(new window.Event('input', { bubbles: true, cancelable: false }));
+    input.dispatchEvent(new Event('input', { bubbles: true, cancelable: false }));
 
-    const button = document.querySelector(`.${Constants.Styles.Components.AskLoader.buttonJs}`);
+    const button = document.querySelector(`.${styles.jsAskLoaderAskButton}`);
     button.dispatchEvent(
-      new window.MouseEvent('click', {
-        view: window,
+      new MouseEvent('click', {
         bubbles: true,
         cancelable: true
       })
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
-    expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
+    expect(extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`)).not.toBe(null);
     expect(memoizeCorsFetchSpy).not.toHaveBeenCalled();
 
     memoizeCorsFetchSpy.mockRestore();
@@ -135,7 +133,6 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     }
   ])('should fetch valid url when url is asked for', async ({ view, inputValue }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
     vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValue(false);
@@ -145,21 +142,20 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     await addXboxAchievementGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${styles.jsXboxAchievementGuides}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
-    expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
+    expect(extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`)).not.toBe(null);
     expect(memoizeCorsFetchSpy).not.toHaveBeenCalled();
 
-    const input = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
+    const input = extensionBody.querySelector(`.${styles.jsAskLoaderInput}`) as HTMLInputElement;
     input.value = inputValue;
-    input.dispatchEvent(new window.Event('input', { bubbles: true, cancelable: false }));
+    input.dispatchEvent(new Event('input', { bubbles: true, cancelable: false }));
 
-    const button = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.buttonJs}`);
+    const button = extensionBody.querySelector(`.${styles.jsAskLoaderAskButton}`);
     button.dispatchEvent(
-      new window.MouseEvent('click', {
-        view: window,
+      new MouseEvent('click', {
         bubbles: true,
         cancelable: true
       })
@@ -168,7 +164,7 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
     expect(memoizeCorsFetchSpy).not.toHaveBeenCalled();
 
-    const guide = document.querySelector('.ta-x-games-improvements-achievements-achievement-guide');
+    const guide = document.querySelector(`.${styles.achievementGuideSolution}`);
     expect(guide).toBe(null);
     expect((guide?.querySelector('.body') as HTMLElement)?.innerText).toBeFalsy();
 
@@ -186,7 +182,6 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     }
   ])('should not display guide for achievement', async ({ view, cachedGuide }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameAchievementsShowXboxAchievementGuides', 'get').mockReturnValueOnce(true);
     vi.spyOn(AchievementsRegex.Test, 'achievementUrl').mockReturnValueOnce(false);
@@ -197,10 +192,10 @@ describe('games-improvements/achievements/add-xbox-achievement-guides', () => {
     await addXboxAchievementGuides();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`
+      `.${styles.jsXboxAchievementGuides}`
     );
 
-    const guide = document.querySelector('.ta-x-games-improvements-achievements-achievement-guide');
+    const guide = document.querySelector(`.${styles.achievementGuideSolution}`);
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(true);
     expect(memoizeCorsFetchSpy).not.toHaveBeenCalled();

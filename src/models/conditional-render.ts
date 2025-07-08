@@ -19,9 +19,9 @@ export class ConditionalRender {
       conditionalRender.conditions = parsedObj.map((cdr) => ConditionalRender.fromObject(cdr));
 
       return conditionalRender;
-    } else {
-      return ConditionalRender.fromObject(parsedObj);
     }
+    
+    return ConditionalRender.fromObject(parsedObj);
   }
 
   static fromObject(obj: { selector: string; checked: boolean; value: string }): ConditionalRender {
@@ -56,26 +56,26 @@ export class ConditionalRender {
     if (!this.isValid()) {
       return method;
     }
+
     if (this.conditions) {
       return this.conditions.every((cdr) => cdr.test(el) === 'remove') ? 'remove' : 'add';
-    } else {
-      const setting = el.querySelector(this.selector) as HTMLElement;
+    } 
 
-      if (isCheckboxElement(setting)) {
-        method = (setting as HTMLInputElement).checked === this.checked ? 'remove' : 'add';
-      } else if (isSelectElement(setting)) {
-        if (toBool(setting.getAttribute('data-is-array'))) {
-          method = this.value.some((val) =>
-            (setting as HTMLSelectElement).value.split(setting.getAttribute('data-array-split')).includes(val)
-          )
-            ? 'remove'
-            : 'add';
-        } else {
-          method = this.value.includes((setting as HTMLSelectElement).value) ? 'remove' : 'add';
-        }
+    const setting = el.querySelector(this.selector) as HTMLElement;
+    if (isCheckboxElement(setting)) {
+      method = (setting as HTMLInputElement).checked === this.checked ? 'remove' : 'add';
+    } else if (isSelectElement(setting)) {
+      if (toBool(setting.getAttribute('data-is-array'))) {
+        method = this.value.some((val) =>
+          (setting as HTMLSelectElement).value.split(setting.getAttribute('data-array-split')).includes(val)
+        )
+          ? 'remove'
+          : 'add';
+      } else {
+        method = this.value.includes((setting as HTMLSelectElement).value) ? 'remove' : 'add';
       }
-
-      return method;
     }
+
+    return method;
   }
 }

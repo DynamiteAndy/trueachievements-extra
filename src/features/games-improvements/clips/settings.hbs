@@ -1,3 +1,29 @@
+{{parseProperty "gameClipsRecordedByOptions" '[
+  { "value": "", "text": "Anyone", "selected": true },
+  { "value": "My friends", "text": "My friends" }
+]'}}
+
+{{parseProperty "gameClipsSavedByOptions" '[
+  { "value": "", "text": "Anyone" },
+  { "value": "Gamer", "text": "Gamer", "selected": true },
+  { "value": "Xbox", "text": "Xbox" }
+]'}}
+
+{{parseProperty "gameClipsRecordedTimeOptions" '[
+  { "value": "7", "text": "This week", "selected": true },
+  { "value": "30", "text": "This month" },
+  { "value": "365", "text": "This year" },
+  { "value": "0", "text": "All" }
+]'}}
+
+{{parseProperty "gameClipsSortByOptions" '[
+  { "value": "Most viewed", "text": "Most viewed", "selected": true },
+  { "value": "Most favourited", "text": "Most favourited" },
+  { "value": "Most commented", "text": "Most commented" },
+  { "value": "Longest", "text": "Longest" },
+  { "value": "GamerTag", "text": "GamerTag" }
+]'}}
+
 {{#includes
   "@ta-x-partials/accordion.hbs"
   title="Clips"
@@ -11,58 +37,44 @@
     label="Default Status for Game Clips"
     id="chkGamesImprovementsGameClipsDefaultStatus"
     config-path="gamesImprovements.clips.gameClipsDefaultStatus"
-    helper-render-condition='{ "selector": "#chkGamesImprovementsGameClipsDefaultStatus", "checked": true }'
+    helper-render-condition='{"selector":"#chkGamesImprovementsGameClipsDefaultStatus","checked":true}'
     helper-text="This feature will cause multiple page reloads if you change more than one default!"
     classes="ta-x-hide-border"
   }}
 
   {{includes
     "@ta-x-partials/select-setting.hbs"
-    render-condition='{ "selector": "#chkGamesImprovementsGameClipsDefaultStatus", "checked": true }'
     id="selGamesImprovementsGameClipsDefaultRecordedByValue"
     config-path="gamesImprovements.clips.gameClipsDefaultRecordedByValue"
+    render-condition='{"selector":"#chkGamesImprovementsGameClipsDefaultStatus","checked":true}'
     container-classes="ta-x-hide-padding-top ta-x-hide-border"
-    options='[
-                { "value": "", "text": "Anyone", "selected": true },
-                { "value": "My friends", "text": "My friends" }]'
+    options=gameClipsRecordedByOptions
   }}
 
   {{includes
     "@ta-x-partials/select-setting.hbs"
-    render-condition='{ "selector": "#chkGamesImprovementsGameClipsDefaultStatus", "checked": true }'
     id="selGamesImprovementsGameClipsDefaultSavedByValue"
     config-path="gamesImprovements.clips.gameClipsDefaultSavedByValue"
+    render-condition='{"selector":"#chkGamesImprovementsGameClipsDefaultStatus","checked":true}'
     container-classes="ta-x-hide-padding-top ta-x-hide-border"
-    options='[
-                { "value": "", "text": "Anyone" },
-                { "value": "Gamer", "text": "Gamer", "selected": true },
-                { "value": "Xbox", "text": "Xbox" }]'
+    options=gameClipsSavedByOptions
   }}
 
   {{includes
     "@ta-x-partials/select-setting.hbs"
-    render-condition='{ "selector": "#chkGamesImprovementsGameClipsDefaultStatus", "checked": true }'
     id="selGamesImprovementsGameClipsDefaultRecordedValue"
     config-path="gamesImprovements.clips.gameClipsDefaultRecordedValue"
+    render-condition='{"selector":"#chkGamesImprovementsGameClipsDefaultStatus","checked":true}'
     container-classes="ta-x-hide-padding-top ta-x-hide-border"
-    options='[
-                { "value": "7", "text": "This week", "selected": true },
-                { "value": "30", "text": "This month" },
-                { "value": "365", "text": "This year" },
-                { "value": "0", "text": "All" }]'
+    options=gameClipsRecordedTimeOptions
   }}
 
   {{includes
     "@ta-x-partials/select-setting.hbs"
-    render-condition='{ "selector": "#chkGamesImprovementsGameClipsDefaultStatus", "checked": true }'
     id="selGamesImprovementsGameClipsDefaultSortByValue"
     config-path="gamesImprovements.clips.gameClipsDefaultSortByValue"
+    render-condition='{"selector":"#chkGamesImprovementsGameClipsDefaultStatus","checked":true}'
     container-classes="ta-x-hide-padding-top ta-x-hide-border"
-    options='[
-                { "value": "Most viewed", "text": "Most viewed", "selected": true },
-                { "value": "Most favourited", "text": "Most favourited" },
-                { "value": "Most commented", "text": "Most commented" },
-                { "value": "Longest", "text": "Longest" },
-                { "value": "GamerTag", "text": "GamerTag" }]'
+    options=gameClipsSortByOptions
   }}
 {{/includes}}

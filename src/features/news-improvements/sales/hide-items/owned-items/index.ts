@@ -1,6 +1,6 @@
 import { newsImprovements, ProductRegex } from '@ta-x-globals';
 import { memoizeFetch } from '@ta-x-helpers';
-import { allConcurrently, waitForElement } from '@ta-x-utilities';
+import { allConcurrently, getCookie, waitForElement } from '@ta-x-utilities';
 import { GamerRegex, GamesRegex } from '@ta-x-globals';
 import { pubSub } from '@ta-x-components';
 
@@ -35,7 +35,7 @@ const getBundleItems = (gameOrBundle: HTMLAnchorElement[]): { games: HTMLAnchorE
   const games = [];
   const dlc = [];
   
-  let otherSaleItems = gameOrBundle.slice(1);
+  const otherSaleItems = gameOrBundle.slice(1);
   otherSaleItems.forEach((gameOrDlc) => {
     if (isGame(gameOrDlc)) {
       games.push(gameOrDlc);
@@ -58,8 +58,14 @@ const getOwnedGames = async (): Promise<{ name: string, url: string, complete: b
     return [];
   }
 
+  const gamerId = getCookie('GamerID');
+
+  if (!gamerId) {
+    return [];
+  }
+
   const gamesResponse = await memoizeFetch(
-    `${gamerPage.href}/games?executeformfunction&function=AjaxList&params=oGamerGamesList%7C%26ddlPlatformIDs%3D%26ddlGenreIDs%3D%26asdGamePropertyID%3D-1%26oGamerGamesList_Order%3DLastScanned%20desc%26oGamerGamesList_Page%3D1%26oGamerGamesList_ItemsPerPage%3D100%26oGamerGamesList_TimeZone%3DGMT%20Standard%20Time%26oGamerGamesList_ShowAll%3DTrue%26txtGamerID%3D96119%26txtTARatioType%3DMyTARatio%26txtDLCInclusionSetting%3DAllDLC%26txtBoostListOnly%3DFalse%26txtShowDLCInfo%3DTrue%26txtConfirmedGenres%3DFalse%26txtCompleteOnly%3DFalse%26txtSiteLeaderboardFilterDefinitionID%3D0%26txtGamePropertyID%3D0`,
+    `${gamerPage.href}/games?executeformfunction&function=AjaxList&params=oGamerGamesList%7C%26ddlPlatformIDs%3D%26ddlGenreIDs%3D%26asdGamePropertyID%3D-1%26oGamerGamesList_Order%3DLastScanned%20desc%26oGamerGamesList_Page%3D1%26oGamerGamesList_ItemsPerPage%3D100%26oGamerGamesList_TimeZone%3DGMT%20Standard%20Time%26oGamerGamesList_ShowAll%3DTrue%26txtGamerID%3D${gamerId}%26txtTARatioType%3DMyTARatio%26txtDLCInclusionSetting%3DAllDLC%26txtBoostListOnly%3DFalse%26txtShowDLCInfo%3DTrue%26txtConfirmedGenres%3DFalse%26txtCompleteOnly%3DFalse%26txtSiteLeaderboardFilterDefinitionID%3D0%26txtGamePropertyID%3D0`,
     { method: 'POST' }
   );
 
@@ -115,13 +121,6 @@ export default async (): Promise<void> => {
   if (!newsImprovements.sales.hideOwnedItems) {
     return;
   }
-
-  const salesTable = await waitForElement('.newsitem .sale [data-sort]');
-  if (!salesTable) {
-    return;
-  }
-
-  await waitForElement('.author');
 
   await applyBody();
 };

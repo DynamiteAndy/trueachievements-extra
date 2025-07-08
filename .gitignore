@@ -188,6 +188,7 @@ App_Data
 dist/*
 .nyc_output
 vitest.config.mts.timestamp-*
+coverage/*
 
 # VS Code
 .vscode/*

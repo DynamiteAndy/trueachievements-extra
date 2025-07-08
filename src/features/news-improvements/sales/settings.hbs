@@ -1,3 +1,16 @@
+{{parseProperty "salesSortByOptions" '[
+  { "value": "product,game", "text": "Product", "selected": true },
+  { "value": "sale-price", "text": "Sale Price" },
+  { "value": "discount", "text": "Discount" },
+  { "value": "completion-time", "text": "Completion Time" },
+  { "value": "ta-ratio", "text": "TA Ratio" }
+]'}}
+
+{{parseProperty "salesSortOrderOptions" '[
+  { "value": "asc", "text": "Ascending", "selected": true },
+  { "value": "desc", "text": "Descending" }
+]'}}
+
 {{#includes
   "@ta-x-partials/accordion.hbs"
   title="Sales"
@@ -16,31 +29,24 @@
 
   {{includes
     "@ta-x-partials/select-setting.hbs"
-    render-condition='{ "selector": "#chkNewsImprovementsSalesAutoSortBy", "checked": true }'
     id="selNewsImprovementsSalesAutoSortByValue"
     config-path="newsImprovements.sales.autoSortByValue"
+    render-condition='{"selector":"#chkNewsImprovementsSalesAutoSortBy","checked":true}'
     container-classes="ta-x-hide-padding-top ta-x-hide-border"
     helper-text="This option may not work on some tables. Let me know what you spot!"
-    helper-render-condition='{ "selector": "#selNewsImprovementsSalesAutoSortByValue", "value": "completion-time,ta-ratio" }'
+    helper-render-condition='{"selector":"#selNewsImprovementsSalesAutoSortByValue","value":"completion-time,ta-ratio"}'
     is-array="true"
     array-split=","
-    options='[
-        { "value": "product,game", "text": "Product", "selected": true },
-        { "value": "sale-price", "text": "Sale Price" },
-        { "value": "discount", "text": "Discount" },
-        { "value": "completion-time", "text": "Completion Time" },
-        { "value": "ta-ratio", "text": "TA Ratio" }]'
+    options=salesSortByOptions
   }}
 
   {{includes
     "@ta-x-partials/select-setting.hbs"
-    render-condition='{ "selector": "#chkNewsImprovementsSalesAutoSortBy", "checked": true }'
     id="selNewsImprovementsSalesAutoSortByOrder"
     config-path="newsImprovements.sales.autoSortByOrder"
+    render-condition='{"selector":"#chkNewsImprovementsSalesAutoSortBy","checked":true}'
     container-classes="ta-x-hide-padding-top"
-    options='[
-        { "value": "asc", "text": "Ascendening", "selected": true },
-        { "value": "desc", "text": "Descending" }]'
+    options=salesSortOrderOptions
   }}
 
   {{includes
@@ -48,6 +54,13 @@
     label="Hide Owned Items"
     id="chkNewsImprovementsSalesHideOwnedItems"
     config-path="newsImprovements.sales.hideOwnedItems"
+  }}
+
+  {{includes
+    "@ta-x-partials/checkbox-setting.hbs"
+    label="Hide Unobtainable Items"
+    id="chkNewsImprovementsSalesHideUnobtainableItems"
+    config-path="newsImprovements.sales.hideUnobtainableItems"
   }}
 
   {{includes

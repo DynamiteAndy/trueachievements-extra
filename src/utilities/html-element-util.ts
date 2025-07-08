@@ -2,84 +2,68 @@ export const isSelectElement = (el: HTMLElement): boolean => el.nodeName === 'SE
 export const isCheckboxElement = (el: HTMLElement): boolean =>
   el.nodeName === 'INPUT' && (el as HTMLInputElement).type === 'checkbox';
 
-export const classListContains = (element: HTMLElement, classes: string | string[]): boolean => {
+export const classListContains = (element: HTMLElement | Element | null, classes: string | string[]): boolean => {
   const classArray = Array.isArray(classes) ? classes : [classes];
-  return classArray.some((className: string) => element.classList.contains(className));
+  return classArray.some((className: string) => element?.classList?.contains(className));
 };
 
-export const waitForElement = (
+export const waitForElement = async <T extends Element = HTMLElement>(
   selector: string,
-  element: Document | HTMLElement | Element = document.documentElement,
-  timeoutMS = 10000
-): Promise<HTMLElement> =>
-  new Promise((resolve) => {
-    if (!element) {
-      return resolve(null);
-    }
+  root: Document | Element | null = document.documentElement,
+  timeoutMS = 10_000
+): Promise<T | null> => {
+  if (!root) return null;
 
-    const foundElement = element.querySelector(selector);
-    if (foundElement) {
-      return resolve(foundElement as HTMLElement);
-    }
+  const found = root.querySelector<T>(selector);
+  if (found) return found;
 
-    let observer: MutationObserver;
-
+  return new Promise<T | null>((resolve) => {
     const timeout = setTimeout(() => {
       observer.disconnect();
       resolve(null);
     }, timeoutMS);
 
-    observer = new MutationObserver(() => {
-      const foundElement = element.querySelector(selector);
-      if (foundElement) {
+    const observer = new MutationObserver(() => {
+      const el = root.querySelector<T>(selector);
+      if (el) {
         observer.disconnect();
         clearTimeout(timeout);
-        resolve(foundElement as HTMLElement);
+        resolve(el);
       }
     });
 
-    observer.observe(element, {
-      childList: true,
-      subtree: true
-    });
+    observer.observe(root, { childList: true, subtree: true });
   });
+};
 
-export const waitForElements = (
+export const waitForElements = async <T extends Element = HTMLElement>(
   selector: string,
-  element: Document | HTMLElement | Element = document.documentElement,
-  timeoutMS = 10000
-): Promise<HTMLElement[]> =>
-  new Promise((resolve) => {
-    if (!element) {
-      return resolve(null);
-    }
+  root: Document | Element | null = document.documentElement,
+  timeoutMS = 10_000
+): Promise<T[]> => {
+  if (!root) return [];
 
-    const elements = element.querySelectorAll(selector);
-    if (elements.length > 0) {
-      return resolve(Array.from(elements) as HTMLElement[]);
-    }
+  const found = [...root.querySelectorAll<T>(selector)];
+  if (found.length) return found;
 
-    let observer: MutationObserver;
-
+  return new Promise<T[]>((resolve) => {
     const timeout = setTimeout(() => {
       observer.disconnect();
-      resolve(null);
+      resolve([]);
     }, timeoutMS);
 
-    observer = new MutationObserver(() => {
-      const elements = element.querySelectorAll(selector);
-      if (elements.length > 0) {
+    const observer = new MutationObserver(() => {
+      const found = [...root.querySelectorAll<T>(selector)];
+      if (found.length) {
         observer.disconnect();
         clearTimeout(timeout);
-        resolve(Array.from(elements) as HTMLElement[]);
+        resolve(found);
       }
     });
 
-    observer.observe(element, {
-      childList: true,
-      subtree: true
-    });
+    observer.observe(root, { childList: true, subtree: true });
   });
+};
 
 export const getElementCoordinates = (element: HTMLElement): { top: number; left: number } => {
   const box = element.getBoundingClientRect();
@@ -96,12 +80,12 @@ export const getElementCoordinates = (element: HTMLElement): { top: number; left
 };
 
 export const removeAllChildren = (element: HTMLElement): void => {
-  while (element.firstChild) {
+  while (element.lastChild) {
     element.removeChild(element.lastChild);
   }
 };
 
-export const waitForImages = (el: HTMLElement): Promise<void> =>
+export const waitForImages = (el: HTMLElement | Element): Promise<void> =>
   new Promise((resolve) => {
     const allImgs: { src: string; element: HTMLImageElement }[] = [];
     const filtered = ([...el.querySelectorAll('img')] as HTMLImageElement[]).filter((imgEl: HTMLImageElement) => {
@@ -145,7 +129,7 @@ export const waitForImages = (el: HTMLElement): Promise<void> =>
     });
   });
 
-export const extractText = (element: HTMLElement): string[] =>
+export const extractText = (element: HTMLElement | Element): string[] =>
   [...element.childNodes]
     .filter((child) => (child.nodeType === 3 || child.nodeName === 'STRONG') && child.parentNode === element)
     .filter((child) => child.textContent.trim())
@@ -154,7 +138,7 @@ export const extractText = (element: HTMLElement): string[] =>
 // TA-X Elements
 
 export const isTAXListElement = (el: HTMLElement): boolean => {
-  if (el.nodeName !== 'DIV' || !el.classList.contains('.frm-lst')) {
+  if (el.nodeName !== 'DIV' || !el.classList.contains('frm-lst')) {
     return false;
   }
 

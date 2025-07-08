@@ -26,7 +26,8 @@
         ]
       }
     ],
-    "eslint/curly": "error"
+    "eslint/curly": "error",
+    "eslint/no-eval": "off"
   },
   "overrides": [
     {

@@ -6,15 +6,18 @@
 - Updated the settings menu to be tabbed instead of dropdowns,
 - Added the ability to expand and collapse dlc groups,
 - Added the ability to hide games on sale if owned,
+- Added the ability to hide games on sale if it has unobtainables,
 - Added the ability to expand and collapse sale groups,
 - Fixed a little annoyance that the gamer menu would be left aligned when screen resolution was less than or equal to 1199px,
 - Compress tinymce improvements to reduce package size,
 - Compress the styles to reduce package size,
 - Behind the scenes, moved from Jest to Vitest,
+- Behind the scenes, moved from JSDom to Happy Dom,
 - Behind the scenes, moved from Webpack to Rspack,
 - Behind the scenes, moved from eslint to oxlint,
+- Behind the scenes, moved from prettier to oxfmt,
 - Behind the scenes, updated dependencies and removed some unused dependencies,
-- Behind the scenes, updated to latest node,
+- Behind the scenes, updated to latest node.
 
 ## 3.1.2
 - Speed up execution speed of Emojis, Observed the test took up to 20 seconds to execute!,

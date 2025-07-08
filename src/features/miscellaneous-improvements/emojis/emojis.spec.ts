@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { setHtml } from '@ta-x-test';
 import { miscellaneousImprovements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';

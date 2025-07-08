@@ -1,8 +1,8 @@
-import { LoaderContext } from '@rspack/core';
+import type { LoaderContext } from '@rspack/core';
 
-export default async function (this: LoaderContext<unknown>, content: string) {
-  return `
-    const styles = \`${content}\`;
-    export default styles;
-  `;
+export default function sassToStringLoader(
+  this: LoaderContext<unknown>,
+  content: string
+): string {
+  return `export default ${JSON.stringify(content)};`;
 }

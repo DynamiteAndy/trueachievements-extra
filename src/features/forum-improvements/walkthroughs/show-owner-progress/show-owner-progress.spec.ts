@@ -1,10 +1,11 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { getPath } from '@ta-x-build-helpers';
-import { setHtml, createInnerTextSpies } from '@ta-x-test';
+import { setHtml } from '@ta-x-test';
 import { Cache, Constants, ForumRegex, forumImprovements as config } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
-import showOwnerProgress from './show-owner-progress';
+import styles from './styles';
+import showOwnerProgress from '.';
 
 vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
 vi.mock('@ta-x-helpers', async () => await vi.importActual('@ta-x-helpers'));
@@ -58,7 +59,6 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
   test('should not run if page title heading is not walkthroughs', async () => {
     const titleElement = createTitleElement('Not the right title');
 
-    createInnerTextSpies();
     vi.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);
     vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(titleElement);
@@ -77,7 +77,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
       '@ta-x-test-views/forum-improvements/walkthroughs/show-owner-progress/walkthrough-not-published-no-link-first-message.html',
       { url: 'https://www.trueachievements.com/forum/viewthread.aspx?tid=1028321' }
     );
-    createInnerTextSpies();
+
     vi.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);
     vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(titleElement);
@@ -96,7 +96,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
       '@ta-x-test-views/forum-improvements/walkthroughs/show-owner-progress/walkthrough-not-published-no-link-first-message.html',
       { url: 'https://www.trueachievements.com/forum/viewthread.aspx?tid=1028321' }
     );
-    createInnerTextSpies();
+
     vi.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);
     vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(titleElement);
@@ -104,11 +104,11 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     await showOwnerProgress();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`
+      `.${styles.jsShowOwnerProgress}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
-    expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
+    expect(extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`)).not.toBe(null);
   });
 
   test.each([
@@ -126,7 +126,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     const titleElement = createTitleElement('Walkthroughs');
 
     await setHtml(view, { url });
-    createInnerTextSpies();
+
     vi.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);
     vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(titleElement);
@@ -136,28 +136,27 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     await showOwnerProgress();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`
+      `.${styles.jsShowOwnerProgress}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
-    expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
+    expect(extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`)).not.toBe(null);
     expect(memoizeFetchSpy).not.toHaveBeenCalled();
 
-    const input = document.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
+    const input = document.querySelector(`.${styles.jsAskLoaderInput}`) as HTMLInputElement;
     input.value = inputValue;
-    input.dispatchEvent(new window.Event('input', { bubbles: true, cancelable: false }));
+    input.dispatchEvent(new Event('input', { bubbles: true, cancelable: false }));
 
-    const button = document.querySelector(`.${Constants.Styles.Components.AskLoader.buttonJs}`);
+    const button = document.querySelector(`.${styles.jsAskLoaderAskButton}`);
     button.dispatchEvent(
-      new window.MouseEvent('click', {
-        view: window,
+      new MouseEvent('click', {
         bubbles: true,
         cancelable: true
       })
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
-    expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
+    expect(extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`)).not.toBe(null);
     expect(memoizeFetchSpy).not.toHaveBeenCalled();
 
     memoizeFetchSpy.mockRestore();
@@ -183,7 +182,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     const titleElement = createTitleElement('Walkthroughs');
 
     await setHtml(view, { url });
-    createInnerTextSpies();
+
     vi.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);
     vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(titleElement);
@@ -194,21 +193,20 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     await showOwnerProgress();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`
+      `.${styles.jsShowOwnerProgress}`
     );
 
     expect(extensionBody.classList.contains(Constants.Styles.Base.hide)).toBe(false);
-    expect(extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`)).not.toBe(null);
+    expect(extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`)).not.toBe(null);
     expect(memoizeFetchSpy).not.toHaveBeenCalled();
 
-    const input = document.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
+    const input = document.querySelector(`.${styles.jsAskLoaderInput}`) as HTMLInputElement;
     input.value = inputValue;
-    input.dispatchEvent(new window.Event('input', { bubbles: true, cancelable: false }));
+    input.dispatchEvent(new Event('input', { bubbles: true, cancelable: false }));
 
-    const button = document.querySelector(`.${Constants.Styles.Components.AskLoader.buttonJs}`);
+    const button = document.querySelector(`.${styles.jsAskLoaderAskButton}`);
     button.dispatchEvent(
-      new window.MouseEvent('click', {
-        view: window,
+      new MouseEvent('click', {
         bubbles: true,
         cancelable: true
       })
@@ -243,7 +241,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     const titleElement = createTitleElement('Walkthroughs');
 
     await setHtml(view, { url });
-    createInnerTextSpies();
+
     vi.spyOn(config.walkthroughs, 'showOwnerProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValueOnce(true);
     vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(titleElement);
@@ -254,7 +252,7 @@ describe('forum-improvements/walkthroughs/show-owner-progress', () => {
     await showOwnerProgress();
 
     const extensionBody = document.querySelector(
-      `.${Constants.Styles.ForumImprovements.Walkthroughs.showOwnerProgressJs}`
+      `.${styles.jsShowOwnerProgress}`
     );
 
     expect(memoizeFetchSpy).toHaveBeenCalled();

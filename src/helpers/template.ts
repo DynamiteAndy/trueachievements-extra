@@ -1,4 +1,4 @@
-import { TemplateOptions } from '@ta-x-types';
+import type { TemplateOptions } from '@ta-x-types';
 
 const wrapper = document.createElement('template');
 

@@ -1,6 +1,6 @@
 import { until } from '@ta-x-helpers';
 import { waitForElement } from '@ta-x-utilities';
-import styles from './styles'
+import styles from './styles';
 import attributes from './attributes';
 
 const getAccordionContent = async (target: HTMLElement): Promise<HTMLElement> => {
@@ -14,7 +14,7 @@ const getAccordionContent = async (target: HTMLElement): Promise<HTMLElement> =>
   }
     
   return content;
-}
+};
 
 export const accordion = async (): Promise<void> => {
   document.addEventListener('click', async ({ target }): Promise<void> => {
@@ -61,10 +61,10 @@ export const accordion = async (): Promise<void> => {
 
   observer.observe(document.body, {
     attributes: true,
-    attributeFilter : ['class'],
+    attributeFilter: ['class'],
     childList: true,
     subtree: true
   });
 };
 
-export default accordion
+export default accordion;

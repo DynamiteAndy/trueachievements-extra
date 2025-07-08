@@ -1,7 +1,9 @@
 import { waitForElement } from '@ta-x-utilities';
-import { ImportableGuideOptions } from '@ta-x-types';
-import { AchievementsRegex, Constants, Cache } from '@ta-x-globals';
+import type { ImportableGuideOptions } from '@ta-x-types';
+import { AchievementsRegex, Cache } from '@ta-x-globals';
 import { pubSub } from '@ta-x-components';
+import styles from './styles';
+import attributes from './attributes';
 
 export class ImportableGuide {
   private extensionEnabled: boolean;
@@ -36,7 +38,7 @@ export class ImportableGuide {
     const asideColumn = await waitForElement('.main aside');
 
     this.extensionBody = asideColumn.querySelector(this.extensionSelector);
-    this.askForLinkBody = this.extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`);
+    this.askForLinkBody = this.extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`);
 
     if (this.extensionEnabled) {
       await this.getAchievementWalkthroughUrl();
@@ -46,9 +48,9 @@ export class ImportableGuide {
   };
 
   public listen = (): void => {
-    const button = this.extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.buttonJs}`);
+    const button = this.extensionBody.querySelector(`.${styles.jsAskLoaderAskButton}`);
     const input = this.extensionBody.querySelector(
-      `.${Constants.Styles.Components.AskLoader.inputJs}`
+      `.${styles.jsAskLoaderInput}`
     ) as HTMLInputElement;
 
     button.addEventListener('click', async (e: Event) => {
@@ -121,14 +123,14 @@ export class ImportableGuide {
     this.askForLinkBody.classList.toggle('ta-x-hide');
 
     if (!this.askForLinkBody.classList.contains('ta-x-hide')) {
-      this.extensionBody.setAttribute('data-ta-x-loaded', 'true');
+      this.extensionBody.setAttribute(attributes.askContentLoaded, 'true');
     } else {
-      this.extensionBody.removeAttribute('data-ta-x-loaded');
+      this.extensionBody.removeAttribute(attributes.askContentLoaded);
     }
   };
 
   private hideBody = (): void => {
-    this.extensionBody.setAttribute('data-ta-x-loaded', 'true');
+    this.extensionBody.setAttribute(attributes.askContentLoaded, 'true');
     this.extensionBody.classList.add('ta-x-hide');
 
     pubSub.publish('tabs:hide', this.extensionBody);

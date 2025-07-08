@@ -1,25 +1,44 @@
 import Handlebars from 'handlebars';
+import { isHandlebarsOptions } from '../helpers/handlebars.ts';
 
-export const conditional = (): void =>
-  Handlebars.registerHelper('conditional', (obj: unknown) => {
-    const out = [];
+export const conditional = (): void => {
+  Handlebars.registerHelper(
+    'conditional',
+    (objOrOptions?: unknown, optionsParam?: Handlebars.HelperOptions) => {
+      let targetObj: Record<string, unknown> = {};
 
-    if (typeof obj === 'object' && obj !== null) {
-      for (const prop in obj) {
-        const value = obj[prop];
+      if (isHandlebarsOptions(objOrOptions)) {
+        targetObj = objOrOptions.hash ?? {};
+      } else if (typeof objOrOptions === 'object' && objOrOptions !== null) {
+        targetObj = { ...(objOrOptions as Record<string, unknown>) };
 
-        if (value === false || value === null || value === undefined) {
-          continue;
+        if (optionsParam?.hash) {
+          Object.assign(targetObj, optionsParam.hash);
         }
-
-        out.push(prop);
       }
+
+      const out: string[] = [];
+
+      for (const [prop, value] of Object.entries(targetObj)) {
+        if (value !== false && value !== null && value !== undefined && value !== '') {
+          out.push(prop);
+        }
+      }
+
+      return out.join(' ');
     }
+  );
+};
 
-    return out.join(' ');
-  });
+export const ternary = (): void => {
+  Handlebars.registerHelper(
+    'ternary',
+    (cond: unknown, truthy: unknown, falseyOrOptions?: unknown) => {
+      const falsey = isHandlebarsOptions(falseyOrOptions) ? '' : falseyOrOptions;
 
-export const ternary = (): void =>
-  Handlebars.registerHelper('ternary', (cond: unknown, truthy: unknown, falsey: unknown) => (cond ? truthy : falsey));
+      return cond ? truthy : (falsey ?? '');
+    }
+  );
+};
 
 export default { conditional, ternary };

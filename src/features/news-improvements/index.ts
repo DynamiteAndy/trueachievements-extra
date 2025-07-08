@@ -1,6 +1,7 @@
 import { waitForElement, allConcurrently } from '@ta-x-utilities';
-import { Constants, NewsRegex } from '@ta-x-globals';
+import { NewsRegex } from '@ta-x-globals';
 import sales from './sales';
+import styles from './styles';
 
 export default async (): Promise<void> => {
   if (!NewsRegex.Test.newsUrl()) {
@@ -11,10 +12,7 @@ export default async (): Promise<void> => {
     return;
   }
 
-  document.body.classList.add(
-    Constants.Styles.NewsImprovements.featureJs,
-    Constants.Styles.NewsImprovements.featureStyle
-  );
+  document.body.classList.add(styles.jsNewsImprovements, styles.newsImprovements);
 
   allConcurrently('News Improvements', [{ name: 'news-improvements-sales', task: sales }]);
 };

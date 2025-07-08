@@ -1,70 +1,68 @@
-<section
-  class="js-ta-x-game-achievements-import-guides js-ta-x-tabs ta-x-game-achievements-import-guides"
->
-  <ul class="tabs-nav ta-x-tabs-link-container js-ta-x-tabs-link-container">
-    <li
-      class="js-ta-x-tabs-link ta-x-tabs-selected ta-x-tabs-link"
-      data-tab-id="#ta-x-tabs-xbox-achievements"
-      data-border-top=""
-    >
-      Xbox Achievements
-    </li>
-    <li
-      class="js-ta-x-tabs-link ta-x-tabs-link"
-      data-tab-id="#ta-x-tabs-playstation-trophies"
-      data-border-top=""
-    >
-      Playstation Trophies
-    </li>
-    <li
-      class="js-ta-x-tabs-link ta-x-tabs-link"
-      data-tab-id="#ta-x-tabs-gamertag-nation"
-      data-border-top=""
-    >
-      Gamertag Nation
-    </li>
+{{parseProperty "importTabs" '[
+  {
+    "id": "xbox-achievements",
+    "label": "Xbox Achievements",
+    "selected": true,
+    "sectionTitle": "Xbox Achievement Guides",
+    "sectionClasses": "js-ta-x-game-achievements-xbox-achievement-guides ta-x-game-achievements-xbox-achievement-guides",
+    "askInfo": "Please enter a direct link to this game from <a href=\"https://www.xboxachievements.com/\" target=\"_blank\" rel=\"noopener noreferrer\">XboxAchievements.com</a>, I\'ll remember it next time!",
+    "askLabel": "XboxAchievements Url",
+    "labelId": "txtGameAchievementsXboxAchievementGuides",
+    "inputId": "btnGameAchievementsXboxAchievementGuidesSave"
+  },
+  {
+    "id": "playstation-trophies",
+    "label": "Playstation Trophies",
+    "sectionTitle": "Playstation Trophy Guides",
+    "sectionClasses": "js-ta-x-game-achievements-playstation-trophy-guides ta-x-game-achievements-playstation-trophy-guides",
+    "askInfo": "Please enter a direct link to this game from <a href=\"https://www.playstationtrophies.org/\" target=\"_blank\" rel=\"noopener noreferrer\">PlaystationTrophies.org</a>, I\'ll remember it next time!",
+    "askLabel": "PlaystationTrophies Url",
+    "labelId": "txtGameAchievementsPlaystationTrophyGuides",
+    "inputId": "btnGameAchievementsPlaystationTrophyGuidesSave"
+  },
+  {
+    "id": "gamertag-nation",
+    "label": "Gamertag Nation",
+    "sectionTitle": "Gamertag Nation Guides",
+    "sectionClasses": "js-ta-x-game-achievements-gamertag-nation-guides ta-x-game-achievements-gamertag-nation-guides",
+    "askInfo": "Please enter a direct link to this game from <a href=\"https://www.gamertagnation.com/\" target=\"_blank\" rel=\"noopener noreferrer\">GamertagNation.com</a>, I\'ll remember it next time!",
+    "askLabel": "GamertagNation Url",
+    "labelId": "txtGameAchievementsGamertagNationGuides",
+    "inputId": "btnGameAchievementsGamertagNationGuidesSave"
+  }
+]'}}
+
+<section class="js-ta-x-game-achievements-import-guides js-ta-x-tabs ta-x-game-achievements-import-guides">
+  <ul class="tabs-nav ta-x-tabs-link-container js-ta-x-tabs-link-container" role="tablist">
+    {{#each importTabs}}
+      <li
+        class="js-ta-x-tabs-link ta-x-tabs-link {{conditional ta-x-tabs-selected=this.selected}}"
+        data-tab-id="#ta-x-tabs-{{this.id}}"
+        data-border-top
+        role="tab"
+        aria-selected="{{ternary this.selected 'true' 'false'}}"
+      >
+        {{this.label}}
+      </li>
+    {{/each}}
   </ul>
-  <div
-    id="ta-x-tabs-xbox-achievements"
-    class="js-ta-x-tabs-content ta-x-tabs-content"
-    data-tab-visible=""
-  >
-    {{includes
-      "@ta-x-partials/ask-loader-section.hbs"
-      section-classes="js-ta-x-game-achievements-xbox-achievement-guides ta-x-game-achievements-xbox-achievement-guides"
-      section-title="Xbox Achievement Guides"
-      ask-information="Please enter a direct link to this game from <a href='https://www.xboxachievements.com/' target='_blank'>XboxAchievements.com</a>, I'll remember it next time!"
-      ask-label="XboxAchievements Url"
-      label-id="txtGameAchievementsXboxAchievementGuides"
-      input-id="btnGameAchievementsXboxAchievementGuidesSave"
-    }}
-  </div>
-  <div
-    id="ta-x-tabs-playstation-trophies"
-    class="js-ta-x-tabs-content ta-x-tabs-content"
-  >
-    {{includes
-      "@ta-x-partials/ask-loader-section.hbs"
-      section-classes="js-ta-x-game-achievements-playstation-trophy-guides ta-x-game-achievements-playstation-trophy-guides"
-      section-title="Playstation Trophy Guides"
-      ask-information="Please enter a direct link to this game from <a href='https://www.playstationtrophies.org/' target='_blank'>PlaystationTrophies.org</a>, I'll remember it next time!"
-      ask-label="PlaystationTrophies Url"
-      label-id="txtGameAchievementsPlaystationTrophyGuides"
-      input-id="btnGameAchievementsPlaystationTrophyGuidesSave"
-    }}
-  </div>
-  <div
-    id="ta-x-tabs-gamertag-nation"
-    class="js-ta-x-tabs-content ta-x-tabs-content"
-  >
-    {{includes
-      "@ta-x-partials/ask-loader-section.hbs"
-      section-classes="js-ta-x-game-achievements-gamertag-nation-guides ta-x-game-achievements-gamertag-nation-guides"
-      section-title="Gamertag Nation Guides"
-      ask-information="Please enter a direct link to this game from <a href='https://www.gamertagnation.com/' target='_blank'>GamertagNation.com</a>, I'll remember it next time!"
-      ask-label="GamertagNation Url"
-      label-id="txtGameAchievementsGamertagNationGuides"
-      input-id="btnGameAchievementsGamertagNationGuidesSave"
-    }}
-  </div>
+
+  {{#each importTabs}}
+    <div
+      id="ta-x-tabs-{{this.id}}"
+      class="js-ta-x-tabs-content ta-x-tabs-content"
+      {{#if this.selected}}data-tab-visible{{/if}}
+      role="tabpanel"
+    >
+      {{includes
+        "@ta-x-partials/ask-loader-section.hbs"
+        section-title=this.sectionTitle
+        section-classes=this.sectionClasses
+        ask-information=this.askInfo
+        ask-label=this.askLabel
+        label-id=this.labelId
+        input-id=this.inputId
+      }}
+    </div>
+  {{/each}}
 </section>

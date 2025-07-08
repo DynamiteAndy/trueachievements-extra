@@ -21,15 +21,15 @@ class ToggleThemeScript extends TinyMCEScript {
 
     if (editWalkthrough.tinymceTheme !== null) {
       return editWalkthrough.tinymceTheme;
-    } else {
-      return this.globalTheme ? this.globalTheme.getAttribute('data-theme') : '';
     }
+    
+    return this.globalTheme ? this.globalTheme.getAttribute('data-theme') : '';
   };
 
   private listen = async (): Promise<void> => {
     const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
     const iframeLoadHandler = async () => {
-      const iframeDocument = iframe && iframe.contentDocument;
+      const iframeDocument = iframe?.contentDocument;
 
       const bodyEl = (await waitForElement('#tinymce', iframeDocument)) as HTMLElement;
       bodyEl.classList.add(Constants.Styles.root, Constants.Styles.StaffWalkthroughImprovements.featureStyle);

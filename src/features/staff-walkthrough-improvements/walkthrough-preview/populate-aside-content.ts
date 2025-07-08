@@ -1,5 +1,5 @@
 import { Cache, Constants, StaffRegex, walkthroughPreview } from '@ta-x-globals';
-import { AsideContentPreviewAchievement, AsideContentPreviewPage } from '@ta-x-types';
+import type { AsideContentPreviewAchievement, AsideContentPreviewPage } from '@ta-x-types';
 import { waitForElement, extractAllBetween, toInt } from '@ta-x-utilities';
 import { memoizeFetch, template } from '@ta-x-helpers';
 import { pubSub } from '@ta-x-components';

@@ -18,13 +18,15 @@ const setTopPosition = (): void => {
 const listen = async (): Promise<void> => {
   const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
 
-  iframe.addEventListener('load', () => {
+  const iframeLoadHandler = (): void => {
     setTopPosition();
 
     window.addEventListener('scroll', setTopPosition);
     pubSub.subscribe('tinymce:repositionFloatingMenus', setTopPosition);
-    iframe.removeEventListener('load', this);
-  });
+    iframe.removeEventListener('load', iframeLoadHandler);
+  };
+
+  iframe.addEventListener('load', iframeLoadHandler);
 };
 
 export const fixFloatingMenus = async (container: HTMLElement): Promise<void> => {

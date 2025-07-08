@@ -1,34 +1,45 @@
-import { join } from 'path';
-import { compilerOptions } from '../../tsconfig.json';
+import { join, resolve } from 'node:path';
+import tsconfig from '../../tsconfig.json' with { type: 'json' };
 
-const ASTERISK = /\*/g;
-const LEADING_DOT_SLASH = /^\.\//;
-const ENDING_SLASH = /\/$/;
-const { baseUrl, paths } = compilerOptions;
-let aliases = null;
+const paths = (tsconfig.compilerOptions.paths ?? {});
 
-export default (aliasPath: string, parentPartialDirectory?: string): string => {
-  const filePath = aliasPath.split('/');
-  const alias = filePath.shift();
+const buildAliases = (): Map<string, string> => {
+  const aliasMap = new Map<string, string>();
 
-  if (aliases === null) {
-    aliases = {};
+  for (const [key, targetPaths] of Object.entries(paths)) {
+    const target = targetPaths?.[0];
+    if (!target) continue;
 
-    for (const key in paths) {
-      const from = key.replace(ASTERISK, '').replace(ENDING_SLASH, '');
+    const cleanKey = key.replace(/\/\*?$/, '').replace(/\*$/, '');
 
-      const to = join(
-        process.cwd(),
-        baseUrl,
-        paths[key][0]
-          .replace(LEADING_DOT_SLASH, '')
-          .replace(ASTERISK, '')
-          .replace(/index$/, '')
-      );
+    const cleanTarget = target
+      .replace(/^\.\//, '')
+      .replace(/\/\*?$/, '')
+      .replace(/\*$/, '')
+      .replace(/\/index$/, '');
 
-      aliases[from] = to;
+    aliasMap.set(cleanKey, resolve(process.cwd(), cleanTarget));
+  }
+
+  return aliasMap;
+};
+
+const aliases = buildAliases();
+
+export default function (
+  aliasPath: string,
+  parentPartialDirectory?: string
+): string {
+  for (const [alias, targetDir] of aliases) {
+    if (aliasPath === alias) {
+      return targetDir;
+    }
+
+    if (aliasPath.startsWith(`${alias}/`)) {
+      const subPath = aliasPath.slice(alias.length + 1);
+      return join(targetDir, subPath);
     }
   }
 
-  return aliases[alias] ? join(aliases[alias], filePath.join('/')) : join(parentPartialDirectory || '', aliasPath);
-};
+  return join(parentPartialDirectory ?? '', aliasPath);
+}

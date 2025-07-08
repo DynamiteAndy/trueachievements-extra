@@ -3,7 +3,7 @@ import { miscellaneousImprovements as config } from '@ta-x-globals';
 import * as taxHelpers from '@ta-x-helpers';
 import giveawayAutoOptIn from '.';
 import { getPath } from '@ta-x-build-helpers';
-import fs from 'fs';
+import fs from 'node:fs';
 
 vi.mock('@ta-x-helpers', async () => await vi.importActual('@ta-x-helpers'));
 
@@ -65,6 +65,29 @@ describe('giveaway-auto-opt-in', () => {
 
     expect(fetchSpy).toHaveBeenCalled();
 
+    fetchSpy.mockRestore();
+  });
+
+  test('should opt in using the live page when already on the win-xbox-games page', async () => {
+    vi.spyOn(config, 'giveawayAutoOptIn', 'get').mockReturnValueOnce(true);
+
+    await setHtml('@ta-x-test-views/miscellaneous-improvements/giveaway-auto-opt-in/active-competition.html', {
+      url: '/win-xbox-games'
+    });
+
+    const memoizeFetchSpy = vi.spyOn(taxHelpers, 'memoizeFetch');
+
+    const fetchSpy = vi.spyOn(taxHelpers, 'fetch');
+    fetchSpy.mockResolvedValueOnce(new Response(fs.readFileSync(getPath('@ta-x-test-views/miscellaneous-improvements/giveaway-auto-opt-in/entered-competition.html'), 'utf8'), { status: 200 }));
+
+    await giveawayAutoOptIn();
+
+    // The active competition is already on the current page, so no fetch of /win-xbox-games
+    // should be needed to discover it.
+    expect(memoizeFetchSpy).not.toHaveBeenCalled();
+    expect(fetchSpy).toHaveBeenCalled();
+
+    memoizeFetchSpy.mockRestore();
     fetchSpy.mockRestore();
   });
 });

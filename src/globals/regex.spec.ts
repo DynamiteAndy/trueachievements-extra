@@ -108,7 +108,7 @@ describe('GamesRegex', () => {
     });
   });
 
-  describe('forum', () => {
+  describe('gameForumUrl', () => {
     test.concurrent.each([
       { input: 'https://www.trueachievements.com/game/Gears-of-War-4/forum', expected: true },
       { input: 'https://www.trueachievements.com/game/Gears-of-War-4/forum?type=all', expected: true },
@@ -117,6 +117,17 @@ describe('GamesRegex', () => {
       { input: 'https://www.trueachievements.com/game/Gears-of-War-3/dlc/Horde-Command-Pack', expected: false }
     ])('should test regex $input - $expected', ({ input, expected }) => {
       expect(GamesRegex.Test.forum(input)).toEqual(expected);
+    });
+  });
+
+  describe('walkthroughUrl', () => {
+    test.concurrent.each([
+      { input: 'https://www.trueachievements.com/game/Truberbrook/walkthrough', expected: true },
+      { input: 'https://www.trueachievements.com/game/Truberbrook/walkthrough/1', expected: true },
+      { input: 'https://www.trueachievements.com/game/Truberbrook/walkthrough/2', expected: true },
+      { input: 'https://www.trueachievements.com/game/Truberbrook/walkthrough/3', expected: true }
+    ])('should test regex $input - $expected', ({ input, expected }) => {
+      expect(GamesRegex.Test.walkthroughUrl(input)).toEqual(expected);
     });
   });
 });

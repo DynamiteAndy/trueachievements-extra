@@ -58,11 +58,13 @@ const listen = (): void => {
 export const appendColorPicker = async (): Promise<void> => {
   const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
 
-  iframe.addEventListener('load', async () => {
+  const iframeLoadHandler = (): void => {
     listen();
 
-    iframe.removeEventListener('load', this);
-  });
+    iframe.removeEventListener('load', iframeLoadHandler);
+  };
+
+  iframe.addEventListener('load', iframeLoadHandler);
 };
 
 export default { appendColorPicker };

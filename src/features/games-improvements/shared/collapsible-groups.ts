@@ -1,10 +1,11 @@
 import { allConcurrently, waitForElement } from '@ta-x-utilities';
-import { Constants } from '@ta-x-globals';
 import html from './collapsible-groups.hbs';
+import styles from './styles';
+import attributes from './attributes';
 
 const applyBody = (header: HTMLElement, index: number): void => {
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-  parsedDocument.body.firstElementChild.setAttribute('data-accordion-target', `.js-ta-x-game-achievements-collapsible-groups-group-${index}`);
+  parsedDocument.body.firstElementChild.setAttribute(attributes.accordionTarget, `.${styles.jsCollapsibleGroupsGroup}-${index}`);
   
   const options = header.querySelector('.options') as HTMLElement;
   options.prepend(parsedDocument.body.firstElementChild);
@@ -38,7 +39,7 @@ export const applyCollapsibleGroups = async () => {
   }
 
   const body = document.querySelector('main')
-  body.classList.add(Constants.Styles.GamesImprovements.Achievements.collapsibleGroupsStyle);
+  body.classList.add(styles.collapsibleGroups);
 
   const headers = [getBaseAchievementGroup(body), ...getDLCAchievementGroups(body)].filter((el: HTMLElement) => el !== null);
 
@@ -50,14 +51,14 @@ export const applyCollapsibleGroups = async () => {
         applyBody(achievementGroup, index);
 
         const accordionContent = document.createElement('div');
-        accordionContent.className = `ta-x-accordion-content js-ta-x-game-achievements-collapsible-groups-group-${index}`;
+        accordionContent.className = `${styles.accordionContent} ${styles.jsCollapsibleGroupsGroup}-${index}`;
 
         let currentElement = achievementGroup.nextElementSibling;
         achievementGroup.parentNode.insertBefore(accordionContent, currentElement);
 
         while (
           currentElement &&
-          !currentElement.matches('.pnl-hd.dlc, .ta-x-accordion-content') &&
+          !currentElement.matches(`.pnl-hd.dlc, .${styles.accordionContent}`) &&
           currentElement.tagName !== 'SECTION'
         ) {
           const nextElement = currentElement.nextElementSibling as HTMLElement;

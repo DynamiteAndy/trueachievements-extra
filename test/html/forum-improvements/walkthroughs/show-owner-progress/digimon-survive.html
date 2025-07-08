@@ -422,7 +422,7 @@
             <div class="ct-chart-comptimes ct-major-third">
               <div class="chartist-tooltip" style="display: none"></div>
               <svg
-                xmlns:ct="http://gionkunz.github.com/chartist-js/ct"
+                xmlns="http://www.w3.org/2000/xmlns/"
                 width="100%"
                 height="100%"
                 class="ct-chart-bar"
@@ -472,103 +472,79 @@
                     class="ct-grid ct-vertical"></line>
                 </g>
                 <g>
-                  <g ct:series-name="series-5" class="ct-series ct-blue">
+                  <g class="ct-series ct-blue">
                     <line
                       x1="44.583333333333336"
                       x2="44.583333333333336"
                       y1="204"
                       y2="191.4"
-                      class="ct-bar"
-                      ct:value="1"
-                      ct:meta="15-20 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="63.75000000000001"
                       x2="63.75000000000001"
                       y1="204"
                       y2="204"
-                      class="ct-bar"
-                      ct:value="0"
-                      ct:meta="20-25 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="82.91666666666667"
                       x2="82.91666666666667"
                       y1="204"
                       y2="191.4"
-                      class="ct-bar"
-                      ct:value="1"
-                      ct:meta="25-30 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="102.08333333333333"
                       x2="102.08333333333333"
                       y1="204"
                       y2="153.6"
-                      class="ct-bar"
-                      ct:value="4"
-                      ct:meta="30-35 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="121.25"
                       x2="121.25"
                       y1="204"
                       y2="204"
-                      class="ct-bar"
-                      ct:value="0"
-                      ct:meta="35-40 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="140.41666666666669"
                       x2="140.41666666666669"
                       y1="204"
                       y2="153.6"
-                      class="ct-bar"
-                      ct:value="4"
-                      ct:meta="40-50 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="159.58333333333334"
                       x2="159.58333333333334"
                       y1="204"
                       y2="153.6"
-                      class="ct-bar"
-                      ct:value="4"
-                      ct:meta="50-60 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="178.75000000000003"
                       x2="178.75000000000003"
                       y1="204"
                       y2="65.4"
-                      class="ct-bar"
-                      ct:value="11"
-                      ct:meta="60-80 hours                            |Dynamite Andy"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="197.91666666666669"
                       x2="197.91666666666669"
                       y1="204"
                       y2="153.6"
-                      class="ct-bar"
-                      ct:value="4"
-                      ct:meta="80-100 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="217.08333333333334"
                       x2="217.08333333333334"
                       y1="204"
                       y2="178.8"
-                      class="ct-bar"
-                      ct:value="2"
-                      ct:meta="100-120 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="236.25000000000003"
                       x2="236.25000000000003"
                       y1="204"
                       y2="191.4"
-                      class="ct-bar"
-                      ct:value="1"
-                      ct:meta="120-150 hours"></line>
+                      class="ct-bar"></line>
                     <line
                       x1="255.41666666666669"
                       x2="255.41666666666669"
                       y1="204"
                       y2="191.4"
-                      class="ct-bar"
-                      ct:value="1"
-                      ct:meta="150-200 hours"></line>
+                      class="ct-bar"></line>
                   </g>
                 </g>
                 <g class="ct-labels">
@@ -666,88 +642,6 @@
                 </g>
               </svg>
             </div>
-            <script>
-              function GameCompletionChart() {
-                new Chartist.Bar(
-                  '.ct-chart-comptimes',
-                  {
-                    labels: [
-                      '15-20',
-                      '20-25',
-                      '25-30',
-                      '30-35',
-                      '35-40',
-                      '40-50',
-                      '50-60',
-                      '60-80',
-                      '80-100',
-                      '100-120',
-                      '120-150',
-                      '150-200'
-                    ],
-                    series: [
-                      {
-                        name: 'series-5',
-                        className: 'ct-blue',
-                        data: [
-                          { meta: '15-20 hours', value: 1 },
-                          { meta: '20-25 hours', value: 0 },
-                          { meta: '25-30 hours', value: 1 },
-                          { meta: '30-35 hours', value: 4 },
-                          { meta: '35-40 hours', value: 0 },
-                          { meta: '40-50 hours', value: 4 },
-                          { meta: '50-60 hours', value: 4 },
-                          {
-                            meta: '60-80 hours                            |Dynamite Andy',
-                            value: 11
-                          },
-                          { meta: '80-100 hours', value: 4 },
-                          { meta: '100-120 hours', value: 2 },
-                          { meta: '120-150 hours', value: 1 },
-                          { meta: '150-200 hours', value: 1 }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    axisY: {
-                      onlyInteger: true,
-                      labelInterpolationFnc: function (value, index) {
-                        return value >= 1000 ? value / 1000 + 'k' : value;
-                      }
-                    },
-                    axisX: {
-                      labelInterpolationFnc: function (value, index, labels) {
-                        return index % 5 === 0 ? value : null;
-                      }
-                    },
-                    chartPadding: { left: -5, bottom: -10 },
-                    plugins: [
-                      Chartist.plugins.tooltip({
-                        tooltipFnc: function (meta, value) {
-                          var m = meta.split('|');
-                          var ret = '' + value + ' estimates of ' + m[0] + '';
-                          if (m[1]) {
-                            ret += '' + '(including ' + m[1] + ')';
-                          }
-                          return ret;
-                        }
-                      })
-                    ]
-                  }
-                ).on('draw', function (data) {
-                  if (
-                    data.type === 'bar' &&
-                    data.meta === '60-80 hours|Dynamite Andy'
-                  ) {
-                    data.element.attr({ style: 'stroke: #768ca7' });
-                  }
-                });
-              }
-              head.ready(function () {
-                GameCompletionChart();
-              });
-            </script>
             <a
               class="base-button green"
               href="/game/Digimon-Survive/completiontime">

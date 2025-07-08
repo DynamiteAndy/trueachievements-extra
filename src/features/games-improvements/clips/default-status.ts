@@ -1,4 +1,5 @@
 import { Cache, gameClips } from '@ta-x-globals';
+import { dispatchEvent } from '@ta-x-helpers';
 import { allConcurrently, waitForElement } from '@ta-x-utilities';
 
 export const changeToDefaultStatus = async (): Promise<void> => {
@@ -54,7 +55,7 @@ const changeSelectOption = async (selector: string, newValue: string, defaultVal
   }
 
   selectOption.value = newValue;
-  selectOption.onchange(null);
+  dispatchEvent(selectOption, 'change');
 };
 
 export default { changeToDefaultStatus };

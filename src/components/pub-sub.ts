@@ -1,4 +1,4 @@
-import { PubSubType } from '@ta-x-types';
+import type { PubSubType } from '@ta-x-types';
 
 type Events = {
   'ajaxIntercept:request': XMLHttpRequest;
@@ -16,26 +16,22 @@ type Events = {
   'test:unsubscribeEvent': string;
 };
 
-function PubSub<E>(): PubSubType<E> {
-  const handlers: { [key: string]: any[] } = {};
+function PubSub<E extends Record<string, unknown>>(): PubSubType<E> {
+  const handlers: { [K in keyof E]?: Array<(msg: E[K]) => void> } = {};
 
   return {
     publish: (event, msg) => {
-      (handlers[event] ?? []).forEach((h) => h(msg));
+      handlers[event]?.forEach((h) => h(msg));
     },
 
     subscribe: (event, callback) => {
-      const list = handlers[event] ?? [];
-      list.push(callback);
-      handlers[event] = list;
-
+      (handlers[event] ??= []).push(callback);
       return callback;
     },
 
     unsubscribe: (event, callback) => {
-      let list = handlers[event] ?? [];
-      list = list.filter((h) => h !== callback);
-      handlers[event] = list;
+      const list = handlers[event] ?? [];
+      handlers[event] = list.filter((h) => h !== callback);
     }
   };
 }

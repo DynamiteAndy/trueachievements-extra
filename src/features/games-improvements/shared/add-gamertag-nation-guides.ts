@@ -2,14 +2,10 @@ import { Constants, ExternalRegex, gamesImprovements } from '@ta-x-globals';
 import { deleteMemoizedCorsFetch, memoizeCorsFetch, template } from '@ta-x-helpers';
 import { extractText, waitForElement } from '@ta-x-utilities';
 import { ImportableGuide } from '@ta-x-models';
-import { GamertagNationOptions } from '@ta-x-types';
 import templatedAchievementGuideSolution from '@ta-x-views/templates/achievement-guide-solution.html';
+import styles from './styles';
 
 class GamertagNation extends ImportableGuide {
-  public constructor(opts: GamertagNationOptions) {
-    super(opts);
-  }
-
   getAchievementGuide = async (url: string): Promise<void> => {
     const achievementTitle = (
       (await waitForElement('.ach-panel:not([data-secret]) .title')) as HTMLSpanElement
@@ -22,7 +18,9 @@ class GamertagNation extends ImportableGuide {
       guide: ([...el.querySelectorAll('.user-feed-addon')] as HTMLDivElement[]).map((el) => {
         if (el.classList.contains('text-break')) {
           return extractText(el).join('<br>');
-        } else if (el.classList.contains('achievement-list')) {
+        }
+        
+        if (el.classList.contains('achievement-list')) {
           const achievement = el.querySelector('.achievement-list-title') as HTMLAnchorElement;
           achievement.innerHTML = achievement.innerHTML.trim();
           achievement.setAttribute('href', achievement.href);
@@ -84,7 +82,7 @@ class GamertagNation extends ImportableGuide {
 export const addGamertagNationGuides = async (): Promise<void> => {
   const gamertagNation = new GamertagNation({
     extensionEnabled: gamesImprovements.achievements.gameAchievementsShowGamertagNationGuides,
-    extensionSelector: `.${Constants.Styles.GamesImprovements.Achievements.showGamertagNationGuidesJs}`,
+    extensionSelector: `.${styles.jsGamertagNationGuides}`,
     extensionSetting: 'gameAchievementsGamertagNationGuideUrl',
     importableGuideUrlTest: ExternalRegex.Test.gamertagNationGuide,
     guide: {

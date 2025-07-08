@@ -8,6 +8,6 @@ export default async (): Promise<void> => {
   }
 
   allConcurrently('Gamer Improvements', [
-    { name: 'gamer-improvments-add-group-by-game-button', task: addGroupByGameButton }
+    { name: 'gamer-improvements-add-group-by-game-button', task: addGroupByGameButton }
   ]);
 };

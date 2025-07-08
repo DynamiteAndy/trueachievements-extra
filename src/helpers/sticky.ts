@@ -1,5 +1,5 @@
 import { Constants, stickyHeader } from '@ta-x-globals';
-import { StickyElementOptions } from '@ta-x-types';
+import type { StickyElementOptions } from '@ta-x-types';
 import { waitForElement } from '../utilities/html-element-util';
 
 const stickyNavBarEnabled = stickyHeader.enabled;

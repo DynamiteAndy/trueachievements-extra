@@ -4,15 +4,15 @@ import { isValid } from './date-util';
 const today = new Date(new Date().setHours(0, 0, 0, 0));
 const yesterday = new Date(new Date(today).setDate(today.getDate() - 1));
 
-export const toInt = (value: string | boolean | number): number => {
+export const toInt = (value: string | boolean | number): number | null => {
   if (value === null || value === undefined) {
     return null;
   }
 
   if (typeof value === 'string') {
-    const parsedValue = parseInt(value.replace(/,/g, ''), 10);
+    const parsedValue = Number.parseInt(value.replace(/,/g, ''), 10);
 
-    return !isNaN(parsedValue) ? parsedValue : null;
+    return !Number.isNaN(parsedValue) ? parsedValue : null;
   }
 
   if (typeof value === 'boolean') {
@@ -34,7 +34,7 @@ export const toDate = (value: string): Date => {
   return isValid(value) ? new Date(value) : null;
 };
 
-export const toBool = (str: string | boolean | number): boolean => {
+export const toBool = (str: string | boolean | number): boolean | null => {
   if (str === null || str === undefined) {
     return null;
   }

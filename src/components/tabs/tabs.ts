@@ -1,14 +1,13 @@
-import { Constants } from '@ta-x-globals';
-import pubSub from './pub-sub';
+import pubSub from '../pub-sub';
+import attributes from './attributes';
+import styles from './styles';
 
 const getCurrentlySelectedTabAndContent = (
   tabOrContent: HTMLElement
 ): { parent: HTMLElement; tab: HTMLElement; content: HTMLElement } => {
-  const parentTabContainer = tabOrContent.closest(`.${Constants.Styles.Components.Tab.featureJs}`) as HTMLElement;
-  const selectedTab = parentTabContainer.querySelector(
-    `.${Constants.Styles.Components.Tab.tabSelected}`
-  ) as HTMLElement;
-  const selectedContent = parentTabContainer.querySelector('[data-tab-visible]') as HTMLElement;
+  const parentTabContainer = tabOrContent.closest(`.${styles.jsTabs}`) as HTMLElement;
+  const selectedTab = parentTabContainer.querySelector(`.${styles.tabSelected}`) as HTMLElement;
+  const selectedContent = parentTabContainer.querySelector(`[${attributes.visibleTab}]`) as HTMLElement;
 
   return { parent: parentTabContainer, tab: selectedTab, content: selectedContent };
 };
@@ -16,24 +15,24 @@ const getCurrentlySelectedTabAndContent = (
 const getTabAndContent = (
   tabOrContent: HTMLElement
 ): { parent: HTMLElement; tab: HTMLElement; content: HTMLElement; isSelected: boolean } => {
-  const parentTabContainer = tabOrContent.closest(`.${Constants.Styles.Components.Tab.featureJs}`) as HTMLElement;
+  const parentTabContainer = tabOrContent.closest(`.${styles.jsTabs}`) as HTMLElement;
   let tab: HTMLElement;
   let content: HTMLElement;
 
-  if (tabOrContent.classList.contains(Constants.Styles.Components.Tab.tabLink)) {
+  if (tabOrContent.classList.contains(styles.jsTabsLink)) {
     tab = tabOrContent;
-    content = parentTabContainer.querySelector(tab.getAttribute('data-tab-id')) as HTMLElement;
-  } else if (tabOrContent.classList.contains(Constants.Styles.Components.Tab.tabContent)) {
+    content = parentTabContainer.querySelector(tab.getAttribute(attributes.tabId)) as HTMLElement;
+  } else if (tabOrContent.classList.contains(styles.jsTabsContent)) {
     content = tabOrContent;
-    tab = parentTabContainer.querySelector(`[data-tab-id="#${content.getAttribute('id')}"]`) as HTMLElement;
+    tab = parentTabContainer.querySelector(`[${attributes.tabId}="#${content.getAttribute('id')}"]`) as HTMLElement;
   } else {
-    tab = tabOrContent.closest(`.${Constants.Styles.Components.Tab.tabLink}`);
-    content = tabOrContent.closest(`.${Constants.Styles.Components.Tab.tabContent}`);
+    tab = tabOrContent.closest(`.${styles.jsTabsLink}`);
+    content = tabOrContent.closest(`.${styles.jsTabsContent}`);
 
     if (tab) {
-      content = parentTabContainer.querySelector(tab.getAttribute('data-tab-id')) as HTMLElement;
+      content = parentTabContainer.querySelector(tab.getAttribute(attributes.tabId)) as HTMLElement;
     } else {
-      tab = parentTabContainer.querySelector(`[data-tab-id="#${content.getAttribute('id')}"]`) as HTMLElement;
+      tab = parentTabContainer.querySelector(`[${attributes.tabId}="#${content.getAttribute('id')}"]`) as HTMLElement;
     }
   }
 
@@ -41,7 +40,7 @@ const getTabAndContent = (
     parent: parentTabContainer,
     tab: tab,
     content: content,
-    isSelected: tab.classList.contains(Constants.Styles.Components.Tab.tabSelected)
+    isSelected: tab.classList.contains(styles.tabSelected)
   };
 };
 
@@ -56,6 +55,7 @@ const getFallbackTab = (tab: HTMLElement) => {
         if (!checkTab.classList.contains('ta-x-hide')) {
           return checkTab;
         }
+        
         checkTab = checkTab[prop];
       }
     }
@@ -63,7 +63,7 @@ const getFallbackTab = (tab: HTMLElement) => {
 };
 
 const switchTab = (selectedTab: HTMLElement) => {
-  if (selectedTab.classList.contains(Constants.Styles.Components.Tab.tabSelected)) {
+  if (selectedTab.classList.contains(styles.tabSelected)) {
     return;
   }
 
@@ -71,12 +71,12 @@ const switchTab = (selectedTab: HTMLElement) => {
   const nextSelected = getTabAndContent(selectedTab);
 
   if (currentTabAndContent.tab && currentTabAndContent.content) {
-    currentTabAndContent.tab.classList.toggle(Constants.Styles.Components.Tab.tabSelected);
-    currentTabAndContent.content.removeAttribute('data-tab-visible');
+    currentTabAndContent.tab.classList.toggle(styles.tabSelected);
+    currentTabAndContent.content.removeAttribute(attributes.visibleTab);
   }
 
-  nextSelected.tab.classList.toggle(Constants.Styles.Components.Tab.tabSelected);
-  nextSelected.content.setAttribute('data-tab-visible', '');
+  nextSelected.tab.classList.toggle(styles.tabSelected);
+  nextSelected.content.setAttribute(attributes.visibleTab, '');
 };
 
 const hideTab = (tabToHide: HTMLElement) => {
@@ -96,8 +96,8 @@ const hideTab = (tabToHide: HTMLElement) => {
     tabAndContent.content.classList.add('ta-x-hide');
 
     if (tabAndContent.isSelected) {
-      tabAndContent.tab.classList.toggle(Constants.Styles.Components.Tab.tabSelected);
-      tabAndContent.content.removeAttribute('data-tab-visible');
+      tabAndContent.tab.classList.toggle(styles.tabSelected);
+      tabAndContent.content.removeAttribute(attributes.visibleTab);
     }
   }
 };
@@ -131,14 +131,16 @@ const listen = (): void => {
 
   const mouseUpEvent = () => {
     isDown = false;
-    container.classList.remove(Constants.Styles.Components.Tab.tabScroll);
+
+    container.classList.remove(styles.tabScroll);
+
     beginMomentumTracking();
     removeListeners();
   };
 
   const mouseLeaveEvent = () => {
     isDown = false;
-    container.classList.remove(Constants.Styles.Components.Tab.tabScroll);
+    container.classList.remove(styles.tabScroll);
 
     removeListeners();
   };
@@ -147,6 +149,7 @@ const listen = (): void => {
     if (!isDown) {
       return;
     }
+
     e.preventDefault();
 
     const x = e.pageX - container.offsetLeft;
@@ -157,9 +160,7 @@ const listen = (): void => {
     velX = container.scrollLeft - prevScrollLeft;
   };
 
-  const wheelEvent = () => {
-    cancelMomentumTracking();
-  };
+  const wheelEvent = () => cancelMomentumTracking();
 
   const beginMomentumTracking = () => {
     cancelMomentumTracking();
@@ -167,9 +168,7 @@ const listen = (): void => {
     momentumID = requestAnimationFrame(momentumLoop);
   };
 
-  const cancelMomentumTracking = () => {
-    cancelAnimationFrame(momentumID);
-  };
+  const cancelMomentumTracking = () => cancelAnimationFrame(momentumID);
 
   const momentumLoop = () => {
     container.scrollLeft += velX;
@@ -191,14 +190,14 @@ const listen = (): void => {
     if (!(e.target instanceof HTMLElement)) {
       return;
     }
-    container = e.target.closest(`.${Constants.Styles.Components.Tab.tabLinkContainer}`);
 
+    container = e.target.closest(`.${styles.jsTabsLinkContainer}`);
     if (!container) {
       return;
     }
 
     isDown = true;
-    container.classList.add(Constants.Styles.Components.Tab.tabScroll);
+    container.classList.add(styles.tabScroll);
     startX = e.pageX - container.offsetLeft;
     scrollLeft = container.scrollLeft;
     cancelMomentumTracking();
@@ -215,7 +214,8 @@ export const tabs = (): void => {
     if (!(target instanceof HTMLElement)) {
       return;
     }
-    if (!target.classList.contains(Constants.Styles.Components.Tab.tabLink)) {
+
+    if (!target.classList.contains(styles.jsTabsLink)) {
       return;
     }
 

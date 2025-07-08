@@ -93,10 +93,6 @@
                     36%
                   </text>
                 </svg>
-                <script>
-                  document.getElementById('svgPC').style.strokeDashoffset =
-                    128.6796;
-                </script>
               </div>
               <div class="clearboth"></div>
             </div>
@@ -289,94 +285,6 @@
           <div>Completion Estimates</div>
           <article>
             <div class="ct-chart-comptimes ct-major-third"></div>
-            <script>
-              function GameCompletionChart() {
-                new Chartist.Bar(
-                  '.ct-chart-comptimes',
-                  {
-                    labels: [
-                      '8-10',
-                      '10-12',
-                      '12-15',
-                      '15-20',
-                      '20-25',
-                      '25-30',
-                      '30-35',
-                      '35-40',
-                      '40-50',
-                      '50-60',
-                      '60-80',
-                      '80-100',
-                      '100-120',
-                      '120-150',
-                      '150-200'
-                    ],
-                    series: [
-                      {
-                        name: 'series-5',
-                        className: 'ct-blue',
-                        data: [
-                          { meta: '8-10 hours', value: 1 },
-                          { meta: '10-12 hours', value: 4 },
-                          { meta: '12-15 hours', value: 2 },
-                          { meta: '15-20 hours', value: 5 },
-                          { meta: '20-25 hours', value: 14 },
-                          { meta: '25-30 hours', value: 21 },
-                          { meta: '30-35 hours', value: 23 },
-                          { meta: '35-40 hours', value: 48 },
-                          { meta: '40-50 hours', value: 72 },
-                          {
-                            meta: '50-60 hours                            |Dynamite Andy',
-                            value: 45
-                          },
-                          { meta: '60-80 hours', value: 45 },
-                          { meta: '80-100 hours', value: 22 },
-                          { meta: '100-120 hours', value: 11 },
-                          { meta: '120-150 hours', value: 6 },
-                          { meta: '150-200 hours', value: 4 }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    axisY: {
-                      onlyInteger: true,
-                      labelInterpolationFnc: function (value, index) {
-                        return value >= 1000 ? value / 1000 + 'k' : value;
-                      }
-                    },
-                    axisX: {
-                      labelInterpolationFnc: function (value, index, labels) {
-                        return index % 5 === 0 ? value : null;
-                      }
-                    },
-                    chartPadding: { left: -5, bottom: -10 },
-                    plugins: [
-                      Chartist.plugins.tooltip({
-                        tooltipFnc: function (meta, value) {
-                          var m = meta.split('|');
-                          var ret = '' + value + ' estimates of ' + m[0] + '';
-                          if (m[1]) {
-                            ret += '' + '(including ' + m[1] + ')';
-                          }
-                          return ret;
-                        }
-                      })
-                    ]
-                  }
-                ).on('draw', function (data) {
-                  if (
-                    data.type === 'bar' &&
-                    data.meta === '50-60 hours|Dynamite Andy'
-                  ) {
-                    data.element.attr({ style: 'stroke: #768ca7' });
-                  }
-                });
-              }
-              head.ready(function () {
-                GameCompletionChart();
-              });
-            </script>
             <a
               class="base-button green"
               href="/game/Crash-Bandicoot-N-Sane-Trilogy/completiontime">

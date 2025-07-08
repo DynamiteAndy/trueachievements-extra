@@ -31,4 +31,24 @@ describe('corsFetch', () => {
 
     global.GM_xmlhttpRequest = originalGM_xmlhttpRequest;
   });
+
+  test('should merge partial options with the defaults instead of replacing them', async () => {
+    const originalGM_xmlhttpRequest = global.GM_xmlhttpRequest;
+    global.GM_xmlhttpRequest = vi.fn();
+
+    let capturedConfig: Record<string, unknown>;
+    (GM_xmlhttpRequest as vi.mock).mockImplementationOnce((config) => {
+      capturedConfig = config;
+      config.onload({ status: 200, responseText: '{}' });
+    });
+
+    await corsFetch('https://example.com/api', { headers: { 'X-Test': 'value' } });
+
+    // method and fetch should still come from the defaults even though only headers was supplied
+    expect(capturedConfig.method).toBe('GET');
+    expect(capturedConfig.fetch).toBe(true);
+    expect(capturedConfig.headers).toEqual({ 'X-Test': 'value' });
+
+    global.GM_xmlhttpRequest = originalGM_xmlhttpRequest;
+  });
 });

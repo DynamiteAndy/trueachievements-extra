@@ -1,10 +1,14 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { defineConfig } from '@rspack/cli';
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
-import htmlPreprocessor from './processors/html-preprocessor';
+import { Metadata, UserScriptMetaDataPlugin } from 'userscript-metadata-webpack-plugin';
 
 const loaderDirectory = join(__dirname, './loaders');
 
+export const createMetadataPlugin = (metadata: Metadata): UserScriptMetaDataPlugin =>
+  new UserScriptMetaDataPlugin({ metadata });
+
+export const entryPath = './src/index.ts';
 export const baseConfig = defineConfig({
   resolve: {
     extensions: ['.js', '.ts'],
@@ -16,7 +20,7 @@ export const baseConfig = defineConfig({
     minimize: false,
     moduleIds: 'named'
   },
-  entry: './src/index.ts',
+  entry: entryPath,
   output: {
     path: join(__dirname, '../dist')
   },
@@ -33,44 +37,47 @@ export const baseConfig = defineConfig({
             loader: 'builtin:lightningcss-loader',
             options: {
               minify: true
-            },
+            }
           },
           'sass-loader'
         ]
       },
       {
-        test: require.resolve('emoji.json'),
+        test: /\.json$/,
+        include: /node_modules[\\/]emoji\.json/,
+        type: 'javascript/auto',
         use: [
           {
             loader: join(loaderDirectory, 'emoji-loader.ts'),
-            options: {
-              compress: true
-            }
+            options: { compress: true }
           }
         ]
       },
       {
         test: /\.html$|\.hbs$/i,
-        loader: 'html-loader',
-        options: {
-          sources: false,
-          preprocessor: htmlPreprocessor,
-        }
+        type: 'javascript/auto',
+        loader: join(loaderDirectory, 'html-loader.ts')
       },
       {
         test: /\.m?ts$/,
+        exclude: [/node_modules/],
+        type: 'javascript/auto',
         use: [
           {
-            loader: 'esbuild-loader',
+            loader: 'builtin:swc-loader',
             options: {
-              target: 'ES2020'
+              jsc: {
+                parser: {
+                  syntax: 'typescript'
+                }
+              }
             }
           },
           {
             loader: join(loaderDirectory, 'inline-javascript-loader.ts'),
             options: {
               compress: true,
-              includedPaths: [/staff-walkthrough-improvements\\edit-walkthrough\\tinymce\\.*\.ts$/]
+              includedPaths: [/staff-walkthrough-improvements[/\\]edit-walkthrough[/\\]tinymce[/\\].*\.ts$/]
             }
           }
         ]
@@ -78,6 +85,14 @@ export const baseConfig = defineConfig({
     ]
   },
   plugins: process.env.analyse
-    ? [new RsdoctorRspackPlugin()]
+    ? [
+        new RsdoctorRspackPlugin({
+          linter: {
+            rules: {
+              'ecma-version-check': 'off'
+            }
+          }
+        })
+      ]
     : []
 });

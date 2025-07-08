@@ -1,4 +1,5 @@
 import { manageWalkthrough, StaffRegex } from '@ta-x-globals';
+import { dispatchEvent } from '@ta-x-helpers';
 import { waitForElement } from '@ta-x-utilities';
 
 export const changeToDefaultStatus = async (): Promise<void> => {
@@ -16,7 +17,7 @@ export const changeToDefaultStatus = async (): Promise<void> => {
     status.value !== manageWalkthrough.manageWalkthroughDefaultStatusValue
   ) {
     status.value = manageWalkthrough.manageWalkthroughDefaultStatusValue;
-    status.onchange(null);
+    dispatchEvent(status, 'change');
   }
 };
 

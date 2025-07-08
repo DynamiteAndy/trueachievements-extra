@@ -1,36 +1,33 @@
-import { join } from 'path';
-import { merge } from 'webpack-merge';
-import { UserScriptMetaDataPlugin } from 'userscript-metadata-webpack-plugin';
-import { baseConfig } from './rspack.base.conf';
-import metadata from './metadata';
+import { join } from 'node:path';
+import { merge } from 'rspack-merge';
 import ExternalFileWatcherPlugin from './plugins/external-file-watcher-plugin';
+import { baseConfig, createMetadataPlugin, entryPath } from './rspack.base.conf';
+import metadata from './metadata';
 
-metadata.name['$'] += ' - Development';
-(metadata.require as string[]).push('file://' + join(__dirname, '../dist/trueachievements-extras.debug.js'));
+(metadata.name as { $: string }).$ += ' - Development';
+(metadata.require as string[]).push(`file://${join(__dirname, '../dist/trueachievements-extras.debug.js')}`);
 
-delete metadata.downloadURL;
-delete metadata.updateURL;
+metadata.downloadURL = undefined;
+metadata.updateURL = undefined;
 
-export const devConfig = merge(baseConfig as never, {
+export const devConfig = merge(baseConfig, {
   mode: 'development',
   cache: false,
   entry: {
-    debug: baseConfig.entry,
+    debug: entryPath,
     'dev.user': join(__dirname, './empty.ts')
   },
   output: {
     filename: 'trueachievements-extras.[name].js'
   },
-  devtool: 'eval-cheap-module-source-map',
-  watch: process.env.watch ? true : false,
+  devtool: process.env.analyse ? 'cheap-module-source-map' : 'eval-cheap-module-source-map',
+  watch: !!process.env.watch,
   watchOptions: {
     ignored: /node_modules/
   },
   plugins: process.env.watch
     ? [
-        new UserScriptMetaDataPlugin({
-          metadata
-        }),
+        createMetadataPlugin(metadata),
         new ExternalFileWatcherPlugin({
           files: [
             join(__dirname, '../src/**/*.hbs'),
@@ -40,11 +37,7 @@ export const devConfig = merge(baseConfig as never, {
           ]
         })
       ]
-    : [
-        new UserScriptMetaDataPlugin({
-          metadata
-        })
-      ]
+    : [createMetadataPlugin(metadata)]
 });
 
 export default devConfig;

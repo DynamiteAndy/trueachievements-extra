@@ -18,7 +18,7 @@ describe('classListContains', () => {
     { input: ['test-class-d'], expected: false }
   ])('should return if $input is contained in classList', async ({ input, expected }) => {
     await setHtml('@ta-x-test-views/test-classes.html');
-    expect(classListContains(document.body, input)).toEqual(expected);
+    expect(classListContains(document.body.firstElementChild, input)).toEqual(expected);
   });
 });
 
@@ -59,10 +59,10 @@ describe('waitForElement', () => {
 });
 
 describe('waitForElements', () => {
-  test('should return null if no element is provided', async () => {
+  test('should return an empty array if no element is provided', async () => {
     const elements = await waitForElements('body', null);
 
-    expect(elements).toBe(null);
+    expect(elements).toEqual([]);
   });
 
   test('should return elements if elements are found immediately', async () => {
@@ -77,7 +77,7 @@ describe('waitForElements', () => {
     await setHtml('@ta-x-test-views/empty.html');
     const elements = await waitForElements('.does-not-exist', undefined, 250);
 
-    expect(elements).toBe(null);
+    expect(elements).toEqual([]);
   });
 
   test('should return elements if found after a mutation', async () => {
@@ -88,7 +88,7 @@ describe('waitForElements', () => {
 
       for (let i = 1; i <= 3; i++) {
         const childElement = document.createElement('div');
-        childElement.className = `should-trigger-mutation`;
+        childElement.className = 'should-trigger-mutation';
         parentElement.appendChild(childElement);
       }
 
@@ -108,7 +108,7 @@ describe('removeAllChildren', () => {
 
     for (let i = 1; i <= 3; i++) {
       const childElement = document.createElement('div');
-      childElement.className = `should-trigger-mutation`;
+      childElement.className = 'should-trigger-mutation';
       document.body.appendChild(childElement);
     }
 

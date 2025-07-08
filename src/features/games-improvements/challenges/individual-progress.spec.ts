@@ -1,6 +1,6 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { getPath } from '@ta-x-build-helpers';
-import { setHtml, createInnerTextSpies } from '@ta-x-test';
+import { setHtml } from '@ta-x-test';
 import { gameChallenges as config, GamesRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
@@ -41,7 +41,6 @@ describe('games-improvements/challenges/individual-progress', () => {
     }
   ])('should memoize fetch if all challenges status is not selected', async ({ view, memoizedView }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameChallengesIndividualProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(true);
@@ -55,7 +54,7 @@ describe('games-improvements/challenges/individual-progress', () => {
     memoizeFetchSpy.mockRestore();
   });
 
-  test.concurrent.each([
+  test.each([
     {
       view: '@ta-x-test-views/games-improvements/challenges/individual-progress/no-challenges-won-with-dlc.html',
       baseExpected: '0/4,374',
@@ -83,7 +82,6 @@ describe('games-improvements/challenges/individual-progress', () => {
     'should render trueachievement score correctly if enabled',
     async ({ view, memoizedView, baseExpected, dlcExpected }) => {
       await setHtml(view);
-      createInnerTextSpies();
 
       vi.spyOn(config, 'gameChallengesIndividualProgress', 'get').mockReturnValueOnce(true);
       vi.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(true);
@@ -105,7 +103,7 @@ describe('games-improvements/challenges/individual-progress', () => {
     }
   );
 
-  test.concurrent.each([
+  test.each([
     {
       view: '@ta-x-test-views/games-improvements/challenges/individual-progress/no-challenges-won-with-dlc.html',
       baseExpected: '0/1,000',
@@ -131,7 +129,6 @@ describe('games-improvements/challenges/individual-progress', () => {
     }
   ])('should render gamerscore correctly if enabled', async ({ view, memoizedView, baseExpected, dlcExpected }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameChallengesIndividualProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(true);
@@ -151,7 +148,7 @@ describe('games-improvements/challenges/individual-progress', () => {
     memoizeFetchSpy.mockRestore();
   });
 
-  test.concurrent.each([
+  test.each([
     {
       view: '@ta-x-test-views/games-improvements/challenges/individual-progress/no-challenges-won-with-dlc.html',
       baseExpected: '0/78',
@@ -177,7 +174,6 @@ describe('games-improvements/challenges/individual-progress', () => {
     }
   ])('should render achievements correctly if enabled', async ({ view, memoizedView, baseExpected, dlcExpected }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameChallengesIndividualProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(GamesRegex.Test, 'challengesUrl').mockReturnValueOnce(true);

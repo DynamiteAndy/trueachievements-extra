@@ -2,16 +2,14 @@
 
 <div
   data-render-condition="{{render-condition}}"
-  class="frm-grp frm-sel
-    {{conditional (object ta-x-hide=render-condition)}}
-    {{container-classes}}
-    ta-x-select"
+  class="frm-grp frm-sel {{conditional ta-x-hide=render-condition}} {{container-classes}} ta-x-select"
 >
   {{#if label}}
-    <label>
+    <label for="{{id}}">
       {{label}}
     </label>
   {{/if}}
+
   <select
     id="{{id}}"
     name="{{ternary name name id}}"
@@ -21,9 +19,7 @@
     class="dropdown {{classes}}"
   >
     {{#each options}}
-      <option value="{{this.value}}" selected="{{this.selected}}">
-        {{this.text}}
-      </option>
+      <option value="{{this.value}}" {{#if this.selected}}selected{{/if}}>{{this.text}}</option>
     {{/each}}
   </select>
 </div>
@@ -31,8 +27,7 @@
 {{#if helper-text}}
   <p
     data-render-condition="{{helper-render-condition}}"
-    class="ta-x-checkbox-helper-text
-      {{conditional (object ta-x-hide=helper-render-condition)}}"
+    class="ta-x-checkbox-helper-text {{conditional ta-x-hide=helper-render-condition}}"
   >
     {{helper-text}}
   </p>
