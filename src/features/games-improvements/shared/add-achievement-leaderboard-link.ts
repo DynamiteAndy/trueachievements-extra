@@ -1,5 +1,5 @@
-import { Constants } from '@ta-x-globals';
 import { allConcurrently, waitForElement } from '@ta-x-utilities';
+import styles from './styles';
 
 export const addAchievementLeaderboardLink = async (): Promise<void> => {
   const dlcAchievementHeaders = [...document.querySelectorAll('main ul.ach-panels li:not(.heading)')] as HTMLElement[];
@@ -13,7 +13,7 @@ export const addAchievementLeaderboardLink = async (): Promise<void> => {
         const progress = achievement.querySelector('.progress-bar') as HTMLDivElement;
         const progressAnchor = document.createElement('a');
 
-        progress.classList.add(Constants.Styles.GamesImprovements.Achievements.showAchievementLeaderboardLinksStyle);
+        progress.classList.add(styles.achievementLeaderboardLinks);
 
         for (const attr of progress.attributes) {
           progressAnchor.setAttributeNS(null, attr.name, attr.value);

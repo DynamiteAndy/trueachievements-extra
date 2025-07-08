@@ -1,9 +1,9 @@
 import { allSequentially, waitForElement } from '@ta-x-utilities';
-import { Constants } from '@ta-x-globals';
 import { addPlaystationTrophyGuides } from './add-playstation-trophy-guides';
 import { addXboxAchievementGuides } from './add-xbox-achievement-guides';
 import { addGamertagNationGuides } from './add-gamertag-nation-guides';
 import html from './import-guides.hbs';
+import styles from './styles';
 
 const applyBody = async (): Promise<void> => {
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
@@ -11,7 +11,7 @@ const applyBody = async (): Promise<void> => {
   const firstSection = await waitForElement('section:not(.smallpanel)', asideColumn);
 
   asideColumn.insertBefore(
-    parsedDocument.querySelector(`.${Constants.Styles.GamesImprovements.Achievements.importGuidesJs}`),
+    parsedDocument.querySelector(`.${styles.jsImportGuides}`),
     firstSection
   );
 };

@@ -2,6 +2,7 @@ import { pubSub } from '@ta-x-components';
 import { Constants } from '@ta-x-globals';
 import { applyStickyElementStyle } from '@ta-x-helpers';
 import { classListContains, waitForElement } from '@ta-x-utilities';
+import styles from '../styles';
 
 let tinymceContainer: HTMLElement;
 let tinymceToolbar: HTMLElement;
@@ -31,9 +32,7 @@ export const setFullWidthToolbar = async (container: HTMLElement): Promise<void>
     return;
   }
 
-  tinymceToolbar.classList.add(
-    Constants.Styles.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarStyles
-  );
+  tinymceToolbar.classList.add(styles.stickyTinymceToolbar);
   document.documentElement.style.setProperty(
     Constants.Styles.Variables.StaffWalkthroughImprovements.EditWalkthroughPage.stickyTinymceToolbarWidth,
     `${tinymceToolbar.parentElement.scrollWidth}px`

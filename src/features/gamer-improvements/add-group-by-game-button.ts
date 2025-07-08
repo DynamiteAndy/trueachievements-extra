@@ -1,6 +1,7 @@
-import { achievements, Constants, GamerRegex } from '@ta-x-globals';
+import { achievements, GamerRegex } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
 import html from './gamer-improvements.html';
+import styles from './styles';
 
 const listen = (button: HTMLElement): void => {
   button.addEventListener('click', async () => {
@@ -12,11 +13,13 @@ const listen = (button: HTMLElement): void => {
 
         if (el1Alt > el2Alt) {
           return 1;
-        } else if (el1Alt < el2Alt) {
+        } 
+        
+        if (el1Alt < el2Alt) {
           return -1;
-        } else {
-          return 0;
         }
+        
+        return 0;
       })
       .forEach((element: HTMLElement, index: number) => {
         element.classList.remove('odd', 'even');
@@ -43,10 +46,10 @@ export const addGroupByGameButton = async (): Promise<void> => {
 
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   searchAndFilterContainer.appendChild(
-    parsedDocument.querySelector(`.${Constants.Styles.GamerImprovements.groupByGameButtonJs}`)
+    parsedDocument.querySelector(`.${styles.jsGroupByGameButton}`)
   );
 
-  const button = searchAndFilterContainer.querySelector(`.${Constants.Styles.GamerImprovements.groupByGameButtonJs}`);
+  const button = searchAndFilterContainer.querySelector(`.${styles.jsGroupByGameButton}`);
 
   listen(button as HTMLElement);
 };

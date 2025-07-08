@@ -1,1 +1,1 @@
-export * from './filter-threads';
+export { default as applyThreadFilters } from './filter-threads';

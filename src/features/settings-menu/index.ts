@@ -11,6 +11,8 @@ import {
 } from '@ta-x-utilities';
 import { template } from '@ta-x-helpers';
 import html from './body.hbs';
+import styles from './styles';
+import attributes from './attributes';
 
 // Elements -------
 let extensionBody: HTMLElement;
@@ -21,19 +23,19 @@ const applyBody = async (): Promise<void> => {
   const navGamerToggle = await waitForElement('[data-tgl="nav-gamer"]', navigationBar);
 
   navigationBar.insertBefore(
-    parsedDocument.querySelector(`.${Constants.Styles.SettingsMenu.wrenchJs}`),
+    parsedDocument.querySelector(`.${styles.jsWrench}`),
     navGamerToggle.nextSibling
   );
 
   const navGamer = await waitForElement('.nav-gamer');
-  const templatedFeature = template(parsedDocument.querySelector(`.${Constants.Styles.SettingsMenu.featureJs}`));
+  const templatedFeature = template(parsedDocument.querySelector(`.${styles.jsFeature}`));
   navGamer.parentNode.insertBefore(templatedFeature, navGamer.nextSibling);
 
   addSettings();
 };
 
 const addSettings = (): void => {
-  extensionBody = document.querySelector(`.${Constants.Styles.SettingsMenu.featureJs}`);
+  extensionBody = document.querySelector(`.${styles.jsFeature}`);
 
   ([...extensionBody.querySelectorAll('input, select')] as HTMLElement[]).forEach((setting) => {
     const configPath = setting.getAttribute('data-config-path');
@@ -98,7 +100,7 @@ const createListElement = (listSetting: ListSetting, value: string): HTMLElement
 };
 
 const listen = (): void => {
-  const extensionTrigger = document.querySelector(`.${Constants.Styles.SettingsMenu.wrenchJs}`);
+  const extensionTrigger = document.querySelector(`.${styles.jsWrench}`);
 
   extensionTrigger.addEventListener('click', (): void => {
     extensionTrigger.classList.add('active');
@@ -145,7 +147,7 @@ const listen = (): void => {
       return;
     }
 
-    if (!target.classList.contains(Constants.Styles.SettingsMenu.closeJs)) {
+    if (!target.classList.contains(styles.jsClose)) {
       return;
     }
 
@@ -163,45 +165,45 @@ const listen = (): void => {
     }
 
     if (
-      !target.classList.contains(Constants.Styles.SettingsMenu.versionLink) &&
-      !target.classList.contains(Constants.Styles.SettingsMenu.documentationLink) &&
-      !target.classList.contains(Constants.Styles.Components.Tab.tabLink)
+      !target.classList.contains(styles.jsVersionLink) &&
+      !target.classList.contains(styles.jsDocumentationLink) &&
+      !target.classList.contains(styles.jsTabsLink)
     ) {
       return;
     }
 
     ev.preventDefault();
 
-    const changelogView = extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.changelogView}`);
-    const documentationView = extensionBody.querySelector(`.${Constants.Styles.SettingsMenu.featureDocumentationView}`);
-    const settingsView = extensionBody.querySelector('[data-previous-tab-visible], [data-tab-visible]');
-    const currentView = extensionBody.querySelector('[data-tab-visible]');
-    const nextView = target.classList.contains(Constants.Styles.SettingsMenu.versionLink)
+    const changelogView = extensionBody.querySelector(`.${styles.jsChangelogView}`);
+    const documentationView = extensionBody.querySelector(`.${styles.jsFeatureDocumentationView}`);
+    const settingsView = extensionBody.querySelector(`[${attributes.previousVisibleTab}], [${attributes.visibleTab}]`);
+    const currentView = extensionBody.querySelector(`[${attributes.visibleTab}]`);
+    const nextView = target.classList.contains(styles.jsVersionLink)
       ? changelogView
       : documentationView;
 
-    if (target.classList.contains(Constants.Styles.Components.Tab.tabLink)) {
-      if (!settingsView.hasAttribute('data-previous-tab-visible')) {
+    if (target.classList.contains(styles.jsTabsLink)) {
+      if (!settingsView.hasAttribute(attributes.previousVisibleTab)) {
         return;
       }
 
-      currentView.removeAttribute('data-tab-visible');
-      settingsView.removeAttribute('data-previous-tab-visible');
-      settingsView.setAttribute('data-tab-visible', '');
-      extensionBody.querySelector(`[data-tab-id="#${settingsView.id}"`).classList.add(Constants.Styles.Components.Tab.tabSelected);
+      currentView.removeAttribute(attributes.visibleTab);
+      settingsView.removeAttribute(attributes.previousVisibleTab);
+      settingsView.setAttribute(attributes.visibleTab, '');
+      extensionBody.querySelector(`[${attributes.tabId}="#${settingsView.id}"]`).classList.add(styles.tabSelected);
     } else if (currentView === nextView) {
-      nextView.removeAttribute('data-tab-visible');
-      settingsView.removeAttribute('data-previous-tab-visible');
-      settingsView.setAttribute('data-tab-visible', '');
-      extensionBody.querySelector(`[data-tab-id="#${settingsView.id}"`).classList.add(Constants.Styles.Components.Tab.tabSelected);
+      nextView.removeAttribute(attributes.visibleTab);
+      settingsView.removeAttribute(attributes.previousVisibleTab);
+      settingsView.setAttribute(attributes.visibleTab, '');
+      extensionBody.querySelector(`[${attributes.tabId}="#${settingsView.id}"]`).classList.add(styles.tabSelected);
     } else {
-      if (!settingsView.hasAttribute('data-previous-tab-visible')) {
-        settingsView.setAttribute('data-previous-tab-visible', '');
-        extensionBody.querySelector(`[data-tab-id="#${settingsView.id}"`).classList.remove(Constants.Styles.Components.Tab.tabSelected);
+      if (!settingsView.hasAttribute(attributes.previousVisibleTab)) {
+        settingsView.setAttribute(attributes.previousVisibleTab, '');
+        extensionBody.querySelector(`[${attributes.tabId}="#${settingsView.id}"]`).classList.remove(styles.tabSelected);
       }
 
-      currentView.removeAttribute('data-tab-visible');
-      nextView.setAttribute('data-tab-visible', '');
+      currentView.removeAttribute(attributes.visibleTab);
+      nextView.setAttribute(attributes.visibleTab, '');
     }
   });
 

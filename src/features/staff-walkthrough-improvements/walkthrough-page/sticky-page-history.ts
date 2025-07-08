@@ -1,6 +1,7 @@
 import { Constants, walkthroughPage } from '@ta-x-globals';
 import { applyStickyElementStyle } from '@ta-x-helpers';
 import { classListContains } from '@ta-x-utilities';
+import styles from './styles';
 
 let walkthroughContainer: HTMLElement;
 let walkthoughPageVersions: HTMLElement;
@@ -33,8 +34,8 @@ export const setPageHistorySticky = async (container: HTMLElement, pageVersions:
   walkthoughPageVersions = pageVersions;
 
   pageVersions.classList.add(
-    Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryJs,
-    Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.stickyPageHistoryStyle
+    styles.jsWalkthroughPageStickyPageHistory,
+    styles.walkthroughPageStickyPageHistory
   );
 
   await applyStickyElementStyle(variableProperty, pageVersions, container, {

@@ -1,5 +1,6 @@
-import { Constants, walkthroughPage } from '@ta-x-globals';
+import { walkthroughPage } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
+import styles from './styles';
 
 export const moveButtonsToLeft = async (
   walkthroughContainer: HTMLElement,
@@ -21,9 +22,7 @@ export const moveButtonsToLeft = async (
   if (walkthroughContainerButtons && walkthroughPageVersionButtons) {
     walkthroughPageVersionButtons.append(...walkthroughContainerButtons.parentElement.childNodes);
 
-    walkthroughContainer.classList.add(
-      Constants.Styles.StaffWalkthroughImprovements.WalkthroughPage.moveButtonsToLeftStyle
-    );
+    walkthroughContainer.classList.add(styles.walkthroughPageMoveButtonsToLeft);
   }
 };
 

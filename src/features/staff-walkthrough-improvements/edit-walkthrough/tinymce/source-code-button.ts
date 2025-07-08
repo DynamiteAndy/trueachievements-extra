@@ -1,6 +1,7 @@
 import { TinyMCEScript } from '@ta-x-models';
 import svg from '@ta-x-svgs/code.hbs';
 import { waitForElement } from '@ta-x-utilities';
+import styles from '../styles';
 
 class SourceCodeScript extends TinyMCEScript {
   constructor() {
@@ -42,14 +43,14 @@ class SourceCodeScript extends TinyMCEScript {
 
       var sourceCodeButton = editor.buttons['sourceCode'];
       var taxGroup = editor.theme.panel.find('toolbar > buttongroup').filter(function(bg) {
-        return bg.settings.name === 'ta-x-group';
+        return bg.settings.name === '${styles.taxGroupName}';
       })[0];
 
       taxGroup._lastRepaintRect = taxGroup._layoutRect;
       taxGroup.append(sourceCodeButton);
 
       const button = document.querySelector('[aria-label="Source Code"] button');
-      button.classList.add('ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code-button');
+      button.classList.add('${styles.sourceCodeButton}');
 
       console.debug('Added Source Code Button');
     })(tinymce.activeEditor);
@@ -59,7 +60,7 @@ class SourceCodeScript extends TinyMCEScript {
   };
 
   afterScript = async (): Promise<void> => {
-    const button = await waitForElement('.ta-x-staff-walkthrough-improvements-edit-walkthrough-page-source-code-button');
+    const button = await waitForElement(`.${styles.sourceCodeButton}`);
     button.innerHTML = svg;
   }
 }

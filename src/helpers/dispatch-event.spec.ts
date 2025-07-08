@@ -28,7 +28,7 @@ describe('dispatchEvent', () => {
 
   test('dispatches a custom event when CustomEvent is not a function', () => {
     const originalCustomEvent = global.CustomEvent;
-    delete global.CustomEvent;
+    global.CustomEvent = undefined;
 
     const listener = vi.fn();
 
@@ -54,7 +54,7 @@ describe('dispatchEvent', () => {
 
   test('dispatches a click event when Event is not a function', () => {
     const originalEvent = global.Event;
-    delete global.Event;
+    global.Event = undefined;
 
     const listener = vi.fn();
 

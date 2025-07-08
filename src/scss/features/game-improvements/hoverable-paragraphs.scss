@@ -1,0 +1,13 @@
+@use '../../variables';
+
+body {
+  &.trueachievement-extras {
+    .ta-x-games-improvements-walkthrough-hoverable-paragraphs {
+      > p {
+        &:hover {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

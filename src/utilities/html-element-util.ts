@@ -1,151 +1,170 @@
+import { mutationObserver } from '@ta-x-services';
+
 export const isSelectElement = (el: HTMLElement): boolean => el.nodeName === 'SELECT';
 export const isCheckboxElement = (el: HTMLElement): boolean =>
   el.nodeName === 'INPUT' && (el as HTMLInputElement).type === 'checkbox';
 
-export const classListContains = (element: HTMLElement, classes: string | string[]): boolean => {
+export const classListContains = (element: HTMLElement | Element | null, classes: string | string[]): boolean => {
   const classArray = Array.isArray(classes) ? classes : [classes];
-  return classArray.some((className: string) => element.classList.contains(className));
+  return classArray.some((className: string) => element?.classList?.contains(className));
 };
 
-export const waitForElement = (
+export const waitForElement = async <T extends Element = HTMLElement>(
   selector: string,
-  element: Document | HTMLElement | Element = document.documentElement,
-  timeoutMS = 10000
-): Promise<HTMLElement> =>
-  new Promise((resolve) => {
-    if (!element) {
-      return resolve(null);
-    }
+  root: Document | Element | null = document.documentElement,
+  timeoutMS = 10_000,
+  signal?: AbortSignal
+): Promise<T | null> => {
+  const elements = await waitForElements<T>(selector, root, timeoutMS, signal);
+  return elements[0] ?? null;
+};
 
-    const foundElement = element.querySelector(selector);
-    if (foundElement) {
-      return resolve(foundElement as HTMLElement);
-    }
+/** `signal` lets a caller give up early (e.g. on a failed ajax response the awaited markup
+ * depends on) instead of waiting out the full `timeoutMS`; an already-aborted signal resolves
+ * immediately with `[]`. */
+export const waitForElements = async <T extends Element = HTMLElement>(
+  selector: string,
+  root: Document | Element | null = document.documentElement,
+  timeoutMS = 10_000,
+  signal?: AbortSignal
+): Promise<T[]> => {
+  if (!root) {
+    return [];
+  }
 
-    let observer: MutationObserver;
+  const initialMatches = Array.from(root.querySelectorAll<T>(selector));
+  if (initialMatches.length > 0) {
+    return initialMatches;
+  }
 
-    const timeout = setTimeout(() => {
-      observer.disconnect();
-      resolve(null);
-    }, timeoutMS);
+  if (signal?.aborted) {
+    return [];
+  }
 
-    observer = new MutationObserver(() => {
-      const foundElement = element.querySelector(selector);
-      if (foundElement) {
-        observer.disconnect();
-        clearTimeout(timeout);
-        resolve(foundElement as HTMLElement);
+  return new Promise<T[]>((resolve) => {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let unregister: (() => void) | undefined;
+
+    const cleanup = () => {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
       }
-    });
 
-    observer.observe(element, {
-      childList: true,
-      subtree: true
-    });
+      if (unregister) {
+        unregister();
+      }
+
+      signal?.removeEventListener('abort', onAbort);
+    };
+
+    const onAbort = () => {
+      cleanup();
+      resolve([]);
+    };
+
+    signal?.addEventListener('abort', onAbort, { once: true });
+
+    unregister = mutationObserver.onElementAdded(
+      selector,
+      (addedElement) => {
+        const matches = Array.from(root.querySelectorAll<T>(selector));
+        const results = matches.length > 0 ? matches : [addedElement as unknown as T];
+
+        cleanup();
+        resolve(results);
+      },
+      { root }
+    );
+
+    timeoutId = setTimeout(() => {
+      cleanup();
+      resolve([]);
+    }, timeoutMS);
   });
+};
 
-export const waitForElements = (
-  selector: string,
-  element: Document | HTMLElement | Element = document.documentElement,
-  timeoutMS = 10000
-): Promise<HTMLElement[]> =>
+export const waitForAttributeChange = (element: HTMLElement, attributeFilter: string[], timeoutMs = 1000): Promise<void> =>
   new Promise((resolve) => {
-    if (!element) {
-      return resolve(null);
-    }
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let unregister: (() => void) | undefined;
 
-    const elements = element.querySelectorAll(selector);
-    if (elements.length > 0) {
-      return resolve(Array.from(elements) as HTMLElement[]);
-    }
-
-    let observer: MutationObserver;
-
-    const timeout = setTimeout(() => {
-      observer.disconnect();
-      resolve(null);
-    }, timeoutMS);
-
-    observer = new MutationObserver(() => {
-      const elements = element.querySelectorAll(selector);
-      if (elements.length > 0) {
-        observer.disconnect();
-        clearTimeout(timeout);
-        resolve(Array.from(elements) as HTMLElement[]);
+    const cleanup = () => {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
       }
-    });
 
-    observer.observe(element, {
-      childList: true,
-      subtree: true
-    });
+      unregister?.();
+    };
+
+    unregister = mutationObserver.onMutation(
+      '*',
+      (changedElement) => {
+        if (changedElement !== element) {
+          return;
+        }
+
+        cleanup();
+        resolve();
+      },
+      { attributeFilter }
+    );
+
+    timeoutId = setTimeout(() => {
+      cleanup();
+      resolve();
+    }, timeoutMs);
   });
 
 export const getElementCoordinates = (element: HTMLElement): { top: number; left: number } => {
   const box = element.getBoundingClientRect();
-  const body = document.body;
   const docEl = document.documentElement;
-  const scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-  const scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-  const clientTop = docEl.clientTop || body.clientTop || 0;
-  const clientLeft = docEl.clientLeft || body.clientLeft || 0;
-  const top = box.top + scrollTop - clientTop;
-  const left = box.left + scrollLeft - clientLeft;
 
-  return { top: Math.round(top), left: Math.round(left) };
+  const scrollTop = window.scrollY || docEl.scrollTop;
+  const scrollLeft = window.scrollX || docEl.scrollLeft;
+
+  const top = box.top + scrollTop - docEl.clientTop;
+  const left = box.left + scrollLeft - docEl.clientLeft;
+
+  return {
+    top: Math.round(top),
+    left: Math.round(left),
+  };
 };
 
 export const removeAllChildren = (element: HTMLElement): void => {
-  while (element.firstChild) {
+  while (element.lastChild) {
     element.removeChild(element.lastChild);
   }
 };
 
-export const waitForImages = (el: HTMLElement): Promise<void> =>
+export const waitForImages = (el: HTMLElement | Element): Promise<void> =>
   new Promise((resolve) => {
-    const allImgs: { src: string; element: HTMLImageElement }[] = [];
-    const filtered = ([...el.querySelectorAll('img')] as HTMLImageElement[]).filter((imgEl: HTMLImageElement) => {
-      if (imgEl.src === '') {
-        return false;
-      }
+    const images = Array.from(el.querySelectorAll<HTMLImageElement>('img'));
+    const pendingImages = images.filter((img) => img.src !== '' && !img.complete);
 
-      const img = new Image();
-      img.src = imgEl.src;
-      return !img.complete;
-    });
-
-    filtered.forEach((item: HTMLImageElement) => {
-      allImgs.push({
-        src: item.src,
-        element: item
-      });
-    });
-
-    const allImgsLength = allImgs.length;
-    let allImgsLoaded = 0;
-
-    if (allImgsLength === 0) {
+    if (pendingImages.length === 0) {
       resolve();
+      return;
     }
 
-    allImgs.forEach((img) => {
-      const image = new Image();
-      const resolveIfLoaded = () => {
-        allImgsLoaded++;
+    let loadedCount = 0;
+    const checkDone = () => {
+      loadedCount++;
 
-        if (allImgsLoaded === allImgsLength) {
-          resolve();
-        }
-      };
+      if (loadedCount === pendingImages.length) {
+        resolve();
+      }
+    };
 
-      image.addEventListener('load', resolveIfLoaded);
-      image.addEventListener('error', resolveIfLoaded);
-
-      image.src = img.src;
+    pendingImages.forEach((imgEl) => {
+      const tracker = new Image();
+      tracker.addEventListener('load', checkDone, { once: true });
+      tracker.addEventListener('error', checkDone, { once: true });
+      tracker.src = imgEl.src;
     });
   });
 
-export const extractText = (element: HTMLElement): string[] =>
+export const extractText = (element: HTMLElement | Element): string[] =>
   [...element.childNodes]
     .filter((child) => (child.nodeType === 3 || child.nodeName === 'STRONG') && child.parentNode === element)
     .filter((child) => child.textContent.trim())
@@ -154,7 +173,7 @@ export const extractText = (element: HTMLElement): string[] =>
 // TA-X Elements
 
 export const isTAXListElement = (el: HTMLElement): boolean => {
-  if (el.nodeName !== 'DIV' || !el.classList.contains('.frm-lst')) {
+  if (el.nodeName !== 'DIV' || !el.classList.contains('frm-lst')) {
     return false;
   }
 

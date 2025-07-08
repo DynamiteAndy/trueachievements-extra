@@ -1,3 +1,9 @@
+{{parseProperty "gameAchievementsDefaultStatusOptions" '[
+  { "value": "rdoAllAchievements", "text": "All", "selected": true },
+  { "value": "rdoWonAchievements", "text": "Won" },
+  { "value": "rdoNotWonAchievements", "text": "Not Won" }
+]'}}
+
 {{#includes
   "@ta-x-partials/accordion.hbs"
   title="Achievements"
@@ -30,14 +36,11 @@
 
   {{includes
     "@ta-x-partials/select-setting.hbs"
-    render-condition='{ "selector": "#chkGamesImprovementsGameAchievementsDefaultStatus", "checked": true }'
     id="selGamesImprovementsGameAchievementsDefaultStatusValue"
-    container-classes="ta-x-hide-padding-top"
     config-path="gamesImprovements.achievements.gameAchievementsDefaultStatusValue"
-    options='[
-      { "value": "rdoAllAchievements", "text": "All", "selected": true },
-      { "value": "rdoWonAchievements", "text": "Won" },
-      { "value": "rdoNotWonAchievements", "text": "Not Won" }]'
+    render-condition='{"selector":"#chkGamesImprovementsGameAchievementsDefaultStatus","checked":true}'
+    container-classes="ta-x-hide-padding-top"
+    options=gameAchievementsDefaultStatusOptions
   }}
 
   {{includes
@@ -45,8 +48,8 @@
     label="Include Guides From XboxAchievements.com"
     id="chkGamesImprovementsGameAchievementsShowXboxAchievementGuides"
     config-path="gamesImprovements.achievements.gameAchievementsShowXboxAchievementGuides"
-    helper-render-condition='{ "selector": "#chkGamesImprovementsGameAchievementsShowXboxAchievementGuides", "checked": true }'
-    helper-text="This feature is tempermental, let me know if you have any issues!"
+    helper-render-condition='{"selector":"#chkGamesImprovementsGameAchievementsShowXboxAchievementGuides","checked":true}'
+    helper-text="This feature is temperamental, let me know if you have any issues!"
   }}
 
   {{includes
@@ -54,8 +57,8 @@
     label="Include Guides From PlaystationTrophies.org"
     id="chkGamesImprovementsGameAchievementsShowPlaystationTrophyGuides"
     config-path="gamesImprovements.achievements.gameAchievementsShowPlaystationTrophyGuides"
-    helper-render-condition='{ "selector": "#chkGamesImprovementsGameAchievementsShowPlaystationTrophyGuides", "checked": true }'
-    helper-text="This feature is tempermental, let me know if you have any issues!"
+    helper-render-condition='{"selector":"#chkGamesImprovementsGameAchievementsShowPlaystationTrophyGuides","checked":true}'
+    helper-text="This feature is temperamental, let me know if you have any issues!"
   }}
 
   {{includes
@@ -63,8 +66,8 @@
     label="Include Guides From GamertagNation.com"
     id="chkGamesImprovementsGameAchievementsShowGamertagNationGuides"
     config-path="gamesImprovements.achievements.gameAchievementsShowGamertagNationGuides"
-    helper-render-condition='{ "selector": "#chkGamesImprovementsGameAchievementsShowGamertagNationGuides", "checked": true }'
-    helper-text="This feature is tempermental, let me know if you have any issues!"
+    helper-render-condition='{"selector":"#chkGamesImprovementsGameAchievementsShowGamertagNationGuides","checked":true}'
+    helper-text="This feature is temperamental, let me know if you have any issues!"
     classes="ta-x-hide-border"
   }}
 {{/includes}}

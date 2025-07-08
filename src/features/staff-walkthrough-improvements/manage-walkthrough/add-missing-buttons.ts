@@ -1,6 +1,7 @@
-import { Constants, manageWalkthrough } from '@ta-x-globals';
+import { manageWalkthrough } from '@ta-x-globals';
 import { waitForElement } from '@ta-x-utilities';
 import html from './manage-walkthrough.html';
+import styles from './styles';
 
 export const addMissingButtons = async (): Promise<void> => {
   if (!manageWalkthrough.addMissingButtons) {
@@ -17,36 +18,21 @@ export const addMissingButtons = async (): Promise<void> => {
 
   let buttonContainer = document.querySelector('#chEditWalkthrough .buttons');
   buttonContainer.insertBefore(
-    parsedDocument.querySelector(
-      `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.readyForReviewButtonJs}`
-    ),
+    parsedDocument.querySelector(`.${styles.jsManageWalkthroughReadyForReviewButton}`),
     buttonContainer.children[0]
   );
   buttonContainer.parentNode.insertBefore(
-    parsedDocument.querySelector(
-      `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.missingButtonsContainerJs}`
-    ),
+    parsedDocument.querySelector(`.${styles.jsManageWalkthroughMissingButtonsContainer}`),
     buttonContainer
   );
-  buttonContainer = document.querySelector(
-    `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.missingButtonsContainerJs}`
-  );
+  buttonContainer = document.querySelector(`.${styles.jsManageWalkthroughMissingButtonsContainer}`);
 
-  (
-    buttonContainer.querySelector(
-      `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.addPageButtonJs}`
-    ) as HTMLAnchorElement
-  ).href = 'javascript:Postback("btnAddPage")';
-  (
-    buttonContainer.querySelector(
-      `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.previewButtonJs}`
-    ) as HTMLAnchorElement
-  ).href = 'javascript:Postback("btnPreview")';
-  (
-    buttonContainer.querySelector(
-      `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.viewContentButtonJs}`
-    ) as HTMLAnchorElement
-  ).href = 'javascript:Postback("btnViewContent")';
+  (buttonContainer.querySelector(`.${styles.jsManageWalkthroughAddPageButton}`) as HTMLAnchorElement).href =
+    'javascript:Postback("btnAddPage")';
+  (buttonContainer.querySelector(`.${styles.jsManageWalkthroughPreviewButton}`) as HTMLAnchorElement).href =
+    'javascript:Postback("btnPreview")';
+  (buttonContainer.querySelector(`.${styles.jsManageWalkthroughViewContentButton}`) as HTMLAnchorElement).href =
+    'javascript:Postback("btnViewContent")';
 };
 
 export default { addMissingButtons };

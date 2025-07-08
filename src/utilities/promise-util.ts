@@ -1,53 +1,51 @@
-const promisify =
-  <T>(fn: (...args: unknown[]) => T) =>
-  async (...args: unknown[]) =>
-    fn(args);
+import { logger } from '@ta-x-services';
 
-const needsPromisifying = (fn: () => unknown): boolean => fn.constructor.name === 'AsyncFunction';
+export interface TaskDefinition<T> {
+  name: string;
+  task: (index?: number) => T | Promise<T>;
+}
 
-export const allSequentially = async <T>(
-  name: string,
-  arr: { name: string; task: () => T | Promise<T> }[]
-): Promise<T[]> => {
-  let index = 0;
-  const result = [];
+export const allSequentially = <T>(batchName: string, arr: TaskDefinition<T>[]): Promise<T[]> =>
+  allConcurrently(batchName, arr, 1);
 
-  while (index < arr.length) {
-    const curIndex = index++;
-    const task = needsPromisifying(arr[curIndex].task) ? promisify(arr[curIndex].task) : arr[curIndex].task;
-    result[curIndex] = await task(curIndex);
-  }
-
-  return result;
-};
-
-export const allConcurrently = async <T>(
-  name: string,
-  arr: { name: string; task: (index?: number) => T | Promise<T> }[],
-  max = 3
-): Promise<T[]> => {
+export const allConcurrently = async <T>(batchName: string, arr: TaskDefinition<T>[], max = 3): Promise<T[]> => {
   if (arr.length === 0) {
-    return Promise.resolve([]);
+    return [];
   }
 
   let index = 0;
-  const results = [];
+  const results: T[] = [];
 
-  const execThread = async () => {
+  // Only spawn as many threads as there are items to prevent idle overhead
+  const threadCount = Math.max(1, Math.min(max, arr.length));
+  logger.debug(batchName, `starting ${arr.length} task(s) with concurrency ${threadCount}`);
+  const start = performance.now();
+
+  // Shared worker thread logic
+  const execThread = async (threadIndex: number) => {
     while (index < arr.length) {
       const curIndex = index++;
-      const task = needsPromisifying(arr[curIndex].task) ? promisify(arr[curIndex].task) : arr[curIndex].task;
-      results[curIndex] = await task(curIndex);
+      const taskDefinition = arr[curIndex];
+      const taskStart = performance.now();
+
+      try {
+        results[curIndex] = await taskDefinition.task(curIndex);
+        logger.debug(
+          batchName,
+          `[thread ${threadIndex}] ${taskDefinition.name} finished in ${Math.round(performance.now() - taskStart)}ms`
+        );
+      } catch (error) {
+        logger.error(batchName, `[thread ${threadIndex}] ${taskDefinition.name} failed`, error);
+        throw error;
+      }
     }
   };
 
-  const threads = [];
-
-  for (let thread = 0; thread < max; thread++) {
-    threads.push(execThread());
-  }
+  const threads = Array.from({ length: threadCount }, (_, threadIndex) => execThread(threadIndex));
 
   await Promise.all(threads);
+
+  logger.debug(batchName, `finished ${arr.length} task(s) in ${Math.round(performance.now() - start)}ms`);
 
   return results;
 };

@@ -1,7 +1,8 @@
 import { setHtml } from '@ta-x-test';
-import { Constants, GamesRegex } from '@ta-x-globals';
+import { GamesRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import forums from '.';
+import styles from './styles';
 
 vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
 
@@ -16,8 +17,8 @@ describe('games-improvements/forums', () => {
 
     await forums();
 
-    expect(document.body.classList.contains(Constants.Styles.ForumImprovements.featureJs)).toBe(false);
-    expect(document.body.classList.contains(Constants.Styles.ForumImprovements.featureStyle)).toBe(false);
+    expect(document.body.classList.contains(styles.jsForumImprovements)).toBe(false);
+    expect(document.body.classList.contains(styles.forumImprovements)).toBe(false);
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
@@ -29,8 +30,8 @@ describe('games-improvements/forums', () => {
 
     await forums();
 
-    expect(document.body.classList.contains(Constants.Styles.ForumImprovements.featureJs)).toBe(false);
-    expect(document.body.classList.contains(Constants.Styles.ForumImprovements.featureStyle)).toBe(false);
+    expect(document.body.classList.contains(styles.jsForumImprovements)).toBe(false);
+    expect(document.body.classList.contains(styles.forumImprovements)).toBe(false);
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
@@ -41,8 +42,8 @@ describe('games-improvements/forums', () => {
 
     await forums();
 
-    expect(document.body.classList.contains(Constants.Styles.ForumImprovements.featureJs)).toBe(true);
-    expect(document.body.classList.contains(Constants.Styles.ForumImprovements.featureStyle)).toBe(true);
+    expect(document.body.classList.contains(styles.jsForumImprovements)).toBe(true);
+    expect(document.body.classList.contains(styles.forumImprovements)).toBe(true);
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });

@@ -1,4 +1,4 @@
-import { createInnerTextSpies, setHtml } from '@ta-x-test';
+import { setHtml } from '@ta-x-test';
 import { ForumRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import walkthroughs from '.';
@@ -74,7 +74,6 @@ describe('forum-improvements/walkthroughs', () => {
   test('should not run if on viewThread and page title heading is not walkthroughs', async () => {
     const titleElement = createTitleElement('Not the right title');
 
-    createInnerTextSpies();
     vi.spyOn(ForumRegex.Test, 'viewBoardUrlWithBoardId').mockReturnValue(false);
     vi.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValue(true);
     vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(titleElement);
@@ -89,7 +88,6 @@ describe('forum-improvements/walkthroughs', () => {
   test('should run if on viewThread and page title heading is walkthroughs', async () => {
     const titleElement = createTitleElement('Walkthroughs');
 
-    createInnerTextSpies();
     vi.spyOn(ForumRegex.Test, 'viewBoardUrlWithBoardId').mockReturnValue(false);
     vi.spyOn(ForumRegex.Test, 'viewThreadUrlWithThreadId').mockReturnValue(true);
     vi.spyOn(taxUtilities, 'waitForElement').mockResolvedValueOnce(titleElement);

@@ -1,16 +1,15 @@
 import { pubSub } from '@ta-x-components';
-import { miscellaneousImprovements } from '@ta-x-globals';
+import { miscellaneousImprovements, MiscellaneousRegex } from '@ta-x-globals';
 import { fetch, memoizeFetch, updateMemoizedFetch } from '@ta-x-helpers';
-import { MiscellaneousRegex } from 'globals/regex';
 
 const getGiveaways = async (): Promise<{ current: HTMLElement; previous: HTMLElement; }> => {
   let giveawayBody = document;
 
-  if (!MiscellaneousRegex.Test.winXboxGamesUrl()) {
-    let giveawayResponse = await memoizeFetch('/win-xbox-games', {}, { deleteAfter: { value: 12, period: 'hours' } });
-    giveawayBody = new DOMParser().parseFromString(giveawayResponse, 'text/html');
+  if (MiscellaneousRegex.Test.winXboxGamesUrl()) {
+    giveawayBody = document;
   } else {
-    return null;
+    const giveawayResponse = await memoizeFetch('/win-xbox-games', {}, { deleteAfter: { value: 12, period: 'hours' } });
+    giveawayBody = new DOMParser().parseFromString(giveawayResponse, 'text/html');
   }
 
   const giveaways = [...giveawayBody.querySelectorAll('.competition .game')];
@@ -53,7 +52,7 @@ const getBody = (giveaway: HTMLElement): Record<string, string> => {
     return null;
   }
 
-  let data = {
+  const data = {
     Command: onClickParams[1],
     Argument: onClickParams[2]
   };

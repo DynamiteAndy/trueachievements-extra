@@ -47,7 +47,7 @@ export const editWalkthrough = {
   set autoSaveNotification(value: boolean) {
     GM_setValue('autoSaveNotification', value);
   },
-  get tinymceTheme(): string {
+  get tinymceTheme(): string | null {
     return GM_getValue('tinymceTheme', null);
   },
   set tinymceTheme(value: string) {
@@ -144,7 +144,9 @@ export const myThreads = {
       : forumImprovements.forumImprovementsThreadFilter;
   },
   set myThreadsThreadFilter(value: boolean) {
-    myThreads.myThreadsForumOverride && GM_setValue('myThreadsThreadFilter', value);
+    if (myThreads.myThreadsForumOverride) {
+      GM_setValue('myThreadsThreadFilter', value);
+    }
   },
   get threadFilterKeywords(): string[] {
     return myThreads.myThreadsForumOverride
@@ -152,7 +154,9 @@ export const myThreads = {
       : forumImprovements.threadFilterKeywords;
   },
   set threadFilterKeywords(value: string[]) {
-    myThreads.myThreadsForumOverride && GM_setValue('myThreadsThreadFilterKeywords', JSON.stringify(value));
+    if (myThreads.myThreadsForumOverride) {
+      GM_setValue('myThreadsThreadFilterKeywords', JSON.stringify(value));
+    }
   }
 };
 
@@ -206,6 +210,12 @@ export const sales = {
   },
   set hideOwnedItems(value: boolean) {
     GM_setValue('hideOwnedItems', value);
+  },
+  get hideUnobtainableItems(): boolean {
+    return GM_getValue('hideUnobtainableItems', false);
+  },
+  set hideUnobtainableItems(value: boolean) {
+    GM_setValue('hideUnobtainableItems', value);
   },
   get collapsibleGroups(): boolean {
     return GM_getValue('collapsibleGroups', false);
@@ -319,7 +329,9 @@ export const gameDLC = {
       : gameAchievements.gameAchievementsDefaultStatus;
   },
   set gameDLCDefaultStatus(value: boolean) {
-    gameDLC.gameDLCOverride && GM_setValue('gameDLCDefaultStatus', value);
+    if (gameDLC.gameDLCOverride) {
+      GM_setValue('gameDLCDefaultStatus', value);
+    }
   },
   get gameDLCDefaultStatusValue(): string {
     return gameDLC.gameDLCOverride
@@ -327,7 +339,9 @@ export const gameDLC = {
       : gameAchievements.gameAchievementsDefaultStatusValue;
   },
   set gameDLCDefaultStatusValue(value: string) {
-    gameDLC.gameDLCOverride && GM_setValue('gameDLCDefaultStatusValue', value);
+    if (gameDLC.gameDLCOverride) {
+      GM_setValue('gameDLCDefaultStatusValue', value);
+    }
   },
   get gameDLCIndividualProgress(): boolean {
     return gameDLC.gameDLCOverride
@@ -335,7 +349,9 @@ export const gameDLC = {
       : gameAchievements.gameAchievementsIndividualProgress;
   },
   set gameDLCIndividualProgress(value: boolean) {
-    gameDLC.gameDLCOverride && GM_setValue('gameDLCIndividualProgress', value);
+    if (gameDLC.gameDLCOverride) {
+      GM_setValue('gameDLCIndividualProgress', value);
+    }
   },
   get gameDLCCollapsibleGroups(): boolean {
     return gameDLC.gameDLCOverride
@@ -343,7 +359,9 @@ export const gameDLC = {
       : gameAchievements.gameAchievementsCollapsibleGroups;
   },
   set gameDLCCollapsibleGroups(value: boolean) {
-    gameDLC.gameDLCOverride && GM_setValue('gameDLCCollapsibleGroups', value);
+    if (gameDLC.gameDLCOverride) {
+      GM_setValue('gameDLCCollapsibleGroups', value);
+    }
   }
 };
 
@@ -372,7 +390,9 @@ export const gameChallenges = {
       : gameAchievements.gameAchievementsIndividualProgress;
   },
   set gameChallengesIndividualProgress(value: boolean) {
-    gameChallenges.gameChallengesOverride && GM_setValue('gameChallengesIndividualProgress', value);
+    if (gameChallenges.gameChallengesOverride) {
+      GM_setValue('gameChallengesIndividualProgress', value);
+    }
   }
 };
 
@@ -389,7 +409,9 @@ export const gameForums = {
       : forumImprovements.forumImprovementsThreadFilter;
   },
   set gameForumsThreadFilter(value: boolean) {
-    gameForums.gameForumsForumOverride && GM_setValue('gameForumsThreadFilter', value);
+    if (gameForums.gameForumsForumOverride) {
+      GM_setValue('gameForumsThreadFilter', value);
+    }
   },
   get threadFilterKeywords(): string[] {
     return gameForums.gameForumsForumOverride
@@ -397,7 +419,9 @@ export const gameForums = {
       : forumImprovements.threadFilterKeywords;
   },
   set threadFilterKeywords(value: string[]) {
-    gameForums.gameForumsForumOverride && GM_setValue('gameForumsThreadFilterKeywords', JSON.stringify(value));
+    if (gameForums.gameForumsForumOverride) {
+      GM_setValue('gameForumsThreadFilterKeywords', JSON.stringify(value));
+    }
   },
   get gameForumsDefaultThread(): boolean {
     return GM_getValue('gameForumsDefaultThread', false);
@@ -413,13 +437,31 @@ export const gameForums = {
   }
 };
 
+export const gameNews = {
+};
+
+export const gameReviews = {
+};
+
+export const gameWalkthrough = {
+  get gameWalkthroughHoverableParagraphs(): boolean {
+    return GM_getValue('gameWalkthroughHoverableParagraphs', false);
+  },
+  set gameWalkthroughHoverableParagraphs(value: boolean) {
+    GM_setValue('gameWalkthroughHoverableParagraphs', value);
+  }
+};
+
 export const gamesImprovements = {
   games,
   achievements: gameAchievements,
   challenges: gameChallenges,
-  forums: gameForums,
   clips: gameClips,
-  dlc: gameDLC
+  dlc: gameDLC,
+  forums: gameForums,
+  news: gameNews,
+  reviews: gameReviews,
+  walkthrough: gameWalkthrough,
 };
 
 export const achievements = {

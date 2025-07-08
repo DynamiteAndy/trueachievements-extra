@@ -1,5 +1,5 @@
 import { isAfterNow } from '../utilities/date-util';
-import { MemoizedFetch } from '../models/memoized-fetch';
+import type { MemoizedFetch } from '../models/memoized-fetch';
 import { GamesRegex } from './regex';
 
 const getMap = <T>(name: string, defaultValue?: ''): Map<string, T> => {
@@ -112,8 +112,8 @@ export class Cache {
   }
 
   static clearExpired(): void {
-    const updatedCache = Array.from(this.memoize.entries()).filter((item) => isAfterNow(item[1].expiryTime));
-    this.memoize = new Map(updatedCache);
+    const updatedCache = Array.from(Cache.memoize.entries()).filter((item) => isAfterNow(item[1].expiryTime));
+    Cache.memoize = new Map(updatedCache);
 
     if (!GamesRegex.Test.achievementsUrl()) {
       GM_deleteValue('gameAchievementsDefaultStatusPathName');

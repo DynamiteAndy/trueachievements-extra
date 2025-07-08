@@ -1,5 +1,5 @@
 import { defineConfig, mergeConfig } from 'vitest/config';
-import baseConfig from './vitest.config.mjs';
+import baseConfig from './vitest.config.mts';
 
 export default mergeConfig(
   baseConfig,
@@ -9,7 +9,13 @@ export default mergeConfig(
         provider: 'v8',
         enabled: true,
         reporter: ['lcov'],
-        include: ['src/**']
+        include: ['src/**'],
+        exclude: [
+          '**/*.hbs',
+          '**/*.html',
+          '**/*.scss',
+          'node_modules/**',
+        ]
       },
       reporters: ['default', 'github-actions']
     }

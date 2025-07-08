@@ -1,12 +1,12 @@
-import {
+import type { ListSettingItemOptions } from './components/list-setting-item';
+import type { TabTemplateOptions } from './components/tabs';
+import type { EmojiTemplateOptions } from './features/emojis';
+import type {
   AsideContentPreviewPage,
   AsideContentPreviewAchievement,
   AsideContentPreviewThanks
 } from './features/staff-walkthrough-improvements/walkthrough-preview/populate-aside-contents';
-import { ListSettingItemOptions } from './components/list-setting-item';
-import { TabTemplateOptions } from './components/tabs';
-import { EmojiTemplateOptions } from './features/emojis';
-import { AchievementGuideSolutionOptions } from './features/games-improvements/achievements/achievement-guide-solution';
+import type { AchievementGuideSolutionOptions } from './features/games-improvements/achievements/achievement-guide-solution';
 
 export type TemplateOptions = {
   element?: HTMLElement;

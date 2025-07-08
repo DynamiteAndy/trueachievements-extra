@@ -1,3 +1,9 @@
+{{parseProperty "gameChallengesDefaultStatusOptions" '[
+  { "value": "rdoAllChallenges", "text": "All", "selected": true },
+  { "value": "rdoWonChallenges", "text": "Won" },
+  { "value": "rdoNotWonChallenges", "text": "Not Won" }
+]'}}
+
 {{#includes
   "@ta-x-partials/accordion.hbs"
   title="Challenges"
@@ -11,16 +17,16 @@
     label="Override Achievement Settings"
     id="chkGamesImprovementsGameChallengesOverride"
     config-path="gamesImprovements.challenges.gameChallengesOverride"
-    helper-render-condition='{ "selector": "#chkGamesImprovementsGameChallengesOverride", "checked": false }'
+    helper-render-condition='{"selector":"#chkGamesImprovementsGameChallengesOverride","checked":false}'
     helper-text="Some settings will be inherited from Achievements."
   }}
 
   {{includes
     "@ta-x-partials/checkbox-setting.hbs"
-    render-condition='{ "selector": "#chkGamesImprovementsGameChallengesOverride", "checked": true }'
     label="Show Progress As XX/XX"
     id="chkGamesImprovementsGameChallengesIndividualProgress"
     config-path="gamesImprovements.challenges.gameChallengesIndividualProgress"
+    render-condition='{"selector":"#chkGamesImprovementsGameChallengesOverride","checked":true}'
   }}
 
   {{includes
@@ -33,13 +39,10 @@
 
   {{includes
     "@ta-x-partials/select-setting.hbs"
-    render-condition='{ "selector": "#chkGamesImprovementsGameChallengesDefaultStatus", "checked": true }'
     id="selGamesImprovementsGameChallengesDefaultStatusValue"
-    container-classes="ta-x-hide-padding-top ta-x-hide-border"
     config-path="gamesImprovements.challenges.gameChallengesDefaultStatusValue"
-    options='[
-                  { "value": "rdoAllChallenges", "text": "All", "selected": true },
-                  { "value": "rdoWonChallenges", "text": "Won" },
-                  { "value": "rdoNotWonChallenges", "text": "Not Won" }]'
+    render-condition='{"selector":"#chkGamesImprovementsGameChallengesDefaultStatus","checked":true}'
+    container-classes="ta-x-hide-padding-top ta-x-hide-border"
+    options=gameChallengesDefaultStatusOptions
   }}
 {{/includes}}

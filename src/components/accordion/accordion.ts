@@ -1,6 +1,7 @@
 import { until } from '@ta-x-helpers';
 import { waitForElement } from '@ta-x-utilities';
-import styles from './styles'
+import { mutationObserver } from '@ta-x-services';
+import styles from './styles';
 import attributes from './attributes';
 
 const getAccordionContent = async (target: HTMLElement): Promise<HTMLElement> => {
@@ -12,9 +13,9 @@ const getAccordionContent = async (target: HTMLElement): Promise<HTMLElement> =>
 
     await until(() => content.style.maxHeight === `${content.scrollHeight}px`, 1000);
   }
-    
+
   return content;
-}
+};
 
 export const accordion = async (): Promise<void> => {
   document.addEventListener('click', async ({ target }): Promise<void> => {
@@ -34,37 +35,15 @@ export const accordion = async (): Promise<void> => {
       : (content.style.maxHeight = `${content.scrollHeight}px`);
   });
 
-  const observer = new MutationObserver((mutations: MutationRecord[]) => {
-    mutations.forEach((mutation: MutationRecord) => {
-      if (!(mutation.target instanceof HTMLElement)) {
-        return;
-      }
-
-      if (mutation.type === 'childList') {
-        if ((!mutation.addedNodes || mutation.addedNodes.length === 0) && (!mutation.removedNodes || mutation.removedNodes.length === 0)) {
-          return;
-        }
-      } else if (mutation.type !== 'attributes') {
-        return;
-      }
-
-      const content = mutation.target.closest(`.${styles.jsAccordionContent}`) as HTMLElement;
-      if (!content) {
-        return;
-      }
-
-      content.style.maxHeight = `${content.scrollHeight}px`;
-    });
-  });
-
   await waitForElement('body');
 
-  observer.observe(document.body, {
-    attributes: true,
-    attributeFilter : ['class'],
-    childList: true,
-    subtree: true
-  });
+  mutationObserver.onMutation(
+    `.${styles.jsAccordionContent}`,
+    (content) => {
+      content.style.maxHeight = `${content.scrollHeight}px`;
+    },
+    { attributeFilter: ['class'] }
+  );
 };
 
-export default accordion
+export default accordion;

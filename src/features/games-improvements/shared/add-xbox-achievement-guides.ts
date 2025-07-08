@@ -1,11 +1,12 @@
-import { Constants, ExternalRegex, gamesImprovements } from '@ta-x-globals';
+import { ExternalRegex, gamesImprovements } from '@ta-x-globals';
 import svg from '@ta-x-svgs/xboxachievements-icon.hbs';
 import { ReseroNetwork } from '@ta-x-models';
+import styles from './styles';
 
 export const addXboxAchievementGuides = async (): Promise<void> => {
   const xboxAchievements = new ReseroNetwork({
     extensionEnabled: gamesImprovements.achievements.gameAchievementsShowXboxAchievementGuides,
-    extensionSelector: `.${Constants.Styles.GamesImprovements.Achievements.showXboxAchievementGuidesJs}`,
+    extensionSelector: `.${styles.jsXboxAchievementGuides}`,
     extensionSetting: 'gameAchievementsXboxAchievementsGuideUrl',
     importableGuideUrlTest: ExternalRegex.Test.xboxAchievementsGuide,
     guide: {
@@ -13,7 +14,7 @@ export const addXboxAchievementGuides = async (): Promise<void> => {
       info: 'This guide was imported from 360Achievements.com',
       svg: {
         svgHTML: svg,
-        svgClass: 'ta-x-xboxachievements-icon'
+        svgClass: styles.xboxAchievementsIcon
       }
     }
   });

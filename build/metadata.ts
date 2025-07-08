@@ -1,8 +1,8 @@
-import { Metadata } from 'userscript-metadata-webpack-plugin';
+import type { Metadata } from 'userscript-metadata-webpack-plugin';
 import { author, url, description, version, bugs } from '../package.json';
 
 // If adding anything new to the Metadata object, ensure that you replace your existing
-// TrueAchievements Extra - Development user script  in tampermonnkey with trueachievements.extras.dev.user.js
+// TrueAchievements Extra - Development user script  in tampermonkey with trueachievements.extras.dev.user.js
 // otherwise the new metadata will not be there.
 
 export default {

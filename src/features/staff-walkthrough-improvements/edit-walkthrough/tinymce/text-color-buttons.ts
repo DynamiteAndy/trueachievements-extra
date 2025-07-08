@@ -1,4 +1,5 @@
 import { TinyMCEScript } from '@ta-x-models';
+import styles from '../styles';
 
 class TextColorScript extends TinyMCEScript {
   constructor() {
@@ -177,7 +178,7 @@ class TextColorScript extends TinyMCEScript {
       var forecolorButton = editor.buttons['forecolor'];
       var backcolorButton = editor.buttons['backcolor'];
       var taxGroup = editor.theme.panel.find('toolbar > buttongroup').filter(function(bg) {
-        return bg.settings.name === 'ta-x-group';
+        return bg.settings.name === '${styles.taxGroupName}';
       })[0];
 
       taxGroup._lastRepaintRect = taxGroup._layoutRect;

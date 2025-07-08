@@ -1,10 +1,12 @@
 import { Cache, Constants, StaffRegex, walkthroughPreview } from '@ta-x-globals';
-import { AsideContentPreviewAchievement, AsideContentPreviewPage } from '@ta-x-types';
+import type { AsideContentPreviewAchievement, AsideContentPreviewPage } from '@ta-x-types';
 import { waitForElement, extractAllBetween, toInt } from '@ta-x-utilities';
 import { memoizeFetch, template } from '@ta-x-helpers';
 import { pubSub } from '@ta-x-components';
 import templatedPageRows from '@ta-x-views/templates/walkthrough-preview-walkthrough-pages.html';
 import html from './walkthrough-preview.hbs';
+import styles from './styles';
+import attributes from './attributes';
 
 // Elements -------
 let extensionBody: HTMLElement;
@@ -14,23 +16,17 @@ const applyBody = async (): Promise<void> => {
   const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
   const asideColumn = await waitForElement('.main aside');
 
-  asideColumn.appendChild(
-    parsedDocument.querySelector(
-      `.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentJs}`
-    )
-  );
+  asideColumn.appendChild(parsedDocument.querySelector(`.${styles.jsPopulateAsideContent}`));
 
-  extensionBody = asideColumn.querySelector(
-    `.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentJs}`
-  );
-  askForWalkthroughBody = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.askJs}`);
+  extensionBody = asideColumn.querySelector(`.${styles.jsPopulateAsideContent}`);
+  askForWalkthroughBody = extensionBody.querySelector(`.${styles.jsAskLoaderAsk}`);
 
   getAchievementWalkthroughId();
 };
 
 const listen = (): void => {
-  const button = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.buttonJs}`);
-  const input = extensionBody.querySelector(`.${Constants.Styles.Components.AskLoader.inputJs}`) as HTMLInputElement;
+  const button = extensionBody.querySelector(`.${styles.jsAskLoaderAskButton}`);
+  const input = extensionBody.querySelector(`.${styles.jsAskLoaderInput}`) as HTMLInputElement;
 
   button.addEventListener('click', async (e: Event) => {
     if (!(e.target instanceof HTMLElement)) {
@@ -170,9 +166,7 @@ const getPagesInWalkthrough = (
     return null;
   }
 
-  const pagesInWalkthroughSection = featureDocument.querySelector(
-    `.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughPagesJs}`
-  );
+  const pagesInWalkthroughSection = featureDocument.querySelector(`.${styles.jsPopulateAsideContentWalkthroughPages}`);
   const pagesinWalkthroughTable = pagesInWalkthroughSection.querySelector('tbody');
   const clonedSummaryRow = (
     templateDocument.querySelector(
@@ -219,7 +213,7 @@ const getAchievementsInWalkthrough = (
   templateDocument: Document
 ): HTMLElement => {
   const achievementsInWalkthroughSection = featureDocument.querySelector(
-    `.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughAchievementsJs}`
+    `.${styles.jsPopulateAsideContentWalkthroughAchievements}`
   );
   const achievementsInWalkthroughTable = achievementsInWalkthroughSection.querySelector('ul');
   const walkthroughAchievements = [
@@ -278,9 +272,7 @@ const getAchievementsInWalkthrough = (
 };
 
 const getWalkthroughThanks = async (walkthroughId: string, featureDocument: Document): Promise<HTMLElement> => {
-  const thanks = featureDocument.querySelector(
-    `.${Constants.Styles.StaffWalkthroughImprovements.WalkthroughPreview.populateAsideContentWalkthroughThanksJs}`
-  );
+  const thanks = featureDocument.querySelector(`.${styles.jsPopulateAsideContentWalkthroughThanks}`);
   const walkthroughPreviewResponse = await memoizeFetch(
     `https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`
   );
@@ -293,12 +285,12 @@ const getWalkthroughThanks = async (walkthroughId: string, featureDocument: Docu
 };
 
 const toggleAskForWalkthrough = (): void => {
-  askForWalkthroughBody.classList.toggle('ta-x-hide');
+  askForWalkthroughBody.classList.toggle(Constants.Styles.Base.hide);
 
-  if (!askForWalkthroughBody.classList.contains('ta-x-hide')) {
-    extensionBody.setAttribute('data-ta-x-loaded', 'true');
+  if (!askForWalkthroughBody.classList.contains(Constants.Styles.Base.hide)) {
+    extensionBody.setAttribute(attributes.askContentLoaded, 'true');
   } else {
-    extensionBody.removeAttribute('data-ta-x-loaded');
+    extensionBody.removeAttribute(attributes.askContentLoaded);
   }
 };
 

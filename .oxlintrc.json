@@ -1,0 +1,26 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "unicorn", "typescript"],
+  "rules": {
+    "typescript/no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true
+      }
+    ],
+    "eslint/no-console": "warn",
+    "import/named": "error",
+    "eslint/curly": "error",
+    "eslint/no-eval": "off"
+  },
+  "overrides": [
+    {
+      "plugins": ["import", "unicorn", "typescript", "vitest"],
+      "files": ["./src/**/*.spec.ts"],
+      "rules": {
+        "vitest/no-conditional-expect": "off"
+      }
+    }
+  ]
+}

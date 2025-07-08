@@ -1,4 +1,5 @@
 import { allConcurrently, allSequentially } from './promise-util';
+import { logger, LogLevel } from '@ta-x-services';
 
 describe('allConcurrently', () => {
   test.concurrent.each([
@@ -41,5 +42,66 @@ describe('allSequentially', () => {
     }
   ])('should execute tasks sequentially and return results', async ({ input, expected }) => {
     expect(await allSequentially('Test', input)).toEqual(expected);
+  });
+});
+
+describe('allConcurrently logging', () => {
+  beforeEach(() => {
+    logger.setLevel(LogLevel.Debug);
+    vi.spyOn(console, 'debug').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    logger.setLevel(LogLevel.Warn);
+    vi.restoreAllMocks();
+  });
+
+  test('logs a debug message for each finished task and the overall run, scoped to the given name', async () => {
+    await allConcurrently('My Group', [
+      { name: 'Task A', task: () => 'a' },
+      { name: 'Task B', task: () => 'b' }
+    ]);
+
+    expect(console.debug).toHaveBeenCalledWith(
+      '%c[My Group]',
+      expect.any(String),
+      expect.stringContaining('Task A finished')
+    );
+    expect(console.debug).toHaveBeenCalledWith(
+      '%c[My Group]',
+      expect.any(String),
+      expect.stringContaining('Task B finished')
+    );
+    expect(console.debug).toHaveBeenCalledWith('%c[My Group]', expect.any(String), expect.stringContaining('finished 2 task(s)'));
+  });
+
+  test('includes the executing thread index in each task log line', async () => {
+    await allConcurrently(
+      'My Group',
+      [
+        { name: 'Task A', task: () => 'a' },
+        { name: 'Task B', task: () => 'b' }
+      ],
+      2
+    );
+
+    expect(console.debug).toHaveBeenCalledWith('%c[My Group]', expect.any(String), expect.stringContaining('[thread 0] Task A finished'));
+    expect(console.debug).toHaveBeenCalledWith('%c[My Group]', expect.any(String), expect.stringContaining('[thread 1] Task B finished'));
+  });
+
+  test('logs an error and rethrows when a task fails', async () => {
+    const error = new Error('boom');
+
+    await expect(
+      allConcurrently('My Group', [{ name: 'Failing Task', task: () => Promise.reject(error) }], 1)
+    ).rejects.toThrow(error);
+
+    expect(console.error).toHaveBeenCalledWith(
+      '%c[My Group]',
+      expect.any(String),
+      expect.stringContaining('Failing Task failed'),
+      error
+    );
   });
 });

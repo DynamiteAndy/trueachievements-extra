@@ -1,9 +1,9 @@
-import { pubSub } from '@ta-x-components';
 import { toBool } from '@ta-x-utilities';
 import showSvg from '@ta-x-svgs/show.hbs';
 import hideSvg from '@ta-x-svgs/hide.hbs';
 import styles from './styles';
 import attributes from './attributes';
+import pubSub from '../pub-sub';
 
 export const hideableRow = async (): Promise<void> => {
   const createIcon = (icon: string, classes: string[]): HTMLElement => {
@@ -25,28 +25,30 @@ export const hideableRow = async (): Promise<void> => {
     return el;
   };
 
-    const createFilterTextElement = (filterText: string): HTMLParagraphElement => {
-      const filterTextElement = document.createElement('p') as HTMLParagraphElement;
-      filterTextElement.classList.add(styles.filterText);
-      filterTextElement.innerText = filterText;
+  const createFilterTextElement = (filterText: string): HTMLParagraphElement => {
+    const filterTextElement = document.createElement('p') as HTMLParagraphElement;
+    filterTextElement.classList.add(styles.filterText);
+    filterTextElement.innerText = filterText;
 
-      return filterTextElement;
-    };
+    return filterTextElement;
+  };
 
   const hideTableElement = (element: HTMLElement, filterText: string) => {
-    const row = element.closest('tr') as HTMLTableRowElement;
+    const isTableRow = element.nodeName === 'TR';
+    const row = (isTableRow ? element : element.closest('tr')) as HTMLTableRowElement;
+
     row.setAttribute(attributes.rowHidden, 'true');
     row.lastElementChild.appendChild(createVisibilityElement());
-    
+
     if (filterText) {
-      const cell = element.closest('td') as HTMLTableCellElement;
+      const cell = row.querySelector('td') as HTMLTableCellElement;
       cell.appendChild(createFilterTextElement(filterText));
     }
   };
 
   const hideForumElement = (element: HTMLElement, filterText: string) => {
     element.closest('div').appendChild(createFilterTextElement(filterText));
-    
+
     const li = element.closest('li') as HTMLLIElement;
     li.setAttribute(attributes.rowHidden, 'true');
     li.lastElementChild.appendChild(createVisibilityElement());
@@ -70,7 +72,7 @@ export const hideableRow = async (): Promise<void> => {
   });
 
   pubSub.subscribe('hideableRow:hide', ({ element, method, filterText }) => {
-    switch(method) {
+    switch (method) {
       case 'forum':
         hideForumElement(element, filterText);
         break;

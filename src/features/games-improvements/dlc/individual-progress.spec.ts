@@ -1,6 +1,6 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { getPath } from '@ta-x-build-helpers';
-import { setHtml, createInnerTextSpies } from '@ta-x-test';
+import { setHtml } from '@ta-x-test';
 import { gameDLC as config, GamesRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import * as taxHelpers from '@ta-x-helpers';
@@ -52,7 +52,6 @@ describe('games-improvements/dlc/individual-progress', () => {
     }
   ])('should memoize fetch if all achievements status is not selected', async ({ view, memoizedView }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameDLCIndividualProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(GamesRegex.Test, 'individualDlcUrl').mockReturnValueOnce(false);
@@ -93,7 +92,6 @@ describe('games-improvements/dlc/individual-progress', () => {
     'should render trueachievement score correctly if enabled',
     async ({ view, memoizedView, baseExpected, dlcExpected }) => {
       await setHtml(view);
-      createInnerTextSpies();
 
       vi.spyOn(config, 'gameDLCIndividualProgress', 'get').mockReturnValueOnce(true);
       vi.spyOn(GamesRegex.Test, 'individualDlcUrl').mockReturnValueOnce(false);
@@ -140,7 +138,6 @@ describe('games-improvements/dlc/individual-progress', () => {
     }
   ])('should render gamerscore correctly if enabled', async ({ view, memoizedView, baseExpected, dlcExpected }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameDLCIndividualProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(GamesRegex.Test, 'individualDlcUrl').mockReturnValueOnce(false);
@@ -185,7 +182,6 @@ describe('games-improvements/dlc/individual-progress', () => {
     }
   ])('should render achievements correctly if enabled', async ({ view, memoizedView, baseExpected, dlcExpected }) => {
     await setHtml(view);
-    createInnerTextSpies();
 
     vi.spyOn(config, 'gameDLCIndividualProgress', 'get').mockReturnValueOnce(true);
     vi.spyOn(GamesRegex.Test, 'individualDlcUrl').mockReturnValueOnce(false);

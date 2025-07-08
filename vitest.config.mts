@@ -1,15 +1,18 @@
 import { defineConfig } from 'vitest/config';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import webTransfrom from './test/plugins/web';
-import emojiJsonTransfrom from './test/plugins/emoji-json';
+import webTransfrom from './test/plugins/web.ts';
+import emojiJsonTransfrom from './test/plugins/emoji-json.ts';
 
 export default defineConfig({
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     root: '.',
     include: ['./src/**/*.spec.ts'],
     globals: true,
     watch: false,
-    environment: 'node'
+    environment: 'happy-dom',
+    execArgv: ['--no-webstorage']
   },
-  plugins: [tsconfigPaths(), webTransfrom(), emojiJsonTransfrom()]
+  plugins: [webTransfrom(), emojiJsonTransfrom()]
 });

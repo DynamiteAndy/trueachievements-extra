@@ -1,4 +1,5 @@
 import { allConcurrently, waitForElement } from '@ta-x-utilities';
+import styles from '../styles';
 import { addToggleThemeButton } from './toggle-theme-button';
 import { setFullWidthToolbar } from './set-fullwidth-toolbar';
 import { fixFloatingMenus } from './fix-floating-menus';
@@ -12,18 +13,18 @@ const createButtonGroup = async () => {
   const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
   const iframeLoadHandler = () => {
     const script = document.createElement('script');
-    script.id = 'ta-x-staff-walkthrough-improvements-tinymce-button-grup';
+    script.id = 'ta-x-staff-walkthrough-improvements-tinymce-button-group';
     script.innerHTML = `
     ((editor) => {
       console.debug('Creating TA-X TinyMCE Group');
 
       var taxGroup = tinymce.ui.Factory.create({
         type: 'buttongroup',
-        name: 'ta-x-group',
+        name: '${styles.taxGroupName}',
         items: []
       });
 
-      taxGroup.addClass('ta-x-tinymce-group');
+      taxGroup.addClass('${styles.tinymceGroup}');
 
       editor.theme.panel.find('toolbar')[1].append(taxGroup);
       

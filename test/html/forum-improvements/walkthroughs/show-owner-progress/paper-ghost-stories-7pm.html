@@ -104,10 +104,6 @@
                     0%
                   </text>
                 </svg>
-                <script>
-                  document.getElementById('svgPC').style.strokeDashoffset =
-                    201.0619;
-                </script>
               </div>
               <div class="clearboth"></div>
             </div>
@@ -300,72 +296,6 @@
           <div>Completion Estimates</div>
           <article>
             <div class="ct-chart-comptimes ct-major-third"></div>
-            <script>
-              function GameCompletionChart() {
-                new Chartist.Bar(
-                  '.ct-chart-comptimes',
-                  {
-                    labels: [
-                      '0-0.5',
-                      '0.5-1',
-                      '1-2',
-                      '2-3',
-                      '3-4',
-                      '4-5',
-                      '5-6',
-                      '6-8',
-                      '8-10'
-                    ],
-                    series: [
-                      {
-                        name: 'series-5',
-                        className: 'ct-blue',
-                        data: [
-                          { meta: '0-0.5 hours', value: 17 },
-                          { meta: '0.5-1 hour', value: 75 },
-                          { meta: '1-2 hours', value: 32 },
-                          { meta: '2-3 hours', value: 1 },
-                          { meta: '3-4 hours', value: 1 },
-                          { meta: '4-5 hours', value: 0 },
-                          { meta: '5-6 hours', value: 1 },
-                          { meta: '6-8 hours', value: 0 },
-                          { meta: '8-10 hours', value: 1 }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    axisY: {
-                      onlyInteger: true,
-                      labelInterpolationFnc: function (value, index) {
-                        return value >= 1000 ? value / 1000 + 'k' : value;
-                      }
-                    },
-                    axisX: {
-                      labelInterpolationFnc: function (value, index, labels) {
-                        return index % 5 === 0 ? value : null;
-                      }
-                    },
-                    chartPadding: { left: -5, bottom: -10 },
-                    plugins: [
-                      Chartist.plugins.tooltip({
-                        tooltipFnc: function (meta, value) {
-                          var m = meta.split('|');
-                          var ret = '' + value + ' estimates of ' + m[0] + '';
-                          if (m[1]) {
-                            ret += '' + '(including ' + m[1] + ')';
-                          }
-                          return ret;
-                        }
-                      })
-                    ]
-                  }
-                );
-              }
-              head.ready(function () {
-                GameCompletionChart();
-              });
-            </script>
             <a
               class="base-button green"
               href="/game/Paper-Ghost-Stories-7PM/completiontime">

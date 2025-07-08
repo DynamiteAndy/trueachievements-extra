@@ -30,18 +30,12 @@ body {
             }
 
             &.ta-x-y-hide {
-              transform: translateY(
-                calc(
-                  -1 * var(--ta-x-sticky-header-height, variables.$ta-x-sticky-header-height)
-                )
-              );
+              transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, variables.$ta-x-sticky-header-height)));
               transition: transform 0.5s ease;
 
               &-no-transition {
                 transform: translateY(
-                  calc(
-                    -1 * var(--ta-x-sticky-header-height, variables.$ta-x-sticky-header-height)
-                  )
+                  calc(-1 * var(--ta-x-sticky-header-height, variables.$ta-x-sticky-header-height))
                 );
               }
             }

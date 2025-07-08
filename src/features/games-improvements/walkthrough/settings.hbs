@@ -1,0 +1,17 @@
+{{#includes
+  "@ta-x-partials/accordion.hbs"
+  title="Walkthrough"
+  expanded=false
+  accordion-target=".js-ta-x-settings-games-improvements-walkthrough"
+  accordion-header-classes="labels"
+  accordion-content-classes="js-ta-x-settings-games-improvements-walkthrough t-settings"
+}}
+  {{includes
+    "@ta-x-partials/checkbox-setting.hbs"
+    label="Hoverable Paragraphs"
+    id="chkGamesImprovementsGameWalkthroughHoverableParagraphs"
+    config-path="gamesImprovements.walkthrough.gameWalkthroughHoverableParagraphs"
+    helper-render-condition='{"selector":"#chkGamesImprovementsGameWalkthroughHoverableParagraphs","checked":true}'
+    helper-text="Hover over a paragraph to highlight your current progress in the walkthrough."
+  }}
+{{/includes}}

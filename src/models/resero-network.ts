@@ -1,15 +1,10 @@
 import { Constants } from '@ta-x-globals';
 import { deleteMemoizedCorsFetch, memoizeCorsFetch, template } from '@ta-x-helpers';
 import { waitForElement } from '@ta-x-utilities';
-import { ReseroNetworkOptions } from '@ta-x-types';
 import templatedAchievementGuideSolution from '@ta-x-views/templates/achievement-guide-solution.html';
 import { ImportableGuide } from './importable-guide';
 
 export class ReseroNetwork extends ImportableGuide {
-  public constructor(opts: ReseroNetworkOptions) {
-    super(opts);
-  }
-
   getAchievementGuide = async (url: string): Promise<void> => {
     const achievementTitle = (
       (await waitForElement('.ach-panel:not([data-secret]) .title')) as HTMLSpanElement

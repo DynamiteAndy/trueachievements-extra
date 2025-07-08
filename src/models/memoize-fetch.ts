@@ -1,5 +1,5 @@
 import { Cache } from '@ta-x-globals';
-import { MemoizedFetchOptions } from '@ta-x-types';
+import type { MemoizedFetchOptions } from '@ta-x-types';
 import { isAfterNow } from '../utilities/date-util';
 import { MemoizedFetch } from './memoized-fetch';
 

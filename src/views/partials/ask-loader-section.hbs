@@ -1,26 +1,17 @@
-<section
-  class="purple js-ta-x-ask-loader-container ta-x-ask-loader-container
-    {{section-classes}}"
->
-  <div>
-    {{section-title}}
-  </div>
+<section class="purple js-ta-x-ask-loader-container ta-x-ask-loader-container {{section-classes}}">
+  <div>{{section-title}}</div>
+
   <article>
     <div class="ta-x-article-loader">
-      <p>
-        Please wait, loading.
-      </p>
-
+      <p>Please wait, loading.</p>
       {{includes "@ta-x-svgs/loader.hbs"}}
     </div>
+
     <div class="js-ta-x-ask-loader-ask ta-x-ask-loader-ask ta-x-hide">
-      <p>
-        {{{ask-information}}}
-      </p>
+      <p>{{{ask-information}}}</p>
+
       <div>
-        <label class="small">
-          {{ask-label}}
-        </label>
+        <label for="{{label-id}}" class="small">{{ask-label}}</label>
         <input
           type="text"
           id="{{label-id}}"
@@ -29,6 +20,7 @@
           class="textbox cs-n js-ta-x-ask-loader-ask-input"
         />
       </div>
+
       <input
         type="submit"
         id="{{input-id}}"

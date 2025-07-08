@@ -1,7 +1,8 @@
 import { setHtml } from '@ta-x-test';
-import { Constants, NewsRegex } from '@ta-x-globals';
+import { NewsRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import newsImprovements from '.';
+import styles from './styles';
 
 vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
 
@@ -16,8 +17,8 @@ describe('news-improvements', () => {
 
     await newsImprovements();
 
-    expect(document.body.classList.contains(Constants.Styles.NewsImprovements.featureJs)).toBe(false);
-    expect(document.body.classList.contains(Constants.Styles.NewsImprovements.featureStyle)).toBe(false);
+    expect(document.body.classList.contains(styles.jsNewsImprovements)).toBe(false);
+    expect(document.body.classList.contains(styles.newsImprovements)).toBe(false);
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
@@ -29,8 +30,8 @@ describe('news-improvements', () => {
 
     await newsImprovements();
 
-    expect(document.body.classList.contains(Constants.Styles.NewsImprovements.featureJs)).toBe(false);
-    expect(document.body.classList.contains(Constants.Styles.NewsImprovements.featureStyle)).toBe(false);
+    expect(document.body.classList.contains(styles.jsNewsImprovements)).toBe(false);
+    expect(document.body.classList.contains(styles.newsImprovements)).toBe(false);
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
@@ -41,8 +42,8 @@ describe('news-improvements', () => {
 
     await newsImprovements();
 
-    expect(document.body.classList.contains(Constants.Styles.NewsImprovements.featureJs)).toBe(true);
-    expect(document.body.classList.contains(Constants.Styles.NewsImprovements.featureStyle)).toBe(true);
+    expect(document.body.classList.contains(styles.jsNewsImprovements)).toBe(true);
+    expect(document.body.classList.contains(styles.newsImprovements)).toBe(true);
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });

@@ -1,9 +1,10 @@
 import { waitForElement, allConcurrently } from '@ta-x-utilities';
-import { Constants, StaffRegex } from '@ta-x-globals';
+import { StaffRegex } from '@ta-x-globals';
 import manageWalkthrough from './manage-walkthrough';
 import walkthroughPage from './walkthrough-page';
 import editWalkthrough from './edit-walkthrough';
 import walkthroughPreview from './walkthrough-preview';
+import styles from './styles';
 
 export default async (): Promise<void> => {
   if (!StaffRegex.Walkthroughs.Test.all()) {
@@ -14,18 +15,15 @@ export default async (): Promise<void> => {
     return;
   }
 
-  document.body.classList.add(
-    Constants.Styles.StaffWalkthroughImprovements.featureJs,
-    Constants.Styles.StaffWalkthroughImprovements.featureStyle
-  );
+  document.body.classList.add(styles.jsStaffWalkthroughImprovements, styles.staffWalkthroughImprovements);
 
-  allConcurrently(
+  await allConcurrently(
     'Staff Walkthrough Improvements',
     [
-      { name: 'staff-walkthrough-improvements-manage-walkthrough', task: manageWalkthrough },
-      { name: 'staff-walkthrough-improvements-walkthrough-preview', task: walkthroughPreview },
-      { name: 'staff-walkthrough-improvements-walkthrough-page', task: walkthroughPage },
-      { name: 'staff-walkthrough-improvements-edit-walkthrough', task: editWalkthrough }
+      { name: 'staff-walkthrough-improvements:manage-walkthrough', task: manageWalkthrough },
+      { name: 'staff-walkthrough-improvements:walkthrough-preview', task: walkthroughPreview },
+      { name: 'staff-walkthrough-improvements:walkthrough-page', task: walkthroughPage },
+      { name: 'staff-walkthrough-improvements:edit-walkthrough', task: editWalkthrough }
     ],
     4
   );

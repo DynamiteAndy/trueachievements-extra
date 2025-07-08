@@ -1,7 +1,7 @@
 import { GamesRegex } from '@ta-x-globals';
 import { memoizeFetch, updateMemoizedFetch } from '@ta-x-helpers';
-import { AchievementGroup } from '@ta-x-types';
 import { allConcurrently, insertSeperator, toInt } from '@ta-x-utilities';
+import type { AchievementGroup } from '@ta-x-types';
 
 const createAchievementGroup = (header: HTMLElement): AchievementGroup => ({
   title: (header.querySelector('h2 a') as HTMLElement).innerText,

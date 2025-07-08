@@ -7,7 +7,7 @@ export default async (): Promise<void> => {
     return;
   }
 
-  allConcurrently('Gamer Improvements', [
-    { name: 'gamer-improvments-add-group-by-game-button', task: addGroupByGameButton }
+  await allConcurrently('Gamer Improvements', [
+    { name: 'gamer-improvements:add-group-by-game-button', task: addGroupByGameButton }
   ]);
 };

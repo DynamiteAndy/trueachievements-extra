@@ -3,6 +3,7 @@ import {
   classListContains,
   waitForElement,
   waitForElements,
+  waitForAttributeChange,
   removeAllChildren,
   waitForImages
 } from './html-element-util';
@@ -18,7 +19,7 @@ describe('classListContains', () => {
     { input: ['test-class-d'], expected: false }
   ])('should return if $input is contained in classList', async ({ input, expected }) => {
     await setHtml('@ta-x-test-views/test-classes.html');
-    expect(classListContains(document.body, input)).toEqual(expected);
+    expect(classListContains(document.body.firstElementChild, input)).toEqual(expected);
   });
 });
 
@@ -56,13 +57,37 @@ describe('waitForElement', () => {
 
     expect(element).not.toBe(null);
   });
+
+  test('should return null immediately if an already-aborted signal is passed, without waiting for the timeout', async () => {
+    await setHtml('@ta-x-test-views/empty.html');
+    const controller = new AbortController();
+    controller.abort();
+
+    const start = Date.now();
+    const element = await waitForElement('.does-not-exist', undefined, 5000, controller.signal);
+
+    expect(element).toBe(null);
+    expect(Date.now() - start).toBeLessThan(1000);
+  });
+
+  test('should return null as soon as the signal aborts, without waiting for the timeout', async () => {
+    await setHtml('@ta-x-test-views/empty.html');
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 50);
+
+    const start = Date.now();
+    const element = await waitForElement('.does-not-exist', undefined, 5000, controller.signal);
+
+    expect(element).toBe(null);
+    expect(Date.now() - start).toBeLessThan(1000);
+  });
 });
 
 describe('waitForElements', () => {
-  test('should return null if no element is provided', async () => {
+  test('should return an empty array if no element is provided', async () => {
     const elements = await waitForElements('body', null);
 
-    expect(elements).toBe(null);
+    expect(elements).toEqual([]);
   });
 
   test('should return elements if elements are found immediately', async () => {
@@ -77,7 +102,7 @@ describe('waitForElements', () => {
     await setHtml('@ta-x-test-views/empty.html');
     const elements = await waitForElements('.does-not-exist', undefined, 250);
 
-    expect(elements).toBe(null);
+    expect(elements).toEqual([]);
   });
 
   test('should return elements if found after a mutation', async () => {
@@ -88,7 +113,7 @@ describe('waitForElements', () => {
 
       for (let i = 1; i <= 3; i++) {
         const childElement = document.createElement('div');
-        childElement.className = `should-trigger-mutation`;
+        childElement.className = 'should-trigger-mutation';
         parentElement.appendChild(childElement);
       }
 
@@ -100,6 +125,57 @@ describe('waitForElements', () => {
     expect(elements).not.toBe(null);
     expect(elements.length).toBe(3);
   });
+
+  test('should return an empty array as soon as the signal aborts, without waiting for the timeout', async () => {
+    await setHtml('@ta-x-test-views/empty.html');
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 50);
+
+    const start = Date.now();
+    const elements = await waitForElements('.does-not-exist', undefined, 5000, controller.signal);
+
+    expect(elements).toEqual([]);
+    expect(Date.now() - start).toBeLessThan(1000);
+  });
+});
+
+describe('waitForAttributeChange', () => {
+  test('should resolve once a matching attribute changes on the given element', async () => {
+    await setHtml('@ta-x-test-views/test-classes.html');
+    const element = document.body.firstElementChild as HTMLElement;
+
+    setTimeout(() => {
+      element.classList.add('should-trigger-mutation');
+    }, 100);
+
+    await expect(waitForAttributeChange(element, ['class'])).resolves.toBeUndefined();
+  });
+
+  test('should ignore attribute changes on other elements', async () => {
+    await setHtml('@ta-x-test-views/test-classes.html');
+    const element = document.body.firstElementChild as HTMLElement;
+    const otherElement = document.createElement('div');
+    document.body.appendChild(otherElement);
+
+    setTimeout(() => {
+      otherElement.classList.add('should-trigger-mutation');
+    }, 50);
+
+    const start = Date.now();
+    await waitForAttributeChange(element, ['class'], 250);
+
+    expect(Date.now() - start).toBeGreaterThanOrEqual(240);
+  });
+
+  test('should resolve after the timeout if no matching change occurs', async () => {
+    await setHtml('@ta-x-test-views/test-classes.html');
+    const element = document.body.firstElementChild as HTMLElement;
+
+    const start = Date.now();
+    await waitForAttributeChange(element, ['class'], 250);
+
+    expect(Date.now() - start).toBeGreaterThanOrEqual(240);
+  });
 });
 
 describe('removeAllChildren', () => {
@@ -108,7 +184,7 @@ describe('removeAllChildren', () => {
 
     for (let i = 1; i <= 3; i++) {
       const childElement = document.createElement('div');
-      childElement.className = `should-trigger-mutation`;
+      childElement.className = 'should-trigger-mutation';
       document.body.appendChild(childElement);
     }
 

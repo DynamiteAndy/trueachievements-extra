@@ -1,7 +1,8 @@
 import { setHtml } from '@ta-x-test';
-import { Constants, StaffRegex } from '@ta-x-globals';
+import { StaffRegex } from '@ta-x-globals';
 import * as taxUtilities from '@ta-x-utilities';
 import staffWalkthroughImprovements from '.';
+import styles from './styles';
 
 vi.mock('@ta-x-utilities', async () => await vi.importActual('@ta-x-utilities'));
 
@@ -16,8 +17,8 @@ describe('staff-walkthrough-improvements', () => {
 
     await staffWalkthroughImprovements();
 
-    expect(document.body.classList.contains(Constants.Styles.StaffWalkthroughImprovements.featureJs)).toBe(false);
-    expect(document.body.classList.contains(Constants.Styles.StaffWalkthroughImprovements.featureStyle)).toBe(false);
+    expect(document.body.classList.contains(styles.jsStaffWalkthroughImprovements)).toBe(false);
+    expect(document.body.classList.contains(styles.staffWalkthroughImprovements)).toBe(false);
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
@@ -29,8 +30,8 @@ describe('staff-walkthrough-improvements', () => {
 
     await staffWalkthroughImprovements();
 
-    expect(document.body.classList.contains(Constants.Styles.StaffWalkthroughImprovements.featureJs)).toBe(false);
-    expect(document.body.classList.contains(Constants.Styles.StaffWalkthroughImprovements.featureStyle)).toBe(false);
+    expect(document.body.classList.contains(styles.jsStaffWalkthroughImprovements)).toBe(false);
+    expect(document.body.classList.contains(styles.staffWalkthroughImprovements)).toBe(false);
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
@@ -41,8 +42,8 @@ describe('staff-walkthrough-improvements', () => {
 
     await staffWalkthroughImprovements();
 
-    expect(document.body.classList.contains(Constants.Styles.StaffWalkthroughImprovements.featureJs)).toBe(true);
-    expect(document.body.classList.contains(Constants.Styles.StaffWalkthroughImprovements.featureStyle)).toBe(true);
+    expect(document.body.classList.contains(styles.jsStaffWalkthroughImprovements)).toBe(true);
+    expect(document.body.classList.contains(styles.staffWalkthroughImprovements)).toBe(true);
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });

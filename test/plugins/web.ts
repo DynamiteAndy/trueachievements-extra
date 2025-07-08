@@ -1,6 +1,7 @@
 import minifyHtml from '@minify-html/node';
 import { compileString } from 'sass';
-import Handlebars from '../../build/handlebars';
+import Handlebars from '../../build/handlebars/index.ts';
+import { MINIFY_OPTS } from '../../build/loaders/html-loader.ts';
 
 export default () => {
   const hbsRegex = /\.hbs$/;
@@ -18,20 +19,7 @@ export default () => {
   };
 
   const minifyContent = (src: string): string => {
-    const minifyHtmlConfig = {
-      do_not_minify_doctype: false,
-      ensure_spec_compliant_unquoted_attribute_values: true,
-      keep_closing_tags: true,
-      keep_html_and_head_opening_tags: false,
-      keep_spaces_between_attributes: false,
-      keep_comments: false,
-      minify_css: true,
-      minify_js: true,
-      remove_bangs: true,
-      remove_processing_instructions: true
-    };
-
-    const result = minifyHtml.minify(Buffer.from(src), minifyHtmlConfig).toString();
+    const result = minifyHtml.minify(Buffer.from(src), MINIFY_OPTS).toString();
     return result;
   };
 
@@ -39,7 +27,7 @@ export default () => {
     name: 'vitest-web',
 
     transform(code: string, id: string) {
-      let result: string = null;
+      let result: string | null = null;
 
       if (hbsRegex.test(id)) {
         const content = compileHandlebars(code);
@@ -52,7 +40,7 @@ export default () => {
 
       if (result !== null) {
         return {
-          code: 'module.exports = ' + JSON.stringify(result) + ';'
+          code: `module.exports = ${JSON.stringify(result)};`
         };
       }
     }

@@ -1,5 +1,5 @@
 import { defineConfig, mergeConfig } from 'vitest/config';
-import baseConfig from './vitest.config.mjs';
+import baseConfig from './vitest.config.mts';
 
 export default mergeConfig(
   baseConfig,
@@ -10,7 +10,13 @@ export default mergeConfig(
         enabled: true,
         reporter: ['html'],
         include: ['src/**'],
-        reportsDirectory: './dist/html/coverage/'
+        reportsDirectory: './dist/html/coverage/',
+        exclude: [
+          '**/*.hbs',
+          '**/*.html',
+          '**/*.scss',
+          'node_modules/**',
+        ]
       },
       silent: true,
       reporters: ['html'],

@@ -5,6 +5,9 @@ import sunSVG from '@ta-x-svgs/sun.hbs';
 import moonSVG from '@ta-x-svgs/moon.hbs';
 import skin from '@ta-x-tinymce-scss/charcoal/skin.scss';
 import content from '@ta-x-tinymce-scss/charcoal/content.scss';
+import styles from '../styles';
+import attributes from '../attributes';
+import staffWalkthroughImprovementsStyles from '../../styles';
 
 class ToggleThemeScript extends TinyMCEScript {
   private globalTheme: HTMLElement;
@@ -21,19 +24,19 @@ class ToggleThemeScript extends TinyMCEScript {
 
     if (editWalkthrough.tinymceTheme !== null) {
       return editWalkthrough.tinymceTheme;
-    } else {
-      return this.globalTheme ? this.globalTheme.getAttribute('data-theme') : '';
     }
+    
+    return this.globalTheme ? this.globalTheme.getAttribute('data-theme') : '';
   };
 
   private listen = async (): Promise<void> => {
     const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
     const iframeLoadHandler = async () => {
-      const iframeDocument = iframe && iframe.contentDocument;
+      const iframeDocument = iframe?.contentDocument;
 
       const bodyEl = (await waitForElement('#tinymce', iframeDocument)) as HTMLElement;
-      bodyEl.classList.add(Constants.Styles.root, Constants.Styles.StaffWalkthroughImprovements.featureStyle);
-      bodyEl.setAttribute('data-ta-x-tinymce-theme', await this.getTinymceTheme());
+      bodyEl.classList.add(Constants.Styles.root, staffWalkthroughImprovementsStyles.staffWalkthroughImprovements);
+      bodyEl.setAttribute(attributes.tinymceTheme, await this.getTinymceTheme());
 
       const style = iframeDocument.createElement('style');
       style.id = 'ta-x-staff-walkthrough-improvements-dark-tinymce-style';
@@ -45,7 +48,7 @@ class ToggleThemeScript extends TinyMCEScript {
       script.innerHTML = `window.addEventListener('message', function(event) {
         console.debug(event);
         if (!event || !event.data || event.data.theme === null || event.data.theme === undefined) return;
-        document.body.setAttribute('data-ta-x-tinymce-theme', event.data.theme);
+        document.body.setAttribute('${attributes.tinymceTheme}', event.data.theme);
       });`;
       iframeDocument.head.appendChild(script);
       iframe.removeEventListener('load', iframeLoadHandler);
@@ -56,7 +59,7 @@ class ToggleThemeScript extends TinyMCEScript {
 
   private observe = async (): Promise<void> => {
     const iframe = (await waitForElement('#txtWalkthrough_ifr')) as HTMLIFrameElement;
-    this.themeToggle = document.querySelector('[aria-label="Toggle Theme"] [data-ta-x-tinymce-theme]');
+    this.themeToggle = document.querySelector(`[aria-label="Toggle Theme"] [${attributes.tinymceTheme}]`);
 
     let preventMutation = false;
     const observer = new MutationObserver((mutations: MutationRecord[]) => {
@@ -78,10 +81,10 @@ class ToggleThemeScript extends TinyMCEScript {
         if (mutation.attributeName === 'data-theme') {
           theme = mutation.target.getAttribute('data-theme');
           preventMutation = true;
-          this.themeToggle.setAttribute('data-ta-x-tinymce-theme', theme === 'dark' ? theme : '');
-          document.body.setAttribute('data-ta-x-theme', theme === 'dark' ? theme : '');
-        } else if (mutation.attributeName === 'data-ta-x-tinymce-theme') {
-          theme = mutation.target.getAttribute('data-ta-x-tinymce-theme');
+          this.themeToggle.setAttribute(attributes.tinymceTheme, theme === 'dark' ? theme : '');
+          document.body.setAttribute(attributes.theme, theme === 'dark' ? theme : '');
+        } else if (mutation.attributeName === attributes.tinymceTheme) {
+          theme = mutation.target.getAttribute(attributes.tinymceTheme);
         } else {
           return;
         }
@@ -104,7 +107,7 @@ class ToggleThemeScript extends TinyMCEScript {
 
   buildScript = async (): Promise<HTMLScriptElement> => {
     const theme = await this.getTinymceTheme();
-    document.body.setAttribute('data-ta-x-theme', theme);
+    document.body.setAttribute(attributes.theme, theme);
 
     const script = `
       ((editor, theme) => {
@@ -114,16 +117,16 @@ class ToggleThemeScript extends TinyMCEScript {
           tooltip: 'Toggle Theme',
           onclick: function (e) {
             var target = e.target;
-            var currentTheme = target.getAttribute('data-ta-x-tinymce-theme');
+            var currentTheme = target.getAttribute('${attributes.tinymceTheme}');
             var newTheme = currentTheme === 'dark' ? '' : 'dark';
 
-            target.setAttribute('data-ta-x-tinymce-theme', newTheme);
+            target.setAttribute('${attributes.tinymceTheme}', newTheme);
           }
         });
 
         var toggleThemeButton = editor.buttons['toggleTheme'];
         var taxGroup = editor.theme.panel.find('toolbar > buttongroup').filter(function(bg) {
-          return bg.settings.name === 'ta-x-group';
+          return bg.settings.name === '${styles.taxGroupName}';
         })[0];
 
         taxGroup._lastRepaintRect = taxGroup._layoutRect;
@@ -138,15 +141,15 @@ class ToggleThemeScript extends TinyMCEScript {
         };
 
         var button = document.querySelector('[aria-label="Toggle Theme"] button');
-        button.setAttribute('data-ta-x-tinymce-theme', theme);
-        button.classList.add('js-ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle', 'ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle');
-        
+        button.setAttribute('${attributes.tinymceTheme}', theme);
+        button.classList.add('${styles.themeToggleJs}', '${styles.themeToggle}');
+
         var sun = createElementFromHTML('${sunSVG}');
-        sun.classList.add('ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-light');
+        sun.classList.add('${styles.themeToggleLight}');
         button.innerHTML = sun.outerHTML
 
         var moon = createElementFromHTML('${moonSVG}');
-        moon.classList.add('ta-x-staff-walkthrough-improvements-edit-walkthrough-page-theme-toggle-dark');
+        moon.classList.add('${styles.themeToggleDark}');
         button.innerHTML += moon.outerHTML
 
         console.debug('Added Toggle Theme Button');
@@ -160,7 +163,7 @@ class ToggleThemeScript extends TinyMCEScript {
     GM_addStyle(skin);
 
     await this.listen();
-    await waitForElement('.mce-ta-x-tinymce-group');
+    await waitForElement(`.mce-${styles.tinymceGroup}`);
     document.body.appendChild(await this.buildScript());
     await this.observe();
   };

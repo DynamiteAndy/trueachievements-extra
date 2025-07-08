@@ -1,11 +1,13 @@
 import { getDuplicates, waitForElement, allConcurrently, extractAllBetween, toInt } from '@ta-x-utilities';
-import { Constants, StaffRegex } from '@ta-x-globals';
+import { StaffRegex } from '@ta-x-globals';
 import { until } from '@ta-x-helpers';
 import html from './manage-walkthrough.html';
 import { changeToDefaultStatus } from './default-status';
 import { makeTableLinksClickable } from './clickable-table-links';
 import { autoSelectFirst } from './auto-select-first';
 import { addMissingButtons } from './add-missing-buttons';
+import styles from './styles';
+import attributes from './attributes';
 
 let walkthroughContainer: HTMLElement;
 
@@ -20,11 +22,7 @@ const applyBody = async (): Promise<void> => {
 
   if (editWalkthrough && (await until(() => walkthroughContainer.childElementCount > 2, 1000))) {
     const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
-    editWalkthrough.after(
-      parsedDocument.querySelector(
-        `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`
-      )
-    );
+    editWalkthrough.after(parsedDocument.querySelector(`.${styles.jsManageWalkthroughContainer}`));
 
     allConcurrently('Manage Walkthrough', [
       { name: 'manage-walkthrough-adjust-left-sidebar', task: adjustLeftSidebar },
@@ -58,10 +56,7 @@ const adjustButtons = async (): Promise<void> => {
 };
 
 const adjustRightSidebar = async (): Promise<void> => {
-  const sideBarContainer = await waitForElement(
-    `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`,
-    walkthroughContainer
-  );
+  const sideBarContainer = await waitForElement(`.${styles.jsManageWalkthroughContainer}`, walkthroughContainer);
 
   if (sideBarContainer) {
     const walkthroughAchievementsContainer = await waitForElement('#chWalkthroughAchievements', walkthroughContainer);
@@ -82,7 +77,7 @@ const adjustLeftSidebar = async (): Promise<void> => {
 
   ([...walkthroughList.querySelectorAll('td a')] as HTMLElement[]).forEach((anchor: HTMLAnchorElement) => {
     const walkthroughId = toInt(extractAllBetween("'", anchor.href)[1]);
-    anchor.setAttribute('data-walkthrough-id', walkthroughId.toString());
+    anchor.setAttribute(attributes.walkthroughId, walkthroughId.toString());
   });
 };
 

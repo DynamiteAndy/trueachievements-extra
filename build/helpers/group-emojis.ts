@@ -1,23 +1,15 @@
 export default function (source: string) {
-  let emojis = JSON.parse(source);
+  const rawEmojis = JSON.parse(source);
+  const grouped: Record<string, { char: string; name: string }[]> = {
+    TrueAchievements: [],
+  };
 
-  emojis = emojis.reduce(
-    (accumulator: Map<string, Array<unknown>>, emoji: { char: string; name: string; group: string }) => {
-      let category = accumulator.get(emoji.group);
-      if (!category) {
-        category = [];
-        accumulator.set(emoji.group, category);
-      }
+  for (const { char, name, group } of rawEmojis) {
+    (grouped[group] ??= []).push({ char, name });
+  }
 
-      category.push({ char: emoji.char, name: emoji.name });
-
-      return accumulator;
-    },
-    new Map([['TrueAchievements', []]])
-  );
-
-  const keys = Array.from(emojis.keys());
-  const values = Array.from(emojis.values());
-
-  return [...keys, ...values];
+  return Object.entries(grouped).map(([group, emojis]) => ({
+    group,
+    emojis,
+  }));
 }

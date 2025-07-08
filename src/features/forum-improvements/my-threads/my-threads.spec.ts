@@ -1,5 +1,5 @@
-import { setHtml } from '@ta-x-test';
 import { ForumRegex } from '@ta-x-globals';
+import { setHtml } from '@ta-x-test';
 import * as taxUtilities from '@ta-x-utilities';
 import myThreads from '.';
 
@@ -11,7 +11,7 @@ describe('forum-improvements/my-threads', () => {
   });
 
   test('should not run if not on my threads page', async () => {
-    vi.spyOn(ForumRegex.Test, 'myTheadsUrl').mockReturnValueOnce(false);
+    vi.spyOn(ForumRegex.Test, 'myThreadsUrl').mockReturnValueOnce(false);
     const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await myThreads();
@@ -21,7 +21,7 @@ describe('forum-improvements/my-threads', () => {
   });
 
   test('should run if on my threads page', async () => {
-    vi.spyOn(ForumRegex.Test, 'myTheadsUrl').mockReturnValueOnce(true);
+    vi.spyOn(ForumRegex.Test, 'myThreadsUrl').mockReturnValueOnce(true);
     const spy = vi.spyOn(taxUtilities, 'allConcurrently');
 
     await myThreads();

@@ -1,18 +1,9 @@
-import { localStorage } from './local-storage';
+vi.stubGlobal('GM_getValue', (key: string, defaultValue?: unknown) => {
+  const value = localStorage.getItem(key);
+  return value ? JSON.parse(value) : defaultValue;
+});
 
-const GM_getValue = vi.fn();
-const GM_setValue = vi.fn();
-const GM_deleteValue = vi.fn();
-const GM_xmlhttpRequest = vi.fn();
-
-GM_getValue.mockImplementation((key: string, defaultValue?: '') =>
-  localStorage.has(key) ? localStorage.get(key) : defaultValue
-);
-GM_setValue.mockImplementation((key: string, value: unknown) => localStorage.set(key, value));
-GM_deleteValue.mockImplementation(() => localStorage.clear());
-
-global.GM_getValue = GM_getValue;
-global.GM_setValue = GM_setValue;
-global.GM_deleteValue = GM_deleteValue;
-global.GM_xmlhttpRequest = GM_xmlhttpRequest;
-(global.GM_info as unknown) = { script: {} };
+vi.stubGlobal('GM_setValue', (key: string, value: unknown) => localStorage.setItem(key, JSON.stringify(value)));
+vi.stubGlobal('GM_deleteValue', () => localStorage.clear());
+vi.stubGlobal('GM_xmlhttpRequest', vi.fn());
+vi.stubGlobal('GM_info', { script: {} });

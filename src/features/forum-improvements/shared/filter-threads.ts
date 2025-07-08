@@ -1,7 +1,7 @@
 import { pubSub } from '@ta-x-components';
 import { waitForElement } from '@ta-x-utilities';
 
-export const applyThreadFilters = async (filters: string[]) => {
+export default async (filters: string[]) => {
   if (!filters.length) {
     return;
   }
@@ -34,5 +34,3 @@ export const applyThreadFilters = async (filters: string[]) => {
     });
   });
 };
-
-export default { applyThreadFilters };

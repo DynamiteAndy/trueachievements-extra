@@ -6,4 +6,4 @@ export default {
   showIcon: 'ta-x-hideable-row-show',
   hideableRow: 'ta-x-hideable-row',
   jsHideableRow: 'js-ta-x-hideable-row'
-};
+} as const;

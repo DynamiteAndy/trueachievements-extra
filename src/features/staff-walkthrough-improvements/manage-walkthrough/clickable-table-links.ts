@@ -2,6 +2,8 @@ import achievementRow from '@ta-x-views/templates/manage-walkthrough-achievement
 import { Constants, manageWalkthrough, AchievementsRegex } from '@ta-x-globals';
 import { memoizeFetch, template } from '@ta-x-helpers';
 import { allConcurrently, waitForElement } from '@ta-x-utilities';
+import styles from './styles';
+import attributes from './attributes';
 
 const clickableAchievements = async (walkthroughContainer: HTMLElement, walthroughPreviewDocument: Document) => {
   if (await waitForElement('#chWalkthroughAchievements', walkthroughContainer)) {
@@ -140,10 +142,8 @@ export const makeTableLinksClickable = async (): Promise<void> => {
     return;
   }
 
-  const walkthroughContainer = document.querySelector(
-    `.${Constants.Styles.StaffWalkthroughImprovements.ManageWalkthroughPage.containerJs}`
-  ) as HTMLElement;
-  const walkthroughId = selectedWalkthrough.getAttribute('data-walkthrough-id');
+  const walkthroughContainer = document.querySelector(`.${styles.jsManageWalkthroughContainer}`) as HTMLElement;
+  const walkthroughId = selectedWalkthrough.getAttribute(attributes.walkthroughId);
   const walthroughPreviewResponse = await memoizeFetch(
     `https://www.trueachievements.com/staff/walkthrough/walkthroughpreview.aspx?walkthroughid=${walkthroughId}`
   );
