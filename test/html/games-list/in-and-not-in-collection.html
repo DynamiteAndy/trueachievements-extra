@@ -1,0 +1,68 @@
+<!--
+  /games.aspx (captured 2026-10-31), condensed to what's under test: the search-and-filter bar
+  (filter options menu emptied) and the games list with its header row plus four games, two
+  in the signed-in gamer's collection (empty last cell) and two not (an "Add game to My Game
+  Collection" link). Query-string, javascript: and on* attribute values were stripped when capturing.
+-->
+<div class="search-and-filter ajaxlistfilter">
+  <input type="text" name="txtSearchString" id="txtSearchString" value="" class="textbox cs-n" placeholder="Search games...">
+  <div class="btn-ctr">
+    <a class="button  menubutton" href="#" id="btnGameList_Filter" title="More filter options"><span class="icon-button-arrow-down droparrow" id="btnGameList_Filter_DropArrow"></span>More filter options</a>
+    <ul id="btnGameList_Filter_Options" style="display:none" class="menuitems rightaligned filterbutton ajaxlistfilter"></ul>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<table class="maintable " id="oGameList">
+  <tbody>
+<tr nodrop="1" class="NoDrop">
+<th class="left" colspan="2"><a href="#">Game</a>
+</th><th><a href="#">Score</a></th>
+<th><a href="#">Ratio</a></th>
+<th><a href="#">Gamers</a></th>
+<th><a href="#">Comp %</a></th>
+<th><a href="#">Comp Time</a></th>
+<th><a href="#">Rating</a></th>
+<th></th>
+<th>GC</th>
+</tr>
+<tr class="odd" id="tr5357">
+<td class="gamethumb"><a href="/game/IDARB/achievements" title="#IDARB Achievements"><img src="/imagestore/thumbs/0007165300/7165348.jpg" alt="#IDARB" class="smallicon" width="32" height="32" loading="lazy"></a></td>
+<td class="game"><a href="/game/IDARB/achievements" title="#IDARB Achievements">#IDARB</a></td>
+<td class="score">1,490 <span class="small">(1,000)</span></td>
+<td class="score">1.49</td>
+<td class="score">113,123</td>
+<td class="score">19.9</td>
+<td><a href="/game/IDARB/completiontime" title="View all time estimates for this game">1-2 hours</a></td><td class="icon-rating"><div class="icon-rating"><i class="fa fa-star"></i> 2.7</div></td><td class="smallbutton"></td>
+<td></td>
+</tr>
+<tr class="even" id="tr6066">
+<td class="gamethumb"><a href="/game/KILLALLZOMBIES/achievements" title="#KILLALLZOMBIES Achievements"><img src="/imagestore/thumbs/0007166000/7166013.jpg" alt="#KILLALLZOMBIES" class="smallicon" width="32" height="32" loading="lazy"></a></td>
+<td class="game"><a href="/game/KILLALLZOMBIES/achievements" title="#KILLALLZOMBIES Achievements">#KILLALLZOMBIES</a></td>
+<td class="score">2,410 <span class="small">(1,000)</span></td>
+<td class="score">2.41</td>
+<td class="score">5,526</td>
+<td class="score">3.7</td>
+<td><a href="/game/KILLALLZOMBIES/completiontime" title="View all time estimates for this game">40-50 hours</a></td><td class="icon-rating"><div class="icon-rating"><i class="fa fa-star"></i> 3.0</div></td><td class="smallbutton"></td>
+<td><a href="#" title="Add game to My Game Collection"><img src="/images/icons/game-collection-add-ta.png" alt="Add game to My Game Collection" height="16" width="16"></a></td></tr>
+<tr class="odd" id="tr9192">
+<td class="gamethumb"><a href="/game/SinucaAttack/achievements" title="#SinucaAttack Achievements"><img src="/imagestore/thumbs/0007169000/7169082.jpg" alt="#SinucaAttack" class="smallicon" width="32" height="32" loading="lazy"></a></td>
+<td class="game"><a href="/game/SinucaAttack/achievements" title="#SinucaAttack Achievements">#SinucaAttack</a></td>
+<td class="score">4,688 <span class="small">(4,000)</span></td>
+<td class="score">1.17</td>
+<td class="score">9,515</td>
+<td class="score">59.3</td>
+<td><a href="/game/SinucaAttack/completiontime" title="View all time estimates for this game">0-0.5 hours</a></td><td class="icon-rating"><div class="icon-rating"><i class="fa fa-star"></i> 1.9</div></td><td class="smallbutton"></td>
+<td><a href="#" title="Add game to My Game Collection"><img src="/images/icons/game-collection-add-ta.png" alt="Add game to My Game Collection" height="16" width="16"></a></td></tr>
+<tr class="odd" id="tr2151">
+<td class="gamethumb"><a href="/game/1-vs-100/achievements" title="1 vs 100 Achievements"><img src="/imagestore/thumbs/0007163300/7163375.jpg" alt="1 vs 100" class="smallicon" width="32" height="32" loading="lazy"></a></td>
+<td class="game"><a href="/game/1-vs-100/achievements" title="1 vs 100 Achievements">1 vs 100</a></td>
+<td class="score">306 <span class="small">(200)</span></td>
+<td class="score">1.53</td>
+<td class="score">105,072</td>
+<td class="score">9.6</td>
+<td><a href="/game/1-vs-100/completiontime" title="View all time estimates for this game">8-10 hours</a></td><td class="icon-rating"><div class="icon-rating"><i class="fa fa-star"></i> 3.7</div></td><td class="smallbutton"></td>
+<td></td>
+</tr>
+  </tbody>
+</table>

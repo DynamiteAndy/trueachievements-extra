@@ -1,5 +1,5 @@
 ---
-name: Bug report
+name: '🐛 Bug Report'
 about: Create a report to help us improve
 title: ''
 labels: 'bug'
@@ -23,10 +23,20 @@ assignees: ''
 
 <!-- If applicable, please add screenshots to help explain your problem. -->
 
+### Setup
+
+**Script version:** <!-- From Tampermonkey's dashboard -->
+
+**Browser and Tampermonkey version:** 
+
+**Signed in to TrueAchievements?** 
+
+**Site theme:** <!-- Light or dark -->
+
 ### Additional Info
 
 <!-- This allows us to get in touch with you if more information is required, or to enable you to test the fix -->
 
-**TrueAchievement Username:** 
+**TrueAchievements Username:** 
 
 **Would you like to be involved with testing?** 

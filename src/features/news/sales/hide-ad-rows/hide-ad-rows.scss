@@ -1,0 +1,8 @@
+body {
+  // Hides the ad script's sale-table rows on TA Pro, where the site hides only the ad inside them
+  &.trueachievement-extras.ta-x-sale-ad-free {
+    .newsitem table.sale tbody tr:has(> td > .dyn-lb) {
+      display: none;
+    }
+  }
+}

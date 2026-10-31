@@ -1,0 +1,91 @@
+<!--
+  Staff manage walkthrough page, /staff/walkthrough/managewalkthrough.aspx, after selecting a page in the walkthrough's
+  Pages list (the site's postback for an in-progress walkthrough, #BLUD). In this view the walkthrough details show the
+  page's own fields (#divEditPage with #txtPageName) and the site drops the Action menu and its own "Ready for review",
+  leaving only Cancel and Save.
+  Captured 2026-10-31 from the live DOM, with our ready-for-review button and missing buttons removed. Condensed: the
+  walkthrough list cut to the selected row, the walkthrough details cut to the name, the page fields and the buttons,
+  the other panels removed, onclicks stripped.
+-->
+<div class="admin-page">
+  <div id="divWalkthroughHolder">
+    <div id="chWalkthroughs" class="controlholder">
+      <div class="title">Walkthroughs</div>
+      <div class="content">
+        <div id="lstWalkthroughID" class="datalist">
+          <div class="scroll" id="scrolllstWalkthroughID">
+            <table class="dl">
+              <tbody>
+                <tr class="selected" id="lstWalkthroughIDselectedrow">
+                  <td class="point"></td>
+                  <td class="c1"><a href="#">#BLUD</a></td>
+                  <td class="dlop plain"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="chEditWalkthrough" class="controlholder">
+      <div class="title">Walkthrough Details</div>
+      <div class="content">
+        <div>
+          <label>Name</label
+          ><input
+            type="text"
+            name="txtWalkthroughName"
+            id="txtWalkthroughName"
+            value="#BLUD"
+            class="textbox cs-vl readonly"
+            readonly="readonly"
+            maxlength="50"
+          />
+        </div>
+        <div id="divEditPage">
+          <div>
+            <label class="small">Page name</label
+            ><input
+              type="text"
+              name="txtPageName"
+              id="txtPageName"
+              value="Walkthrough overview"
+              class="textbox cs-vl"
+              maxlength="50"
+            />
+          </div>
+          <div>
+            <label class="small">Created by</label
+            ><input
+              type="text"
+              name="txtPageCreatedByGamerTag"
+              id="txtPageCreatedByGamerTag"
+              value="SMOREVER"
+              class="textbox cs-n readonly"
+              readonly="readonly"
+            />
+          </div>
+          <div>
+            <label class="small">Locked by</label
+            ><input
+              type="text"
+              name="txtLockedByGamerTag"
+              id="txtLockedByGamerTag"
+              value="TrueAchievement"
+              class="textbox cs-n readonly"
+              readonly="readonly"
+            />
+          </div>
+        </div>
+        <div class="buttons">
+          <a class="button" href="#" id="btnCancel" title="Cancel"
+            ><img src="/images/icons/cancel.png" alt="Cancel" title="Cancel" width="16" height="16" />Cancel</a
+          >
+          <a class="button" href="#" id="btnSave" title="Save"
+            ><img src="/images/icons/save.png" alt="Save" title="Save" width="16" height="16" />Save</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

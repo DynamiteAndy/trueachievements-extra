@@ -1,0 +1,79 @@
+body {
+  &.trueachievement-extras {
+    // A side section shaped like the site's Popular Content box (measured on a game page): no title, its
+    // tab bar across the top on a darker strip, each tab with a 3px line along its top. The selected tab takes the
+    // section's colour and the tabs' colour for its place on that line (tabs.scss); the others are darker, with a
+    // clear line. The section itself is the site's (its background, padding and text), so it sits with the others.
+    .ta-x-tabbed-section {
+      .ta-x-tabbed-section-tabs {
+        // Across the section's full width, at its very top (the site pads side sections 8px 10px)
+        gap: 2px;
+        margin: -8px -10px 0;
+        padding: 0;
+        background: #e1e1e1;
+
+        // The site's side list rules (for any `aside > section ul li`) would change the tabs' padding and give each a
+        // line under it, so the tabs' look is set in full here
+        li {
+          flex: 1 0 auto;
+          margin: 0;
+          padding: 5px 0.75rem;
+          white-space: nowrap;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 21px;
+          color: #fff;
+          background: #666;
+          border-bottom: 0;
+          border-top: 3px solid transparent;
+
+          &:hover {
+            border-bottom: 0;
+            border-top: 3px solid currentColor;
+          }
+
+          &.ta-x-tabs-selected {
+            color: #646464;
+            background: #fff;
+            border-bottom: 0;
+            border-top: 3px solid;
+          }
+        }
+      }
+
+      // The section's body, holding the tabs' content: the site's article, without its line under the bar
+      > article {
+        padding-top: 0.9rem;
+        border-top: 0;
+      }
+    }
+
+    [data-theme='dark'] {
+      .ta-x-tabbed-section .ta-x-tabbed-section-tabs {
+        background: #222;
+
+        // The site's dark side list rule colours every line #222, which would show on the tabs' top line
+        li {
+          background: #161616;
+          border-top-color: transparent;
+
+          &:hover {
+            border-top-color: currentColor;
+          }
+
+          // The browser's near-black ring doesn't show on these dark tabs: from the keyboard, a white ring inside
+          &:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: -2px;
+          }
+
+          &.ta-x-tabs-selected {
+            color: #fff;
+            background: #333;
+          }
+        }
+      }
+    }
+  }
+}

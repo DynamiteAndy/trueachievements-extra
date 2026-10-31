@@ -1,0 +1,54 @@
+<!--
+  Game videos, /game/Gears-of-War-4/videos, straight from the server (a plain GET, before any script ran).
+  Captured 2026-11-15. Condensed to the page's form and its four filter dropdowns (#divMyGamesFilter); each dropdown's
+  onchange (javascript:Postback('<id>','')) stripped, as it posts the form back. "Anyone" has no value attribute, so
+  its value is its text.
+-->
+<form method="post" action="/game/Gears-of-War-4/videos" id="frm">
+  <div id="divMyGamesFilter" class="filter">
+    <div class="frm-col w-1/2">
+      <div class="frm-grp">
+        <label>Recorded by</label>
+        <div class="frm-sel"><select id="ddlRecordedBy" name="ddlRecordedBy_RD" class=" dropdown cs-n">
+<option>Anyone</option>
+<option value="My friends">My friends</option>
+<option value="Me">Me</option>
+</select>
+</div>
+      </div>
+      <div class="frm-grp">
+        <label>Saved by</label>
+        <div class="frm-sel"><select id="ddlSavedBy" name="ddlSavedBy_RD" class=" dropdown cs-n">
+<option>Anyone</option>
+<option value="Gamer" selected="selected">Gamer</option>
+<option value="Xbox">Xbox</option>
+</select>
+</div>
+      </div>
+    </div>
+
+    <div class="frm-col w-1/2">
+      <div class="frm-grp">
+        <label>Recorded</label>
+        <div class="frm-sel"><select id="ddlUploaded" name="ddlUploaded_RD" class=" dropdown cs-n">
+<option value="7" selected="selected">This week</option>
+<option value="30">This month</option>
+<option value="365">This year</option>
+<option value="0">All</option>
+</select>
+</div>
+      </div>
+      <div class="frm-grp">
+        <label>Sort by</label>
+        <div class="frm-sel"><select id="ddlOrder" name="ddlOrder_RD" class=" dropdown cs-n">
+<option value="Most viewed" selected="selected">Most viewed</option>
+<option value="Most favourited">Most favourited</option>
+<option value="Most commented">Most commented</option>
+<option value="Longest">Longest</option>
+<option value="GamerTag">GamerTag</option>
+</select>
+</div>
+      </div>
+    </div>
+  </div>
+</form>

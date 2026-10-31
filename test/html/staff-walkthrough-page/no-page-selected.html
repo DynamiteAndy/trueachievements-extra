@@ -1,0 +1,34 @@
+<!--
+  Staff walkthrough page, /staff/walkthrough/walkthroughpage.aspx?walkthroughid=<id>&walkthroughpageid=0, straight from
+  the server (a plain GET, before any script ran), so no page is selected: no preview panel, an empty version list and
+  empty page history buttons. The site renders no "Back to management" button here, so ours is added.
+  Captured 2026-10-31. Condensed: page dropdown cut to a few entries, version list header table removed.
+-->
+<div class="admin-page">
+  <h1 id="oh1" class="block">Edit Asdivine Dios Walkthrough</h1>
+  <div class="informationpanel" id="oWarnings">
+    To find out exactly how your walkthrough should be structured and written, please
+    <a href="https://www.trueachievements.com/forum/viewthread.aspx" target="_blank">read this</a>
+  </div>
+  <div id="chWalkthroughPageVersions" class="controlholder">
+    <div class="title">Page History</div>
+    <div class="content">
+      <div>
+        <label class="vsmall">Page</label
+        ><select id="sddWalkthroughPageID" name="sddWalkthroughPageID" class="dropdown cs-n">
+          <option></option>
+          <option value="22621">Walkthrough overview</option>
+          <option value="22622">General hints and tips</option>
+          <option value="22623">Quests (1 - 15)</option>
+        </select>
+      </div>
+      <div id="lstWalkthroughPageVersion" class="datalist">
+        <div class="scroll" id="scrolllstWalkthroughPageVersion">
+          <table class="dl"></table>
+        </div>
+      </div>
+      <div class="buttons"></div>
+    </div>
+  </div>
+  <!-- Edit Form -->
+</div>

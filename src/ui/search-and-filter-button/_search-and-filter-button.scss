@@ -1,0 +1,11 @@
+body {
+  &.trueachievement-extras {
+    // A text-only button in the site's search and filter bar. The site's own button there ("More filter options") is
+    // 1px taller, because its 19px arrow icon sets the line height instead of the 18px text, so match it
+    .search-and-filter {
+      .ta-x-search-and-filter-button {
+        line-height: 19px;
+      }
+    }
+  }
+}

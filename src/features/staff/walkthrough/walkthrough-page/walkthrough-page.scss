@@ -1,0 +1,59 @@
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff {
+      .admin-page {
+        .ta-x-walkthrough-page-container {
+          display: flex;
+
+          #chWalkthroughPageVersions,
+          #chWalkthroughPagePreview {
+            margin-left: 0;
+            position: unset;
+            width: unset;
+          }
+
+          #chWalkthroughPagePreview {
+            flex: 1;
+            // Its right edge in line with the info panel above: the site's .controlholder margin (0 10px 10px 0) left
+            // it 10px short. The page history's keeps it, as the gap between them
+            margin-right: 0;
+          }
+
+          #chWalkthroughPageVersions {
+            height: 100%;
+
+            .content {
+              .buttons {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+
+                .button {
+                  flex: 1;
+
+                  &:not(:first-of-type) {
+                    margin-top: 5px;
+                  }
+                }
+
+                .clearboth {
+                  display: none;
+                }
+              }
+            }
+          }
+
+          &.ta-x-move-buttons-to-left {
+            #chWalkthroughPagePreview {
+              .content {
+                .buttons {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,146 @@
+body {
+  &.trueachievement-extras {
+    li,
+    tr {
+      &[data-row-hidden] {
+        .ta-x-hideable-row {
+          display: flex;
+          justify-content: flex-end;
+          align-content: center;
+          flex-wrap: wrap;
+
+          user-select: none;
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          svg {
+            pointer-events: none;
+            display: none;
+            height: 20px;
+          }
+        }
+      }
+
+      &[data-row-hidden='true'] {
+        p {
+          &.ta-x-hideable-row-filter-text {
+            font-weight: 700;
+            font-size: 1.4rem;
+          }
+
+          &:not(.ta-x-hideable-row-filter-text) {
+            display: none;
+          }
+        }
+
+        svg {
+          &.ta-x-hideable-row-show {
+            display: unset;
+          }
+        }
+      }
+
+      &[data-row-hidden='false'] {
+        p {
+          &.ta-x-hideable-row-filter-text {
+            display: none;
+          }
+        }
+
+        svg {
+          &.ta-x-hideable-row-hide {
+            display: unset;
+          }
+        }
+      }
+    }
+
+    li {
+      &[data-row-hidden='true'] {
+        .stats,
+        .author-pages,
+        .read,
+        .stack {
+          display: none;
+        }
+
+        .last {
+          justify-content: flex-end;
+
+          img,
+          div:not(.ta-x-hideable-row) {
+            display: none;
+          }
+        }
+      }
+
+      &[data-row-hidden='false'] {
+        .last {
+          .ta-x-hideable-row {
+            padding-left: 1rem;
+          }
+        }
+      }
+    }
+
+    tr {
+      // The site's content of the last cell (a sale's unobtainable flag) and our toggle, side by side. Its minimum
+      // width makes the table widen the column for both, keeping the cell's padding
+      &[data-row-hidden] {
+        .ta-x-hideable-row-toggle-cell {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
+          min-width: 47px;
+          // Clicking the toggle quickly would otherwise select the flag beside it as text
+          user-select: none;
+
+          .ta-x-hideable-row {
+            flex-wrap: nowrap;
+            justify-content: center;
+          }
+        }
+      }
+
+      &[data-row-hidden='true'] {
+        // Hidden, only the toggle: centred, not pushed aside by the site's (invisible) content
+        .ta-x-hideable-row-toggle-cell > :not(.ta-x-hideable-row) {
+          display: none;
+        }
+
+        td {
+          font-size: 0;
+
+          // The first cell's own content (the game's link, a bundle's links) hidden too, so it's out of the Tab order and
+          // not read; only our "Hidden by" text stays
+          &:first-child > :not(.ta-x-hideable-row-filter-text, .ta-x-hideable-row) {
+            visibility: hidden;
+          }
+
+          // The side borders go transparent rather than away, so the table's columns keep their widths
+          &:not(:first-child) {
+            // Important over the dark theme's own border colour, which is more specific
+            border-left-color: transparent !important;
+
+            *:not(.ta-x-hideable-row, .ta-x-hideable-row-toggle-cell) {
+              visibility: hidden;
+            }
+
+            .ta-x-hideable-row {
+              * {
+                visibility: unset;
+              }
+            }
+          }
+
+          &:not(:last-child) {
+            border-right-color: transparent !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+// A menu's columns, their width and the gap between them (between a group's links too), where it starts, and its
+// height and scrollbar while it scrolls, set on its item with the classes that apply them; and each group's longest
+// link, set on its box (fit-menus.ts, the one place their sizes are written)
+$menu-columns: var(--ta-x-sticky-header-menu-columns);
+$menu-column-width: var(--ta-x-sticky-header-menu-column-width);
+$menu-column-gap: var(--ta-x-sticky-header-menu-column-gap);
+$menu-left: var(--ta-x-sticky-header-menu-left);
+$menu-max-height: var(--ta-x-sticky-header-menu-max-height);
+$menu-scrollbar: var(--ta-x-sticky-header-menu-scrollbar, 0px);
+$group-link-width: var(--ta-x-sticky-header-group-link-width);
+
+body {
+  &.trueachievement-extras {
+    .ta-x-sticky-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+
+    // Fit Menus To Window: a menu too tall for the window gets columns (fit-menus.ts sets how many and how wide), a
+    // group kept whole with its heading. The menu is placed by the menu bar rather than its own item, centred under it
+    // and moved along to stay in the window (fit-menus.ts works out where); its top stays where the site puts it, right
+    // under its item, so the pointer moves onto it without leaving the item. Desktop only, where the site shows its
+    // menus on hover (fit-menus.ts's DESKTOP, the same breakpoint)
+    @media only screen and (min-width: 768px) {
+      .ta-x-sticky-header .nav-primary .items > li.ta-x-sticky-header-fit-menu {
+        position: static;
+
+        > div {
+          top: auto;
+          left: $menu-left;
+          width: calc($menu-columns * $menu-column-width + ($menu-columns - 1) * $menu-column-gap + $menu-scrollbar);
+        }
+
+        // Our box of the menu's groups, in columns, and in it a box for each heading with its links, kept whole.
+        // Blocks over the site's rule that makes every div in a shown menu a flex row; the groups keep the site's space
+        // between them, which the site gives the menu's own children
+        .ta-x-sticky-header-fit-menu-columns {
+          display: block !important;
+          columns: $menu-columns;
+          column-gap: $menu-column-gap;
+        }
+
+        .ta-x-sticky-header-fit-menu-group {
+          display: block !important;
+          break-inside: avoid;
+
+          &:not(:last-child) {
+            margin-bottom: 1rem;
+          }
+
+          // Its links in equal columns, so they line up: as many to a line as its longest fits, two at least, as the
+          // site has them (a link too long for half wraps); a gap between, and their sides half the site's (its padding
+          // is !important)
+          > div {
+            display: grid !important;
+            grid-template-columns: repeat(
+              auto-fill,
+              minmax(min($group-link-width, calc((100% - $menu-column-gap) / 2)), 1fr)
+            );
+            column-gap: $menu-column-gap;
+
+            > a {
+              width: auto !important;
+              padding-right: 4px !important;
+              padding-left: 4px !important;
+            }
+          }
+        }
+
+        // Measuring as the menu opens: each link as wide as its text needs on one line (fit-menus.ts reads it)
+        &.ta-x-sticky-header-fit-menu-measuring .ta-x-sticky-header-fit-menu-group > div > a {
+          justify-self: start;
+          width: max-content !important;
+          white-space: nowrap;
+        }
+
+        // Too tall even in its most columns: as tall as the window leaves, scrolling inside
+        &.ta-x-sticky-header-fit-menu-scrolls > div {
+          max-height: $menu-max-height;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          scrollbar-width: thin;
+        }
+      }
+    }
+  }
+}

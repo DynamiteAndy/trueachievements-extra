@@ -1,61 +1,160 @@
-name: Build and Tag Release
+name: Release
 
 on:
   push:
     branches:
       - main
+    # A release is a version bump, which always changes package.json
+    paths:
+      - package.json
 
 jobs:
-  build-and-tag:
+  # Runs the project's code (its install and build) with a read-only token: the release scripts and notes leave it only
+  # as an artifact, for the release job
+  check:
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    outputs:
+      skip: ${{ steps.check-version.outputs.skip }}
+      version: ${{ steps.check-version.outputs.version }}
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
-        fetch-depth: 0 # Fetches all history & tags automatically
+        # The tags, to tell whether this version is released already
+        fetch-depth: 0
+        persist-credentials: false
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: latest
-
-    - name: Setup Node.js & Cache
-      uses: actions/setup-node@v7
-      with:
-        node-version-file: '.nvmrc'
-        cache: 'pnpm'
-
-    - name: Check if current package version is already tagged
+    - name: Check if current package version is already released
       id: check-version
       run: |
         PACKAGE_VERSION="v$(node -p "require('./package.json').version")"
-        echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
+        echo "version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
 
         if git rev-parse "$PACKAGE_VERSION" >/dev/null 2>&1; then
-          echo "Version $PACKAGE_VERSION already tagged. Skipping build."
+          echo "Version $PACKAGE_VERSION already tagged. Nothing to do."
           echo "skip=true" >> $GITHUB_OUTPUT
         else
-          echo "New version detected ($PACKAGE_VERSION). Proceeding with build."
+          echo "New version detected ($PACKAGE_VERSION). Building it."
           echo "skip=false" >> $GITHUB_OUTPUT
         fi
 
-    - name: Install dependencies
+    # The runner's own Node is enough to read the version, so a run with nothing to release installs nothing
+    - name: Setup
       if: steps.check-version.outputs.skip != 'true'
-      run: pnpm install --frozen-lockfile
+      uses: ./.github/actions/setup
 
     - name: Build
       if: steps.check-version.outputs.skip != 'true'
       run: pnpm run build:release
 
-    - name: Commit dist folder and push tag
+    # dist/ on main keeps the last release committed there, the one that moved installs to GitHub Releases. Installs
+    # from before it update from there, so nothing is released until dist holds it, and when dist claims this version
+    # it must be exactly this commit's build
+    - name: Check dist matches the build, when dist is this version
       if: steps.check-version.outputs.skip != 'true'
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add dist/*.js
-        git commit -m "$PACKAGE_VERSION" --no-verify || echo "No changes to commit"
-        git tag "$PACKAGE_VERSION"
-        git push origin "$PACKAGE_VERSION"
+        if ! git show HEAD:dist/trueachievements-extras.user.js | grep -q 'releases/latest/download/'; then
+          echo "::error::dist/ on main doesn't hold the release that moves installs to GitHub Releases, so installs from before it would never update: it must be committed to dist/ before anything is released"
+          exit 1
+        fi
+
+        DIST_VERSION="$(git show HEAD:dist/trueachievements-extras.user.js | grep -m1 '@version' | awk '{print $3}')"
+        if [ "v$DIST_VERSION" != "$PACKAGE_VERSION" ]; then
+          echo "dist/ holds $DIST_VERSION, not this version, so it isn't checked."
+          exit 0
+        fi
+
+        if ! git diff --quiet -- 'dist/*.js'; then
+          git diff --stat -- 'dist/*.js'
+          echo "::error::dist/ claims $PACKAGE_VERSION but doesn't match build:release of this commit, so it isn't released. Check the version bump's Build Release Dist run."
+          exit 1
+        fi
       env:
-        HUSKY_SKIP_HOOKS: true
+        PACKAGE_VERSION: ${{ steps.check-version.outputs.version }}
+
+    # The release's notes are this version's CHANGELOG.md section
+    - name: Gather the release scripts and notes
+      if: steps.check-version.outputs.skip != 'true'
+      run: |
+        mkdir -p "$RELEASE"
+        cp dist/trueachievements-extras.user.js dist/trueachievements-extras.min.user.js "$RELEASE/"
+        awk -v heading="## ${PACKAGE_VERSION#v}" '$0 == heading { on = 1; next } on && /^## / { exit } on' CHANGELOG.md \
+          | sed '/./,$!d' > "$RELEASE/notes.md"
+
+        if [ ! -s "$RELEASE/notes.md" ]; then
+          echo "::error::CHANGELOG.md has no \"## ${PACKAGE_VERSION#v}\" section for the release notes"
+          exit 1
+        fi
+      env:
+        PACKAGE_VERSION: ${{ steps.check-version.outputs.version }}
+        RELEASE: ${{ runner.temp }}/release
+
+    - name: Keep them for the release job
+      if: steps.check-version.outputs.skip != 'true'
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: release
+        path: ${{ runner.temp }}/release/
+        if-no-files-found: error
+        retention-days: 1
+
+  # Holds the write token, so it checks out and runs nothing of the project's: gh only, on the files the check job
+  # left, once they're checked to be just those. The release makes the tag on the commit checked; tags aren't under
+  # main's ruleset, so this token can make one
+  release:
+    needs: check
+    if: ${{ needs.check.outputs.skip == 'false' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+
+    steps:
+    - name: Download the release scripts and notes
+      uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        name: release
+        path: ${{ runner.temp }}/release
+
+    # Only these files, each a plain file: no other name, folder or link reaches the release
+    - name: Check the artifact holds only the release scripts and notes
+      run: |
+        expected="$(printf '%s f\n' notes.md trueachievements-extras.min.user.js trueachievements-extras.user.js)"
+        found="$(cd "$ARTIFACT" && find . -mindepth 1 -printf '%P %y\n' | sort)"
+
+        if [ "$found" != "$expected" ]; then
+          echo "::error::The check job's artifact isn't just the release scripts and notes. Found:"
+          echo "$found"
+          exit 1
+        fi
+      env:
+        ARTIFACT: ${{ runner.temp }}/release
+
+    # Marked Latest, as releases/latest/download is where every install updates from
+    - name: Create the release on the commit checked
+      run: |
+        gh release create "$PACKAGE_VERSION" \
+          "$ARTIFACT/trueachievements-extras.user.js" "$ARTIFACT/trueachievements-extras.min.user.js" \
+          --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "$PACKAGE_VERSION" \
+          --notes-file "$ARTIFACT/notes.md" --latest
+      env:
+        ARTIFACT: ${{ runner.temp }}/release
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PACKAGE_VERSION: ${{ needs.check.outputs.version }}
+
+    # GitHub has marked a release Latest against the flags given before, and a release that isn't Latest leaves every
+    # install where it is, so a wrong Latest fails the run rather than going unnoticed
+    - name: Check the release is Latest
+      run: |
+        LATEST="$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)"
+        if [ "$LATEST" != "$PACKAGE_VERSION" ]; then
+          echo "::error::releases/latest is $LATEST, not $PACKAGE_VERSION, so installs won't update to it: mark $PACKAGE_VERSION Latest on the Releases page"
+          exit 1
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PACKAGE_VERSION: ${{ needs.check.outputs.version }}

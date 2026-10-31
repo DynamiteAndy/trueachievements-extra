@@ -1,0 +1,81 @@
+<!--
+  Staff edit walkthrough page, /staff/walkthrough/editwalkthroughpage.aspx: our TinyMCE toolbar group (ta-x-group) as
+  TinyMCE renders it, after our page scripts have added and tagged the buttons (the source code button's class, the
+  theme toggle's classes and data-ta-x-tinymce-theme).
+  Captured 2026-10-31 (after fixing the inline-javascript-loader). Condensed: the rest of the editor removed, and the
+  icons we put inside the Source Code and Toggle Theme buttons taken out, leaving TinyMCE's own placeholder icon
+  (`i.mce-ico.mce-i-<name>`, from addButton's default icon) that ours replace.
+-->
+<div class="mce-tinymce">
+  <div class="mce-toolbar">
+    <div
+      id="mceu_56"
+      class="mce-container mce-ta-x-tinymce-group mce-btn-group mce-flow-layout-item mce-last"
+      role="group"
+    >
+      <div id="mceu_56-body">
+        <div
+          id="mceu_57"
+          class="mce-widget mce-btn mce-colorbutton mce-first"
+          role="button"
+          tabindex="-1"
+          aria-haspopup="true"
+          aria-label="Text color"
+        >
+          <button role="presentation" hidefocus="1" type="button" tabindex="-1">
+            <i class="mce-ico mce-i-forecolor"></i><span id="mceu_57-preview" class="mce-preview"></span>
+          </button>
+          <button type="button" class="mce-open" hidefocus="1" tabindex="-1"><i class="mce-caret"></i></button>
+        </div>
+        <div
+          id="mceu_58"
+          class="mce-widget mce-btn mce-colorbutton"
+          role="button"
+          tabindex="-1"
+          aria-haspopup="true"
+          aria-label="Background color"
+        >
+          <button role="presentation" hidefocus="1" type="button" tabindex="-1">
+            <i class="mce-ico mce-i-backcolor"></i><span id="mceu_58-preview" class="mce-preview"></span>
+          </button>
+          <button type="button" class="mce-open" hidefocus="1" tabindex="-1"><i class="mce-caret"></i></button>
+        </div>
+        <div
+          id="mceu_59"
+          class="mce-widget mce-btn"
+          tabindex="-1"
+          aria-labelledby="mceu_59"
+          role="button"
+          aria-label="Source Code"
+        >
+          <button
+            role="presentation"
+            type="button"
+            tabindex="-1"
+            class="ta-x-source-code-button"
+          >
+            <i class="mce-ico mce-i-sourceCode"></i>
+          </button>
+        </div>
+        <div
+          id="mceu_60"
+          class="mce-widget mce-btn mce-last"
+          tabindex="-1"
+          aria-labelledby="mceu_60"
+          role="button"
+          aria-label="Toggle Theme"
+        >
+          <button
+            role="presentation"
+            type="button"
+            tabindex="-1"
+            data-ta-x-tinymce-theme="dark"
+            class="js-ta-x-theme-toggle ta-x-theme-toggle"
+          >
+            <i class="mce-ico mce-i-toggleTheme"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

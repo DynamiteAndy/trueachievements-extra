@@ -1,0 +1,32 @@
+<!--
+  Staff edit walkthrough page, /staff/walkthrough/editwalkthroughpage.aspx: the TinyMCE editor as the site renders it, for
+  the sticky toolbar (its toolbar group, the editing iframe and the status bar).
+  Captured 2026-11-14 on a page the user can edit, before our sticky toolbar script ran (our sticky class and y-show class
+  left off). Condensed: the toolbars' buttons removed (the sticky toolbar only uses the group, not its buttons), the
+  iframe's content and attributes other than its id removed, the status bar's path and word count emptied. Ids and
+  classes are TinyMCE's own. The parents are the page's own: div.admin-page > div#divEditWalkthroughPage.
+-->
+<div class="admin-page">
+  <div id="divEditWalkthroughPage">
+    <div id="mceu_33" class="mce-tinymce mce-container mce-panel">
+      <div id="mceu_33-body" class="mce-container-body mce-stack-layout">
+        <div id="mceu_34" class="mce-toolbar-grp mce-container mce-panel mce-first mce-stack-layout-item">
+          <div id="mceu_34-body" class="mce-container-body mce-stack-layout">
+            <div id="mceu_35" class="mce-container mce-toolbar mce-first mce-stack-layout-item"></div>
+            <div id="mceu_45" class="mce-container mce-toolbar mce-last mce-stack-layout-item"></div>
+          </div>
+        </div>
+        <div id="mceu_51" class="mce-edit-area mce-container mce-panel mce-stack-layout-item">
+          <iframe id="txtWalkthrough_ifr"></iframe>
+        </div>
+        <div id="mceu_52" class="mce-statusbar mce-container mce-panel mce-last mce-stack-layout-item">
+          <div id="mceu_52-body" class="mce-container-body mce-flow-layout">
+            <div id="mceu_53" class="mce-path mce-flow-layout-item mce-first"></div>
+            <label id="mceu_55" class="mce-wordcount mce-widget mce-label mce-flow-layout-item"></label>
+            <div id="mceu_54" class="mce-flow-layout-item mce-resizehandle mce-last"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

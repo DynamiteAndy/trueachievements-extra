@@ -1,0 +1,13 @@
+body {
+  &.trueachievement-extras {
+    // The toast renders the site's own toast markup (jq-toast-*) and relies on the site's toast and
+    // fade styles. The site styles toast links #eee on a white toast, which is unreadable, so links in
+    // our toast take the heading colour instead. They keep the site's link line (a 1px bottom border, 3px under the
+    // text), in that colour, so they still read as links
+    .ta-x-toast .jq-toast-single a {
+      color: inherit;
+      border-bottom-color: currentColor;
+      font-size: inherit;
+    }
+  }
+}

@@ -1,44 +1,35 @@
 {
   "compilerOptions": {
-    "rootDir": "./",
-    "outDir": "./dist",
+    "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "target": "ES2024",
     "allowJs": false,
-    "removeComments": true,
     "allowUnreachableCode": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "sourceMap": true,
-    "strict": false,
+    "isolatedModules": true,
+    "strict": true,
     "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "allowImportingTsExtensions": true,
+    "types": ["vitest/globals", "node", "tampermonkey"],
     "paths": {
+      "@ta-x-page": ["./src/page/index"],
+      "@ta-x-fetch": ["./src/fetch/index"],
+      "@ta-x-storage": ["./src/storage/index"],
+      "@ta-x-site": ["./src/site/index"],
+      "@ta-x-lib": ["./src/lib/index"],
       "@ta-x-features": ["./src/features/index"],
-      "@ta-x-features/*": ["./src/features/*"],
-      "@ta-x-partials/*": ["./src/views/partials/*"],
-      "@ta-x-globals": ["./src/globals/index"],
-      "@ta-x-utilities": ["./src/utilities/index"],
-      "@ta-x-utilities/*": ["./src/utilities/*"],
-      "@ta-x-models": ["./src/models/index"],
-      "@ta-x-components": ["./src/components/index"],
-      "@ta-x-helpers": ["./src/helpers/index"],
-      "@ta-x-services": ["./src/services/index"],
-      "@ta-x-build-helpers": ["./build/helpers/index"],
-      "@ta-x-types": ["./src/types/index"],
+      "@ta-x-ui": ["./src/ui/index"],
       "@ta-x-scss/*": ["./src/scss/*"],
-      "@ta-x-tinymce-scss/*": [
-        "./src/scss/features/staff-walkthrough-improvements/tinymce/*"
-      ],
-      "@ta-x-views/*": ["./src/views/*"],
-      "@ta-x-svgs/*": ["./src/resources/svgs/*"],
       "@ta-x-project-root/*": ["./*"],
       "@ta-x-test": ["./test/index"],
+      "@ta-x-test-timers": ["./test/support/timers"],
       "@ta-x-test-views/*": ["./test/html/*"]
     }
   },
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.test.json" }
-  ]
+  "include": ["src/**/*", "test/**/*", "build/**/*", "vitest.*.mts", "package.json"],
+  "exclude": ["dist", "node_modules"]
 }

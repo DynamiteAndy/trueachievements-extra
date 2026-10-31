@@ -1,0 +1,65 @@
+// The site's lazyYT video styles, from a walkthrough page: achievement pages don't load them, so YouTubeVideo
+// brings them along. Same selectors and values, so on pages that do load them nothing changes
+.lazyYT-container {
+  position: relative;
+  display: block;
+  height: 0;
+  padding: 0 0 56.25%;
+  overflow: hidden;
+  background-color: #000;
+  z-index: 1;
+  margin: 2.5rem 0;
+}
+
+.lazyYT-container iframe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.ytp-thumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.ytp-button:focus,
+.ytp-button {
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  padding: 0;
+  background: transparent;
+}
+
+.ytp-large-play-button {
+  position: absolute;
+  width: 68px;
+  cursor: pointer;
+}
+
+.ytp-large-play-button-bg {
+  transition: fill 0.1s cubic-bezier(0.4, 0, 1, 1);
+  fill: #1f1f1f;
+  opacity: 1;
+}
+
+.ytp-thumbnail:hover .ytp-large-play-button-bg {
+  fill: #cc181e;
+}
+
+// Ours, not the site's: the copy above takes the play button's focus ring away, so the keyboard shows nowhere on our
+// imported guides' videos. A white ring inside it, from the keyboard only, shows on the thumbnail and the black box
+// alike. Scoped to our guides, so the site's own videos (walkthrough pages) stay as the site has them
+.ta-x-achievement-guide .ytp-button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}

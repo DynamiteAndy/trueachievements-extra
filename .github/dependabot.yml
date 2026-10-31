@@ -1,0 +1,15 @@
+version: 2
+
+updates:
+  # The actions are pinned to commits, so they're moved on by pull request. The setup action is listed too, as it holds
+  # the pnpm action. Monthly and grouped (a pull request per directory at most), to keep the extra CI runs few
+  - package-ecosystem: github-actions
+    directories:
+      - '/'
+      - '/.github/actions/*'
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns:
+          - '*'

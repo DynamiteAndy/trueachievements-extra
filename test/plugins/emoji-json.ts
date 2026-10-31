@@ -1,28 +1,26 @@
-import path from 'node:path';
 import fs from 'node:fs';
-import { compress } from 'compress-json';
-import groupEmojis from '../../build/helpers/group-emojis.ts';
+import { createRequire } from 'node:module';
 
+import { compressedEmojis } from '../../build/helpers/group-emojis.ts';
+
+// The emoji.json package compressed as build/loaders/emoji-loader.ts does it for the build
 export default () => {
   const emojiJsonModule = 'emoji.json';
   const resolvedVirtualEmojiJsonModule = `\0${emojiJsonModule}`;
 
   return {
     name: 'vitest-emoji-json',
-    enforce: 'pre',
+    enforce: 'pre' as const,
 
     resolveId(id: string) {
-      if (id.endsWith(emojiJsonModule)) {
+      if (id === emojiJsonModule) {
         return resolvedVirtualEmojiJsonModule;
       }
     },
     load(id: string) {
       if (id === resolvedVirtualEmojiJsonModule) {
-        const emojis = fs.readFileSync(path.resolve('node_modules/emoji.json/emoji.json'), 'utf-8');
-        const mappedEmojis = groupEmojis(emojis);
-        const compressedEmojis = compress(mappedEmojis);
-
-        return JSON.stringify(compressedEmojis);
+        const emojis = fs.readFileSync(createRequire(import.meta.url).resolve(emojiJsonModule), 'utf-8');
+        return JSON.stringify(compressedEmojis(emojis));
       }
     }
   };

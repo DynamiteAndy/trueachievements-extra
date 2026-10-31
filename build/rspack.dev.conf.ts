@@ -1,43 +1,49 @@
-import { join } from 'node:path';
+import { rspack } from '@rspack/core';
 import { merge } from 'rspack-merge';
-import ExternalFileWatcherPlugin from './plugins/external-file-watcher-plugin';
-import { baseConfig, createMetadataPlugin, entryPath } from './rspack.base.conf';
-import metadata from './metadata';
 
-(metadata.name as { $: string }).$ += ' - Development';
-(metadata.require as string[]).push(`file://${join(__dirname, '../dist/trueachievements-extras.debug.js')}`);
+import type { Configuration, RspackPluginInstance } from '@rspack/core';
 
-metadata.downloadURL = undefined;
-metadata.updateURL = undefined;
+import { createMetadata, header } from './metadata.ts';
+import { baseConfig, entryPath } from './rspack.base.conf.ts';
 
-export const devConfig = merge(baseConfig, {
-  mode: 'development',
-  cache: false,
-  entry: {
-    debug: entryPath,
-    'dev.user': join(__dirname, './empty.ts')
-  },
-  output: {
-    filename: 'trueachievements-extras.[name].js'
-  },
-  devtool: process.env.analyse ? 'cheap-module-source-map' : 'eval-cheap-module-source-map',
-  watch: !!process.env.watch,
-  watchOptions: {
-    ignored: /node_modules/
-  },
-  plugins: process.env.watch
-    ? [
-        createMetadataPlugin(metadata),
-        new ExternalFileWatcherPlugin({
-          files: [
-            join(__dirname, '../src/**/*.hbs'),
-            join(__dirname, '../CHANGELOG.md'),
-            join(__dirname, '../CREDITS.md'),
-            join(__dirname, '../FEATURE-DOCUMENTATION.md')
-          ]
-        })
+// The script Tampermonkey installs is the header alone: its @require loads the debug build
+const devUserscriptPlugin: RspackPluginInstance = {
+  apply(compiler) {
+    compiler.hooks.thisCompilation.tap('DevUserscript', (compilation) => {
+      compilation.hooks.processAssets.tap(
+        { name: 'DevUserscript', stage: rspack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL },
+        () => {
+          compilation.emitAsset(
+            'trueachievements-extras.dev.user.js',
+            new rspack.sources.RawSource(`${header(createMetadata('dev'))}\n`)
+          );
+        }
+      );
+    });
+  }
+};
+
+export default (): Configuration =>
+  merge(baseConfig, {
+    mode: 'development',
+    entry: {
+      // Preact's debug warnings and DevTools, the signal log, and debug logging, ahead of the script so they see every
+      // render and every signal
+      debug: [
+        './src/dev/start-mark.ts',
+        './src/dev/devtools-hook.ts',
+        './src/dev/preact-debug.ts',
+        './src/dev/signals-debug.ts',
+        './src/dev/debug-logging.ts',
+        entryPath
       ]
-    : [createMetadataPlugin(metadata)]
-});
-
-export default devConfig;
+    },
+    output: {
+      filename: 'trueachievements-extras.[name].js'
+    },
+    devtool: 'eval-cheap-module-source-map',
+    watchOptions: {
+      ignored: /node_modules/
+    },
+    plugins: [devUserscriptPlugin]
+  });

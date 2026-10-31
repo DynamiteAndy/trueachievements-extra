@@ -1,0 +1,67 @@
+<!--
+  News sale article, /news/xbox-shocktober-sale-2026 (server HTML, before the site's or our scripts run).
+  Captured 2026-10-31. Condensed: the article keeps its sale section and an empty author section (the feature waits for
+  `.author`). The sale section's intro text, links and line breaks are dropped and its region selector emptied; it
+  keeps the first two of its four platform groups (an h2 and h3 above a div.tab-w holding a sortable table.sale), each
+  table cut to its first row. Store links are cut to their path.
+-->
+<html>
+  <body>
+    <main>
+      <article class="newsitem new-layout">
+        <section class="sale">
+          <div class="region-selector cf-region"></div>
+          <h2>Xbox 360 (backwards compatible) Sales</h2>
+          <h3>Xbox 360 (backwards compatible) Games</h3>
+          <div class="tab-w">
+            <table class="sale interactive">
+              <thead>
+                <tr class="headers">
+                  <th data-sort="string" class="sortable sorting-asc" data-sort-dir="asc">Product</th>
+                  <th data-sort="price" class="price sortable">Sale Price</th>
+                  <th data-sort="int" class="discount sortable">Discount</th>
+                  <th class="info"><i class="fa fa-info-circle"></i></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="/game/Alan-Wake/achievements">Alan Wake</a></td>
+                  <td class="price" data-sort-value="html">
+                    <div><a class="base-button blue afl" href="/ext" target="_blank" rel="noopener"><div><span class="spnRegion_1">$6.59<br></span><span class="spnRegion_2" style="display:none">£4.94<br></span><span class="spnRegion_4" style="display:none">€6.59<br></span><span class="spnRegion_6" style="display:none">$9.88<br></span><span class="spnRegion_7" style="display:none">$6.59<br></span></div><i class="fa fa-shopping-cart"></i></a></div>
+                  </td>
+                  <td>67% </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h2>Xbox Series X|S Sales</h2>
+          <h3>Xbox Series X|S Games</h3>
+          <div class="tab-w">
+            <table class="sale interactive">
+              <thead>
+                <tr class="headers">
+                  <th data-sort="string" class="sortable sorting-asc" data-sort-dir="asc">Product</th>
+                  <th data-sort="price" class="price sortable">Sale Price</th>
+                  <th data-sort="int" class="discount sortable">Discount</th>
+                  <th class="info"><i class="fa fa-info-circle"></i></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="/game/7-Days-to-Die/achievements">7 Days to Die</a></td>
+                  <td class="price" data-sort-value="html">
+                    <div><a class="base-button blue afl" href="/ext" target="_blank" rel="noopener"><div><span class="spnRegion_1">$24.74<br></span><span class="spnRegion_2" style="display:none">£20.61<br></span><span class="spnRegion_4" style="display:none">€24.74<br></span><span class="spnRegion_6" style="display:none">$37.09<br></span><span class="spnRegion_7" style="display:none">$31.89<br></span></div><i class="fa fa-shopping-cart"></i></a></div>
+                  </td>
+                  <td>45% </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="author"></section>
+      </article>
+    </main>
+  </body>
+</html>

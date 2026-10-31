@@ -1,0 +1,38 @@
+name: Delete Held Runs
+
+on:
+  # A pull request closed or merged: its runs held for approval (a first-time contributor's) can't be wanted any more.
+  # pull_request_target, as only it gets a token that can delete runs for a fork's pull request; that's safe here as
+  # nothing from the pull request is checked out or run. Reopened, it gets a new run (held again) from ci.yml's own
+  # pull_request trigger
+  pull_request_target:
+    types: [closed]
+
+# One at a time per pull request
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  delete-held-runs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Deleting runs needs write access to Actions, and nothing else
+    permissions:
+      actions: write
+
+    steps:
+    # The pull request's branch and repository come in through env, never pasted into the script: a fork names its
+    # own branch
+    - name: Delete the pull request's held runs
+      run: |
+        gh api --paginate "repos/$GITHUB_REPOSITORY/actions/runs?event=pull_request&status=action_required" \
+          --jq ".workflow_runs[] | select(.head_branch == env.HEAD_REF and .head_repository.full_name == env.HEAD_REPO)
+            | .id" |
+          while read -r RUN_ID; do
+            gh run delete "$RUN_ID" --repo "$GITHUB_REPOSITORY"
+          done
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}

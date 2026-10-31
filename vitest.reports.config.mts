@@ -1,4 +1,5 @@
 import { defineConfig, mergeConfig } from 'vitest/config';
+
 import baseConfig from './vitest.config.mts';
 
 export default mergeConfig(
@@ -6,22 +7,15 @@ export default mergeConfig(
   defineConfig({
     test: {
       coverage: {
-        provider: 'v8',
         enabled: true,
         reporter: ['html'],
-        include: ['src/**'],
-        reportsDirectory: './dist/html/coverage/',
-        exclude: [
-          '**/*.hbs',
-          '**/*.html',
-          '**/*.scss',
-          'node_modules/**',
-        ]
+        reportsDirectory: './dist/html/coverage/'
       },
       silent: true,
-      reporters: ['html'],
-      watch: true,
-      outputFile: './dist/html/index.html'
+      // The default reporter prints the UI's address with its token (Vitest 5 asks for it: without, the UI answers
+      // 403). The HTML report goes to dist/html (Vitest 5's html reporter takes `outputDir`; it ignores `outputFile`)
+      reporters: ['default', ['html', { outputDir: './dist/html' }]],
+      watch: true
     }
   })
 );

@@ -1,0 +1,22 @@
+// The staff walkthrough pages' background, in both themes
+$page-background: #000;
+
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff {
+      min-width: unset !important;
+      overflow: auto;
+      background-color: $page-background;
+
+      main {
+        min-height: unset !important;
+      }
+
+      .admin-page {
+        position: unset;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}

@@ -1,9 +1,16 @@
 {
   "name": "trueachievements-extras",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "type": "module",
   "engines": {
-    "node": ">=26.5.1"
+    "node": ">=26.13.1"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "onFail": "error",
+      "version": "12.23.0"
+    }
   },
   "private": true,
   "description": "Provides a variety of extras for use on TrueAchievements",
@@ -12,69 +19,67 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dynamiteandy/trueachievements-extra.git",
-    "homepage": "https://github.com/dynamiteandy/trueachievements-extra.git"
+    "url": "https://github.com/dynamiteandy/trueachievements-extra.git"
   },
   "author": "Dynamite Andy - dynamiteandy@gmail.com",
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "prepare": "husky",
-    "analyse": "cross-env analyse=true rspack build --config ./build/rspack.dev.conf.ts",
-    "build": "concurrently --group --max-processes 3 --names \"dev,prod,prod-min\" \"pnpm run build:dev\" \"pnpm run build:prod\" \"pnpm run build:prod-min\"",
-    "build:release": "concurrently --group --max-processes 2 --names \"prod,prod-min\" \"pnpm run build:prod\" \"pnpm run build:prod-min\"",
+    "postinstall": "node build/link-editor-tsdk.ts",
+    "analyse": "rspack build --config ./build/rspack.prod.conf.ts --config-name prod-min --env analyse",
+    "analyse:snapshot": "node build/rsdoctor-snapshot.ts",
+    "analyse:diff": "rsdoctor bundle-diff --baseline=dist/local/rsdoctor-before/manifest.json --current=dist/local/rsdoctor-after/manifest.json --html --output=dist/local/rsdoctor-diff.html",
+    "build": "pnpm run build:dev && pnpm run build:prod-all",
+    "build:release": "rspack build --config ./build/rspack.prod.conf.ts --env release",
     "build:dev": "rspack build --config ./build/rspack.dev.conf.ts",
-    "build:prod": "rspack build --config ./build/rspack.prod.conf.ts",
-    "build:prod-min": "cross-env minimize=true rspack build --config ./build/rspack.prod.conf.ts",
-    "lint": "concurrently --group --max-processes 3 --names \"scss,html,ts\" \"pnpm run lint:scss\" \"pnpm run lint:html\" \"pnpm run lint:ts\"",
-    "lint:html": "oxfmt --check \"**/*.html\" \"**/*.hbs\"",
-    "lint:scss": "oxfmt --check \"**/*.scss\"",
-    "lint:ts": "oxlint",
-    "fix": "concurrently --group --max-processes 3 --names \"scss,html,ts\" \"pnpm run fix:scss\" \"pnpm run fix:html\" \"pnpm run fix:ts\"",
-    "fix:html": "oxfmt --write \"**/*.html\" \"**/*.hbs\"",
-    "fix:scss": "oxfmt --write \"**/*.scss\"",
-    "fix:ts": "oxlint --fix",
-    "start": "cross-env watch=true pnpm run build:dev",
+    "build:prod": "rspack build --config ./build/rspack.prod.conf.ts --config-name prod",
+    "build:prod-min": "rspack build --config ./build/rspack.prod.conf.ts --config-name prod-min",
+    "build:prod-all": "rspack build --config ./build/rspack.prod.conf.ts",
+    "lint": "oxfmt --check \"src/**/*.{ts,tsx,scss}\" \"test/**/*.{ts,tsx}\" \"build/**/*.ts\" \"*.mts\" && oxlint --deny-warnings",
+    "fix": "oxfmt --write \"src/**/*.{ts,tsx,scss}\" \"test/**/*.{ts,tsx}\" \"build/**/*.ts\" \"*.mts\" && oxlint --fix",
+    "start": "rspack build --config ./build/rspack.dev.conf.ts --watch",
     "test:reports": "vitest --config vitest.reports.config.mts --ui",
-    "test:github": "vitest --config vitest.github.config.mts"
+    "test:github": "vitest run --coverage.enabled --coverage.reporter=lcov --reporter=default --reporter=github-actions --reporter=junit --outputFile.junit=dist/coverage/test-report.junit.xml",
+    "test:mutate": "node test/tools/mutate/prove.ts",
+    "fixture:condense": "node test/tools/fixtures/condense-cli.ts"
   },
   "devDependencies": {
-    "@minify-html/node": "^0.18.1",
-    "@rsdoctor/rspack-plugin": "^1.6.3",
-    "@rspack/cli": "^2.2.2",
-    "@rspack/core": "^2.2.2",
-    "@types/node": "^26.4.1",
-    "@types/sanitize-html": "^2.16.1",
+    "@preact/signals-debug": "^1.5.0",
+    "@rsdoctor/cli": "^2.0.4",
+    "@rsdoctor/core": "^2.0.4",
+    "@rspack/cli": "^2.3.4",
+    "@rspack/core": "^2.3.4",
+    "@types/node": "^26.6.11",
+    "@types/sanitize-html": "^2.16.2",
     "@types/tampermonkey": "^5.5.0",
-    "@vitest/coverage-v8": "^4.1.11",
-    "@vitest/ui": "^4.1.11",
-    "concurrently": "^10.0.5",
-    "cross-env": "^10.1.0",
+    "@vitest/coverage-v8": "^5.1.2",
+    "@vitest/ui": "^5.1.2",
     "emoji.json": "^16.0.0",
-    "fake-indexeddb": "^6.2.5",
-    "handlebars": "^4.7.9",
-    "happy-dom": "^20.14.0",
+    "fake-indexeddb": "^6.2.8",
+    "happy-dom": "^21.0.4",
+    "htmlnano": "^3.7.0",
     "husky": "^9.1.7",
-    "marked": "^18.0.11",
-    "marked-mangle": "^1.1.13",
-    "oxc-minify": "^0.148.0",
-    "oxfmt": "^0.66.0",
-    "oxlint": "^1.81.0",
+    "lightningcss": "^1.33.0",
+    "marked": "^18.3.0",
+    "oxfmt": "^0.80.0",
+    "oxlint": "^1.95.0",
+    "preact-render-to-string": "^6.8.3",
     "rspack-merge": "^1.0.1",
-    "sanitize-html": "^2.17.7",
-    "sass": "^1.104.0",
-    "sass-loader": "^17.0.1",
-    "typescript": "^7.0.2",
-    "userscript-metadata-webpack-plugin": "^0.4.2",
-    "vitest": "^4.1.11"
+    "sanitize-html": "^2.18.2",
+    "sass": "^1.108.2",
+    "sass-loader": "^17.1.1",
+    "tsrs": "7.1.0-beta.tsrs5",
+    "vitest": "^5.1.2",
+    "yaml": "^2.9.1"
   },
   "url": "https://github.com/dynamiteandy/trueachievements-extra",
   "dependencies": {
     "@eastdesire/jscolor": "^2.5.2",
+    "@fortawesome/free-regular-svg-icons": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@preact/signals": "^2.11.4",
     "@rxliuli/vista": "^0.5.3",
-    "compress-json": "^3.4.0"
+    "compress-json": "^3.4.0",
+    "preact": "^11.2.0"
   },
-  "volta": {
-    "node": "26.5.1"
-  },
-  "packageManager": "pnpm@12.3.4"
+  "packageManager": "pnpm@12.23.0"
 }

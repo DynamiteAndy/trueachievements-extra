@@ -1,0 +1,66 @@
+<!--
+  Staff manage walkthrough page, /staff/walkthrough/managewalkthrough.aspx?walkthroughid=1578 (Xbox Apps That Don't
+  Need A WT, Published), fetched by populate-aside-content for the status and the form its "View public page" button
+  posts back.
+  Captured 2026-11-08 (a GET). Condensed: the form keeps its action, its hidden state fields (__VIEWSTATE's 1308
+  characters cut to a placeholder), one of each kind of field it has (text, checkbox both ways, the status filter
+  select) and the button; everything else removed. A published walkthrough's page rows have no links, so the first
+  is kept to show it. The button keeps its javascript:Postback href because that's what the code mirrors.
+-->
+<form method="post" action="/staff/walkthrough/managewalkthrough.aspx?walkthroughid=1578" id="frm">
+  <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="VIEWSTATE" />
+  <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="E9B59F14" />
+  <div class="admin-page">
+    <input type="text" name="txtSearch" id="txtSearch" value="" class="textbox" />
+    <select id="ddlStatusFilter" name="ddlStatusFilter" class="dropdown cs-n">
+      <option selected="selected" value="-1">(All)</option>
+      <option value="New">New</option>
+      <option value="In progress">In progress</option>
+      <option value="Ready for review">Ready for review</option>
+      <option value="Ready for publish">Ready for publish</option>
+      <option value="Published">Published</option>
+      <option value="Merged">Merged</option>
+      <option value="New owner required">New owner required</option>
+    </select>
+    <input type="checkbox" class="checkbox" name="chkBeingImprovedFilter" id="chkBeingImprovedFilter" value="True" />
+    <div id="divWalkthroughHolder">
+      <div id="chEditWalkthrough" class="controlholder">
+        <div class="title">Walkthrough Details</div>
+        <div class="content">
+          <div>
+            <label>Name</label
+            ><input type="text" name="txtWalkthroughName" id="txtWalkthroughName" value="Xbox Apps That Don't Need A WT" class="textbox cs-vl readonly" readonly="readonly" maxlength="50" />
+          </div>
+          <div>
+            <label>Status</label
+            ><input type="text" name="txtStatus" id="txtStatus" value="Published" class="textbox cs-n readonly" readonly="readonly" maxlength="30" />
+          </div>
+          <input type="checkbox" class="checkbox" name="chkSinglePageWalkthrough" id="chkSinglePageWalkthrough" value="True" checked="" />
+          <div id="divPages">
+            <div id="lstWalkthroughPages" class="datalist">
+              <div class="scroll" id="scrolllstWalkthroughPages">
+                <table class="dl">
+                  <tbody>
+                    <tr>
+                      <td class="point"></td>
+                      <td class="c1">1</td>
+                      <td class="c2">Overview</td>
+                      <td class="c3">30/11/2016</td>
+                      <td class="c4"></td>
+                      <td class="dlop plain"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="buttons">
+            <a href="javascript:Postback('btnViewWalkthrough')" class="button"
+              ><img src="/images/icons/walkthrough.png" width="16" height="16" alt="View public page" title="View public page" /><span>View public page</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

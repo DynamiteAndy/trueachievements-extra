@@ -1,0 +1,48 @@
+<!--
+  Staff edit walkthrough page, /staff/walkthrough/editwalkthroughpage.aspx?walkthroughpageid=<id>&walkthroughpagecontentid=<id>,
+  straight from the server (a GET, before any script ran): the walkthrough's image viewer, hidden until TinyMCE's
+  "Add Image" opens it.
+  Captured 2026-10-31. Condensed: the rest of the editor page removed, images cut to 4 of 36, onclicks and
+  javascript: hrefs stripped, apart from the Add images link's (insert-xbox-images.ts reads the game id from it),
+  captured again 2026-11-23 from Asdivine Dios' edit page (server HTML, the same link byte for byte).
+-->
+<div class="admin-page">
+  <div class="imageviewerholder" id="oWalkthroughImageViewer" style="display: none">
+    <div class="imageviewer">
+      <div class="itemname">Asdivine Dios</div>
+      <div class="ivimage" id="iv132811">
+        <a href="#">
+          <img
+            src="https://www.trueachievements.com/customimages/thumbs/132811.jpg"
+            alt="'Credits' uploaded by Dynamite Andy 29 Sep 22 at 20:11"
+            title="'Credits' uploaded by Dynamite Andy 29 Sep 22 at 20:11"
+        /></a>
+      </div>
+      <div class="ivimage" id="iv132810">
+        <a href="#">
+          <img
+            src="https://www.trueachievements.com/customimages/thumbs/132810.jpg"
+            alt="'Forgotten Village' uploaded by Dynamite Andy 29 Sep 22 at 19:12"
+            title="'Forgotten Village' uploaded by Dynamite Andy 29 Sep 22 at 19:12"
+        /></a>
+      </div>
+      <div class="ivimage" id="iv132809">
+        <a href="#">
+          <img
+            src="https://www.trueachievements.com/customimages/thumbs/132809.jpg"
+            alt="'Granum Mountain - Missing Chest' uploaded by Dynamite Andy 29 Sep 22 at 18:28"
+            title="'Granum Mountain - Missing Chest' uploaded by Dynamite Andy 29 Sep 22 at 18:28"
+        /></a>
+      </div>
+      <div class="ivimage" id="iv132796">
+        <a href="#">
+          <img
+            src="https://www.trueachievements.com/customimages/thumbs/132796.jpg"
+            alt="'Yggdrasil Parallel' uploaded by Dynamite Andy 29 Sep 22 at 16:21"
+            title="'Yggdrasil Parallel' uploaded by Dynamite Andy 29 Sep 22 at 16:21"
+        /></a>
+      </div>
+      <div class="addimages"><a href="javascript:LaunchChild('/multiimagehandler.aspx?relatedtype=Game&amp;relatedid=7744&amp;popup=1&amp;imagetype=Walkthrough','ImageUpload',1000,640)" title="Add images">Add images</a></div>
+    </div>
+  </div>
+</div>

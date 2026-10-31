@@ -6,7 +6,8 @@
 	"recommendations": [
 		"oxc.oxc-vscode",
 		"amodio.tsl-problem-matcher",
-		"vitest.explorer"
+		"vitest.explorer",
+		"TypeScriptTeam.native-preview"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": ["stylelint.vscode-stylelint", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]

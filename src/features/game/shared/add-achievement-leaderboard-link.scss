@@ -1,0 +1,21 @@
+@use 'variables';
+
+body {
+  &.trueachievement-extras {
+    a {
+      &.ta-x-leaderboard-links {
+        @media (max-width: variables.$ta-x-mobile-breakpoint-max) {
+          display: none;
+        }
+      }
+    }
+
+    div {
+      &.ta-x-leaderboard-links {
+        @media (min-width: variables.$ta-x-tablet-breakpoint-min) {
+          display: none;
+        }
+      }
+    }
+  }
+}

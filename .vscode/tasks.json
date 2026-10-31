@@ -6,7 +6,7 @@
       "script": "start",
       "problemMatcher": ["$ts-webpack-watch"],
       "label": "npm: start",
-      "detail": "cross-env watch=true pnpm run build:dev",
+      "detail": "rspack build --watch (the dev build)",
       "isBackground": true
     },
     {

@@ -1,0 +1,100 @@
+@use 'spin';
+
+body {
+  &.trueachievement-extras {
+    .ta-x-article-loader {
+      text-align: center;
+    }
+
+    // The loader, the ask form and the feature's content side by side once loaded; stacked while loading
+    .ta-x-ask-loader-container {
+      display: flex;
+      justify-content: space-between;
+
+      &:not([data-ta-x-loaded]) {
+        display: block;
+      }
+
+      .ta-x-article-loader {
+        svg {
+          animation-name: ta-x-spin;
+          animation-duration: 2000ms;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+          display: block;
+          margin: auto;
+          margin-bottom: 0.8rem;
+          width: 5rem;
+        }
+      }
+    }
+
+    // The ask form, wherever it is (an ask loader, or a guide site's linked pages). The whole width, also in the ask
+    // loader's row: without text above it (changing a thread's walkthrough) it shrank to its field's width
+    .ta-x-ask-loader-ask {
+      flex-basis: 100%;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          margin-bottom: 0.9rem;
+        }
+
+        // The site caps text inputs at 250px, short of the Save button below. The field keeps the inset look it
+        // has on game pages everywhere, including forum pages, whose flat textbox style would otherwise apply
+        // (colours stay the site's, for either theme)
+        input.textbox {
+          box-sizing: border-box;
+          width: 100%;
+          max-width: none;
+          padding: 1px 2px;
+          border-width: 2px;
+          border-style: inset;
+          border-radius: 0;
+          line-height: 18px;
+        }
+
+        + input.button {
+          width: 100%;
+          margin: 0;
+          margin-top: 0.9rem;
+
+          // The site's hover drops the button's bottom border (with !important), which looks broken and shrinks the
+          // panel: keep it as it is at rest (black on the light theme's blue button, grey on the dark theme's)
+          &:hover {
+            border-bottom: 2px outset #000 !important;
+          }
+        }
+      }
+
+      // With Cancel, the two buttons share the row Save has alone, half each. A div in the form, so `> div` above
+      // (the field's, a column) reaches it too: its direction is set again here
+      > .ta-x-ask-loader-ask-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.9rem;
+        margin-top: 0.9rem;
+
+        input.button {
+          flex: 1 1 0;
+          margin: 0;
+
+          &:hover {
+            border-bottom: 2px outset #000 !important;
+          }
+        }
+      }
+    }
+
+    // The dark theme's hover border (its theme is set on an element inside body, so this sits here rather than nested
+    // above)
+    [data-theme='dark'] {
+      .ta-x-ask-loader-ask > div + input.button:hover,
+      .ta-x-ask-loader-ask-buttons input.button:hover {
+        border-bottom-color: rgb(85, 85, 85) !important;
+      }
+    }
+  }
+}

@@ -12,15 +12,24 @@
   "bracketSameLine": false,
   "bracketSpacing": true,
   "singleAttributePerLine": false,
-  "ignorePatterns": ["dist/**", "node_modules/**", "coverage/**", "test/html/**/*.html"],
-  "overrides": [
-    {
-      "files": ["*.hbs"],
-      "options": { "singleQuote": false }
-    },
-    {
-      "files": ["*.ts"],
-      "options": { "printWidth": 120 }
-    }
-  ]
+  "sortImports": {
+    "groups": [
+      "value-builtin",
+      "type-builtin",
+      "value-external",
+      "type-external",
+      "value-internal",
+      "type-internal",
+      "value-parent",
+      "type-parent",
+      "value-sibling",
+      "type-sibling",
+      "value-index",
+      "type-index"
+    ],
+    "internalPattern": [
+      "@ta-x-*"
+    ]
+  },
+  "ignorePatterns": ["dist/**", "node_modules/**", "test/html/**/*.html"]
 }

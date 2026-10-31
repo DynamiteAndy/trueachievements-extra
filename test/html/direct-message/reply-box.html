@@ -1,0 +1,55 @@
+<!--
+  Direct message reply box. Captured by the earlier tests (date unknown, before 2026-10). Condensed 2026-11-01: just
+  the reply box; its first toolbar group is cut to 2 of its 7 buttons, the site's smileydropdown to 2 of its 20 items
+  and the controllerbuttondropdown to 2 of its 40 items, and inline handlers (onclick) are removed.
+-->
+<html>
+  <body>
+    <div class="adv_editbox frm-grp frm-a-top" id="aeb_aebMessage">
+      <label class="small" for="aebMessage">Reply</label>
+      <div>
+        <div class="toolbar">
+          <div class="formatbuttons">
+            <span class="format_bold" tabindex="0" title="Insert pair of bold tags (Alt + B)">
+              <i class="fa fa-bold"></i>
+            </span>
+            <span class="format_underline" tabindex="0" title="Insert pair of underline tags (Alt + U)">
+              <i class="fa fa-underline"></i>
+            </span>
+          </div>
+          <div class="formatbuttons">
+            <div>
+              <span tabindex="0" title="Insert emoticons">
+                <i class="fa fa-smile-o"></i>
+              </span>
+              <div style="display: none" class="smileydropdown dropdownbuttonpanel">
+                <span tabindex="0">
+                  <img src="/images/smiley/smile.gif" alt="smile" width="15" height="15">
+                </span>
+                <span tabindex="0">
+                  <img src="/images/smiley/laugh.gif" alt="laugh" width="15" height="15">
+                </span>
+              </div>
+            </div>
+            <div>
+              <span tabindex="0" title="Insert controller icons">
+                <i class="fa fa-gamepad"></i>
+              </span>
+              <div style="display: none" class="controllerbuttondropdown dropdownbuttonpanel">
+                <span tabindex="0">
+                  <img src="/images/controllerbuttons/Xbox%20One/cn_A.png" alt="cn_A" height="18" width="18">
+                </span>
+                <span tabindex="0">
+                  <img src="/images/controllerbuttons/Xbox%20One/cn_B.png" alt="cn_B" height="18" width="18">
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="aeb_wrap">
+          <textarea id="aebMessage" name="aebMessage" rows="30" class="textarea expandable" style="height: 650px"></textarea>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

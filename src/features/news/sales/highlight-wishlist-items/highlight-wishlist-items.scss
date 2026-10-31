@@ -1,0 +1,54 @@
+body {
+  &.trueachievement-extras {
+    // Like the wishlist page's own listing pills (its Game and Bundle labels), whose CSS only that page loads
+    .ta-x-wishlist-pill {
+      display: inline-block;
+      margin-left: 0.6rem;
+      padding: 0 0.6rem;
+      border-radius: 3px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.6;
+      white-space: nowrap;
+      vertical-align: middle;
+
+      // The words are here rather than in the page: the site's table sort reads the name cell's text
+      &.ta-x-wishlist-pill-item {
+        background-color: #e0eef9;
+        color: #1d6eb7;
+
+        &::before {
+          content: 'Wishlist';
+        }
+      }
+
+      &.ta-x-wishlist-pill-containing {
+        background-color: #efe3ff;
+        color: #5b2a9e;
+
+        &::before {
+          content: 'Contains wishlist';
+        }
+      }
+    }
+
+    // A row a hide feature has hidden shows only why
+    tr[data-row-hidden='true'] .ta-x-wishlist-pill {
+      display: none;
+    }
+
+    [data-theme='dark'] {
+      .ta-x-wishlist-pill {
+        &.ta-x-wishlist-pill-item {
+          background-color: #1a3a54;
+          color: #b8d6ee;
+        }
+
+        &.ta-x-wishlist-pill-containing {
+          background-color: #3a2a57;
+          color: #d2b8f5;
+        }
+      }
+    }
+  }
+}

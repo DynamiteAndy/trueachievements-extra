@@ -1,4 +1,33 @@
+// The one stylesheet: the shared styles, then each feature's own, from its folder, in this order
 @use 'base';
-@use 'components';
-@use 'animations';
-@use 'features/index';
+@use '../ui/toast/toast';
+@use '../ui/tabs/tabs';
+@use '../ui/ask-loader/ask-loader';
+@use '../ui/accordion/accordion';
+@use '../ui/hideable-row/hideable-row';
+@use '../ui/search-and-filter-button/search-and-filter-button';
+@use '../ui/editable-header/editable-header';
+@use '../ui/settings/settings';
+@use '../page/sticky/sticky-under-header';
+@use '../page/sticky/slide-animations';
+
+@use '../features/all-pages/settings-menu/settings-menu';
+@use '../features/all-pages/sticky-header/sticky-header';
+@use '../features/all-pages/emojis/emojis';
+@use '../features/staff/walkthrough/walkthrough';
+@use '../features/staff/walkthrough/edit-walkthrough-page/edit-walkthrough-page';
+@use '../features/staff/walkthrough/manage-walkthrough/manage-walkthrough';
+@use '../features/staff/walkthrough/walkthrough-page/walkthrough-page';
+@use '../features/staff/walkthrough/walkthrough-preview/walkthrough-preview';
+@use '../features/forum/view-thread/show-owner-progress/show-owner-progress';
+@use '../features/game/extra-guides/AchievementGuideSolution/achievement-guide-solution';
+@use '../features/game/shared/add-achievement-leaderboard-link';
+@use '../features/game/extra-guides/ImportGuides/import-guides';
+@use '../features/game/extra-guides/GuideLinks/guide-links';
+@use '../features/game/extra-guides/TabbedSection/tabbed-section';
+@use '../features/game/extra-guides/YouTubeVideo/youtube-video';
+@use '../features/game/shared/collapsible-groups' as games-collapsible-groups;
+@use '../features/game/walkthrough/hoverable-paragraphs/hoverable-paragraphs';
+@use '../features/news/sales/collapsible-groups/collapsible-groups' as sales-collapsible-groups;
+@use '../features/news/sales/hide-ad-rows/hide-ad-rows';
+@use '../features/news/sales/highlight-wishlist-items/highlight-wishlist-items';
