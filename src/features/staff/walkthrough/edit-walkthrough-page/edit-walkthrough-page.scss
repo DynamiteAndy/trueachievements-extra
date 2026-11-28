@@ -1,0 +1,276 @@
+@use 'editor-colours';
+
+// The floating menu's top until the sticky toolbar sets its custom property
+$floating-menu-top: 0;
+
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff {
+      .admin-page {
+        .ta-x-image-selector {
+          &#oWalkthroughImageViewer {
+            width: 321px;
+          }
+
+          .noimages,
+          .itemname {
+            padding: 5px;
+            text-align: center;
+            font-size: unset !important;
+          }
+
+          .ta-x-image-selector-container {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            border-bottom: 1px solid #000;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+
+            .noimages {
+              margin-top: 0;
+            }
+          }
+
+          a[title='Add images'] {
+            text-align: center;
+            padding: 5px;
+            cursor: pointer !important;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .imageviewer {
+            display: flex;
+            flex-wrap: wrap;
+
+            .ivimage {
+              position: unset;
+              margin: 5px;
+              max-width: 46%;
+            }
+          }
+
+          .ta-x-image-selector-title {
+            text-align: center;
+            padding-top: 3px;
+            white-space: break-spaces;
+          }
+        }
+
+        // TinyMCE 6's icon leaves a 3px margin in its 24px square: drawn at 20px, spilling evenly out of the 16px icon box,
+        // its border is as big as the skin's own glyphs
+        .mce-i-selectall svg {
+          width: 20px;
+          height: 20px;
+          margin: -2px;
+          vertical-align: top;
+
+          // In the icon's colour, as the skin's glyphs are: the skin's reset gives everything inside a button its own
+          // colour (.mce-widget *), the svg and its path included
+          &,
+          path {
+            color: inherit;
+          }
+        }
+
+        .ta-x-source-code-button {
+          // The 576x512 icon is 22.5px wide at the group's 20px height; equal margins keep the button 38px wide and
+          // the icon centred
+          svg {
+            width: 22.5px;
+            margin: 0 -2.25px;
+          }
+        }
+
+        .mce-ta-x-tinymce-group {
+          // Square, so Toggle Theme's Sun and Moon (of different widths) keep the button one size
+          svg {
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+
+            path {
+              fill: #555;
+              filter: drop-shadow(21px 21px #fff);
+              pointer-events: none;
+            }
+
+            &:hover {
+              path {
+                fill: #333;
+              }
+            }
+
+            &.ta-x-theme-toggle-light {
+              display: none;
+            }
+
+            &.ta-x-theme-toggle-dark {
+              display: block;
+            }
+          }
+
+          [data-ta-x-tinymce-theme='dark'] {
+            svg {
+              &.ta-x-theme-toggle-light {
+                display: block;
+              }
+
+              &.ta-x-theme-toggle-dark {
+                display: none;
+              }
+            }
+          }
+        }
+
+        .ta-x-sticky-toolbar {
+          // Stuck or in place is ours to decide (stickUnderHeader), over the site's inline position: its script works
+          // it out from where the toolbar was on load, which a resize or the header changing leaves stale. Stuck and
+          // pinned, the shared styles position it (sticky-under-header.scss)
+          &:not(.ta-x-sticky-under-header-stuck) {
+            position: static !important;
+          }
+          border-bottom: 1px solid editor-colours.$light-editor-edge;
+        }
+      }
+
+      [data-theme='dark'] {
+        .admin-page {
+          .ta-x-image-selector {
+            .ta-x-image-selector-title {
+              color: editor-colours.$dark-editor-text;
+            }
+
+            .ta-x-image-selector-container {
+              background-color: #2f3740;
+
+              .itemname {
+                color: editor-colours.$dark-editor-text;
+              }
+            }
+          }
+        }
+      }
+
+      // A toolbar menu opens just under the toolbar, wherever it's stuck. Not a submenu (`mce-menu-sub`): TinyMCE opens
+      // those beside the item hovered, which this would move to the toolbar's line. Not a dialog's dropdown either:
+      // TinyMCE marks a menu opened inside its fixed dialog `mce-fixed`, which the toolbar's never are, stuck or not
+      // (without it, Table properties' Alignment opens at the toolbar's line, far below its field)
+      > .mce-menu:not(.mce-menu-sub):not(.mce-fixed) {
+        &.mce-floatpanel {
+          top: var(--ta-x-sticky-toolbar-floating-menu, $floating-menu-top) !important;
+        }
+      }
+
+      // Text color's and Background color's panel takes the picker drawn inside it, over the size TinyMCE gave it when
+      // it first opened (then holding only the picker's field)
+      // A menu like the others (text-color-buttons.ts), not the popover TinyMCE makes it: no arrow, no gap for one
+      > .mce-floatpanel:has(.ta-x-text-color-picker) {
+        width: auto !important;
+        height: auto !important;
+        margin-top: 0;
+
+        > .mce-arrow {
+          display: none;
+        }
+      }
+
+      .ta-x-text-color-picker {
+        // Only where the picker keeps the colour picked, for the page to read
+        .ta-x-text-color-field {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        // TinyMCE's panel is the menu, in both editor themes: the dark theme's box for the table dialog's pickers
+        // (below) isn't drawn here
+        .jscolor-border {
+          border: 0 !important;
+          background: none !important;
+        }
+
+        // The swatches' borders as the grid's cells had them (the light skin's .mce-grid-cell)
+        .jscolor-palette-sw {
+          border-color: #d6d6d6 !important;
+        }
+
+        // No color, in the grid's last cell: a bold × on no colour, in the skin's grey (.mce-colorbtn-trans). Drawn as
+        // two lines, which centre exactly where a font's × sits off its middle. Its colour block stays, unseen, as it
+        // gives the swatch the others' size
+        .ta-x-text-color-no-color {
+          background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 1.5l7 7M8.5 1.5l-7 7' stroke='%23707070' stroke-width='2.4'/%3E%3C/svg%3E")
+            center / 10px 10px no-repeat !important;
+          cursor: pointer;
+
+          > div {
+            visibility: hidden;
+          }
+        }
+      }
+
+      // The dark skin's grid cells (charcoal/skin.scss): its dark borders, and No color on the cells' fill
+      &[data-ta-x-theme='dark'] .ta-x-text-color-picker {
+        .jscolor-palette-sw {
+          border-color: editor-colours.$dark-editor-border !important;
+        }
+
+        .ta-x-text-color-no-color {
+          background-color: #4c5761 !important;
+        }
+      }
+
+      // The table dialog's pickers, which jscolor draws straight into the body, look like the editor's menus: the light
+      // skin's here, the dark skin's below. The colour buttons' pickers are drawn inside a menu (above)
+      > .jscolor-wrap {
+        .jscolor-shadow {
+          border-radius: 0 !important;
+          box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .jscolor-border {
+          border: 1px solid #fff !important;
+          border-radius: 0 !important;
+          background: #fff !important;
+        }
+      }
+
+      // The editor's theme, not the site's: its Toggle Theme can set it light on the dark site, which would leave a
+      // dark line under the light toolbar, and our group's icons light grey on it
+      &[data-ta-x-theme='dark'] {
+        .admin-page {
+          .mce-ta-x-tinymce-group {
+            svg {
+              path {
+                fill: editor-colours.$dark-editor-text;
+                filter: drop-shadow(21px 21px #000);
+              }
+            }
+          }
+
+          // The dark skin edges its glyphs with a black text-shadow (charcoal/skin.scss), which an svg doesn't take
+          .mce-i-selectall svg {
+            filter: drop-shadow(1px 1px 0 #000);
+          }
+
+          // The dark skin's panels have no border (charcoal/skin.scss), so its width is given again here
+          .ta-x-sticky-toolbar {
+            border-bottom: 1px solid editor-colours.$dark-editor-edge;
+          }
+        }
+
+        // The table dialog's pickers, as the dark skin's menus (charcoal/skin.scss)
+        > .jscolor-wrap .jscolor-border {
+          border-color: #232b33 !important;
+          background: #2f3740 !important;
+        }
+      }
+    }
+  }
+}

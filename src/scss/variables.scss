@@ -1,3 +1,12 @@
+// An SVG icon at the text's size, sitting on its line as a Font Awesome glyph does: for our icons that stand in for the
+// site's glyphs (the wrench, the emoji button) or sit in its text (the guide links, an editable header). The wrench
+// centres its icon with flex, where the offset does nothing
+@mixin icon-at-text-size {
+  width: auto;
+  height: 0.86em;
+  vertical-align: -0.05em;
+}
+
 // Device Breakpoints
 $ta-x-mobile-breakpoint-max: 575px;
 
@@ -5,19 +14,3 @@ $ta-x-tablet-breakpoint-min: $ta-x-mobile-breakpoint-max + 1px;
 $ta-x-tablet-breakpoint-max: 767px;
 
 $ta-x-desktop-breakpoint-min: $ta-x-tablet-breakpoint-max + 1px;
-
-// Both Themes
-$ta-x-both-theme-online-status: #107c10;
-
-// White Theme
-$ta-x-white-theme-online-status-border: #d9d9d9;
-
-// Dark Theme
-$ta-x-dark-theme-online-status-border: #646464;
-
-// TA-X Dynamics
-$ta-x-sticky-header-height: 0;
-$ta-x-staff-walkthrough-improvements-walkthrough-page-sticky-page-history-top: 0;
-$ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-top: 0;
-$ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-width: 0;
-$ta-x-staff-walkthrough-improvements-edit-walkthrough-page-sticky-tinymce-toolbar-floating-menu: 0;

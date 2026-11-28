@@ -1,0 +1,66 @@
+@use 'variables';
+
+body {
+  &.trueachievement-extras {
+    // A guide site's linked pages, shown in place of the ask; its field (behind +) is the ask form
+    .ta-x-guide-links {
+      flex-basis: 100%;
+
+      // The add, change and remove icons, at the text's size
+      svg {
+        @include variables.icon-at-text-size;
+      }
+
+      .ta-x-guide-links-list {
+        // No margin of its own: ending the tab, its last line sits 8px above the bottom edge (the section's own
+        // padding), as the other side panels end 8px below their last item
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        // Rows like the site's side lists (e.g. First Winners): its padding and line height, and its line under
+        // every row, last included, in its colours (#eee, or #222 on the dark theme: its own rule leaves the last
+        // row without one; another would trim the top padding to 2px). The page's path wraps in the space left,
+        // so the count and × keep their place at the right edge.
+        li {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto auto;
+          align-items: center;
+          gap: 0.8rem;
+          margin: 0;
+          padding: 5px 0;
+          line-height: 18px;
+          border-bottom: 1px solid #eee;
+
+          > a:first-child {
+            overflow-wrap: anywhere;
+          }
+
+          > span {
+            white-space: nowrap;
+          }
+
+          // Under the row, across it: too long for the count's place
+          > .ta-x-guide-links-slow {
+            grid-column: 1 / -1;
+            margin: 0;
+          }
+        }
+      }
+
+      .ta-x-ask-loader-ask {
+        margin-top: 0.9rem;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    [data-theme='dark'] {
+      .ta-x-guide-links .ta-x-guide-links-list li {
+        border-bottom-color: #222;
+      }
+    }
+  }
+}

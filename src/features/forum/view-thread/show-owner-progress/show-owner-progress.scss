@@ -1,0 +1,42 @@
+body {
+  &.trueachievement-extras {
+    // Laid out side by side by its ask loader (ask-loader.scss)
+    .ta-x-owner-progress {
+      // The linked walkthrough, under the editors and thanks, with its pencil to change it
+      .ta-x-owner-progress-link {
+        margin-top: 1rem;
+      }
+
+      article {
+        .ta-x-owner-progress-editor-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          flex-basis: 100%;
+        }
+
+        .ta-x-owner-progress-editor-row {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1rem;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+
+        .ta-x-owner-progress-editor {
+          margin-left: 1rem;
+        }
+
+        .thanks {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding-left: 1rem;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

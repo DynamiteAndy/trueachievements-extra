@@ -1,0 +1,11 @@
+body {
+  &.trueachievement-extras {
+    // A tabbed section (tabbed-section.scss) with a tab for each guide site
+    .ta-x-import-guides {
+      p {
+        margin-top: 0;
+        margin-bottom: 0.9rem;
+      }
+    }
+  }
+}

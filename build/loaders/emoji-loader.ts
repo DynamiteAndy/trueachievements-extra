@@ -1,18 +1,6 @@
-import type { LoaderContext } from 'webpack';
-import { compress } from 'compress-json';
-import groupEmojis from '../helpers/group-emojis';
+import { compressedEmojis } from '../helpers/group-emojis.ts';
 
-interface EmojiLoaderOptions {
-  compress: boolean;
-}
-
-export default function (this: LoaderContext<EmojiLoaderOptions>, source: string) {
-  const options = this.getOptions();
-  let emojis = groupEmojis(source);
-
-  if (options.compress) {
-    emojis = compress(emojis);
-  }
-
-  return JSON.stringify(emojis);
+// emoji.json as the emoji picker's groups, compressed (the picker decompresses them)
+export default function emojiLoader(source: string): string {
+  return `export default ${JSON.stringify(compressedEmojis(source))};`;
 }

@@ -1,0 +1,21 @@
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff {
+      main {
+        .admin-page {
+          .walkthroughsummary {
+            + .walkthroughpagelinks {
+              flex-direction: column;
+
+              a {
+                &.next {
+                  margin-left: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

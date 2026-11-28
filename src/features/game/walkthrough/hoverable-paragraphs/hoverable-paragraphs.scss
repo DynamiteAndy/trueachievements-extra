@@ -1,0 +1,11 @@
+body {
+  &.trueachievement-extras {
+    .ta-x-hoverable-paragraphs {
+      > p {
+        &:hover {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

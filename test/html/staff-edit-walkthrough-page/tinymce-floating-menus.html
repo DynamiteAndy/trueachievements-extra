@@ -1,0 +1,54 @@
+<!--
+  Staff edit walkthrough page, /staff/walkthrough/editwalkthroughpage.aspx: two of TinyMCE's floating menus, which it adds
+  to <body> the first time each is opened. Captured 2026-11-18 on a page the user can edit: the toolbar's Paragraph menu,
+  and the Alignment menu of the Table properties dialog (opened with TinyMCE's own mceInsertTable, nothing inserted).
+  TinyMCE gives a menu opened inside its fixed dialog `mce-fixed`; the toolbar's menus never have it, stuck or not (checked
+  for Paragraph, Table, Controller Buttons and Add Achievement). Condensed: each menu cut to its first two items, inline
+  styles (TinyMCE's position and size) removed, ids numbered as TinyMCE does but not the live ones.
+-->
+<div
+  id="mceu_101"
+  class="mce-container mce-panel mce-floatpanel mce-menu mce-menu-align"
+  hidefocus="1"
+  tabindex="-1"
+  role="application">
+  <div id="mceu_101-body" class="mce-container-body mce-stack-layout" role="menu">
+    <div
+      id="mceu_102"
+      class="mce-active mce-menu-item mce-menu-item-normal mce-first mce-stack-layout-item"
+      tabindex="-1"
+      role="menuitem"
+      aria-checked="true"
+      aria-pressed="true">
+      <i class="mce-ico mce-i-none"></i>&nbsp;<span id="mceu_102-text" class="mce-text">Paragraph</span>
+    </div>
+    <div
+      id="mceu_103"
+      class="mce-menu-item mce-menu-item-normal mce-stack-layout-item"
+      tabindex="-1"
+      role="menuitem"
+      aria-checked="false"
+      aria-pressed="false">
+      <i class="mce-ico mce-i-none"></i>&nbsp;<span id="mceu_103-text" class="mce-text">Address</span>
+    </div>
+  </div>
+</div>
+<div
+  id="mceu_201"
+  class="mce-container mce-panel mce-floatpanel mce-menu mce-fixed mce-menu-align"
+  hidefocus="1"
+  tabindex="-1"
+  role="application">
+  <div id="mceu_201-body" class="mce-container-body mce-stack-layout" role="menu">
+    <div
+      id="mceu_202"
+      class="mce-menu-item mce-menu-item-normal mce-first mce-stack-layout-item"
+      tabindex="-1"
+      role="menuitem">
+      <i class="mce-ico mce-i-none"></i>&nbsp;<span id="mceu_202-text" class="mce-text">None</span>
+    </div>
+    <div id="mceu_203" class="mce-menu-item mce-menu-item-normal mce-stack-layout-item" tabindex="-1" role="menuitem">
+      <i class="mce-ico mce-i-none"></i>&nbsp;<span id="mceu_203-text" class="mce-text">Left</span>
+    </div>
+  </div>
+</div>

@@ -4,13 +4,11 @@
 
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
-		"dbaeumer.vscode-eslint",
-		"esbenp.prettier-vscode",
+		"oxc.oxc-vscode",
 		"amodio.tsl-problem-matcher",
-		"orta.vscode-jest"
+		"vitest.explorer",
+		"TypeScriptTeam.native-preview"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
-	"unwantedRecommendations": [
-		"stylelint.vscode-stylelint"
-	]
+	"unwantedRecommendations": ["stylelint.vscode-stylelint", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
 }

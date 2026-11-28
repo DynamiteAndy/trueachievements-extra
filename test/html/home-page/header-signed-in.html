@@ -1,0 +1,41 @@
+<!--
+  Home page (https://www.trueachievements.com/), signed in, captured from the live DOM on 2026-11-14 (a plain GET gets the
+  signed-out header). Condensed: the page's form and div.page, the header's nav with its menu items emptied, and the
+  site's nav-gamer panel (added to div.page by the site's script) emptied. Our wrench and settings menu removed.
+-->
+<form id="frm">
+  <div class="page ta" data-theme="dark">
+    <header>
+      <nav class="nav-primary middle">
+        <i class="fa fa-bars" data-tgl="items" data-h=""></i>
+        <a href="/"><h1 class="home">TrueAchievements</h1></a>
+        <ul class="items"></ul>
+        <span
+          class="search-icon ss-search-trigger"
+          id="ssSearchTrigger"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          title="Search site"
+          ><i class="fa fa-search"></i
+        ></span>
+        <div class="gamer" data-tgl="nav-gamer" aria-haspopup="True" data-h="">
+          <div class="image">
+            <img
+              src="https://www.trueachievements.com/imagestore/0003699100/3699191.jpg"
+              width="32"
+              height="32"
+              alt="Dynamite Andy"
+              loading="lazy"
+            /><i class="unread-n"></i>
+          </div>
+          <div class="info"><span>Dynamite Andy</span><small>1,103,266</small></div>
+        </div>
+        <a class="gamer-page" title="My gamer page" data-no-hover="" href="/gamer/Dynamite+Andy"
+          ><i class="fa fa-home"></i
+        ></a>
+      </nav>
+    </header>
+    <div class="main middle"></div>
+    <div class="nav-gamer"></div>
+  </div>
+</form>

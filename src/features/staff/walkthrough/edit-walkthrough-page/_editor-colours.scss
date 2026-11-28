@@ -1,0 +1,7 @@
+// The dark editor (the edit walkthrough's toolbar and TinyMCE's charcoal skin)
+$dark-editor-text: #b5b9bf;
+$dark-editor-border: #202a33;
+// The lines between the editor's parts (under its toolbar, over its status bar), in each theme. The dark one is a shade
+// darker than the toolbar (#404952) and the text area (#444), as the light one is than its white
+$light-editor-edge: #ddd;
+$dark-editor-edge: #2b323a;

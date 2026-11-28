@@ -1,0 +1,10 @@
+// Named for the script: a page or an extension could define its own `spin`, and the later one would win
+@keyframes ta-x-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,221 @@
+<!--
+  Staff manage walkthrough page, /staff/walkthrough/managewalkthrough.aspx?walkthroughid=<id>, straight from the server
+  (a plain GET, before any script ran), with a walkthrough selected.
+  Captured 2026-10-31. Condensed: the walkthrough list filters and every list's header table removed, lists cut to a
+  few rows, the walkthrough details cut to the name and buttons, javascript: hrefs and onclicks stripped.
+-->
+<div class="admin-page">
+  <div id="divWalkthroughHolder">
+    <div id="chWalkthroughs" class="controlholder">
+      <div class="title">Walkthroughs</div>
+      <div class="content">
+        <div id="lstWalkthroughID" class="datalist">
+          <div class="scroll" id="scrolllstWalkthroughID">
+            <table class="dl">
+              <tbody>
+                <tr class="selected" id="lstWalkthroughIDselectedrow">
+                  <td class="point"></td>
+                  <td class="c1"><a href="#">Asdivine Dios</a></td>
+                  <td class="dlop plain"></td>
+                </tr>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1"><a href="#">Asdivine Hearts</a></td>
+                  <td class="dlop plain"></td>
+                </tr>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1"><a href="#">Avatar: The Last Airbender - Quest for Balance</a></td>
+                  <td class="dlop plain"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="chEditWalkthrough" class="controlholder">
+      <div class="title">Walkthrough Details</div>
+      <div class="content">
+        <div>
+          <label>Name</label
+          ><input
+            type="text"
+            name="txtWalkthroughName"
+            id="txtWalkthroughName"
+            value="Asdivine Dios"
+            class="textbox cs-vl readonly"
+            readonly="readonly"
+            maxlength="50"
+          />
+        </div>
+        <div class="buttons">
+          <a class="button menubutton" href="#" id="btnWalkthrough" title="Action"
+            ><span class="icon-button-arrow-down droparrow" id="btnWalkthrough_DropArrow"></span>Action</a
+          >
+          <ul id="btnWalkthrough_Options" style="display: none" class="menuitems">
+            <li>
+              <a href="#"
+                ><img
+                  src="/images/icons/addtotrophycasesmall.png"
+                  width="16"
+                  height="16"
+                  alt="Add page"
+                  title="Add page"
+                /><span>Add page</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  src="/images/icons/walkthrough.png"
+                  width="16"
+                  height="16"
+                  alt="View public page"
+                  title="View public page"
+                /><span>View public page</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  src="/images/icons/previewwalkthrough.png"
+                  width="16"
+                  height="16"
+                  alt="Preview"
+                  title="Preview"
+                /><span>Preview</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  src="/images/icons/previewwalkthrough.png"
+                  width="16"
+                  height="16"
+                  alt="View and edit content"
+                  title="View and edit content"
+                /><span>View and edit content</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><img
+                  src="/images/icons/refresh.png"
+                  width="16"
+                  height="16"
+                  alt="Clear Cache"
+                  title="Clear Cache"
+                /><span>Clear Cache</span></a
+              >
+            </li>
+          </ul>
+          <a class="button" href="#" id="btnCancel" title="Cancel"
+            ><img src="/images/icons/cancel.png" alt="Cancel" title="Cancel" width="16" height="16" />Cancel</a
+          >
+          <a class="button" href="#" id="btnSave" title="Save"
+            ><img src="/images/icons/save.png" alt="Save" title="Save" width="16" height="16" />Save</a
+          >
+        </div>
+      </div>
+    </div>
+    <div id="chWalkthroughAchievements" class="controlholder">
+      <div class="title">Achievements</div>
+      <div class="content">
+        <div id="lstWalkthroughAchievementID" class="datalist">
+          <div class="scroll" id="scrolllstWalkthroughAchievementID">
+            <table class="dl">
+              <tbody>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1">First Step</td>
+                  <td class="c2">3</td>
+                  <td class="dlop plain"></td>
+                </tr>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1">All for One, One for All</td>
+                  <td class="c2">4</td>
+                  <td class="dlop plain"></td>
+                </tr>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1">Bronze Honors</td>
+                  <td class="c2">4</td>
+                  <td class="dlop plain"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="total">Total records: 20</div>
+        </div>
+      </div>
+    </div>
+    <div id="chWalkthroughGames" class="controlholder">
+      <div class="title">Games in this walkthrough</div>
+      <div class="content">
+        <div id="lstWalkthroughGames" class="datalist">
+          <div class="scroll" id="scrolllstWalkthroughGames">
+            <table class="dl">
+              <tbody>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1">Asdivine Dios</td>
+                  <td class="c2"><img src="/images/icons/tick.png" /></td>
+                  <td class="c3">20</td>
+                  <td class="dlop plain"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="chWalkthroughGamers" class="controlholder">
+      <div class="title">Gamers</div>
+      <div class="content">
+        <div id="lstWalkthroughGamers" class="datalist">
+          <div class="scroll" id="scrolllstWalkthroughGamers">
+            <table class="dl">
+              <tbody>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1">ManicMetalhead</td>
+                  <td class="c2">Management</td>
+                  <td class="dlop plain"></td>
+                </tr>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1">Avianette</td>
+                  <td class="c2">Overseer</td>
+                  <td class="dlop plain"></td>
+                </tr>
+                <tr>
+                  <td class="point"></td>
+                  <td class="c1">Dynamite Andy</td>
+                  <td class="c2">Owner</td>
+                  <td class="dlop plain"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="chWalkthroughOtherSiteLink" class="controlholder">
+      <div class="title">Other Site Walkthrough</div>
+      <div class="content">
+        <h6 id="h6OtherSiteGame">TrueTrophies Linked Game</h6>
+        <input
+          type="text"
+          name="txtOtherSiteGame"
+          id="txtOtherSiteGame"
+          value=""
+          class="textbox cs-l readonly"
+          readonly="readonly"
+        />
+        <div class="buttons"></div>
+      </div>
+    </div>
+  </div>
+</div>

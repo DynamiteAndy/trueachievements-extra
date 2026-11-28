@@ -1,0 +1,84 @@
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff {
+      .admin-page {
+        #divWalkthroughHolder {
+          position: unset;
+          margin-top: unset;
+          height: unset;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        #divSearchWalkthrough {
+          .buttons {
+            display: flex;
+          }
+
+          .button {
+            display: block;
+            flex-grow: 1;
+
+            &#btnSearchWalkthrough {
+              margin: 0;
+              margin-bottom: 3px;
+              // The site's buttons on this page are 19px inside (an 18px line); Search is 18px, 1px short of them, so
+              // it's matched to them
+              height: 19px;
+
+              &:hover {
+                margin-bottom: 5px;
+              }
+            }
+          }
+
+          .clearboth {
+            display: none;
+          }
+        }
+
+        #chWalkthroughs,
+        #chEditWalkthrough,
+        #chWalkthroughAchievements,
+        #chWalkthroughGames,
+        #chWalkthroughGamers,
+        #chWalkthroughOtherSiteLink {
+          position: unset;
+          top: unset;
+          left: unset;
+          display: block;
+          margin: 0;
+        }
+
+        #chEditWalkthrough {
+          flex: 1;
+          margin: 0 1.5rem;
+          height: fit-content;
+        }
+
+        // The side panels from the top, level with the other two columns, 1.5rem apart like the columns (spread over
+        // the tallest column's height, a taller Walkthrough Details would push them down and apart)
+        .ta-x-manage-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        // The buttons row with the Action menu's items in it (ManageWalkthrough.tsx): spaced as the site's own
+        // buttons are (their margin and the space between them), and the same apart once it wraps
+        .buttons.ta-x-manage-action-buttons-row {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+          gap: 6px 3px;
+
+          // The site's Action button, hidden only once its items are in this row, so the page still has them when the
+          // controller doesn't mount
+          #btnWalkthrough {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

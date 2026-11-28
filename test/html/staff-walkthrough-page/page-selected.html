@@ -1,0 +1,98 @@
+<!--
+  Staff walkthrough page, /staff/walkthrough/walkthroughpage.aspx, with a page selected (after the site's postback).
+  Captured 2026-10-31, signed in as the walkthrough's author, so the site renders its own "Back to management"
+  button (#btnBackToWalkthrough) in the preview buttons.
+  Condensed: our own container and moved buttons were put back where the site renders them, the page dropdown and
+  version list cut to a few entries, the version list header table and the preview content removed, onclick/hrefs stripped.
+-->
+<div class="admin-page">
+  <h1 id="oh1" class="block">Edit Asdivine Dios Walkthrough</h1>
+  <div class="informationpanel" id="oWarnings">
+    To find out exactly how your walkthrough should be structured and written, please
+    <a href="https://www.trueachievements.com/forum/viewthread.aspx" target="_blank">read this</a>
+  </div>
+  <div id="chWalkthroughPageVersions" class="controlholder">
+    <div class="title">Page History</div>
+    <div class="content">
+      <div>
+        <label class="vsmall">Page</label
+        ><select id="sddWalkthroughPageID" name="sddWalkthroughPageID" class="dropdown cs-n">
+          <option></option>
+          <option value="22621">Walkthrough overview</option>
+          <option value="22622">General hints and tips</option>
+          <option value="22623">Quests (1 - 15)</option>
+        </select>
+      </div>
+      <div id="lstWalkthroughPageVersion" class="datalist">
+        <div class="scroll" id="scrolllstWalkthroughPageVersion">
+          <table class="dl">
+            <tbody>
+              <tr class="selected" id="lstWalkthroughPageVersionselectedrow">
+                <td class="point"></td>
+                <td class="c1"><a href="#">21</a></td>
+                <td class="c2"><a href="#">Avianette</a></td>
+                <td class="c3"><a href="#">02 Oct 22 02:38</a></td>
+                <td class="c4">
+                  <img
+                    src="/images/icons/tick.png"
+                    alt="Current version"
+                    title="Current version"
+                    width="16"
+                    height="16"
+                  />
+                </td>
+                <td class="dlop plain"></td>
+              </tr>
+              <tr>
+                <td class="point"></td>
+                <td class="c1"><a href="#">20</a></td>
+                <td class="c2"><a href="#">Avianette</a></td>
+                <td class="c3"><a href="#">02 Oct 22 02:37</a></td>
+                <td class="c4"></td>
+                <td class="dlop plain"></td>
+              </tr>
+              <tr>
+                <td class="point"></td>
+                <td class="c1"><a href="#">19</a></td>
+                <td class="c2"><a href="#">Dynamite Andy</a></td>
+                <td class="c3"><a href="#">17 Jun 22 07:30</a></td>
+                <td class="c4"></td>
+                <td class="dlop plain"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="buttons"></div>
+    </div>
+  </div>
+  <div id="chWalkthroughPagePreview" class="controlholder">
+    <div class="title">Preview</div>
+    <div class="content">
+      <div id="divVersionNotes"><strong>Notes: </strong></div>
+      <div class="buttons">
+        <a class="button" href="#" id="btnBackToWalkthrough" title="Back to management"
+          ><img
+            src="/images/icons/leftarrow.png"
+            alt="Back to management"
+            title="Back to management"
+            width="16"
+            height="16"
+          />Back to management</a
+        >
+        <a class="button" href="#" id="btnEditPage2" title="Edit page"
+          ><img src="/images/icons/editpage.png" alt="Edit page" title="Edit page" width="16" height="16" />Edit page</a
+        >
+        <div class="clearboth"></div>
+      </div>
+      <div id="divWalkthroughPagePreview"></div>
+      <div class="buttons">
+        <a class="button" href="#" id="btnEditPage" title="Edit page"
+          ><img src="/images/icons/editpage.png" alt="Edit page" title="Edit page" width="16" height="16" />Edit page</a
+        >
+        <div class="clearboth"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Edit Form -->
+</div>

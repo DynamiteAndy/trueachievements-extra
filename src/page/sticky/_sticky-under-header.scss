@@ -1,0 +1,49 @@
+// The slide in and out of view, shared with the slide classes (_slide-animations.scss), so what's stuck under the
+// header moves with it
+$slide-transition: transform 0.5s ease;
+
+// Slides out of view by the header's height, not its own, so it moves with the header
+@mixin slide-under-sticky-header {
+  // Hidden: sliding out, or straight away (-no-transition)
+  &.ta-x-y-hide,
+  &.ta-x-y-hide-no-transition {
+    // Its default is a length (0px), as `calc` rejects a plain 0 here
+    transform: translateY(calc(-1 * var(--ta-x-sticky-header-height, 0px)));
+  }
+
+  &.ta-x-y-hide {
+    transition: $slide-transition;
+  }
+}
+
+// An element stickUnderHeader looks after (page/sticky): in place, stuck fixed under the header, or
+// pinned at its end. Its top, width and pinned top are set on the element itself. Important, over the site's own inline
+// position (its TinyMCE toolbar script sets one on every scroll)
+body {
+  &.trueachievement-extras {
+    .ta-x-sticky-under-header {
+      // Slides out of view by the header's height as the header hides (in both themes)
+      @include slide-under-sticky-header;
+
+      &.ta-x-sticky-under-header-stuck {
+        position: fixed !important;
+        top: var(--ta-x-sticky-under-header-top, 0px) !important;
+        width: var(--ta-x-sticky-under-header-width, auto) !important;
+        // Stuck, it slides by a copy of the header's slide (slide.ts), not a transition of its own
+        transition: none !important;
+
+        // The height it had in place (keepHeight), not a share of the window's
+        &.ta-x-sticky-under-header-keep-height {
+          height: var(--ta-x-sticky-under-header-height) !important;
+        }
+
+        // At its end it's pinned in its parent, so it scrolls with the page itself, without a slide
+        &.ta-x-sticky-under-header-at-end {
+          position: absolute !important;
+          top: var(--ta-x-sticky-under-header-at-end-top, 0px) !important;
+          transform: none !important;
+        }
+      }
+    }
+  }
+}

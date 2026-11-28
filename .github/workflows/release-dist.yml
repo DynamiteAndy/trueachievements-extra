@@ -1,0 +1,158 @@
+name: Build Release Dist
+
+on:
+  # A release is a pull request that bumps package.json's version. The filter looks at the whole pull request, so
+  # every later push to it rebuilds the release scripts too. A draft's aren't built (the build job skips it), as each
+  # build adds a commit and its runs; marking it ready for review builds them
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - package.json
+
+# A newer push to the same pull request cancels the build it supersedes
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  # Runs the project's code (its install and build) with a read-only token: the release scripts leave it only as an
+  # artifact, for the publish job
+  build:
+    # A fork's pull request gets a read-only token, so it can't push to its branch
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    outputs:
+      skip: ${{ steps.check-version.outputs.skip }}
+      version: ${{ steps.check-version.outputs.version }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        # The branch's own commit (not the merge with main), so the dist commit goes on top of it
+        ref: ${{ github.event.pull_request.head.sha }}
+        # The base commit's package.json and the tags
+        fetch-depth: 0
+        persist-credentials: false
+
+    - name: Check if the version changed
+      id: check-version
+      run: |
+        HEAD_VERSION="$(node -p "require('./package.json').version")"
+        BASE_VERSION="$(git show "$BASE_SHA:package.json" | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version")"
+        echo "version=v$HEAD_VERSION" >> $GITHUB_OUTPUT
+
+        if [ "$HEAD_VERSION" = "$BASE_VERSION" ]; then
+          echo "Version unchanged ($HEAD_VERSION). Nothing to build."
+          echo "skip=true" >> $GITHUB_OUTPUT
+        elif git rev-parse "v$HEAD_VERSION" >/dev/null 2>&1; then
+          # The release job tags only versions not tagged yet, so this one would never be released
+          echo "::error::v$HEAD_VERSION is already tagged: bump to a version not released yet"
+          exit 1
+        else
+          echo "skip=false" >> $GITHUB_OUTPUT
+        fi
+      env:
+        BASE_SHA: ${{ github.event.pull_request.base.sha }}
+
+    - name: Setup
+      if: steps.check-version.outputs.skip != 'true'
+      uses: ./.github/actions/setup
+
+    - name: Build
+      if: steps.check-version.outputs.skip != 'true'
+      run: pnpm run build:release
+
+    - name: Keep the release scripts for the publish job
+      if: steps.check-version.outputs.skip != 'true'
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: release-dist
+        path: dist/*.js
+        if-no-files-found: error
+        retention-days: 1
+
+  # Holds the write token, so it runs none of the project's code (no install, build or hooks): git and gh only, on the
+  # release scripts the build left, once they're checked to be just those
+  publish:
+    needs: build
+    if: ${{ needs.build.outputs.skip == 'false' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Pushing the dist commit to the pull request's branch, and starting CI on it
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        # Only the push step gets the token
+        persist-credentials: false
+
+    - name: Download the release scripts
+      uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      with:
+        name: release-dist
+        path: ${{ runner.temp }}/release-dist
+
+    # Only the files dist tracks, each a plain file: no other name, folder or link reaches the commit
+    - name: Check the artifact holds only the release scripts
+      run: |
+        expected="$(git ls-files 'dist/*.js' | sed 's|^dist/\(.*\)|\1 f|' | sort)"
+        found="$(cd "$ARTIFACT" && find . -mindepth 1 -printf '%P %y\n' | sort)"
+
+        if [ -z "$expected" ] || [ "$found" != "$expected" ]; then
+          echo "::error::The build's artifact isn't just the release scripts dist tracks. Expected:"
+          echo "$expected"
+          echo "Found:"
+          echo "$found"
+          exit 1
+        fi
+
+        cp "$ARTIFACT"/*.js dist/
+      env:
+        ARTIFACT: ${{ runner.temp }}/release-dist
+
+    # Commits only when the scripts changed, so a push that leaves them as they are adds nothing. A push with this
+    # token starts no run without approval (so this one can't start itself again), apart from a dispatch: that starts
+    # CI on the new commit, as main's ruleset requires the ci check on the pull request's latest commit
+    - name: Commit dist, push it to the branch and start CI on it
+      run: |
+        git add dist/*.js
+        if git diff --cached --quiet; then
+          echo "dist is already up to date for $PACKAGE_VERSION."
+          exit 0
+        fi
+
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "Build dist for $PACKAGE_VERSION" --no-verify
+        # Fails rather than overwrite if the branch moved on since this run started
+        git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$HEAD_REF"
+        gh workflow run ci.yml --ref "$HEAD_REF" --repo "$GITHUB_REPOSITORY"
+
+        # The pull request's own workflows start on the new commit too, held for approval: they'd only run CI (just
+        # started) and this build again, so they go as soon as they show up. Not finding them fails nothing:
+        # cleanup.yml deletes any left
+        NEW_SHA="$(git rev-parse HEAD)"
+        HELD=""
+        for ATTEMPT in $(seq 1 12); do
+          sleep 5
+          HELD="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/runs" -f head_sha="$NEW_SHA" \
+            -f status=action_required --jq '.workflow_runs[].id')" || HELD=""
+          [ "$(echo "$HELD" | grep -c .)" -ge 2 ] && break
+        done
+        for RUN_ID in $HELD; do
+          gh run delete "$RUN_ID" --repo "$GITHUB_REPOSITORY" || echo "::warning::The held run $RUN_ID wasn't deleted"
+        done
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        PACKAGE_VERSION: ${{ needs.build.outputs.version }}

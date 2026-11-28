@@ -1,0 +1,171 @@
+body {
+  &.trueachievement-extras {
+    // The settings rows show only in the settings menu's panels, and need its specificity over the site's panel rules
+    // there (the copied ones in settings-menu.scss, and the site's own for a signed-in gamer)
+    .ta-x-settings-menu {
+      .t-settings {
+        .ta-x-checkbox {
+          flex-wrap: wrap;
+          padding: 1rem 0;
+
+          label {
+            max-width: 85%;
+          }
+
+          // The site's toggle hides its checkbox (display: none) and draws the switch with the label after it, so the
+          // keyboard can't reach it, on the site's own toggles too. Ours keep the checkbox in the Tab order, unseen and
+          // under the switch (Space switches it), and ring the switch while it has the keyboard's focus
+          .frm-tgl {
+            position: relative;
+
+            input[type='checkbox'] {
+              display: block;
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 1px;
+              height: 1px;
+              margin: 0;
+              opacity: 0;
+              pointer-events: none;
+
+              &:focus-visible + label::before {
+                outline: 2px solid #fff;
+                outline-offset: 2px;
+              }
+            }
+          }
+        }
+
+        .ta-x-listbox {
+          padding-top: 0;
+          flex-direction: column;
+          align-items: flex-start;
+
+          > label {
+            padding-bottom: 0.5rem;
+          }
+
+          .frm-lst {
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+
+            input {
+              &.textbox {
+                flex: 1;
+              }
+
+              // In the menu's blue button look, as tall as the field beside it
+              &[type='submit'] {
+                align-self: stretch;
+                margin-left: 1rem;
+                padding: 0 1rem;
+                border: 0;
+                border-radius: 3px;
+                background: #4299e1;
+                // The site's own button text colour (#bbb) wins otherwise, as for the footer's buttons
+                color: #fff !important;
+                font-size: 1.3rem;
+                cursor: pointer;
+              }
+            }
+
+            ul {
+              width: 100%;
+
+              li {
+                > div {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  width: 100%;
+
+                  p {
+                    word-break: break-all;
+                  }
+
+                  a {
+                    margin-left: 1rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .ta-x-select-label {
+          flex-shrink: 0;
+          margin-right: 1rem;
+          font-size: 1.3rem;
+          line-height: 1.8rem;
+          color: #495057;
+        }
+
+        .ta-x-select {
+          max-width: 330px;
+
+          &::after {
+            top: -1rem;
+          }
+        }
+
+        .ta-x-settings-helper-text {
+          font-size: 1.2rem;
+          padding-top: 0.5rem;
+        }
+
+        .ta-x-select-helper-text {
+          font-size: 1.2rem;
+          margin: 0rem 1rem 1rem;
+        }
+
+        .ta-x-hide-border {
+          border-bottom: 0;
+
+          &-when-checked {
+            &:has(input:checked) {
+              border-bottom: 0;
+            }
+          }
+        }
+
+        // After the rows' own padding, which it overrides
+        .ta-x-hide-padding-top {
+          padding-top: 0;
+        }
+      }
+
+      // The lines between rows, as the site's gamer menu draws them: one under every row and group header, a group's
+      // last row and the row above a header included, none inside a toggle's group (its classes) and none under a
+      // tab's last row. Set here by where a row sits, over its classes, so no panel has to say it. A tab's groups are
+      // its children: each header (.ta-x-accordion) followed by its rows (.ta-x-accordion-content)
+      .ta-x-tabs-content {
+        > .ta-x-accordion-content:not(:last-child) > :last-child,
+        > :not(.ta-x-accordion, .ta-x-accordion-content):has(+ .ta-x-accordion) {
+          // The site's row line (settings-menu.scss), which a row's own classes may have taken away
+          border-bottom: 1px solid #e6e6e6 !important;
+        }
+
+        > :last-child:not(.ta-x-accordion, .ta-x-accordion-content),
+        > .ta-x-accordion-content:last-child > :last-child {
+          border-bottom: 0 !important;
+        }
+      }
+    }
+
+    .page[data-theme='dark'] .ta-x-settings-menu {
+      .ta-x-tabs-content {
+        > .ta-x-accordion-content:not(:last-child) > :last-child,
+        > :not(.ta-x-accordion, .ta-x-accordion-content):has(+ .ta-x-accordion) {
+          border-bottom-color: #616161 !important;
+        }
+      }
+
+      // The tabs' inactive grey
+      .t-settings .ta-x-select-label {
+        color: #9c9c9c;
+      }
+    }
+  }
+}

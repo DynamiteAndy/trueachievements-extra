@@ -1,8 +1,4 @@
-@import 'variables';
-
-:root {
-  --ta-x-sticky-header-height: $ta-x-sticky-header-height;
-}
+@use 'variables';
 
 body {
   &.trueachievement-extras {
@@ -10,6 +6,20 @@ body {
       display: none !important;
     }
 
+    // Below 1,200px the site opens its gamer menu at the window's left edge; this puts it, and our settings menu (also
+    // `nav-gamer open`), at the right, under the avatar and the wrench
+    @media (max-width: 1199px) {
+      .nav-gamer {
+        &.open {
+          justify-content: flex-end;
+        }
+      }
+    }
+
+    // The site's `.middle` is a fixed 1,200px. A media query's width counts the vertical scrollbar, the page's doesn't,
+    // so in a window 1,200 to about 1,215px wide it's wider than the room left beside the scrollbar, and the page
+    // scrolls sideways: `width: 100%` keeps it inside. Only that band shows it (a 1,200px window: the page 1,200px wide
+    // beside 1,185px of room)
     .middle {
       @media (max-width: 1349px) {
         width: 100%;
@@ -21,10 +31,12 @@ body {
         max-width: 1200px;
       }
 
-      @media (min-width: $ta-x-tablet-breakpoint-min) {
+      @media (min-width: variables.$ta-x-tablet-breakpoint-min) {
         .news-section {
           &.list {
             > section {
+              // The site pulls a highlighted news item 10px past the list on each side; this keeps it in line with
+              // the other rows
               &.highlight {
                 margin: 5px 0;
 
@@ -37,31 +49,6 @@ body {
             }
           }
         }
-      }
-    }
-
-    .ta-x-flex-break {
-      flex-basis: 100%;
-      height: 0;
-      border: 0;
-      padding: 0;
-      margin: 0;
-    }
-
-    .ta-x-article-loader {
-      text-align: center;
-
-      img {
-        width: 25px;
-        height: 25px;
-        margin: 0 auto;
-        margin-bottom: 0.8rem;
-      }
-    }
-
-    [data-ta-x-loaded] {
-      .ta-x-article-loader {
-        display: none;
       }
     }
   }

@@ -1,0 +1,19 @@
+@use 'variables';
+
+body {
+  &.trueachievement-extras {
+    // A header over something linked, its icon button at the right: the guide sites' linked pages, a thanks thread's
+    // walkthrough
+    .ta-x-editable-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+
+      // The icon, at the text's size
+      svg {
+        @include variables.icon-at-text-size;
+      }
+    }
+  }
+}

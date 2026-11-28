@@ -1,0 +1,6 @@
+allowBuilds:
+  '@parcel/watcher': false
+
+# Install fails on a Node outside package.json's engines range (pnpm reads this here, not from .npmrc). Dependencies'
+# own engines ranges become strict too
+engineStrict: true

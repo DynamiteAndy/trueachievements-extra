@@ -1,0 +1,225 @@
+name: CI
+
+on:
+  # main itself, which also gives Codecov the base commit's coverage to compare pull requests with; other branches
+  # are checked through their pull request, which tests the merge with main
+  push:
+    branches:
+      - main
+  # Pull requests, from forks too
+  pull_request:
+  # Started by the release dist build on the commit it pushes, which no push event checks; it checks the branch itself
+  workflow_dispatch:
+
+# A newer push to the same pull request (or to main, or a dispatch to the same branch) cancels the run it supersedes
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # The release dist build's dispatch checks a commit that only adds the release scripts. Its code is the commit
+  # before's, so that commit's CI result stands for it and the jobs below skip; it waits for that run and fails with it
+  dist-only:
+    runs-on: ubuntu-latest
+    # A cap on a run that hangs, so it can't hold a runner for GitHub's default six hours
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      passed: ${{ steps.parent.outputs.passed }}
+    steps:
+    - name: Checkout code
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        # The commit before, to compare with
+        fetch-depth: 2
+        persist-credentials: false
+
+    - name: Wait for the commit before's CI, if this commit only adds dist
+      id: parent
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      run: |
+        if ! git diff --quiet HEAD^ HEAD -- . ':(exclude)dist/*.js'; then
+          echo "The commit changes more than dist, so every job runs."
+          exit 0
+        fi
+
+        RUN_ID="$(gh run list --commit "$(git rev-parse HEAD^)" --workflow ci.yml --event pull_request --limit 1 \
+          --json databaseId --jq '.[0].databaseId // empty')"
+        if [ -z "$RUN_ID" ]; then
+          echo "::error::The commit before has no pull request CI run to stand for this one"
+          exit 1
+        fi
+
+        gh run watch "$RUN_ID" --exit-status --interval 15 > /dev/null
+        echo "passed=true" >> "$GITHUB_OUTPUT"
+      env:
+        GH_TOKEN: ${{ github.token }}
+
+  # Lint type-checks too (.oxlintrc.json's typeAware and typeCheck, through tsrs), so there's no type-check job
+  lint:
+    needs: dist-only
+    if: ${{ needs.dist-only.outputs.passed != 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        # Nothing here pushes, so the token isn't kept in .git/config
+        persist-credentials: false
+        # The pull request's merge commit and its first parent, the base, for the dist check
+        fetch-depth: 2
+
+    # The release scripts users install come from dist/ on main, and a change inside one of their long minified lines
+    # can't be reviewed by eye. Only the release build changes them, on its own repository's version bump: a pull
+    # request from a fork, or one that keeps the version, changing them fails
+    - name: Check the pull request's changes to dist
+      if: ${{ github.event_name == 'pull_request' }}
+      run: |
+        if git diff --quiet HEAD^1 HEAD -- 'dist/*.js'; then
+          exit 0
+        fi
+
+        if [ "$FROM_FORK" = "true" ]; then
+          echo "::error::A pull request from a fork can't change the release scripts in dist/"
+          exit 1
+        fi
+
+        version() { node -p 'JSON.parse(require("fs").readFileSync(0, "utf8")).version'; }
+        if [ "$(git show HEAD^1:package.json | version)" = "$(version < package.json)" ]; then
+          echo "::error::dist/ changed without a version change: only the release build writes it"
+          exit 1
+        fi
+      env:
+        FROM_FORK: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
+
+    - name: Setup
+      uses: ./.github/actions/setup
+
+    # GitHub format, so lint errors show on the pull request's lines
+    - name: Run lint
+      run: pnpm run lint --format github
+
+    # The node_modules cache is keyed on the lockfile, not package.json, so a restored cache skips the install that
+    # would catch a package.json the lockfile doesn't match. This checks it without installing anything
+    - name: Check the lockfile matches package.json
+      run: pnpm install --frozen-lockfile --lockfile-only
+
+  test:
+    needs: dist-only
+    if: ${{ needs.dist-only.outputs.passed != 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+
+    - name: Setup
+      uses: ./.github/actions/setup
+
+    - name: Run tests
+      run: pnpm run test:github
+
+    # Each upload names its file, so neither picks up the other's report from dist/coverage/
+    - name: Upload coverage reports to Codecov
+      if: ${{ !cancelled() }}
+      uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+      with:
+        files: ./dist/coverage/lcov.info
+        disable_search: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+    # Test Analytics: each test's result and time, so failing and flaky tests show on the pull request. After a
+    # failing run too, which is when it matters
+    - name: Upload test results to Codecov
+      if: ${{ !cancelled() }}
+      uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+      with:
+        report_type: test_results
+        files: ./dist/coverage/test-report.junit.xml
+        disable_search: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  # Beside lint and test, as it needs nothing from them: a run whose lint fails still builds, which costs less than
+  # waiting for them on every run
+  build:
+    needs: dist-only
+    if: ${{ needs.dist-only.outputs.passed != 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+
+    - name: Setup
+      uses: ./.github/actions/setup
+
+    # Both prod scripts in one process, written to dist/local/ (only the release job writes dist/)
+    - name: Build
+      run: pnpm run build:prod-all
+
+    # The dev config (the debug entry and the dev script's header) on pull requests only, so a change that breaks it
+    # can't merge; main and the dispatched run build only what ships
+    - name: Build the dev script
+      if: ${{ github.event_name == 'pull_request' }}
+      run: pnpm run build:dev
+
+  # A pull request's runs pile up with every push, so a new one deletes the finished runs on its commits before the
+  # previous one. The pull request's latest commit and its parent keep theirs: a dist commit's dispatched run checks
+  # its parent's CI (dist-only, above), and the previous result stays to compare with. The latest commit is read from
+  # the pull request, not this run's event, so re-running an old run can't take the newer runs. Older runs held for
+  # approval go too (GitHub counts them finished); runs still going are left, and so is a fork's pull request, whose
+  # token can't delete runs (held-runs.yml and cleanup.yml see to those). It holds a token that can delete runs, so it
+  # checks out and runs nothing from the pull request; a lookup that fails only warns, and the ci check doesn't wait
+  # for it, so it can't fail a pull request
+  prune-old-runs:
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      actions: write
+    steps:
+    - name: Delete the pull request's finished runs from before its previous commit
+      run: |
+        HEAD_SHA="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" --jq '.head.sha')" || HEAD_SHA=""
+        PARENT="$(gh api "repos/$GITHUB_REPOSITORY/commits/$HEAD_SHA" --jq '.parents[0].sha')" || PARENT=""
+        if [ -z "$HEAD_SHA" ] || [ -z "$PARENT" ]; then
+          echo "::warning::The pull request's latest commit or its parent couldn't be read, so no runs were deleted"
+          exit 0
+        fi
+        export HEAD_SHA PARENT
+        gh api --paginate --method GET "repos/$GITHUB_REPOSITORY/actions/runs" -f branch="$HEAD_REF" -f status=completed \
+          --jq '.workflow_runs[] | select(.head_repository.full_name == env.GITHUB_REPOSITORY
+            and .head_sha != env.HEAD_SHA and .head_sha != env.PARENT) | .id' |
+          while read -r RUN_ID; do
+            gh run delete "$RUN_ID" --repo "$GITHUB_REPOSITORY" || echo "::warning::Run $RUN_ID wasn't deleted"
+          done || echo "::warning::The pull request's runs couldn't all be listed"
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+
+  # The one check main's ruleset requires, so jobs can be added or renamed without changing the ruleset. It runs
+  # whatever happened above and fails unless every job passed. A skipped or cancelled job counts as a failure, apart
+  # from the jobs a dist-only commit skips once the commit before passed
+  ci:
+    needs: [dist-only, lint, test, build]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Fail unless every job passed
+      if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || (needs.dist-only.outputs.passed != 'true' && contains(needs.*.result, 'skipped')) }}
+      run: exit 1

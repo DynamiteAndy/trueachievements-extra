@@ -1,0 +1,66 @@
+<!--
+  Staff manage walkthrough page, /staff/walkthrough/managewalkthrough.aspx?walkthroughid=4138 (#BLUD), fetched by a
+  staff member who no longer has access to that walkthrough. The site answers 200 with its walkthrough list in place of
+  the walkthrough's form, so there's no name, status or pages.
+  Captured 2026-11-14 (a GET). Condensed: the list's filters kept, its rows (the walkthroughs the gamer can open) and
+  their links, inline handlers and ids removed; the structure, classes and option text are the site's.
+-->
+<div class="admin-page">
+  <div id="divWalkthroughHolder">
+    <div id="chWalkthroughs" class="controlholder">
+      <div class="title">Walkthroughs</div>
+      <div class="content">
+        <div>
+          <label class="small">Status</label>
+          <select id="ddlStatusFilter" class="dropdown cs-n">
+            <option selected>(All)</option>
+            <option>New</option>
+            <option>In progress</option>
+            <option>Ready for review</option>
+            <option>Ready for publish</option>
+            <option>Published</option>
+            <option>Merged</option>
+            <option>New owner required</option>
+          </select>
+        </div>
+        <div>
+          <label class="small">Being improved</label>
+          <input id="chkBeingImprovedFilter" class="checkbox" type="checkbox" />
+        </div>
+        <div id="divPortStatus">
+          <label class="small">Port status</label>
+          <select id="ddlPortStatus" class="dropdown cs-n">
+            <option>(All)</option>
+            <option>Is a port</option>
+            <option>Has ports</option>
+            <option>Is not a port</option>
+            <option>Has no ports</option>
+          </select>
+        </div>
+        <div id="divSearchWalkthrough">
+          <div>
+            <label class="small">W/T name</label>
+            <input id="txtSearchWalkthrough" class="textbox cs-n" type="text" />
+          </div>
+          <div class="buttons"><a id="btnSearchWalkthrough" class="button">Search</a></div>
+        </div>
+        <div id="lstWalkthroughID" class="datalist">
+          <table class="header">
+            <tbody>
+              <tr>
+                <td class="point"></td>
+                <td class="c1">Walkthrough</td>
+                <td class="c2"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="scrolllstWalkthroughID" class="scroll">
+            <table class="dl">
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

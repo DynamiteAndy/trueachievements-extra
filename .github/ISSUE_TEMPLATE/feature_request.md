@@ -1,5 +1,5 @@
 ---
-name: '🚀🆕 Feature Request'
+name: '🚀 Feature Request'
 about: Suggest an idea for this project
 title: ''
 labels: 'feature-request'
@@ -19,6 +19,6 @@ assignees: ''
 
 <!-- This allows us to get in touch with you if more information is required, or to enable you to test the fix -->
 
-**TrueAchievement Username:** 
+**TrueAchievements Username:** 
 
 **Would you like to be involved with testing?**

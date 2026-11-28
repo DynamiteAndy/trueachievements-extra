@@ -1,25 +1,26 @@
 {
+  "oxc.enable": true,
   "[typescript]": {
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[scss]": {
     "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
-  "prettier.semi": true,
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "none",
-  "prettier.bracketSameLine": true,
-  "prettier.htmlWhitespaceSensitivity": "ignore",
-  "prettier.endOfLine": "auto",
-  "prettier.printWidth": 120,
-  "typescript.preferences.quoteStyle": "single",
-  "jest.autoRun": {
-    "watch": false,
-    "onSave": "test-file"
+  "js/ts.preferences.quoteStyle": "single",
+  "js/ts.experimental.useTsgo": true,
+  "js/ts.tsdk.path": "./node_modules/.tsrs-tsdk",
+  "vitest.rootConfig": "./vitest.config.mts",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always",
+    "source.format.oxc": "always"
   }
 }

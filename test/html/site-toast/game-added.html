@@ -1,0 +1,13 @@
+<!--
+  The site's own toast, as rendered by $.toast({ heading: 'Game added to collection', style: 'success' })
+  on /games.aspx (captured 2026-10-31) while fully visible. The plugin leaves an inline display: none
+  on the toast; the site's .fade class overrides it with display: block !important.
+  Site CSS (logged-in bundles): .fade { opacity: 0; transition: opacity 0.3s; display: block !important; }
+  .fade-in { opacity: 1; } .displaynone { display: none !important; } and .jq-toast-single.style-info /
+  style-warning / style-danger / style-success.
+-->
+<div class="jq-toast-wrap bottom-right">
+  <div class="jq-toast-single style-success fade fade-in" style="display: none;">
+    <h2 class="jq-toast-heading">Game added to collection</h2>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<!--
+  Public walkthrough page, /game/Xbox-One/walkthrough (walkthrough 1578, Xbox Apps That Don't Need A WT), which the
+  manage page's "View public page" button lands on; populate-aside-content reads its thanks count and achievements.
+  Captured 2026-11-08, signed in. Condensed: the aside cut to the Walkthrough Thanks and Walkthrough Achievements
+  sections; the achievements' game picker cut to its first two games (its other options' query strings reduced to #,
+  its onchange removed) and the list to its first three achievements. Zero Hour VIP's description really is the site's
+  "<insert display string text>", which the page parses as an element. The thanks button's postback href reduced to #.
+-->
+<main><h1>Xbox One Walkthrough</h1></main>
+<aside>
+  <section class="purple walkthroughthanks">
+    <div>Walkthrough Thanks</div>
+    <article>
+      <div class="thanks"><span class="">21</span><img class="thumbsup" src="/images/walkthroughs/thumbs_up.png" alt="Thanks" width="64" height="64" /></div>
+      <p>community members have thanked the author.</p>
+      <a href="#" class="base-button">Thank the author</a>
+    </article>
+  </section>
+  <section class="green walkthrough-right">
+    <div>Walkthrough Achievements</div>
+    <article>
+      <select id="" name="" class="walkthrough-games dropdown cs-n">
+        <option value="4952" selected="selected" data-redirect="/game/Xbox-One/walkthrough">Xbox One - 1/1 earned</option>
+        <option value="4791" data-redirect="#">Microsoft Store - 0/1 earned</option>
+      </select>
+      <ul class="il">
+        <li data-i="177244"><img src="/imagestore/thumbs/0007123200/7123217.jpg" alt="Xbox One Preorder" class="smallicon" width="32" height="32" loading="lazy" /><a href="/game/Xbox-One/walkthrough#ap177244">Xbox One Preorder</a><p>Xbox One Preorder</p></li>
+        <li data-i="148344"><img src="/imagestore/thumbs/0007126500/7126516.jpg" alt="Zero Hour VIP" class="smallicon" width="32" height="32" loading="lazy" /><a href="/game/Xbox-One/walkthrough#ap148344">Zero Hour VIP</a><p><insert display string text></p></li>
+        <li data-i="148345"><img src="/imagestore/thumbs/0007017600/7017626.jpg" alt="NXE Launch Team" class="smallicon" width="32" height="32" loading="lazy" /><a href="/game/Xbox-One/walkthrough#ap148345">NXE Launch Team</a><p>On November 19, 2008 we unleashed to the world a New Xbox Experience. Jump In.</p></li>
+      </ul>
+    </article>
+  </section>
+</aside>

@@ -1,0 +1,1 @@
+export { SelectAllIcon } from './SelectAllIcon';

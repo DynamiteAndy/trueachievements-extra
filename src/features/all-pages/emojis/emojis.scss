@@ -1,0 +1,39 @@
+@use 'variables';
+
+body {
+  &.trueachievement-extras {
+    .ta-x-emojis {
+      // The toolbar button, in the size of the site's fa-smile-o glyph it replaces. Font Awesome 7's outline smile is
+      // drawn thinner than the site's FA4 glyph, so its line is thickened to match (the stroke is in the icon's
+      // 512-unit viewBox)
+      > a svg {
+        @include variables.icon-at-text-size;
+
+        path {
+          stroke: currentColor;
+          stroke-width: 16;
+        }
+      }
+
+      .ta-x-tabs-content {
+        &[data-tab-visible] {
+          height: 10rem;
+          overflow-y: auto;
+          margin-right: -1rem;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          text-align: center;
+        }
+
+        span {
+          font-size: 2.2rem;
+          user-select: none;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

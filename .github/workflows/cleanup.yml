@@ -1,0 +1,49 @@
+name: Clean Up Runs
+
+on:
+  # Weekly, so the run list and the logs kept with each run stay short
+  schedule:
+    - cron: '0 4 * * 1'
+  # By hand, from the Actions tab
+  workflow_dispatch:
+
+# Only one clean-up at a time; a newer one waits rather than deleting alongside it
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  delete-old-runs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Deleting runs needs write access to Actions, and nothing else
+    permissions:
+      actions: write
+
+    steps:
+    # The release bot's runs held for approval: the dist commit's pull request runs, which its dispatched CI run
+    # already covers. A contributor's held run stays until its pull request closes (held-runs.yml), so it can still be
+    # approved
+    - name: Delete the release bot's held runs
+      run: |
+        gh run list --repo "$GITHUB_REPOSITORY" --status action_required --user 'github-actions[bot]' --limit 1000 \
+          --json databaseId --jq '.[].databaseId' |
+          while read -r RUN_ID; do
+            gh run delete "$RUN_ID" --repo "$GITHUB_REPOSITORY"
+          done
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Finished runs only, so a run still going (this one included) is never deleted, nor a held one (above)
+    - name: Delete finished runs older than two weeks
+      run: |
+        CUTOFF="$(date -u -d '14 days ago' +%s)"
+        gh run list --repo "$GITHUB_REPOSITORY" --status completed --limit 1000 \
+          --json databaseId,createdAt,conclusion \
+          --jq ".[] | select(.conclusion != \"action_required\" and (.createdAt | fromdateiso8601) < $CUTOFF)
+            | .databaseId" |
+          while read -r RUN_ID; do
+            gh run delete "$RUN_ID" --repo "$GITHUB_REPOSITORY"
+          done
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

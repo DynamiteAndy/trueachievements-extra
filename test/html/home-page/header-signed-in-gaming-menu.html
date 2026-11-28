@@ -1,0 +1,66 @@
+<!--
+  Home page (https://www.trueachievements.com/), signed in, read from the live DOM on 2026-11-25 as a tag, attribute and
+  text tree (Chrome's privacy filter blocks the menu's outerHTML) and written back as markup. Condensed: the header of
+  header-signed-in.html with one of the menu bar's items, Gaming, and its menu: its three groups, each heading kept,
+  three links each. The other items (Community, My Links, the search item) and the rest of the page left out.
+-->
+<form id="frm">
+  <div class="page ta" data-theme="dark">
+    <header>
+      <nav class="nav-primary middle">
+        <i class="fa fa-bars" data-tgl="items" data-h=""></i>
+        <a href="/"><h1 class="home">TrueAchievements</h1></a>
+        <ul class="items">
+          <li>
+            <span class="active" data-tgl="m-1" aria-haspopup="true" data-h="">Gaming</span>
+            <div class="m-1 open">
+              <span data-tgl="m-1-1" data-h="">News</span>
+              <div class="m-1-1">
+                <a href="/news">Xbox News</a>
+                <a href="/newslist/community" rel="nofollow">Community News</a>
+                <a href="/xbox-live-status">Xbox Live Status</a>
+              </div>
+              <span data-tgl="m-1-2" data-h="">Gaming</span>
+              <div class="m-1-2">
+                <a href="/games.aspx">Xbox Games</a>
+                <a href="/xbox-achievements.aspx">Xbox Achievements</a>
+                <a href="/walkthrough-hub">Xbox Walkthroughs</a>
+              </div>
+              <span data-tgl="m-1-3" data-h="">New Releases, Sales and Subscriptions</span>
+              <div class="m-1-3">
+                <a href="/win-xbox-games">Daily Game Giveaway</a>
+                <a href="/products/xbox-sales">Xbox Sales</a>
+                <a href="/game-pass-ultimate/games">Game Pass Ultimate Games</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <span
+          class="search-icon ss-search-trigger"
+          id="ssSearchTrigger"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          title="Search site"
+          ><i class="fa fa-search"></i
+        ></span>
+        <div class="gamer" data-tgl="nav-gamer" aria-haspopup="True" data-h="">
+          <div class="image">
+            <img
+              src="https://www.trueachievements.com/imagestore/0003699100/3699191.jpg"
+              width="32"
+              height="32"
+              alt="Dynamite Andy"
+              loading="lazy"
+            /><i class="unread-n"></i>
+          </div>
+          <div class="info"><span>Dynamite Andy</span><small>1,103,266</small></div>
+        </div>
+        <a class="gamer-page" title="My gamer page" data-no-hover="" href="/gamer/Dynamite+Andy"
+          ><i class="fa fa-home"></i
+        ></a>
+      </nav>
+    </header>
+    <div class="main middle"></div>
+    <div class="nav-gamer"></div>
+  </div>
+</form>

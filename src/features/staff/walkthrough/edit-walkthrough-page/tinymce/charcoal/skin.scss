@@ -1,0 +1,266 @@
+@use '../../editor-colours';
+
+body {
+  &.trueachievement-extras {
+    &.ta-x-staff {
+      .mce-edit-area {
+        border: 0 !important;
+      }
+
+      .mce-colorbutton {
+        button:not(.mce-open) {
+          padding-right: 3px !important;
+        }
+
+        .mce-open {
+          border: 0;
+          padding: 4px 7px 4px 2px !important;
+        }
+
+        .mce-preview {
+          position: unset;
+          padding: 0;
+          margin: 0;
+          margin-top: -2px;
+          width: 100%;
+        }
+      }
+
+      // The toolbar's buttons are the same size in both themes: each in a border, 4px above and below. TinyMCE's own
+      // toolbar buttons have no border and 3px, which would make the light theme's smaller than the dark theme's.
+      // Their colours are each theme's. 4px between them and the toolbar's edges, between rows and between groups:
+      // TinyMCE gives each group 2px above and to its left, and each button 2px to its left, so the
+      // groups get 4px above and the toolbar 4px at its bottom. Buttons within a group stay 2px apart
+      .mce-toolbar-grp {
+        padding: 0 0 4px;
+
+        .mce-colorbutton,
+        .mce-menubtn,
+        .mce-btn {
+          border: 1px solid #ccc !important;
+          background-color: #f7f7f7 !important;
+
+          &:focus,
+          &.mce-active,
+          &:hover {
+            background-image: none !important;
+            background-color: #e3e3e3 !important;
+            border-color: #b1b1b1 !important;
+          }
+
+          // Dropdowns too (TinyMCE gives them 20px on the right)
+          button {
+            padding: 4px 10px;
+          }
+        }
+
+        .mce-btn-group {
+          margin-top: 4px;
+
+          .mce-btn {
+            margin: 0;
+            margin-left: 2px;
+          }
+        }
+      }
+
+      // No outer border in either theme, only the line under the toolbar. None at all: a transparent one leaves a 1px
+      // strip of the page down each side. Important over the 1px TinyMCE sets inline
+      .mce-tinymce {
+        border-width: 0 !important;
+      }
+
+      // The line over the status bar, the colour of the one under the toolbar (TinyMCE's is white in the light theme
+      // and another dark in the dark one)
+      .mce-statusbar {
+        border-top-color: editor-colours.$light-editor-edge;
+      }
+
+      &[data-ta-x-theme='dark'] {
+        .mce-panel {
+          border: 0 solid #232b33;
+          background-color: #404952;
+
+          .mce-arrow {
+            &::after {
+              border-bottom-color: #404952;
+            }
+          }
+
+          .mce-window-head,
+          .mce-foot {
+            border-color: #9e9e9e;
+          }
+
+          .mce-title,
+          .mce-label {
+            color: editor-colours.$dark-editor-text;
+            text-shadow: 0 1px 1px rgb(0 0 0 / 75%);
+          }
+
+          .mce-path-item {
+            color: editor-colours.$dark-editor-text;
+          }
+
+          i {
+            &.mce-i-resize {
+              color: editor-colours.$dark-editor-text;
+            }
+
+            &.mce-ico {
+              text-shadow: 1px 1px #000;
+              color: editor-colours.$dark-editor-text;
+            }
+
+            &.mce-caret {
+              border-top: 4px solid editor-colours.$dark-editor-text;
+            }
+          }
+
+          .mce-colorbutton,
+          .mce-menubtn,
+          .mce-btn {
+            border: 1px solid editor-colours.$dark-editor-border !important;
+            text-shadow: 0 1px 1px rgb(0 0 0 / 75%);
+            background-color: #4c5761 !important;
+
+            &:focus,
+            &.mce-active,
+            &:hover {
+              background-image: none !important;
+              background-color: #004364 !important;
+              border-color: #24292e !important;
+            }
+
+            &.mce-disabled {
+              cursor: default;
+            }
+
+            &.mce-primary {
+              background-color: #004364 !important;
+              color: #fff;
+              text-shadow: 1px 1px #333;
+
+              &:hover {
+                background-color: #00547d !important;
+              }
+            }
+
+            button {
+              padding: 4px 10px;
+              font-size: 14px;
+              cursor: pointer;
+              // The menus' own text colour: the icons' grey would be under 4.5:1 on the buttons' fill for text
+              color: #ddd;
+              text-align: center;
+
+              span {
+                color: unset;
+              }
+            }
+          }
+        }
+
+        // After .mce-panel's, which it is too
+        .mce-statusbar {
+          border-top-color: editor-colours.$dark-editor-edge;
+        }
+
+        .mce-menu {
+          background: #2f3740;
+        }
+
+        .mce-menu-item-sep {
+          background: #25313f;
+          border-color: #424f5f;
+        }
+
+        .mce-menu-item-normal {
+          .mce-text {
+            color: #ddd !important;
+            background: transparent !important;
+          }
+
+          &:focus,
+          &.mce-selected,
+          &.mce-active {
+            background-color: #006597;
+            color: #fff !important;
+          }
+
+          &:hover {
+            text-decoration: none;
+            color: #fff;
+            background-color: #0085c7;
+          }
+
+          .mce-caret {
+            border-left: 4px solid editor-colours.$dark-editor-text;
+          }
+        }
+
+        .mce-grid-cell {
+          div {
+            border-color: editor-colours.$dark-editor-border;
+            background-color: #4c5761;
+          }
+        }
+
+        .mce-grid-border {
+          a {
+            border-color: editor-colours.$dark-editor-border;
+            background-color: #4c5761;
+
+            &.mce-active {
+              background-color: #006597;
+            }
+          }
+        }
+
+        .mce-text-center {
+          color: #ddd;
+        }
+
+        .mce-tabs {
+          background: #303942;
+          border-bottom: 1px solid editor-colours.$dark-editor-border;
+
+          .mce-tab {
+            color: editor-colours.$dark-editor-text;
+            border-color: editor-colours.$dark-editor-border;
+            background: #303942;
+            text-shadow: 0 1px 1px rgb(0 0 0 / 75%);
+
+            &.mce-active {
+              background: #404952;
+            }
+          }
+        }
+
+        .mce-i-checkbox,
+        .mce-textbox,
+        input {
+          background-color: #4c5761;
+          // Typed text, as light as the menus' text, to be over 4.5:1 on the field
+          color: #ddd;
+          border-color: editor-colours.$dark-editor-border;
+          background-image: unset;
+        }
+
+        #oWalkthroughImageViewer {
+          border: 0 solid #232b33;
+          background-color: #2f3740;
+
+          .imageviewer {
+            background-color: #2f3740;
+          }
+
+          .noimages,
+          .itemname {
+            color: editor-colours.$dark-editor-text;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@use 'sticky-under-header';
+
+// The slide classes (slide-classes.ts): the sticky header, and the elements stuck under it, slide in and out of view
+body {
+  &.trueachievement-extras {
+    .ta-x-y-show {
+      transform: translateY(0);
+      transition: sticky-under-header.$slide-transition;
+    }
+
+    // Hidden: sliding out, or straight away (-no-transition)
+    .ta-x-y-hide,
+    .ta-x-y-hide-no-transition {
+      transform: translateY(-100%);
+    }
+
+    .ta-x-y-hide {
+      transition: sticky-under-header.$slide-transition;
+    }
+
+    // Asked for less motion, the header and what's stuck under it move at once rather than sliding. The stuck elements
+    // follow the header's own slide, so with none to copy they move at once too (slide.ts). The element under the header
+    // has a slide of its own at a higher specificity (_sticky-under-header.scss), so it's named here as well
+    @media (prefers-reduced-motion: reduce) {
+      .ta-x-y-show,
+      .ta-x-y-hide,
+      .ta-x-sticky-under-header.ta-x-y-hide {
+        transition: none;
+      }
+    }
+  }
+}

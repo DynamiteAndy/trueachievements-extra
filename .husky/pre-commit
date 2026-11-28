@@ -1,17 +1,12 @@
-#!/usr/bin/env sh
-
-# Check for staged files in the 'dist' directory
-staged_dist_files=$(git diff --cached --name-only | grep '^dist/')
-
-if [ -n "$staged_dist_files" ]; then
+# Only CI writes the release scripts in dist/, so a commit never takes dist changes: changes to files HEAD has are
+# put back, and new files are only unstaged
+staged_dist=$(git diff --cached --name-only -- dist)
+if [ -n "$staged_dist" ]; then
   echo "Unstaging files in the 'dist' directory before commit:"
-  echo "$staged_dist_files"
-  
-  # Unstage the files in 'dist'
-  git reset HEAD -- $staged_dist_files
-
-  # Reset the files in 'dist' to the last committed state
-  git checkout -- $staged_dist_files
+  echo "$staged_dist"
+  git diff --cached --name-only --no-renames --diff-filter=MD -z -- dist |
+    xargs -0 -r git restore --source=HEAD --staged --worktree --
+  git restore --staged -- dist
 fi
 
 pnpm run lint
